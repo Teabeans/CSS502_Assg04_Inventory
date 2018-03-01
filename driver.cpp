@@ -1,3 +1,10 @@
+/*
+ * CSS502 Assignment 4: Matt Gross & Tim Lum - Group 7
+ * File: Inventory Controller
+ * Description: Holds the core business logic to manage two inventory databases
+ * and process a list of transactions
+*/
+
 // Necessary for file stream object handling
 #include <fstream>
 
