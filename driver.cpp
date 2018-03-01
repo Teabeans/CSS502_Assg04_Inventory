@@ -1,0 +1,110 @@
+// Necessary for file stream object handling
+#include <fstream>
+
+// Necessary for input-output stream operations
+#include <iostream>
+
+// Necessary for string operations
+#include <string>
+
+// Necessary for database objects
+#include "InvDB.h"
+#include "CustDB.h"
+
+// Necessary for transaction objects
+#include "Borrow.h"
+#include "Return.h"
+
+#include "Parent.h"
+#include "Child.h"
+
+void readInv(std::ifstream& dataFile) {
+
+}
+
+void readCust(std::ifstream& dataFile) {
+
+}
+
+int estimate(std::ifstream& dataFile){
+   int retEstimate = 0;
+   for (;;) {
+      // Exit condition
+      if (dataFile.eof()) {
+         break;
+      }
+      //Otherwise, just keep drawing lines
+      // TODO
+      retEstimate++;
+   }
+   retEstimate = retEstimate*2;
+   // Now compare against the list of primes until the prime exceeds retEstimate
+   // TODO
+   // Assign this prime to retEstimate
+   // TODO
+   return(10067);
+   // 2x the number of newline characters
+   // Just make a list of prime numbers
+} // Closing estimate()
+
+int main() {
+   std::cout << "Hello, World!" << std::endl;
+   Parent someParent;
+   Child someChild;
+   std::cout << "Parent tests:" << std::endl;
+   std::cout << someParent.toString() << std::endl;
+   std::cout << someParent.toStringParent() << std::endl;
+   std::cout << std::endl;
+   std::cout << "Child tests:" << std::endl;
+   std::cout << someChild.toString() << std::endl;
+   std::cout << someChild.toStringParent() << std::endl;
+
+// Begin program
+   // Acquire the relevant files
+
+   std::ifstream commandFile("data4commands.txt");
+   std::ifstream customerFile("data4customers.txt");
+   std::ifstream inventoryFile("data4movies.txt");
+   std::ifstream sacrificialFile("data4movies.txt");
+
+   // Determine the size of the inventory
+   int entries = estimate(sacrificialFile);
+
+   // Create an InventoryDatabase of size 'entries'
+   InvDB invDB(entries);
+
+   // Create a CustomerDatabase of size 10000
+   CustDB custDB(10000);
+
+   // Load the InventoryDatabase using the InventoryFile
+   readInv(inventoryFile);
+
+   // Load the CustomerDatabase using the CustomerFile
+   readCust(customerFile);
+
+
+   // Generate Transactions from the CommandFile and send Transaction impacts to the appropriate locations
+   while (!commandFile.eof()) {
+      // Read the next relevant line of command
+      std::string currCommand;
+      std::getline(commandFile, currCommand);
+
+      // Queries isLegal() in Transactions, invDB, and custDB
+      if (isLegal(currCommand)) {
+         // Make a Transaction from the string
+         Trans* currTrans = Trans(currCommand);
+
+         // Send the Transaction to the Databases for execution
+         invDB.adjustStock(currTrans);
+         custDB.appendHistory(currTrans);
+
+         // Deallocate the Transaction
+         delete currTrans;
+      }
+   }
+
+// End program
+
+   return (0);
+}
+
