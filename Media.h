@@ -1,18 +1,21 @@
-class Media{
-private:
-   string title;
-   int stock;
-   int releaseYear;
+#pragma once
+#include <string>
+
+class Media {
 public:
-   string toString();
-   void display();
-
-   int getRelease();
+   std::string getTitle();
    int getStock();
-   string getTitle();
-
-   void setRelease();
-   void setStock();
-   void setTitle();
-   
+   int getReleaseDate();
+   char getMedium();
+   void setTitle(std::string);
+   void setStock(int);
+   void setReleaseDate(int);
+   void setMedium(char);
+   Media();
+   ~Media();
+private:
+   std::string title;
+   int stock;
+   int releaseDate;
+   char medium;
 };
