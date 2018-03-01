@@ -97,7 +97,7 @@ int main() {
       std::getline(commandFile, command);
 
 
-      // isLegal Functionality
+      // create a transaction and check for transaction legality
       Trans* currTrans;
 
       // create borrow object and run transaction
@@ -112,7 +112,8 @@ int main() {
 
       // check customer and display history
       else if (command.at(0) == 'H') {
-
+         // TODO check whether customer is valid
+         // TODO output customer history
       }
 
       // otherwise, this is an invalid command
