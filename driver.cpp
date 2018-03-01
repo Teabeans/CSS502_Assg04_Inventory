@@ -1,9 +1,9 @@
-/*
+/**
  * CSS502 Assignment 4: Matt Gross & Tim Lum - Group 7
  * File: Inventory Controller
  * Description: Holds the core business logic to manage two inventory databases
  * and process a list of transactions
-*/
+**/
 
 // Necessary for file stream object handling
 #include <fstream>
@@ -93,21 +93,43 @@ int main() {
    // Generate Transactions from the CommandFile and send Transaction impacts to the appropriate locations
    while (!commandFile.eof()) {
       // Read the next relevant line of command
-      std::string currCommand;
-      std::getline(commandFile, currCommand);
+      std::string command;
+      std::getline(commandFile, command);
+
+
+      // isLegal Functionality
+      Trans* currTrans;
+
+      // create borrow object and run transaction
+      if (command.at(0) == 'B') {
+         currTrans = new Borrow(command);
+      }
+
+      // create return object and run transaction
+      else if (command.at(0) == 'R') {
+         currTrans = new Return(command);
+      }
+
+      // check customer and display history
+      else if (command.at(0) == 'H') {
+
+      }
+
+      // otherwise, this is an invalid command
+      else {
+         cerr << "Error, invalid command: " << command.at(0) << endl;
+      }
 
       // Queries isLegal() in Transactions, invDB, and custDB
-      if (isLegal(currCommand)) {
-         // Make a Transaction from the string
-         Trans* currTrans = Trans(currCommand);
+      if (invDB.isLegal(command) && custDB.isLegal(command) {
 
          // Send the Transaction to the Databases for execution
          invDB.adjustStock(currTrans);
          custDB.appendHistory(currTrans);
-
-         // Deallocate the Transaction
-         delete currTrans;
       }
+
+      // deallocate current transaction now that it's been used
+      delete currTrans;
    }
 
 // End program
