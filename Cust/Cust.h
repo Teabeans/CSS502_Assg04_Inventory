@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "Trans.h"
+#include "../Trans/Trans.h"
 
 class Cust {
 public:

@@ -6,6 +6,7 @@ public:
    char getGenre();
    void setGenre(char);
    Drama();
+   Drama(std::string);
    ~Drama();
 private:
 };

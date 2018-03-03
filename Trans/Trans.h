@@ -1,15 +1,16 @@
 #pragma once
 #include <string>
+
 class Trans {
 public:
-   std::string toString();
-   char getType();
-   std::string getInvID();
-   int getCustID();
-   int getQty();
-   void setInvID(std::string);
-   void setCustID(int);
-   void setQty(int);
+   // std::string toString();
+   // char getType();
+   // std::string getInvID();
+   // int getCustID();
+   // int getQty();
+   // void setInvID(std::string);
+   // void setCustID(int);
+   // void setQty(int);
    Trans();
    Trans(std::string);
    ~Trans();

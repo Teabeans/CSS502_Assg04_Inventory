@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include "Cust.h"
-#include "Trans.h"
+#include "../Trans/Trans.h"
 
 class CustDB {
 public:
