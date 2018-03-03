@@ -41,19 +41,16 @@ void readInv(std::ifstream& data, InvDB& invDB) {
          // create borrow object and run transaction
          if (filmData.at(0) == 'F') {
             invDB.addFilm(new Comedy(filmData));
-            std::cerr << " Comedy" << std::endl;
          }
 
          // create return object and run transaction
          else if (filmData.at(0) == 'D') {
             invDB.addFilm(new Drama(filmData));
-            std::cerr << " Drama" << std::endl;
          }
 
          // check customer and display history
          else if (filmData.at(0) == 'C') {
             invDB.addFilm(new Classic(filmData));
-            std::cerr << " Classic" << std::endl;
          }
 
          // otherwise, this is an invalid film type
@@ -126,31 +123,31 @@ int main() {
       Trans* currTrans = nullptr;
 
       // make sure the line contains data
-      if (command.length() >= 1) {
-         // create borrow object and run transaction
-         if (command.at(0) == 'B') {
-            currTrans = new Borrow(command);
-            std::cerr << " Borrow" << std::endl;
-         }
+      // if (command.length() >= 1) {
+      //    // create borrow object and run transaction
+      //    if (command.at(0) == 'B') {
+      //       currTrans = new Borrow(command);
+      //       std::cerr << " Borrow" << std::endl;
+      //    }
 
-         // create return object and run transaction
-         else if (command.at(0) == 'R') {
-            currTrans = new Return(command);
-            std::cerr << " Return" << std::endl;
-         }
+      //    // create return object and run transaction
+      //    else if (command.at(0) == 'R') {
+      //       currTrans = new Return(command);
+      //       std::cerr << " Return" << std::endl;
+      //    }
 
-         // check customer and display history
-         else if (command.at(0) == 'H') {
-            std::cerr << " Show History" << std::endl;
-            // TODO check whether customer is valid
-            // TODO output customer history
-         }
+      //    // check customer and display history
+      //    else if (command.at(0) == 'H') {
+      //       std::cerr << " Show History" << std::endl;
+      //       // TODO check whether customer is valid
+      //       // TODO output customer history
+      //    }
 
-         // otherwise, this is an invalid command
-         else {
-            std::cerr << "Invalid command: " << command.at(0) << std::endl;
-         }
-      }
+      //    // otherwise, this is an invalid command
+      //    else {
+      //       std::cerr << "Invalid command: " << command.at(0) << std::endl;
+      //    }
+      // }
 
       // Queries isLegal() in Transactions, invDB, and custDB
       if (invDB.isLegal(command) /* && custDB.isLegal(command)*/ ) {

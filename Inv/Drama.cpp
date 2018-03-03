@@ -7,8 +7,8 @@ Drama::Drama() {
 
 }
 
-Drama::Drama(std::string filmData) {
-	// std::cerr << "creating film";
+Drama::Drama(std::string data) : Film(data) {
+	std::cerr << "creating Drama: ";
 }
 
 Drama::~Drama() {
