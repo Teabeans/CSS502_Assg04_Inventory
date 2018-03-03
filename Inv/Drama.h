@@ -3,8 +3,8 @@
 
 class Drama : public Film {
 public:
-   char getGenre();
-   void setGenre(char);
+   // char getGenre();
+   // void setGenre(char);
    Drama();
    Drama(std::string);
    ~Drama();

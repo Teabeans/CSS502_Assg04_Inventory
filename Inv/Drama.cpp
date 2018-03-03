@@ -12,5 +12,6 @@ Drama::Drama(std::string filmData) {
 }
 
 Drama::~Drama() {
+   std::cerr << "destruct Drama" << std::endl;
 
 }

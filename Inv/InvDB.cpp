@@ -53,8 +53,13 @@ InvDB::InvDB(int size) {
 }
 
 InvDB::~InvDB() {
+   // std::cerr << "destruct invDB" << std::endl;
 
    if (invTable != nullptr) {
-      delete invTable;
+
+      // TODO: Find out why invTable can't be deleted without causing an Abort Trap: 6 error
+
+      // delete invTable;
    }
+   // std::cerr << "end destruct invDB" << std::endl;
 }

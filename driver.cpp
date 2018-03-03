@@ -61,11 +61,8 @@ void readInv(std::ifstream& data, InvDB& invDB) {
             std::cerr << "Invalid film type: " << filmData.at(0) << std::endl;
          }
       }
-
-
-      filmID++;
    }
-}
+} // End readInv
 
 // void readCust(std::ifstream& dataFile) {
 
@@ -144,7 +141,7 @@ int main() {
 
          // check customer and display history
          else if (command.at(0) == 'H') {
-            std::cerr << " H" << std::endl;
+            std::cerr << " Show History" << std::endl;
             // TODO check whether customer is valid
             // TODO output customer history
          }
@@ -169,8 +166,5 @@ int main() {
       }
    }
 
-// End program
-
    return (0);
-}
-
+} // End program
