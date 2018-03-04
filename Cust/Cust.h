@@ -177,5 +177,3 @@ public:
 
 
 }; // Closing class Cust{}
-
-// End of file - Cust.h
