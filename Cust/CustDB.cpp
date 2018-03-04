@@ -65,6 +65,25 @@
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
+//       CLASS CONSTANTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+// Do not redeclare these variables in the .cpp.
+// Included here only for reference
+// See associated .h file for variable declarations
+
+// (+) ------------|
+// #MAXCUSTOMERS
+//-----------------|
+// Desc:   The maximum anticipated number customer spots needed
+// Invars: Set to 9973
+/// const static int MAXCUSTOMERS = 9973;
+
+
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
 //       PRIVATE FIELDS (-)
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
@@ -77,8 +96,8 @@
 // #custTable
 //-----------------|
 // Desc:   The customer database
-// Invars: 10000 valid customer IDs, so 2x and nearest prime size
-///   Cust* custTable[20011];
+// Invars: Table size must not exceed 9999, nearest prime is 9973
+///   Cust* custTable[MAXCUSTOMERS];
 
 
 
@@ -88,6 +107,28 @@
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
+// (-) --------------------------------|
+// #doesConflict(Cust*, int)
+//-------------------------------------|
+// Desc:    Determines whether this customer and index creates a collision
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+bool CustDB::doesConflict(Cust* custPtr, int query) {
+   // Identity check - If the pointers are the same, this is not a collision.
+   if (this->custTable[query] == custPtr) {
+      return (false);
+   }
+   // Else, if anything is here, that's a collision.
+   else if (this->custTable[query] != nullptr) {
+      return (true);
+   }
+   // Nothing found at that location, so no conflict exists.
+   return (false);
+} // Closing doesConflict()
+
 //-----------------|
 // #isValid(string)
 //-----------------|
@@ -95,33 +136,68 @@
 // Invars: Return value is variable based on state of DB
 bool CustDB::isValid(std::string) {
 
-}
+} // Closing isValid()
 
-//-----------------|
+// (-) --------------------------------|
 // #hash(Cust*)
-//-----------------|
-// Desc:   Determines the appropriate index based on a customer pointer
-// Invars: Returns either the hash location of that customer or an empty index
-int CustDB::hash(Cust* CustPtr) {
-   
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: Customer name ("F L") must contain at least 3 chars.
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+int CustDB::hash(Cust* custPtr) {
+   std::string custName = custPtr->getName();
+   char letter1 = custName[0]; // TODO: Verify that this is legal
+   char letter2 = custName[1];
+   char letter3 = custName[2];
+   int intOf1 = letter1 * 1000000; // 123 goes to 123 000 000
+   int intOf2 = letter2 * 1000;    // 456 goes to     456 000
+   int intOf3 = letter3;           // 789 goes to         789
+   int hash = ( letter1 + letter2 + letter3 ) % MAXCUSTOMERS;
+   // If a conflict is identified
+   if (this->doesConflict(custPtr, hash)) {
+      // Probe until an open index is found
+      hash = this->probe(custPtr, hash);
+   }
+   // Non-conflicting index guaranteed
+   return(hash);
 }
 
-//-----------------|
+// (-) --------------------------------|
 // #probe(Cust*)
-//-----------------|
-// Desc:   In the event of a collision, probes to the next valid index
-// Invars: Returns either the hash location of that customer or an empty index
-int CustDB::probe(Cust* CustPtr) {
-   
-}
+//-------------------------------------|
+// Desc:    Linear probe
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+int CustDB::probe(Cust* custPtr, int query) {
+   int hash = query;
+   while (this->doesConflict(custPtr, query)) {
+      // Linear probe!
+      hash++;
+   }
+   return(hash);
+} // Closing probe()
 
-//-----------------|
+// (-) --------------------------------|
 // #obliviate()
-//-----------------|
-// Desc:   Deallocates all memory
-// Invars: None
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
 void CustDB::obliviate() {
-   
+   for (int i = 0 ; i < MAXCUSTOMERS ; i++) {
+      if (this->custTable[i] != nullptr) {
+         delete custTable[i];
+      }
+   }
 }
 
 
@@ -152,7 +228,18 @@ void CustDB::obliviate() {
 // RetVal:  NULL
 // MetCall: NULL
 std::string CustDB::toString() {
-   std::string retString = "CustDB::toString()";
+   std::string retString = "CustDB::toString() \n";
+   retString += "Customer Database:\n";
+   retString += "ID        First Name           Last Name\n";
+//               1234      01234567890123456789 01234567890123456789
+   // Go down the custTable
+   for (int i = 0 ; i < MAXCUSTOMERS ; i++) {
+      // And for every valid Customer...
+      if (custTable[i] != nullptr) {
+         // Append them to the string
+         retString += custTable[i]->toString() + "\n";
+      }
+   }
    return (retString);
 } // Closing toString()
 
@@ -166,7 +253,10 @@ std::string CustDB::toString() {
 // RetVal:  NULL
 // MetCall: NULL
 void CustDB::display() {
-   std::cout << "CustDB::display()";
+   // TODO: Write display() function
+   std::cout << "CustDB::display()" << std::endl;
+   std::cout << this->toString() << std::endl;
+
 } // Closing display()
 
 // (+) --------------------------------|
@@ -178,9 +268,9 @@ void CustDB::display() {
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
-void CustDB::insertCustomer(Cust* CustPtr) {
-   int indexToInsertAt = this->hash(CustPtr);
-   this->custTable[indexToInsertAt] = CustPtr;
+void CustDB::insertCustomer(Cust* custPtr) {
+   int indexToInsertAt = this->hash(custPtr);
+   this->custTable[indexToInsertAt] = custPtr;
 } // Closing insertCustomer()
 
 // (+) --------------------------------|
@@ -217,22 +307,32 @@ Cust* CustDB::getCustomerAt(int query) {
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
-//-----------------|
+// (+) --------------------------------|
 // #CustDB()
-//-----------------|
-// Desc:   NULL
-// Invars: NULL
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
    CustDB::CustDB() {
-   
+      for (int i = 0 ; i < MAXCUSTOMERS ; i++) {
+         custTable[i] = nullptr;
+      }
    }
 
-//-----------------|
+// (+) --------------------------------|
 // #~CustDB()
-//-----------------|
-// Desc:   NULL
-// Invars: NULL
+//-------------------------------------|
+// Desc:    Deallocates memory and zeroes fields
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
    CustDB::~CustDB() {
-
+      this->obliviate();
    }
 
 // End of file - CustDB.cpp
