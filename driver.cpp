@@ -126,7 +126,7 @@ int main() {
       if (command.length() >= 1) {
 
          // call the factory method to determine type of transaction
-         currTrans = currTrans.factory(command);
+         currTrans = currTrans->factory(command);
       }
 
       // Queries isLegal() in Transactions, invDB, and custDB

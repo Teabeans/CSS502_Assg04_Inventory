@@ -1,5 +1,6 @@
 // Trans.cpp
 #include <string>
+#include <iostream>
 #include "Trans.h"
 #include "Borrow.h"
 #include "Return.h"
@@ -11,18 +12,18 @@
 Trans* Trans::factory(std::string command) {
 
    // create borrow object and run transaction
-   if (command[0] == "B") {
+   if (command[0] == 'B') {
       std::cerr << " Borrow" << std::endl;
-      return new Borrow;
+      return new Borrow(command);
    }
 
    // create return object and run transaction
-   else if (command[0] == "R") {
+   else if (command[0] == 'R') {
       std::cerr << " Return" << std::endl;
-      return new Return;
+      return new Return(command);
    }
 
-   // else if (command[0] == "H") {
+   // else if (command[0] == 'H') {
       // std::cerr << " Show History" << std::endl;
       // return new History;
    // }
@@ -30,6 +31,7 @@ Trans* Trans::factory(std::string command) {
    // otherwise, this is an invalid command
    else {
       std::cerr << "Invalid command: " << command.at(0) << std::endl;
+      return new Trans(command);
    }
 }
 
