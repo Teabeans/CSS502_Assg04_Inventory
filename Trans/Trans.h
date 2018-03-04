@@ -156,7 +156,9 @@ public:
 // Desc:   Returns transaction data fields
 // Invars: None
    void setType(char transType);
-   void setGenre(std::string theGenre);
+   void setTypeAsString(std::string transType);
+   void setGenre(char theGenre);
+   void setGenreAsString(std::string theGenre);
    void setTitle(std::string theTitle);
    void setIdentifier1(std::string trait);
    void setIdentifier2(std::string trait);
