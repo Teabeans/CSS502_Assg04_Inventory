@@ -5,9 +5,6 @@
 // Requisite in the .h file
 #pragma once
 
-// Necessary for string operations
-#include <string>
-
 // Necessary for customer operations
 #include "Cust.h"
 
@@ -37,7 +34,7 @@ private:
 //-----------------|
 // Desc:   The customer database
 // Invars: 10000 valid customer IDs, so 2x and nearest prime size
-   Cust custTable[20011];
+   Cust* custTable[20011];
 
 
 
@@ -48,11 +45,32 @@ private:
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
 //-----------------|
-// #isValid
+// #isValid(string)
 //-----------------|
 // Desc:   Determines whether this string is a valid customerDB command
-// Invars: Return value is variable based on state of
+// Invars: Return value is variable based on state of DB
    bool isValid(std::string);
+
+//-----------------|
+// #hash(Cust*)
+//-----------------|
+// Desc:   Determines the appropriate index based on a customer pointer
+// Invars: Returns either the hash location of that customer or an empty index
+   int hash(Cust* CustPtr);
+
+//-----------------|
+// #probe(Cust*)
+//-----------------|
+// Desc:   In the event of a collision, probes to the next valid index
+// Invars: Returns either the hash location of that customer or an empty index
+   int probe(Cust* CustPtr);
+
+//-----------------|
+// #obliviate()
+//-----------------|
+// Desc:   Deallocates all memory
+// Invars: None
+   void obliviate();
 
 public:
 //-------|---------|---------|---------|---------|---------|---------|---------|
@@ -84,6 +102,13 @@ public:
 // Desc:   NULL
 // Invars: NULL
    void display();
+
+//-----------------|
+// #insertCustomer(int)
+//-----------------|
+// Desc:   NULL
+// Invars: NULL
+   void insertCustomer(Cust*);
 
 //-----------------|
 // #getCustomerAt(int)
