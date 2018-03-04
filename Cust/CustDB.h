@@ -22,8 +22,8 @@
 // #MAXCUSTOMERS
 //-----------------|
 // Desc:   The maximum anticipated number customer spots needed
-// Invars: Set to 9973
-const static int MAXCUSTOMERS = 9973;
+// Invars: Set to 20011
+const static int MAXCUSTOMERS = 20011;
 
 class CustDB {
 
@@ -40,6 +40,13 @@ private:
 // Desc:   The customer database
 // Invars: Table size must not exceed 9999, nearest prime is 9973
    Cust* custTable[MAXCUSTOMERS];
+
+//-----------------|
+// #custTableByID
+//-----------------|
+// Desc:   The customer database, sorted by customer ID number
+// Invars: Table size to accommodate 
+   Cust* custTableByID[10000];
 
 
 
