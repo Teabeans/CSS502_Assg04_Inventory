@@ -1,6 +1,37 @@
 // Trans.cpp
 #include <string>
 #include "Trans.h"
+#include "Borrow.h"
+#include "Return.h"
+
+/**
+ * factory method
+ * Desc: generates and returns a type of transaction based on the type string
+**/
+Trans* Trans::factory(std::string command) {
+
+   // create borrow object and run transaction
+   if (command[0] == "B") {
+      std::cerr << " Borrow" << std::endl;
+      return new Borrow;
+   }
+
+   // create return object and run transaction
+   else if (command[0] == "R") {
+      std::cerr << " Return" << std::endl;
+      return new Return;
+   }
+
+   // else if (command[0] == "H") {
+      // std::cerr << " Show History" << std::endl;
+      // return new History;
+   // }
+
+   // otherwise, this is an invalid command
+   else {
+      std::cerr << "Invalid command: " << command.at(0) << std::endl;
+   }
+}
 
 Trans::Trans() {
 

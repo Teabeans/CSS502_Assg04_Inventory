@@ -11,6 +11,7 @@ public:
    // void setInvID(std::string);
    // void setCustID(int);
    // void setQty(int);
+   Trans* factory(std::string);
    Trans();
    Trans(std::string);
    ~Trans();
