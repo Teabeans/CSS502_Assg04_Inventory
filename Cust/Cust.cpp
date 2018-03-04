@@ -313,11 +313,15 @@ Cust::Cust() {
    this->custID    = 99999; // Number out-of-bounds
 }
 
-//-----------------|
+// (+) --------------------------------|
 // #Cust(string, string, int)
-//-----------------|
-// Desc:   Customer constructor by name and ID
-// Invars: None
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
 Cust::Cust(std::string nameF, std::string nameL, int IDnum) {
    this->firstName = nameF;
    this->lastName  = nameL;
@@ -332,11 +336,15 @@ Cust::Cust(std::string nameF, std::string nameL, int IDnum) {
    this->history += tempString + "): \n";
 }
 
-//-----------------|
+// (+) --------------------------------|
 // #~Cust()
-//-----------------|
-// Desc:   Customer deconstructor
-// Invars: None
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
 Cust::~Cust() {
    this->firstName = "";
    this->lastName  = "";
