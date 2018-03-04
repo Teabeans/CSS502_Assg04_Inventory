@@ -84,7 +84,6 @@ public:
 // Invars: May be called with faulty transaction information
 //         GIGO - No error checking is performed by appendHistory()
    void appendHistory(std::string someTransaction);
-   void appendHistory(Trans someTransaction);
 
 //-----------------|
 // #toString()
@@ -135,16 +134,16 @@ public:
 //-----------------|
 // Desc:   Sets the customer name
 // Invars: None
-   void setFirstName(std::string firstName);
-   void setLastName(std::string lastName);
-   void setName(std::string first, std::string last);
+   void setFirstName(std::string nameF);
+   void setLastName(std::string nameL);
+   void setName(std::string nameF, std::string nameL);
 
 //-----------------|
 // #setID()
 //-----------------|
 // Desc:   Sets the customer ID number
 // Invars: None
-   void setID(int custID);
+   void setID(int IDnum);
 
 
 
@@ -166,7 +165,7 @@ public:
 //-----------------|
 // Desc:   Customer constructor by name and ID
 // Invars: None
-   Cust(std::string firstName, std::string lastName, int custID);
+   Cust(std::string nameF, std::string nameL, int IDnum);
 
 //-----------------|
 // #~Cust()
@@ -178,3 +177,5 @@ public:
 
 
 }; // Closing class Cust{}
+
+// End of file - Cust.h
