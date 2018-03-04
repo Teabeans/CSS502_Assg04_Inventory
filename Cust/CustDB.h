@@ -18,7 +18,12 @@
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
-// None for this class
+// (+) ------------|
+// #MAXCUSTOMERS
+//-----------------|
+// Desc:   The maximum anticipated number customer spots needed
+// Invars: Set to 9973
+const static int MAXCUSTOMERS = 9973;
 
 class CustDB {
 
@@ -33,8 +38,8 @@ private:
 // #custTable
 //-----------------|
 // Desc:   The customer database
-// Invars: 10000 valid customer IDs, so 2x and nearest prime size
-   Cust* custTable[20011];
+// Invars: Table size must not exceed 9999, nearest prime is 9973
+   Cust* custTable[MAXCUSTOMERS];
 
 
 
@@ -43,6 +48,13 @@ private:
 //       PRIVATE METHODS (-)
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
+
+//-----------------|
+// #doesConflict(Cust*, int)
+//-----------------|
+// Desc:   Determines whether this customer and index creates a collision
+// Invars: Returns false if the customer pointer matches the one at the index
+   bool doesConflict(Cust* custPtr, int query);
 
 //-----------------|
 // #isValid(string)
@@ -56,14 +68,14 @@ private:
 //-----------------|
 // Desc:   Determines the appropriate index based on a customer pointer
 // Invars: Returns either the hash location of that customer or an empty index
-   int hash(Cust* CustPtr);
+   int hash(Cust* custPtr);
 
 //-----------------|
 // #probe(Cust*)
 //-----------------|
 // Desc:   In the event of a collision, probes to the next valid index
 // Invars: Returns either the hash location of that customer or an empty index
-   int probe(Cust* CustPtr);
+   int probe(Cust* CustPtr, int query);
 
 //-----------------|
 // #obliviate()
