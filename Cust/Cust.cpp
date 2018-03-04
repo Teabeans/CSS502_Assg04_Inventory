@@ -345,13 +345,3 @@ Cust::~Cust() {
 }
 
 // End of file - Cust.cpp
-
-// (+) --------------------------------|
-// #NULL()
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
