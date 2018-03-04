@@ -1,7 +1,7 @@
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
 // UW CSS 502A - Assignment 4 - Inventory Management
-// Cust.cpp
+// CustDB.cpp
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
@@ -21,7 +21,7 @@
 // File Description
 //-----------------------------------------------------------------------------|
 //
-// This is the implementation file for the Cust.h header.
+// This is the implementation file for the CustDB.h header.
 //
 
 //-----------------------------------------------------------------------------|
@@ -77,8 +77,8 @@
 // #MAXCUSTOMERS
 //-----------------|
 // Desc:   The maximum anticipated number customer spots needed
-// Invars: Set to 9973
-/// const static int MAXCUSTOMERS = 9973;
+// Invars: Set to 20011
+/// const static int MAXCUSTOMERS = 20011;
 
 
 
@@ -98,6 +98,13 @@
 // Desc:   The customer database
 // Invars: Table size must not exceed 9999, nearest prime is 9973
 ///   Cust* custTable[MAXCUSTOMERS];
+
+//-----------------|
+// #custTableByID
+//-----------------|
+// Desc:   The customer database, sorted by customer ID number
+// Invars: Table size to accommodate 
+///   Cust* custTableByID[10000];
 
 
 
@@ -270,7 +277,11 @@ void CustDB::display() {
 // MetCall: NULL
 void CustDB::insertCustomer(Cust* custPtr) {
    int indexToInsertAt = this->hash(custPtr);
+   // Add customer to table by name (hash)
    this->custTable[indexToInsertAt] = custPtr;
+   // Add customer to table by ID
+   this->custTableByID[custPtr->getID] = custPtr;
+
 } // Closing insertCustomer()
 
 // (+) --------------------------------|
@@ -296,7 +307,12 @@ Cust* CustDB::getCustomerAt(int query) {
 // RetVal:  NULL
 // MetCall: NULL
    void CustDB::appendHistory(Trans someTransaction) {
-   
+      // Gather requisite data for an appending action
+      int         IDnum    = someTransaction.getCustID;
+      Cust*       tgt      = this->custTableByID[IDnum];
+      std::string appendix = someTransaction.toString();
+      // Send to the target customer for history append
+      tgt->appendHistory(appendix);
    }
 
 
