@@ -29,17 +29,21 @@ private:
 
 //-----------------|
 // #type
+// #typeAsString
 //-----------------|
 // Desc:   The transaction type (borrow or return)
 // Invars: Initializes to junk values
    char type;
+   std::string typeAsString;
 
 //-----------------|
 // #genre
+// #genreAsString
 //-----------------|
 // Desc:   Genre of the thing transacted
 // Invars: Initializes to junk values
-   std::string genre;
+   char genre;
+   std::string genreAsString;
 
 //-----------------|
 // #title
@@ -131,7 +135,9 @@ public:
 // Desc:   Returns transaction data fields
 // Invars: None
    char        getType();
-   std::string getGenre();
+   std::string getTypeAsString();
+   char        getGenre();
+   std::string getGenreAsString();
    std::string getTitle();
    std::string getIdentifier1();
    std::string getIdentifier2();
@@ -150,8 +156,8 @@ public:
 // Desc:   Returns transaction data fields
 // Invars: None
    void setType(char transType);
-   void setGenre(std::string genre);
-   void setTitle(std::string title);
+   void setGenre(std::string theGenre);
+   void setTitle(std::string theTitle);
    void setIdentifier1(std::string trait);
    void setIdentifier2(std::string trait);
    void setCustID(int IDnum);
@@ -195,3 +201,5 @@ public:
 // Invars: None
    ~Trans();
 };
+
+// End of file - Trans.h
