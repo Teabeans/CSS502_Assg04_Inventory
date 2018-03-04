@@ -192,7 +192,8 @@ std::string Trans::toString() {
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
 // (+) --------------------------------|
-// #NULL()
+// #getType()
+// #getTypeAsString()
 //-------------------------------------|
 // Desc:    NULL
 // Params:  NULL
@@ -203,22 +204,13 @@ std::string Trans::toString() {
 char Trans::getType() {
    return(this->type);
 }
-
-// (+) --------------------------------|
-// #NULL()
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
 std::string Trans::getTypeAsString() {
    return(this->typeAsString);
 }
 
 // (+) --------------------------------|
-// #NULL()
+// #getGenre()
+// #getGenreAsString()
 //-------------------------------------|
 // Desc:    NULL
 // Params:  NULL
@@ -229,22 +221,12 @@ std::string Trans::getTypeAsString() {
 char Trans::getGenre() {
    return(this->genre);
 }
-
-// (+) --------------------------------|
-// #NULL()
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
 std::string Trans::getGenreAsString() {
    return(this->genreAsString);
 }
 
 // (+) --------------------------------|
-// #NULL()
+// #getTitle()
 //-------------------------------------|
 // Desc:    NULL
 // Params:  NULL
@@ -257,7 +239,7 @@ std::string Trans::getTitle() {
 }
 
 // (+) --------------------------------|
-// #NULL()
+// #getIdentifier1()
 //-------------------------------------|
 // Desc:    NULL
 // Params:  NULL
@@ -270,7 +252,7 @@ std::string Trans::getIdentifier1() {
 }
 
 // (+) --------------------------------|
-// #NULL()
+// #getIdentifier2()
 //-------------------------------------|
 // Desc:    NULL
 // Params:  NULL
@@ -283,7 +265,7 @@ std::string Trans::getIdentifier2() {
 }
 
 // (+) --------------------------------|
-// #NULL()
+// #getCustID()
 //-------------------------------------|
 // Desc:    NULL
 // Params:  NULL
@@ -296,7 +278,7 @@ int Trans::getCustID() {
 }
 
 // (+) --------------------------------|
-// #NULL()
+// #getQty()
 //-------------------------------------|
 // Desc:    NULL
 // Params:  NULL
@@ -309,7 +291,8 @@ int Trans::getQty() {
 }
 
 // (+) --------------------------------|
-// #NULL()
+// #setType(char)
+// #setTypeAsString(string)
 //-------------------------------------|
 // Desc:    NULL
 // Params:  NULL
@@ -320,9 +303,13 @@ int Trans::getQty() {
 void Trans::setType(char transType) {
    this->type = transType;
 }
+void Trans::setTypeAsString(std::string transType) {
+   this->typeAsString = transType;
+}
 
 // (+) --------------------------------|
-// #NULL()
+// #setGenre(char)
+// #setGenreAsString(string)
 //-------------------------------------|
 // Desc:    NULL
 // Params:  NULL
@@ -330,13 +317,15 @@ void Trans::setType(char transType) {
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
-void Trans::setGenre(std::string theGenre) {
+void Trans::setGenre(char theGenre) {
    this->genre = theGenre;
 }
-
+void Trans::setGenreAsString(std::string theGenre) {
+   this->genreAsString = theGenre;
+}
 
 // (+) --------------------------------|
-// #NULL()
+// #setTitle(string)
 //-------------------------------------|
 // Desc:    NULL
 // Params:  NULL
@@ -350,7 +339,7 @@ void Trans::setTitle(std::string theTitle) {
 
 
 // (+) --------------------------------|
-// #NULL()
+// #setIdentifier1(string)
 //-------------------------------------|
 // Desc:    NULL
 // Params:  NULL
@@ -363,7 +352,7 @@ void Trans::setIdentifier1(std::string trait) {
 }
 
 // (+) --------------------------------|
-// #NULL()
+// #setIdentifier2(string)
 //-------------------------------------|
 // Desc:    NULL
 // Params:  NULL
@@ -376,7 +365,7 @@ void Trans::setIdentifier2(std::string trait) {
 }
 
 // (+) --------------------------------|
-// #NULL()
+// #setCustID(int)
 //-------------------------------------|
 // Desc:    NULL
 // Params:  NULL
@@ -389,7 +378,7 @@ void Trans::setCustID(int IDnum) {
 }
 
 // (+) --------------------------------|
-// #NULL()
+// #setQty(int)
 //-------------------------------------|
 // Desc:    NULL
 // Params:  NULL
@@ -409,6 +398,7 @@ void Trans::setQty(int quantity) {
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
+// TODO: Resolve @MG - Factory method logic is the same as Trans(string) constructor? Should the Trans(string) call this method, or would you rather have it packed right into the constructor?
 // (+) --------------------------------|
 // #factory(string)
 //-------------------------------------|
@@ -438,18 +428,21 @@ Trans* Trans::factory(std::string command) {
    // }
 
    // otherwise, this is an invalid command
+
+/* - TODO: Resolve @MG: Error checking should be performed by isLegal() function before this point is reached. If factory() is called, the command should be guaranteed to be a valid one.
    else {
       std::cerr << "Invalid command: " << command.at(0) << std::endl;
       return new Trans(command);
    }
+*/
 }
 
 // (+) --------------------------------|
-// #NULL()
+// #Trans()
 //-------------------------------------|
-// Desc:    NULL
+// Desc:    Defaults Transaction constructor
 // Params:  NULL
-// PreCons: NULL
+// PreCons: Should not be called under normal circumstances
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
@@ -458,9 +451,9 @@ Trans::Trans() {
 }
 
 // (+) --------------------------------|
-// #NULL()
+// #Trans(string)
 //-------------------------------------|
-// Desc:    NULL
+// Desc:    Constructor of Transaction object by string
 // Params:  NULL
 // PreCons: NULL
 // PosCons: NULL
@@ -471,9 +464,9 @@ Trans::Trans(std::string command) {
 }
 
 // (+) --------------------------------|
-// #NULL()
+// #~Trans()
 //-------------------------------------|
-// Desc:    NULL
+// Desc:    Trans deconstructor
 // Params:  NULL
 // PreCons: NULL
 // PosCons: NULL
