@@ -100,7 +100,7 @@ int main() {
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
    // Instantitate a new customer database
-   CustDB testCustDB();
+   CustDB testCustDB = CustDB();
 
    // Create two new customers
    // 1111 Mouse Mickey
@@ -131,10 +131,10 @@ int main() {
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
-//       END CUSTOMER DATABSE TESTS
+//       END CUSTOMER DATABASE TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-
+   
    // Acquire the relevant files
 
    std::ifstream commandFile("data4commands.txt");
