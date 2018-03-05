@@ -116,12 +116,18 @@ int main() {
    std::cout << std::endl;
 
    // Check the history of customer 1
+   std::cout << testCustomer1->getHistory();
    // Attempt to append history to customer 1
+   testCustomer1->appendHistory("This is a test append");
    // Check the history of customer 1 again
+   std::cout << testCustomer1->getHistory();
+
    // Attempt to insert customers to database
-   
+   testCustDB.insertCustomer(testCustomer1);
+   testCustDB.insertCustomer(testCustomer2);
 
    // Check insertion
+   std::cout << testCustDB.toString();
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
