@@ -62,6 +62,13 @@ private:
    std::string identifier2; //second identifier (eg. year or release date)
 
 //-----------------|
+// #release
+//-----------------|
+// Desc:   A string representation of the release date
+// Invars: Initializes to junk values
+   std::string release;
+
+//-----------------|
 // #customerID
 //-----------------|
 // Desc:   The transaction type
@@ -141,6 +148,7 @@ public:
    std::string getTitle();
    std::string getIdentifier1();
    std::string getIdentifier2();
+   std::string getRelease();
    int         getCustID();
    int         getQty();
 
@@ -162,6 +170,7 @@ public:
    void setTitle(std::string theTitle);
    void setIdentifier1(std::string trait);
    void setIdentifier2(std::string trait);
+   void setRelease(std::string);
    void setCustID(int IDnum);
    void setQty(int quantity);
 
