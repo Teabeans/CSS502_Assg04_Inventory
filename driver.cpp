@@ -29,6 +29,10 @@
 #include "Inv/Drama.h"
 #include "Inv/Classic.h"
 
+// For testing purposes
+#include "Cust/Cust.h"
+#include "Cust/CustDB.h"
+
 void readInv(std::ifstream& data, InvDB& invDB) {
 
    int filmID = 0;
@@ -89,6 +93,42 @@ void readInv(std::ifstream& data, InvDB& invDB) {
 int main() {
 
 // Begin program
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       START CUSTOMER DATABASE TESTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+   // Instantitate a new customer database
+   CustDB testCustDB();
+
+   // Create two new customers
+   // 1111 Mouse Mickey
+   Cust* testCustomer1 = new Cust("Mickey", "Mouse", 1111);
+   // 9000 Lizard Larry
+   Cust* testCustomer2 = new Cust("Larry", "Lizard", 9000);
+
+   // Check customer instantiation
+   std::cout << "Customer1 constructor results:" << std::endl;
+   std::cout << testCustomer1->toString() << std::endl;
+   std::cout << "Customer2 constructor results:" << std::endl;
+   std::cout << testCustomer2->toString() << std::endl;
+   std::cout << std::endl;
+
+   // Check the history of customer 1
+   // Attempt to append history to customer 1
+   // Check the history of customer 1 again
+   // Attempt to insert customers to database
+   
+
+   // Check insertion
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       END CUSTOMER DATABSE TESTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+
    // Acquire the relevant files
 
    std::ifstream commandFile("data4commands.txt");
