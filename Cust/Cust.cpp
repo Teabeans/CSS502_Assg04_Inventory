@@ -145,7 +145,7 @@ void Cust::appendHistory(std::string someTransaction){
 }
 
 // (+) --------------------------------|
-// #NULL()
+// #toString()
 //-------------------------------------|
 // Desc:    NULL
 // Params:  NULL
@@ -155,6 +155,18 @@ void Cust::appendHistory(std::string someTransaction){
 // MetCall: NULL
 std::string Cust::toString() {
    std::string retString = "";
+// retString += "ID        First Name           Last Name\n";
+//               1234      01234567890123456789 01234567890123456789
+   // Generate a temporary stream for appending
+   std::ostringstream tempStream;
+   // Append all values, properly formatted
+   // TODO: Test this from driver
+   tempStream << std::setw(4) << std::setfill('0') << this->custID << "      ";
+   tempStream << std::setw(20) << this->getFirstName << " ";
+   tempStream << std::setw(20) << this->getLastName;
+   // Assign the temporary stream to the return string
+   std::string retString(tempStream.str());
+   // Return the result
    return (retString);
 }
 
@@ -330,7 +342,7 @@ Cust::Cust(std::string nameF, std::string nameL, int IDnum) {
    this->history += this->firstName + " " + this->lastName + "(ID ";
    // Convert the ID integer to a 4-wide formatted string
    std::ostringstream tempStream;
-   tempStream << std::setw(4) << std::setfill('0') << custID;
+   tempStream << std::setw(4) << std::setfill('0') << this->custID;
    std::string tempString(tempStream.str());
    // Append that string to the history header
    this->history += tempString + "): \n";
