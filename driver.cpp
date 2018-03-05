@@ -99,35 +99,51 @@ int main() {
 //       START CUSTOMER DATABASE TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
+
+   std::cout << "--- START CUSTOMER DATABASE TESTS ---" << std::endl << std::endl;
+
    // Instantitate a new customer database
+   std::cout << "Creating a default CustDB..." << std::endl << std::endl;
    CustDB testCustDB = CustDB();
 
+   std::cout << "Creating a transaction from string 'B 1111 D F Ferries and You: A Primer, 2018'..." << std::endl << std::endl;
+   Trans testTransaction = Trans("B 1111 D F Ferries and You: A Primer, 2018");
+
    // Create two new customers
-   // 1111 Mouse Mickey
-   Cust* testCustomer1 = new Cust("Mickey", "Mouse", 1111);
-   // 9000 Lizard Larry
-   Cust* testCustomer2 = new Cust("Larry", "Lizard", 9000);
+   std::cout << "Creating two new customers..." << std::endl << std::endl;
+   // 1111 Jane Doe
+   Cust* testCustomer1 = new Cust("Jane", "Doe", 1111);
+   // 9000 Boaty McBoatface
+   Cust* testCustomer2 = new Cust("Boaty", "McBoatface", 9000);
 
    // Check customer instantiation
-   std::cout << "Customer1 constructor results:" << std::endl;
+   std::cout << "Customer 1 & 2 constructor results:" << std::endl;
    std::cout << testCustomer1->toString() << std::endl;
-   std::cout << "Customer2 constructor results:" << std::endl;
    std::cout << testCustomer2->toString() << std::endl;
    std::cout << std::endl;
 
    // Check the history of customer 1
-   std::cout << testCustomer1->getHistory();
+   std::cout << "Checking history of customer 1:" << std::endl;
+   std::cout << testCustomer1->getHistory() << std::endl << std::endl;
+
    // Attempt to append history to customer 1
-   testCustomer1->appendHistory("This is a test append");
+   std::cout << "Testing appendHistory(string)..." << std::endl << std::endl;
+   testCustomer1->appendHistory(testTransaction.toString());
+
    // Check the history of customer 1 again
-   std::cout << testCustomer1->getHistory();
+   std::cout << "Checking the history of customer 1 after append:" << std::endl;
+   std::cout << testCustomer1->getHistory() << std::endl;
 
    // Attempt to insert customers to database
+   std::cout << "Inserting customers 1 and 2 to database..." << std::endl << std::endl;
    testCustDB.insertCustomer(testCustomer1);
    testCustDB.insertCustomer(testCustomer2);
 
    // Check insertion
-   std::cout << testCustDB.toString();
+   std::cout << "Checking insertion results:" << std::endl;
+   std::cout << testCustDB.toString() << std::endl << std::endl;
+
+   std::cout << "--- END CUSTOMER DATABASE TESTS ---" << std::endl << std::endl;
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
