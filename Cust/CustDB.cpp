@@ -205,6 +205,9 @@ void CustDB::obliviate() {
          delete custTable[i];
       }
    }
+   for (int i = 0 ; i <= 9999 ; i++) {
+      this->custTableByID[i] = nullptr;
+   }
 }
 
 
@@ -343,10 +346,10 @@ Cust* CustDB::getCustomerAt(int query) {
 // MetCall: NULL
    CustDB::CustDB() {
       for (int i = 0 ; i < MAXCUSTOMERS ; i++) {
-         custTable[i] = nullptr;
+         this->custTable[i] = nullptr;
       }
       for (int i = 0 ; i <= 9999 ; i++) {
-         CustTableByID[i] = nullptr;
+         this->CustTableByID[i] = nullptr;
       }
    }
 
