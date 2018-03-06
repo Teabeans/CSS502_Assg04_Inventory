@@ -12,14 +12,16 @@ public:
    void display();
    void adjustStock(Trans*);
    bool isLegal(std::string);
+   bool contains(Film*);
+   Film* retrieve(Film*);
    bool addFilm(Film*);
 
    InvDB();
-   InvDB(int);
+   InvDB(std::ifstream&);
    ~InvDB();
 
 private:
-   vector<Film> invTable;
+   std::vector<Film> invTable;
    bool isValid(std::string);
    int hashTitle(std::string);
 };

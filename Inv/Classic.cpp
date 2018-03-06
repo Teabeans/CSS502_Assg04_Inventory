@@ -79,8 +79,8 @@ Classic::Classic() {
 }
 
 Classic::Classic(std::string data) {
-   std::cerr << "creating Classic ";
-   std::cerr << data << std::endl;
+   // std::cerr << "creating Classic ";
+   // std::cerr << data << std::endl;
 
    // split the regular film data items by commans and insert those to 
    // the appropriate data members
@@ -112,6 +112,6 @@ Classic::Classic(std::string data) {
 }
 
 Classic::~Classic() {
-   std::cerr << "destruct Classic" << std::endl;
+   // std::cerr << "destruct Classic" << std::endl;
 
 }

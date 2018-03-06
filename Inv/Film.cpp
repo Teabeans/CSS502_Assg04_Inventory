@@ -62,8 +62,8 @@ Film::Film() {
 }
 
 Film::Film(std::string data) {
-   std::cerr << "creating film";
-   std::cerr << data << std::endl;
+   // std::cerr << "creating film";
+   // std::cerr << data << std::endl;
 
    // split the data string by commas and parse into object data
    std::string delim = ", ";
