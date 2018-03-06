@@ -112,23 +112,36 @@ int main() {
    InvDB invDB(inventoryFile);
 
    std::cout << "Creating an empty InvDB object..." << std::endl << std::endl;
-   InvDB testInvDB = InvDB();
+   InvDB testInvDB;
 
    // Create three new films
    std::cout << "Creating three new films..." << std::endl << std::endl;
-   Film filmAA("C, 10, Victor Fleming, The Wizard of Oz, Judy Garland 7 1939");
-   Film filmBB("F, 10, Nora Ephron, Sleepless in Seattle, 1993");
-   Film filmCC("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
+   Classic filmAA("C, 10, Victor Fleming, The Wizard of Oz, Judy Garland 7 1939");
+   Comedy filmBB("F, 10, Nora Ephron, Sleepless in Seattle, 1993");
+   Drama filmCC("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
 
    // Attempt to add these films to the inventory database
    std::cout << "Adding films to the testInvDB..." << std::endl << std::endl;
-   testInvDB.addFilm(*filmAA);
-   testInvDB.addFilm(*filmBB);
-   testInvDB.addFilm(*filmCC);
+   testInvDB.addFilm(&filmAA);
+   testInvDB.addFilm(&filmBB);
 
    // Query quantities of each film
+   std::cout << "invDB contains Oz: " << testInvDB.contains(&filmAA) << std::endl;
+   std::cout << "invDB contains Seattle: " << testInvDB.contains(&filmBB) << std::endl;
+   std::cout << "invDB contains Lambs: " << testInvDB.contains(&filmCC) << std::endl;
+
+   testInvDB.addFilm(&filmCC);
+   std::cout << "Oz Qty: " << testInvDB.retrieve(&filmAA)->getStock() << std::endl;
+   std::cout << "Seattle Qty: " << testInvDB.retrieve(&filmBB)->getStock() << std::endl;
+   std::cout << "Lambs Qty: " << testInvDB.retrieve(&filmCC)->getStock() << std::endl;
+
+   // Test Display method
+   std::cout << std::endl;
    std::cout << "State of testInvDB:" << std::endl;
    std::cout << testInvDB.toString() << std::endl << std::endl;
+
+   std::cout << "State of Real invDB:" << std::endl;
+   std::cout << invDB.toString() << std::endl << std::endl;
 
    // Create borrow transactions
    std::cout << "Creating borrow transactions..." << std::endl << std::endl;
@@ -143,6 +156,14 @@ int main() {
    Trans RTestF = Trans("R 1234 F Sleepless in Seattle, 1993");
 
    // Send a transaction
+   testInvDB.adjustStock(BTestF);
+   // testInvDB.adjustStock(RTestD);
+   // testInvDB.adjustStock(BTestF);
+
+   // Test Display method
+   std::cout << std::endl;
+   std::cout << "Post-Transaction State of testInvDB:" << std::endl;
+   std::cout << testInvDB.toString() << std::endl << std::endl;
 
    // Query film states again
 
@@ -216,7 +237,7 @@ int main() {
       if (invDB.isLegal(command) /* && custDB.isLegal(command)*/ ) {
 
          // Send the Transaction to the Databases for execution
-         invDB.adjustStock(currTrans);
+         invDB.adjustStock(*currTrans);
          // custDB.appendHistory(currTrans);
       }
 

@@ -1,8 +1,16 @@
 #include "InvDB.h"
+
+// film types
 #include "Film.h"
 #include "Classic.h"
 #include "Drama.h"
 #include "Comedy.h"
+
+// transactions
+#include "../Trans/Trans.h"
+#include "../Trans/Borrow.h"
+#include "../Trans/Return.h"
+
 // Necessary for file stream object handling
 #include <fstream>
 #include <string>
@@ -11,17 +19,78 @@
 
 std::string InvDB::toString() {
    std::string retString = "";
-   retString = "This is the parent specific toString test";
+
+   retString += "Comedy Films: \n";
+
+   for (int i = 0; i < comedies.size(); i++) {
+      retString += std::to_string(comedies.at(i).getStock()) + ", ";
+      retString += comedies.at(i).getTitle() + ", ";
+      retString += comedies.at(i).getDirector() + ", ";
+      retString += std::to_string(comedies.at(i).getReleaseDate()) + "\n";
+   }
+
+   // display all comedies
+         // sorted by title, then year
+
+
+   retString += "Drama Films: \n";
+
+   for (int i = 0; i < dramas.size(); i++) {
+      retString += std::to_string(dramas.at(i).getStock()) + ", ";
+      retString += dramas.at(i).getTitle() + ", ";
+      retString += dramas.at(i).getDirector() + ", ";
+      retString += std::to_string(dramas.at(i).getReleaseDate()) + "\n";
+   }
+   // then all dramas
+         // sorted by director, then title
+
+
+   retString += "Classic Films: \n";
+
+   for (int i = 0; i < classics.size(); i++) {
+      retString += std::to_string(classics.at(i).getStock()) + ", ";
+      retString += classics.at(i).getTitle() + ", ";
+      retString += classics.at(i).getDirector() + ", ";
+      retString += std::to_string(classics.at(i).getReleaseDate()) + "\n";
+   }
+   // then all classics
+         // sorted by release date, then actor
+
    return (retString);
 }
 
 void InvDB::display() {
 
+   std::cout << toString();
 }
 
-void InvDB::adjustStock(Trans* trans) {
+void InvDB::adjustStock(Trans& trans) {
+
+   if (trans.getGenre() == 'F') {
+      Comedy film;
+      film.setTitle(trans.getTitle());
+      film.setReleaseDate(std::stoi(trans.getRelease()));
+
+      if (trans.getType() == 'B') {
+         retrieve(&film)->setStock(retrieve(&film)->getStock() + 1);
+      }
+      else {
+         retrieve(&film)->setStock(retrieve(&film)->getStock() - 1);
+      }
+   }
+
+   else if (trans.getGenre() == 'D') {
+      
+   }
+
+   else if (trans.getGenre() == 'C') {
+      Classic filmAA("C, 0, , , ");
+      
+   }
 
 }
+
+
 
 
 bool InvDB::contains(Film* film) {
@@ -30,37 +99,103 @@ bool InvDB::contains(Film* film) {
    bool alreadyContainsFilm = false;
    int index = 0; 
 
-   while (index < invTable.size()) {
-      if (invTable.at(index) == *film) {
-         alreadyContainsFilm = true;
-         break;
+   // if this film is a comedy
+   if (film->getGenre() == 'F') {
+      while (index < comedies.size()) {
+         if (comedies.at(index) == *film) {
+            alreadyContainsFilm = true;
+            break;
+         }
+         else {
+            index++;
+         }
       }
-      else {
-         index++;
-      }
-   }
 
-   return alreadyContainsFilm;
+      return alreadyContainsFilm;
+   }
+   // if this film is a drama
+   else if (film->getGenre() == 'D') {
+      while (index < dramas.size()) {
+         if (dramas.at(index) == *film) {
+            alreadyContainsFilm = true;
+            break;
+         }
+         else {
+            index++;
+         }
+      }
+
+      return alreadyContainsFilm;
+   }
+   // if this film is a classic
+   else if (film->getGenre() == 'C') {
+      while (index < classics.size()) {
+         if (classics.at(index) == *film) {
+            alreadyContainsFilm = true;
+            break;
+         }
+         else {
+            index++;
+         }
+      }
+
+      return alreadyContainsFilm;
+   }
+   else {
+      return false;
+   }
 }
+
 
 Film* InvDB::retrieve(Film* film) {
 
    // search the table for the film being added to see if it's already present
-   bool alreadyContainsFilm = false;
    int index = 0; 
 
-   while (index < invTable.size()) {
-      if (invTable.at(index) == *film) {
-         alreadyContainsFilm = true;
-         break;
+   // if this film is a comedy
+   if (film->getGenre() == 'F') {
+      while (index < comedies.size()) {
+         if (comedies.at(index) == *film) {
+            break;
+         }
+         else {
+            index++;
+         }
       }
-      else {
-         index++;
-      }
-   }
-   // index is pointing to the correct film entry at this point
 
-   return &invTable.at(index);
+      return &comedies.at(index);
+   }
+
+   else if (film->getGenre() == 'D') {
+      while (index < dramas.size()) {
+         if (dramas.at(index) == *film) {
+            break;
+         }
+         else {
+            index++;
+         }
+      }
+
+      return &dramas.at(index);
+   }
+
+   else if (film->getGenre() == 'C') {
+      while (index < classics.size()) {
+         if (classics.at(index) == *film) {
+            break;
+         }
+         else {
+            index++;
+         }
+      }
+
+      return &classics.at(index);
+   }
+   else {
+      return NULL;
+   }
+
+
 }
 
 
@@ -72,26 +207,33 @@ Film* InvDB::retrieve(Film* film) {
 **/
 bool InvDB::addFilm(Film* film) {
 
-   // if this is another instance of an existing Classic film, add the actor to
-   // the list and increase the stock
-   if (contains(film) == true && film->getGenre() == 'C') {
+   if (contains(film) == false) {
+      if (film->getGenre() == 'F') {
+         comedies.push_back(*film);
+      }
+
+      else if (film->getGenre() == 'D') {
+         dramas.push_back(*film);
+      }
+
+      else if (film->getGenre() == 'C') {
+         classics.push_back(*film);
+      }
+      return true;
+   }
+
+   // otherwise, if this is an existing classic, consolidate the actor name and
+   // inventory count
+   else if (contains(film) == true && film->getGenre() == 'C') {
 
       int stock = retrieve(film)->getStock() + film->getStock();
-
       retrieve(film)->setStock(stock);
+
       return true;
    }
-   // otherwise, if this isn't contained just add this film 
-   else if (contains(film) == false) {
-      invTable.push_back(*film);
-      return true;
-   }
-   // otherwise it must be an existing non-classic film, so ignore it
    else {
       return false;
    }
-
-
 }
 
 /**

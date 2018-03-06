@@ -10,7 +10,7 @@ class InvDB {
 public:
    std::string toString();
    void display();
-   void adjustStock(Trans*);
+   void adjustStock(Trans&);
    bool isLegal(std::string);
    bool contains(Film*);
    Film* retrieve(Film*);
@@ -21,7 +21,9 @@ public:
    ~InvDB();
 
 private:
-   std::vector<Film> invTable;
+   std::vector<Film> comedies;
+   std::vector<Film> dramas;
+   std::vector<Film> classics;
    bool isValid(std::string);
    int hashTitle(std::string);
 };

@@ -109,6 +109,8 @@ Classic::Classic(std::string data) {
    releaseMonth = std::stoi(items[2]); // int
    releaseDate = std::stoi(items[3]); // int
 
+
+   // std::cerr << "done creating Classic ";
 }
 
 Classic::~Classic() {
