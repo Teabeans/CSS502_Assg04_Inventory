@@ -345,6 +345,9 @@ Cust* CustDB::getCustomerAt(int query) {
       for (int i = 0 ; i < MAXCUSTOMERS ; i++) {
          custTable[i] = nullptr;
       }
+      for (int i = 0 ; i <= 9999 ; i++) {
+         CustTableByID[i] = nullptr;
+      }
    }
 
 // (+) --------------------------------|
