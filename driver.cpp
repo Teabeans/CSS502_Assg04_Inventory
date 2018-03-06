@@ -45,50 +45,50 @@ int main() {
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
-   // std::cout << "--- START CUSTOMER DATABASE TESTS ---" << std::endl << std::endl;
+   std::cout << "--- START CUSTOMER DATABASE TESTS ---" << std::endl << std::endl;
 
-   // // Instantitate a new customer database
-   // std::cout << "Creating a default CustDB..." << std::endl << std::endl;
-   // CustDB testCustDB = CustDB();
+   // Instantitate a new customer database
+   std::cout << "Creating a default CustDB..." << std::endl << std::endl;
+   CustDB testCustDB = CustDB();
 
-   // std::cout << "Creating a transaction from string 'B 1111 D F Ferries and You: A Primer, 2018'..." << std::endl << std::endl;
-   // Trans testTransaction = Trans("B 1111 D F Ferries and You: A Primer, 2018");
+   std::cout << "Creating a transaction from string 'B 1111 D F Ferries and You: A Primer, 2018'..." << std::endl << std::endl;
+   Trans testTransaction = Trans("B 1111 D F Ferries and You: A Primer, 2018");
 
-   // // Create two new customers
-   // std::cout << "Creating two new customers..." << std::endl << std::endl;
-   // // 1111 Jane Doe
-   // Cust* testCustomer1 = new Cust("Jane", "Doe", 1111);
-   // // 9000 Boaty McBoatface
-   // Cust* testCustomer2 = new Cust("Boaty", "McBoatface", 9000);
+   // Create two new customers
+   std::cout << "Creating two new customers..." << std::endl << std::endl;
+   // 1111 Jane Doe
+   Cust* testCustomer1 = new Cust("Jane", "Doe", 1111);
+   // 9000 Boaty McBoatface
+   Cust* testCustomer2 = new Cust("Boaty", "McBoatface", 9000);
 
-   // // Check customer instantiation
-   // std::cout << "Customer 1 & 2 constructor results:" << std::endl;
-   // std::cout << testCustomer1->toString() << std::endl;
-   // std::cout << testCustomer2->toString() << std::endl;
-   // std::cout << std::endl;
+   // Check customer instantiation
+   std::cout << "Customer 1 & 2 constructor results:" << std::endl;
+   std::cout << testCustomer1->toString() << std::endl;
+   std::cout << testCustomer2->toString() << std::endl;
+   std::cout << std::endl;
 
-   // // Check the history of customer 1
-   // std::cout << "Checking history of customer 1:" << std::endl;
-   // std::cout << testCustomer1->getHistory() << std::endl << std::endl;
+   // Check the history of customer 1
+   std::cout << "Checking history of customer 1:" << std::endl;
+   std::cout << testCustomer1->getHistory() << std::endl << std::endl;
 
-   // // Attempt to append history to customer 1
-   // std::cout << "Testing appendHistory(string)..." << std::endl << std::endl;
-   // testCustomer1->appendHistory(testTransaction.toString());
+   // Attempt to append history to customer 1
+   std::cout << "Testing appendHistory(string)..." << std::endl << std::endl;
+   testCustomer1->appendHistory(testTransaction.toString());
 
-   // // Check the history of customer 1 again
-   // std::cout << "Checking the history of customer 1 after append:" << std::endl;
-   // std::cout << testCustomer1->getHistory() << std::endl;
+   // Check the history of customer 1 again
+   std::cout << "Checking the history of customer 1 after append:" << std::endl;
+   std::cout << testCustomer1->getHistory() << std::endl;
 
-   // // Attempt to insert customers to database
-   // std::cout << "Inserting customers 1 and 2 to database..." << std::endl << std::endl;
-   // testCustDB.insertCustomer(testCustomer1);
-   // testCustDB.insertCustomer(testCustomer2);
+   // Attempt to insert customers to database
+   std::cout << "Inserting customers 1 and 2 to database..." << std::endl << std::endl;
+   testCustDB.insertCustomer(testCustomer1);
+   testCustDB.insertCustomer(testCustomer2);
 
-   // // Check insertion
-   // std::cout << "Checking insertion results:" << std::endl;
-   // std::cout << testCustDB.toString() << std::endl << std::endl;
+   // Check insertion
+   std::cout << "Checking insertion results:" << std::endl;
+   std::cout << testCustDB.toString() << std::endl << std::endl;
 
-   // std::cout << "--- END CUSTOMER DATABASE TESTS ---" << std::endl << std::endl;
+   std::cout << "--- END CUSTOMER DATABASE TESTS ---" << std::endl << std::endl;
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
@@ -100,43 +100,47 @@ int main() {
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
-//       INV DATABASE TESTS
+//       START INV DATABASE TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
    std::cout << "--- START INVENTORY DATABASE TESTS ---" << std::endl << std::endl;
 
    // Create a new inventory database object
-   std::cerr << "Create and load database" << std::endl;
+   std::cout << "Create an InvDB object from bulk input..." << std::endl << std::endl;
    std::ifstream inventoryFile("data4movies.txt");
    InvDB invDB(inventoryFile);
 
+   std::cout << "Creating an empty InvDB object..." << std::endl << std::endl;
+   InvDB testInvDB = InvDB();
+
    // Create three new films
+   std::cout << "Creating three new films..." << std::endl << std::endl;
    Film filmAA("C, 10, Victor Fleming, The Wizard of Oz, Judy Garland 7 1939");
    Film filmBB("F, 10, Nora Ephron, Sleepless in Seattle, 1993");
    Film filmCC("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
 
    // Attempt to add these films to the inventory database
-   std::cerr << "Add 3 Films" << std::endl;
-   invDB.addFilm(&filmAA);
-   invDB.addFilm(&filmBB);
-   invDB.addFilm(&filmCC);
+   std::cout << "Adding films to the testInvDB..." << std::endl << std::endl;
+   testInvDB.addFilm(*filmAA);
+   testInvDB.addFilm(*filmBB);
+   testInvDB.addFilm(*filmCC);
 
    // Query quantities of each film
-   std::cerr << "Query Stock values for 3 films" << std::endl;
-   std::cerr << "Stock for FilmAA" << invDB.retrieve(&filmAA)->getStock() << std::endl;
-   std::cerr << "Stock for FilmBB" << invDB.retrieve(&filmBB)->getStock() << std::endl;
-   std::cerr << "Stock for FilmCC" << invDB.retrieve(&filmCC)->getStock() << std::endl;
+   std::cout << "State of testInvDB:" << std::endl;
+   std::cout << testInvDB.toString() << std::endl << std::endl;
 
    // Create borrow transactions
-   // Trans BTestC = Trans("B <ID> C <TITLE>, <RELEASE>");
-   // Trans BTestD = Trans("B <ID> D <TITLE>, <RELEASE>");
-   // Trans BTestF = Trans("B <ID> F <TITLE>, <RELEASE>");
+   std::cout << "Creating borrow transactions..." << std::endl << std::endl;
+   Trans BTestC = Trans("B 1234 C The Wizard of Oz, 7 1939");
+   Trans BTestD = Trans("B 1234 D Silence of the Lambs, 1991");
+   Trans BTestF = Trans("B 1234 F Sleepless in Seattle, 1993");
 
-   // // Create return transactions
-   // Trans RTestC = Trans("R <ID> C <TITLE>, <RELEASE>");
-   // Trans RTestD = Trans("R <ID> D <TITLE>, <RELEASE>");
-   // Trans RTestF = Trans("R <ID> F <TITLE>, <RELEASE>");
+   // Create return transactions
+   std::cout << "Creating return transactions..." << std::endl << std::endl;
+   Trans RTestC = Trans("R 1234 C The Wizard of Oz, 7 1939");
+   Trans RTestD = Trans("R 1234 D Silence of the Lambs, 1991");
+   Trans RTestF = Trans("R 1234 F Sleepless in Seattle, 1993");
 
    // Send a transaction
 
@@ -144,10 +148,45 @@ int main() {
 
    std::cout << "--- END INVENTORY DATABASE TESTS ---" << std::endl << std::endl;
 
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       END INVENTORY DATABASE TESTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
 
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       START BULK CUSTOMERDB INPUT TESTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
 
+   std::cout << "--- START BULK CUSTOMERDB INPUT TESTS ---" << std::endl << std::endl;
+   
+   // Test the customerDB bulk inputs
+   std::cout << "Testing customerDB bulk inputs..." << std::endl << std::endl;
 
+   // Test the customerDB bulk inputs
+   std::cout << "Creating an empty CustDB object..." << std::endl << std::endl;
 
+   // Capture command file to filestream
+   std::cout << "Capture bulk input to fileStream..." << std::endl << std::endl;
+   
+   // Have the Inventory Controller (main()) parse the file and perform insertion actions
+   std::cout << "Sending bulk commands to CustDB object..." << std::endl << std::endl;
+   
+   // Test isLegalCust() logic
+   std::cout << "The first command isLegal(): " << "<isLegal() result goes here>" << " (0 expected, plus error report)" << std::endl << std::endl;
+
+   // Check if the commands were SUPER EFFECTIVE!
+   std::cout << "Check state of CustDB after bulk input:" << std::endl << std::endl;
+      
+   std::cout << "--- END BULK INPUT TESTS ---" << std::endl << std::endl;
+   
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       END BULK CUSTOMERDB INPUT TESTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
 
    // Acquire the relevant files
 
@@ -197,51 +236,51 @@ int main() {
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
-   // std::cerr << "--- BEGIN FILM CLASS TESTS ---" << std::endl;
+   std::cerr << "--- BEGIN FILM CLASS TESTS ---" << std::endl;
 
-   // // default constructor
-   // Film filmA;
+   // default constructor
+   Film filmA;
 
-   // filmA.setTitle("Testing Film");
-   // filmA.setStock(20);
-   // filmA.setReleaseDate(1995);
-   // filmA.setGenre('X');
-   // filmA.setDirector("Antonio Testing");
-   // filmA.appendActor("Bob Benson");
+   filmA.setTitle("Testing Film");
+   filmA.setStock(20);
+   filmA.setReleaseDate(1995);
+   filmA.setGenre('X');
+   filmA.setDirector("Antonio Testing");
+   filmA.appendActor("Bob Benson");
 
-   // std::cerr << filmA.getTitle() << std::endl;
-   // std::cerr << filmA.getStock() << std::endl;
-   // std::cerr << filmA.getReleaseDate() << std::endl;
-   // std::cerr << filmA.getGenre() << std::endl;
-   // std::cerr << filmA.getDirector() << std::endl;
+   std::cerr << filmA.getTitle() << std::endl;
+   std::cerr << filmA.getStock() << std::endl;
+   std::cerr << filmA.getReleaseDate() << std::endl;
+   std::cerr << filmA.getGenre() << std::endl;
+   std::cerr << filmA.getDirector() << std::endl;
 
-   // // string constructor
-   // Film filmB("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
+   // string constructor
+   Film filmB("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
 
-   // std::cerr << filmB.getTitle() << std::endl;
-   // std::cerr << filmB.getStock() << std::endl;
-   // std::cerr << filmB.getReleaseDate() << std::endl;
-   // std::cerr << filmB.getGenre() << std::endl;
-   // std::cerr << filmB.getDirector() << std::endl;
+   std::cerr << filmB.getTitle() << std::endl;
+   std::cerr << filmB.getStock() << std::endl;
+   std::cerr << filmB.getReleaseDate() << std::endl;
+   std::cerr << filmB.getGenre() << std::endl;
+   std::cerr << filmB.getDirector() << std::endl;
 
-   // // operators
-   // std::cerr << "FilmA == FilmB: " << (filmA == filmB) << std::endl;
-   // std::cerr << "FilmA >= FilmB: " << (filmA >= filmB) << std::endl;
-   // std::cerr << "FilmA <= FilmB: " << (filmA <= filmB) << std::endl;
+   // operators
+   std::cerr << "FilmA == FilmB: " << (filmA == filmB) << std::endl;
+   std::cerr << "FilmA >= FilmB: " << (filmA >= filmB) << std::endl;
+   std::cerr << "FilmA <= FilmB: " << (filmA <= filmB) << std::endl;
 
 
-   // Film filmC("D, 100, Jonathan Demme, Silence of the Lambs, 1991");
-   // std::cerr << "FilmA == FilmB: " << (filmC == filmB) << std::endl;
-   // std::cerr << "FilmA >= FilmB: " << (filmC >= filmB) << std::endl;
-   // std::cerr << "FilmA <= FilmB: " << (filmC <= filmB) << std::endl;
+   Film filmC("D, 100, Jonathan Demme, Silence of the Lambs, 1991");
+   std::cerr << "FilmA == FilmB: " << (filmC == filmB) << std::endl;
+   std::cerr << "FilmA >= FilmB: " << (filmC >= filmB) << std::endl;
+   std::cerr << "FilmA <= FilmB: " << (filmC <= filmB) << std::endl;
 
-   // std::cerr << "filmA contains actor: Bob Benson: ";
-   // std::cerr << filmA.hasActor("Bob Benson") << std::endl;
+   std::cerr << "filmA contains actor: Bob Benson: ";
+   std::cerr << filmA.hasActor("Bob Benson") << std::endl;
 
-   // std::cerr << "filmA contains actor: Bob Johnson: ";
-   // std::cerr << filmA.hasActor("Bob Johnson") << std::endl;
+   std::cerr << "filmA contains actor: Bob Johnson: ";
+   std::cerr << filmA.hasActor("Bob Johnson") << std::endl;
 
-   // std::cerr << "--- END FILM CLASS TESTS ---" << std::endl;
+   std::cerr << "--- END FILM CLASS TESTS ---" << std::endl;
 
 
 
