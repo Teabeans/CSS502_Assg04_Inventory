@@ -221,13 +221,33 @@ int main() {
    std::cout << "--- START BULK COMMAND INPUT TESTS ---" << std::endl << std::endl;
    
    // Generate a test InvDB and CustDB
+   std::cout << "Generating empty InvDB and CustDB objects..." << std::endl << std::endl;
+   InvDB BulkInvDB = InvDB();
+   CustDB BulkCustDB = CustDB();
+   
    // Minimally populate these two DBs
+   std::cout << "Populating the two databases..." << std::endl << std::endl;
+   
    // Capture the command file to a stream
+   std::cout << "Loading the command file..." << std::endl << std::endl;
+   
    // Parse the stream
+   std::cout << "Parsing the command stream..." << std::endl << std::endl;
+   
    // Test isLegal() logic
+   std::cout << "Testing isLegal() logic:" << std::endl;
+   std::cout << << std::endl;
+   
    // Generate transaction objects from legal commands
-   // Send Transactions to InvDB and CustDB
+   // Send these transactions to both the InvDB and CustDB
+   std::cout << "Generating and sending test transactions..." << std::endl << std::endl;
+   // call bulkProcess()
+         
    // Check results
+   std::cout << "Results of bulk processing" << std::endl;
+   std::cout << "InvDB status:" << std::endl << BulkInvDB.toString() << std::endl << std::endl;
+   std::cout << "CustDB status:" << std::endl << BulkCustDB.toString() << std::endl << std::endl;
+
    
    std::cout << "--- END BULK COMMAND INPUT TESTS ---" << std::endl << std::endl;
    
