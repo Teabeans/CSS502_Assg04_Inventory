@@ -100,7 +100,7 @@ int main() {
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
-//       INV DATABASE TESTS
+//       START INV DATABASE TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
@@ -148,10 +148,45 @@ int main() {
 
    std::cout << "--- END INVENTORY DATABASE TESTS ---" << std::endl << std::endl;
 
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       END INVENTORY DATABASE TESTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
 
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       START BULK CUSTOMERDB INPUT TESTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
 
+   std::cout << "--- START BULK CUSTOMERDB INPUT TESTS ---" << std::endl << std::endl;
+   
+   // Test the customerDB bulk inputs
+   std::cout << "Testing customerDB bulk inputs..." << std::endl << std::endl;
 
+   // Test the customerDB bulk inputs
+   std::cout << "Creating an empty CustDB object..." << std::endl << std::endl;
 
+   // Capture command file to filestream
+   std::cout << "Capture bulk input to fileStream..." << std::endl << std::endl;
+   
+   // Have the Inventory Controller (main()) parse the file and perform insertion actions
+   std::cout << "Sending bulk commands to CustDB object..." << std::endl << std::endl;
+   
+   // Test isLegalCust() logic
+   std::cout << "The first command isLegal(): " << "<isLegal() result goes here>" << " (0 expected, plus error report)" << std::endl << std::endl;
+
+   // Check if the commands were SUPER EFFECTIVE!
+   std::cout << "Check state of CustDB after bulk input:" << std::endl << std::endl;
+      
+   std::cout << "--- END BULK INPUT TESTS ---" << std::endl << std::endl;
+   
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       END BULK CUSTOMERDB INPUT TESTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
 
    // Acquire the relevant files
 
