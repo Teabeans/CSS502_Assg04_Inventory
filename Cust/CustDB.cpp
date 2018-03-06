@@ -61,7 +61,7 @@
 #include <stack>
 
 // Field and method declarations for the Cust (Customer) class
-#include "custDB.h"
+#include "CustDB.h"
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
@@ -280,7 +280,7 @@ void CustDB::insertCustomer(Cust* custPtr) {
    // Add customer to table by name (hash)
    this->custTable[indexToInsertAt] = custPtr;
    // Add customer to table by ID
-   this->custTableByID[custPtr->getID] = custPtr;
+   this->custTableByID[custPtr->getID()] = custPtr;
 
 } // Closing insertCustomer()
 
@@ -308,7 +308,7 @@ Cust* CustDB::getCustomerAt(int query) {
 // MetCall: NULL
    void CustDB::appendHistory(Trans someTransaction) {
       // Gather requisite data for an appending action
-      int         IDnum    = someTransaction.getCustID;
+      int         IDnum    = someTransaction.getCustID();
       Cust*       tgt      = this->custTableByID[IDnum];
       std::string appendix = someTransaction.toString();
       // Send to the target customer for history append

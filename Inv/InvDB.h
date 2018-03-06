@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include "../Trans/Trans.h"
 #include "Film.h"
 
@@ -12,11 +13,13 @@ public:
    void adjustStock(Trans*);
    bool isLegal(std::string);
    bool addFilm(Film*);
+
    InvDB();
    InvDB(int);
    ~InvDB();
+
 private:
-   Film* invTable = nullptr;
+   vector<Film> invTable;
    bool isValid(std::string);
    int hashTitle(std::string);
 };

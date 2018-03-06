@@ -61,7 +61,7 @@
 #include <stack>
 
 // Field and method declarations for the Cust (Customer) class
-#include "cust.h"
+#include "Cust.h"
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //

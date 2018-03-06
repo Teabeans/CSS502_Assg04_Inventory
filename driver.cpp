@@ -33,62 +33,7 @@
 #include "Cust/Cust.h"
 #include "Cust/CustDB.h"
 
-void readInv(std::ifstream& data, InvDB& invDB) {
 
-   int filmID = 0;
-   while (!data.eof()) {
-      // Read the next relevant line of command
-      std::string filmData;
-      std::getline(data, filmData);
-
-      if (filmData.length() >= 1) {
-         // create borrow object and run transaction
-         if (filmData.at(0) == 'F') {
-            invDB.addFilm(new Comedy(filmData));
-         }
-
-         // create return object and run transaction
-         else if (filmData.at(0) == 'D') {
-            invDB.addFilm(new Drama(filmData));
-         }
-
-         // check customer and display history
-         else if (filmData.at(0) == 'C') {
-            invDB.addFilm(new Classic(filmData));
-         }
-
-         // otherwise, this is an invalid film type
-         else {
-            std::cerr << "Invalid film type: " << filmData.at(0) << std::endl;
-         }
-      }
-   }
-} // End readInv
-
-// void readCust(std::ifstream& dataFile) {
-
-// }
-
-// int estimate(std::ifstream& dataFile){
-//    int retEstimate = 0;
-//    // for (;;) {
-//    //    // Exit condition
-//    //    if (dataFile.eof()) {
-//    //       break;
-//    //    }
-//    //    //Otherwise, just keep drawing lines
-//    //    // TODO
-//    //    retEstimate++;
-//    // }
-//    // retEstimate = retEstimate*2;
-//    // Now compare against the list of primes until the prime exceeds retEstimate
-//    // TODO
-//    // Assign this prime to retEstimate
-//    // TODO
-//    return(10067);
-//    // 2x the number of newline characters
-//    // Just make a list of prime numbers
-// } // Closing estimate()
 
 int main() {
 
@@ -150,28 +95,30 @@ int main() {
 //       END CUSTOMER DATABASE TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-   
+
+
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       INV DATABASE TESTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+
+   // Create an InventoryDatabase of size 'entries'
+   std::ifstream inventoryFile("data4movies.txt");
+   InvDB invDB(inventoryFile);
+
+
+
+
+
+
    // Acquire the relevant files
 
    std::ifstream commandFile("data4commands.txt");
    // std::ifstream customerFile("data4customers.txt");
-   std::ifstream inventoryFile("data4movies.txt");
-   // std::ifstream sacrificialFile("data4movies.txt");
 
-   // Determine the size of the inventory
-   // int entries = estimate(sacrificialFile);
 
-   // Create an InventoryDatabase of size 'entries'
-   InvDB invDB(10067);
-
-   // Create a CustomerDatabase of size 10000
-   // CustDB custDB(10000);
-
-   // Load the InventoryDatabase using the InventoryFile
-   readInv(inventoryFile, invDB);
-
-   // Load the CustomerDatabase using the CustomerFile
-   // readCust(customerFile);
 
 
    // Generate Transactions from the CommandFile and send Transaction impacts to the appropriate locations
@@ -179,7 +126,6 @@ int main() {
       // Read the next relevant line of command
       std::string command;
       std::getline(commandFile, command);
-
 
       // create a transaction and check for transaction legality
       Trans* currTrans = nullptr;
@@ -204,6 +150,65 @@ int main() {
          delete currTrans;
       }
    }
+
+
+
+
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       FILM CLASS TESTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+
+   std::cerr << "--- BEGIN FILM CLASS TESTS ---" << std::endl;
+
+   // default constructor
+   Film filmA;
+
+   filmA.setTitle("Testing Film");
+   filmA.setStock(20);
+   filmA.setReleaseDate(1995);
+   filmA.setGenre('X');
+   filmA.setDirector("Antonio Testing");
+   filmA.appendActor("Bob Benson");
+
+   std::cerr << filmA.getTitle() << std::endl;
+   std::cerr << filmA.getStock() << std::endl;
+   std::cerr << filmA.getReleaseDate() << std::endl;
+   std::cerr << filmA.getGenre() << std::endl;
+   std::cerr << filmA.getDirector() << std::endl;
+
+   // string constructor
+   Film filmB("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
+
+   std::cerr << filmB.getTitle() << std::endl;
+   std::cerr << filmB.getStock() << std::endl;
+   std::cerr << filmB.getReleaseDate() << std::endl;
+   std::cerr << filmB.getGenre() << std::endl;
+   std::cerr << filmB.getDirector() << std::endl;
+
+   // operators
+   std::cerr << "FilmA == FilmB: " << (filmA == filmB) << std::endl;
+   std::cerr << "FilmA >= FilmB: " << (filmA >= filmB) << std::endl;
+   std::cerr << "FilmA <= FilmB: " << (filmA <= filmB) << std::endl;
+
+
+   Film filmC("D, 100, Jonathan Demme, Silence of the Lambs, 1991");
+   std::cerr << "FilmA == FilmB: " << (filmC == filmB) << std::endl;
+   std::cerr << "FilmA >= FilmB: " << (filmC >= filmB) << std::endl;
+   std::cerr << "FilmA <= FilmB: " << (filmC <= filmB) << std::endl;
+
+   std::cerr << "filmA contains actor: Bob Benson: ";
+   std::cerr << filmA.hasActor("Bob Benson") << std::endl;
+
+   std::cerr << "filmA contains actor: Bob Johnson: ";
+   std::cerr << filmA.hasActor("Bob Johnson") << std::endl;
+
+   std::cerr << "--- END FILM CLASS TESTS ---" << std::endl;
+
+
+
 
    return (0);
 } // End program

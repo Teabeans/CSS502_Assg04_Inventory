@@ -2,22 +2,30 @@
 
 #include <string>
 #include <vector>
-#include "Media.h"
 
 class Film {
 
 public:
-   // std::string getTitle();
-   // int getStock();
-   // int getReleaseDate();
-   // void setTitle(std::string);
-   // void setStock(int);
-   // void setReleaseDate(int);
-   // void setGenre(char);
-   // std::string getDirector();
-   // bool doesFeatureActor(std::string);
-   // void setDirector(std::string);
-   // void appendActor(std::string);
+   // get/set methods
+   std::string getTitle();
+   int getStock();
+   int getReleaseDate();
+   char getGenre();
+   std::string getDirector();
+   void setTitle(std::string);
+   void setStock(int);
+   void setReleaseDate(int);
+   void setGenre(char);
+   void setDirector(std::string);
+   bool hasActor(std::string);
+   void appendActor(std::string);
+
+
+   //-------|---------|---------|---------|---------|---------|---------|---------|
+   //
+   //       OPERATORS
+   //
+   //-------|---------|---------|---------|---------|---------|---------|---------|
 
    /**
     * == operator
@@ -25,6 +33,20 @@ public:
     * Pre: assumes title and release data are populated
    **/
    bool operator==(Film&);
+
+   /**
+    * <= operator
+    * Desc: compares two films based on title & release date
+    * Pre: assumes title and release data are populated
+   **/
+   bool operator<=(Film&);
+
+   /**
+    * >= operator
+    * Desc: compares two films based on title & release date
+    * Pre: assumes title and release data are populated
+   **/
+   bool operator>=(Film&);
 
    /**
     * Constructors
@@ -38,6 +60,6 @@ protected:
    int stock;
    int releaseDate;
    std::string director;
-   std::vector<std::string> actors;
    char genre;
+   std::vector<std::string> actors;
 };
