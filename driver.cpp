@@ -107,30 +107,40 @@ int main() {
    std::cout << "--- START INVENTORY DATABASE TESTS ---" << std::endl << std::endl;
 
    // Create a new inventory database object
+   std::cout << "Create an InvDB object from bulk input..." << std::endl << std::endl;
    std::ifstream inventoryFile("data4movies.txt");
    InvDB invDB(inventoryFile);
 
+   std::cout << "Creating an empty InvDB object..." << std::endl << std::endl;
+   InvDB testInvDB = InvDB();
+
    // Create three new films
+   std::cout << "Creating three new films..." << std::endl << std::endl;
    Film filmAA("C, 10, Victor Fleming, The Wizard of Oz, Judy Garland 7 1939");
    Film filmBB("F, 10, Nora Ephron, Sleepless in Seattle, 1993");
    Film filmCC("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
 
    // Attempt to add these films to the inventory database
-   invDB.addFilm(*filmAA);
-   invDB.addFilm(*filmBB);
-   invDB.addFilm(*filmCC);
+   std::cout << "Adding films to the testInvDB..." << std::endl << std::endl;
+   testInvDB.addFilm(*filmAA);
+   testInvDB.addFilm(*filmBB);
+   testInvDB.addFilm(*filmCC);
 
    // Query quantities of each film
+   std::cout << "State of testInvDB:" << std::endl;
+   std::cout << testInvDB.toString() << std::endl << std::endl;
 
    // Create borrow transactions
-   // Trans BTestC = Trans("B <ID> C <TITLE>, <RELEASE>");
-   // Trans BTestD = Trans("B <ID> D <TITLE>, <RELEASE>");
-   // Trans BTestF = Trans("B <ID> F <TITLE>, <RELEASE>");
+   std::cout << "Creating borrow transactions..." << std::endl << std::endl;
+   Trans BTestC = Trans("B 1234 C The Wizard of Oz, 7 1939");
+   Trans BTestD = Trans("B 1234 D Silence of the Lambs, 1991");
+   Trans BTestF = Trans("B 1234 F Sleepless in Seattle, 1993");
 
-   // // Create return transactions
-   // Trans RTestC = Trans("R <ID> C <TITLE>, <RELEASE>");
-   // Trans RTestD = Trans("R <ID> D <TITLE>, <RELEASE>");
-   // Trans RTestF = Trans("R <ID> F <TITLE>, <RELEASE>");
+   // Create return transactions
+   std::cout << "Creating return transactions..." << std::endl << std::endl;
+   Trans RTestC = Trans("R 1234 C The Wizard of Oz, 7 1939");
+   Trans RTestD = Trans("R 1234 D Silence of the Lambs, 1991");
+   Trans RTestF = Trans("R 1234 F Sleepless in Seattle, 1993");
 
    // Send a transaction
 
