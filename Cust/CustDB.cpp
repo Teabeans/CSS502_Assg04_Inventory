@@ -350,7 +350,7 @@ Cust* CustDB::getCustomerAt(int query) {
          this->custTable[i] = nullptr;
       }
       for (int i = 0 ; i <= 9999 ; i++) {
-         this->CustTableByID[i] = nullptr;
+         this->custTableByID[i] = nullptr;
       }
    }
 
