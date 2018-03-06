@@ -38,7 +38,63 @@
 int main() {
 
 // Begin program
+   
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       FILM CLASS TESTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
 
+   std::cerr << "--- BEGIN FILM CLASS TESTS ---" << std::endl;
+
+   // default constructor
+   Film filmA;
+
+   filmA.setTitle("Testing Film");
+   filmA.setStock(20);
+   filmA.setReleaseDate(1995);
+   filmA.setGenre('X');
+   filmA.setDirector("Antonio Testing");
+   filmA.appendActor("Bob Benson");
+
+   std::cerr << filmA.getTitle() << std::endl;
+   std::cerr << filmA.getStock() << std::endl;
+   std::cerr << filmA.getReleaseDate() << std::endl;
+   std::cerr << filmA.getGenre() << std::endl;
+   std::cerr << filmA.getDirector() << std::endl;
+
+   // string constructor
+   Film filmB("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
+
+   std::cerr << filmB.getTitle() << std::endl;
+   std::cerr << filmB.getStock() << std::endl;
+   std::cerr << filmB.getReleaseDate() << std::endl;
+   std::cerr << filmB.getGenre() << std::endl;
+   std::cerr << filmB.getDirector() << std::endl;
+
+   // operators
+   std::cerr << "FilmA == FilmB: " << (filmA == filmB) << std::endl;
+   std::cerr << "FilmA >= FilmB: " << (filmA >= filmB) << std::endl;
+   std::cerr << "FilmA <= FilmB: " << (filmA <= filmB) << std::endl;
+
+
+   Film filmC("D, 100, Jonathan Demme, Silence of the Lambs, 1991");
+   std::cerr << "FilmA == FilmB: " << (filmC == filmB) << std::endl;
+   std::cerr << "FilmA >= FilmB: " << (filmC >= filmB) << std::endl;
+   std::cerr << "FilmA <= FilmB: " << (filmC <= filmB) << std::endl;
+
+   std::cerr << "filmA contains actor: Bob Benson: ";
+   std::cerr << filmA.hasActor("Bob Benson") << std::endl;
+
+   std::cerr << "filmA contains actor: Bob Johnson: ";
+   std::cerr << filmA.hasActor("Bob Johnson") << std::endl;
+
+   std::cerr << "--- END FILM CLASS TESTS ---" << std::endl;
+   
+// END FILM CLASS TESTS
+   
+   
+   
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
 //       CUSTOMER DATABASE TESTS
@@ -297,57 +353,7 @@ int main() {
 
 
 
-//-------|---------|---------|---------|---------|---------|---------|---------|
-//
-//       FILM CLASS TESTS
-//
-//-------|---------|---------|---------|---------|---------|---------|---------|
 
-   std::cerr << "--- BEGIN FILM CLASS TESTS ---" << std::endl;
-
-   // default constructor
-   Film filmA;
-
-   filmA.setTitle("Testing Film");
-   filmA.setStock(20);
-   filmA.setReleaseDate(1995);
-   filmA.setGenre('X');
-   filmA.setDirector("Antonio Testing");
-   filmA.appendActor("Bob Benson");
-
-   std::cerr << filmA.getTitle() << std::endl;
-   std::cerr << filmA.getStock() << std::endl;
-   std::cerr << filmA.getReleaseDate() << std::endl;
-   std::cerr << filmA.getGenre() << std::endl;
-   std::cerr << filmA.getDirector() << std::endl;
-
-   // string constructor
-   Film filmB("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
-
-   std::cerr << filmB.getTitle() << std::endl;
-   std::cerr << filmB.getStock() << std::endl;
-   std::cerr << filmB.getReleaseDate() << std::endl;
-   std::cerr << filmB.getGenre() << std::endl;
-   std::cerr << filmB.getDirector() << std::endl;
-
-   // operators
-   std::cerr << "FilmA == FilmB: " << (filmA == filmB) << std::endl;
-   std::cerr << "FilmA >= FilmB: " << (filmA >= filmB) << std::endl;
-   std::cerr << "FilmA <= FilmB: " << (filmA <= filmB) << std::endl;
-
-
-   Film filmC("D, 100, Jonathan Demme, Silence of the Lambs, 1991");
-   std::cerr << "FilmA == FilmB: " << (filmC == filmB) << std::endl;
-   std::cerr << "FilmA >= FilmB: " << (filmC >= filmB) << std::endl;
-   std::cerr << "FilmA <= FilmB: " << (filmC <= filmB) << std::endl;
-
-   std::cerr << "filmA contains actor: Bob Benson: ";
-   std::cerr << filmA.hasActor("Bob Benson") << std::endl;
-
-   std::cerr << "filmA contains actor: Bob Johnson: ";
-   std::cerr << filmA.hasActor("Bob Johnson") << std::endl;
-
-   std::cerr << "--- END FILM CLASS TESTS ---" << std::endl;
 
 
 
