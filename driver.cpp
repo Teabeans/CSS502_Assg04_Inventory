@@ -38,10 +38,66 @@
 int main() {
 
 // Begin program
-
+   
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
-//       START CUSTOMER DATABASE TESTS
+//       FILM CLASS TESTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+
+   std::cerr << "--- BEGIN FILM CLASS TESTS ---" << std::endl;
+
+   // default constructor
+   Film filmA;
+
+   filmA.setTitle("Testing Film");
+   filmA.setStock(20);
+   filmA.setReleaseDate(1995);
+   filmA.setGenre('X');
+   filmA.setDirector("Antonio Testing");
+   filmA.appendActor("Bob Benson");
+
+   std::cerr << filmA.getTitle() << std::endl;
+   std::cerr << filmA.getStock() << std::endl;
+   std::cerr << filmA.getReleaseDate() << std::endl;
+   std::cerr << filmA.getGenre() << std::endl;
+   std::cerr << filmA.getDirector() << std::endl;
+
+   // string constructor
+   Film filmB("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
+
+   std::cerr << filmB.getTitle() << std::endl;
+   std::cerr << filmB.getStock() << std::endl;
+   std::cerr << filmB.getReleaseDate() << std::endl;
+   std::cerr << filmB.getGenre() << std::endl;
+   std::cerr << filmB.getDirector() << std::endl;
+
+   // operators
+   std::cerr << "FilmA == FilmB: " << (filmA == filmB) << std::endl;
+   std::cerr << "FilmA >= FilmB: " << (filmA >= filmB) << std::endl;
+   std::cerr << "FilmA <= FilmB: " << (filmA <= filmB) << std::endl;
+
+
+   Film filmC("D, 100, Jonathan Demme, Silence of the Lambs, 1991");
+   std::cerr << "FilmA == FilmB: " << (filmC == filmB) << std::endl;
+   std::cerr << "FilmA >= FilmB: " << (filmC >= filmB) << std::endl;
+   std::cerr << "FilmA <= FilmB: " << (filmC <= filmB) << std::endl;
+
+   std::cerr << "filmA contains actor: Bob Benson: ";
+   std::cerr << filmA.hasActor("Bob Benson") << std::endl;
+
+   std::cerr << "filmA contains actor: Bob Johnson: ";
+   std::cerr << filmA.hasActor("Bob Johnson") << std::endl;
+
+   std::cerr << "--- END FILM CLASS TESTS ---" << std::endl;
+   
+// END FILM CLASS TESTS
+   
+   
+   
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       CUSTOMER DATABASE TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
@@ -90,17 +146,13 @@ int main() {
 
    std::cout << "--- END CUSTOMER DATABASE TESTS ---" << std::endl << std::endl;
 
-//-------|---------|---------|---------|---------|---------|---------|---------|
-//
-//       END CUSTOMER DATABASE TESTS
-//
-//-------|---------|---------|---------|---------|---------|---------|---------|
+// END CUSTOMER DATABASE TESTS
 
 
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
-//       START INV DATABASE TESTS
+//       INV DATABASE TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
@@ -169,15 +221,13 @@ int main() {
 
    std::cout << "--- END INVENTORY DATABASE TESTS ---" << std::endl << std::endl;
 
-//-------|---------|---------|---------|---------|---------|---------|---------|
-//
-//       END INVENTORY DATABASE TESTS
-//
-//-------|---------|---------|---------|---------|---------|---------|---------|
+// END INVENTORY DATABASE TESTS
 
+   
+   
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
-//       START BULK CUSTOMERDB INPUT TESTS
+//       BULK CUSTOMERDB INPUT TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
@@ -201,14 +251,87 @@ int main() {
    // Check if the commands were SUPER EFFECTIVE!
    std::cout << "Check state of CustDB after bulk input:" << std::endl << std::endl;
       
-   std::cout << "--- END BULK INPUT TESTS ---" << std::endl << std::endl;
+   std::cout << "--- END BULK CUSTOMERDB INPUT TESTS ---" << std::endl << std::endl;
+   
+// END BULK CUSTOMERDB INPUT TESTS 
+   
+   
    
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
-//       END BULK CUSTOMERDB INPUT TESTS
+//       BULK INVENTORYDB INPUT TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
+   std::cout << "--- START BULK INVENTORYDB INPUT TESTS ---" << std::endl << std::endl;
+   
+   // Test the inventoryDB bulk inputs
+   std::cout << "Testing inventoryDB bulk inputs..." << std::endl << std::endl;
+
+   // Test the inventoryDB bulk inputs
+   std::cout << "Creating an empty InvDB object..." << std::endl << std::endl;
+
+   // Capture command file to filestream
+   std::cout << "Capture bulk input to fileStream..." << std::endl << std::endl;
+   
+   // Have the Inventory Controller (main()) parse the file and perform insertion actions
+   std::cout << "Sending bulk commands to InvDB object..." << std::endl << std::endl;
+   
+   // Test isLegalInv() logic
+   std::cout << "The first command isLegal(): " << "<isLegal() result goes here>" << " (0 expected, plus error report)" << std::endl << std::endl;
+
+   // Check if the commands were SUPER EFFECTIVE!
+   std::cout << "Check state of InvDB after bulk input:" << std::endl << std::endl;
+   
+   std::cout << "--- END BULK INVENTORYDB INPUT TESTS ---" << std::endl << std::endl;
+
+// END BULK CUSTOMERDB INPUT TESTS
+   
+
+   
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       BULK COMMAND INPUT TESTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+   
+   std::cout << "--- START BULK COMMAND INPUT TESTS ---" << std::endl << std::endl;
+   
+   // Generate a test InvDB and CustDB
+   std::cout << "Generating empty InvDB and CustDB objects..." << std::endl << std::endl;
+   InvDB BulkInvDB = InvDB();
+   CustDB BulkCustDB = CustDB();
+   
+   // Minimally populate these two DBs
+   std::cout << "Populating the two databases..." << std::endl << std::endl;
+   
+   // Capture the command file to a stream
+   std::cout << "Loading the command file..." << std::endl << std::endl;
+   
+   // Parse the stream
+   std::cout << "Parsing the command stream..." << std::endl << std::endl;
+   
+   // Test isLegal() logic
+   std::cout << "Testing isLegal() logic:" << std::endl;
+   std::cout << << std::endl;
+   
+   // Generate transaction objects from legal commands
+   // Send these transactions to both the InvDB and CustDB
+   std::cout << "Generating and sending test transactions..." << std::endl << std::endl;
+   // call bulkProcess()
+         
+   // Check results
+   std::cout << "Results of bulk processing" << std::endl;
+   std::cout << "InvDB status:" << std::endl << BulkInvDB.toString() << std::endl << std::endl;
+   std::cout << "CustDB status:" << std::endl << BulkCustDB.toString() << std::endl << std::endl;
+
+   
+   std::cout << "--- END BULK COMMAND INPUT TESTS ---" << std::endl << std::endl;
+   
+// END BULK COMMAND INPUT TESTS
+
+   
+   
    // Acquire the relevant files
 
    std::ifstream commandFile("data4commands.txt");
@@ -251,57 +374,7 @@ int main() {
 
 
 
-//-------|---------|---------|---------|---------|---------|---------|---------|
-//
-//       FILM CLASS TESTS
-//
-//-------|---------|---------|---------|---------|---------|---------|---------|
 
-   std::cerr << "--- BEGIN FILM CLASS TESTS ---" << std::endl;
-
-   // default constructor
-   Film filmA;
-
-   filmA.setTitle("Testing Film");
-   filmA.setStock(20);
-   filmA.setReleaseDate(1995);
-   filmA.setGenre('X');
-   filmA.setDirector("Antonio Testing");
-   filmA.appendActor("Bob Benson");
-
-   std::cerr << filmA.getTitle() << std::endl;
-   std::cerr << filmA.getStock() << std::endl;
-   std::cerr << filmA.getReleaseDate() << std::endl;
-   std::cerr << filmA.getGenre() << std::endl;
-   std::cerr << filmA.getDirector() << std::endl;
-
-   // string constructor
-   Film filmB("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
-
-   std::cerr << filmB.getTitle() << std::endl;
-   std::cerr << filmB.getStock() << std::endl;
-   std::cerr << filmB.getReleaseDate() << std::endl;
-   std::cerr << filmB.getGenre() << std::endl;
-   std::cerr << filmB.getDirector() << std::endl;
-
-   // operators
-   std::cerr << "FilmA == FilmB: " << (filmA == filmB) << std::endl;
-   std::cerr << "FilmA >= FilmB: " << (filmA >= filmB) << std::endl;
-   std::cerr << "FilmA <= FilmB: " << (filmA <= filmB) << std::endl;
-
-
-   Film filmC("D, 100, Jonathan Demme, Silence of the Lambs, 1991");
-   std::cerr << "FilmA == FilmB: " << (filmC == filmB) << std::endl;
-   std::cerr << "FilmA >= FilmB: " << (filmC >= filmB) << std::endl;
-   std::cerr << "FilmA <= FilmB: " << (filmC <= filmB) << std::endl;
-
-   std::cerr << "filmA contains actor: Bob Benson: ";
-   std::cerr << filmA.hasActor("Bob Benson") << std::endl;
-
-   std::cerr << "filmA contains actor: Bob Johnson: ";
-   std::cerr << filmA.hasActor("Bob Johnson") << std::endl;
-
-   std::cerr << "--- END FILM CLASS TESTS ---" << std::endl;
 
 
 
