@@ -104,9 +104,39 @@ int main() {
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
-   // Create an InventoryDatabase of size 'entries'
+   std::cout << "--- START INVENTORY DATABASE TESTS ---" << std::endl << std::endl;
+
+   // Create a new inventory database object
    std::ifstream inventoryFile("data4movies.txt");
    InvDB invDB(inventoryFile);
+
+   // Create three new films
+   Film filmAA("C, 10, Victor Fleming, The Wizard of Oz, Judy Garland 7 1939");
+   Film filmBB("F, 10, Nora Ephron, Sleepless in Seattle, 1993");
+   Film filmCC("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
+
+   // Attempt to add these films to the inventory database
+   invDB.addFilm(*filmAA);
+   invDB.addFilm(*filmBB);
+   invDB.addFilm(*filmCC);
+
+   // Query quantities of each film
+
+   // Create borrow transactions
+   // Trans BTestC = Trans("B <ID> C <TITLE>, <RELEASE>");
+   // Trans BTestD = Trans("B <ID> D <TITLE>, <RELEASE>");
+   // Trans BTestF = Trans("B <ID> F <TITLE>, <RELEASE>");
+
+   // // Create return transactions
+   // Trans RTestC = Trans("R <ID> C <TITLE>, <RELEASE>");
+   // Trans RTestD = Trans("R <ID> D <TITLE>, <RELEASE>");
+   // Trans RTestF = Trans("R <ID> F <TITLE>, <RELEASE>");
+
+   // Send a transaction
+
+   // Query film states again
+
+   std::cout << "--- END INVENTORY DATABASE TESTS ---" << std::endl << std::endl;
 
 
 
