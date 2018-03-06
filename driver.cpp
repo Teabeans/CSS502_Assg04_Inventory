@@ -230,6 +230,16 @@ int main() {
 //-------|---------|---------|---------|---------|---------|---------|---------|
    
    std::cout << "--- START BULK COMMAND INPUT TESTS ---" << std::endl << std::endl;
+   
+   // Generate a test InvDB and CustDB
+   // Minimally populate these two DBs
+   // Capture the command file to a stream
+   // Parse the stream
+   // Test isLegal() logic
+   // Generate transaction objects from legal commands
+   // Send Transactions to InvDB and CustDB
+   // Check results
+   
    std::cout << "--- END BULK COMMAND INPUT TESTS ---" << std::endl << std::endl;
    
 //-------|---------|---------|---------|---------|---------|---------|---------|
