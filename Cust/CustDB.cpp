@@ -142,7 +142,8 @@ bool CustDB::doesConflict(Cust* custPtr, int query) {
 // Desc:   Determines whether this string is a valid customerDB command
 // Invars: Return value is variable based on state of DB
 bool CustDB::isValid(std::string) {
-
+   // TODO: Implement this function
+   return(true);
 } // Closing isValid()
 
 // (-) --------------------------------|
