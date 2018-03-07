@@ -93,7 +93,8 @@ Film::~Film() {
 //       GETTERS / SETTERS (+)
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-
+// TODO: Add virtual to all methods we expect to be overriden by child classes
+// TODO: Check if virtual should be added to all methods irregardless
 // title
 std::string Film::getTitle() {
    return title;
