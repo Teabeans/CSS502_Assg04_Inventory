@@ -3,8 +3,30 @@
 
 class Drama : public Film {
 public:
-   // char getGenre();
-   // void setGenre(char);
+   
+   /**
+    * == operator
+    * Desc: compares two films based on title & release date
+    * Pre: assumes title and release data are populated
+   **/
+   bool operator==(Film&);
+
+   /**
+    * <= operator
+    * Desc: compares two films based on title & release date
+    * Pre: assumes title and release data are populated
+   **/
+   bool operator<=(Film&);
+   bool operator<(Film&);
+
+   /**
+    * >= operator
+    * Desc: compares two films based on title & release date
+    * Pre: assumes title and release data are populated
+   **/
+   bool operator>=(Film&);
+   bool operator>(Film&);
+
    Drama();
    Drama(std::string);
    ~Drama();

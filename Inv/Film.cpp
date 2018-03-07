@@ -178,13 +178,28 @@ bool Film::operator==(Film& rhs) {
 }
 
 /**
- * <= operator
+ * <= & < operators
  * Desc: compares two films based on title & release date
  * Pre: assumes title and release data are populated
 **/
 bool Film::operator<=(Film& rhs) {
 
-   if (title <= rhs.title && releaseDate <= rhs.releaseDate) {
+   if (title < rhs.title) {
+      return true;
+   }
+   else if (title == rhs.title && releaseDate <= rhs.releaseDate) {
+      return true;
+   }
+   else {
+      return false;
+   }
+}
+bool Film::operator<(Film& rhs) {
+
+   if (title < rhs.title) {
+      return true;
+   }
+   else if (title == rhs.title && releaseDate < rhs.releaseDate) {
       return true;
    }
    else {
@@ -193,16 +208,31 @@ bool Film::operator<=(Film& rhs) {
 }
 
 /**
- * >= operator
+ * >= & > operators
  * Desc: compares two films based on title & release date
  * Pre: assumes title and release data are populated
 **/
 bool Film::operator>=(Film& rhs) {
 
-   if (title >= rhs.title && releaseDate >= rhs.releaseDate) {
-      return true;
-   }
-   else {
-      return false;
-   }
+   if (title > rhs.title) {
+         return true;
+      }
+      else if (title == rhs.title && releaseDate >= rhs.releaseDate) {
+         return true;
+      }
+      else {
+         return false;
+      }
+}
+bool Film::operator>(Film& rhs) {
+
+   if (title > rhs.title) {
+         return true;
+      }
+      else if (title == rhs.title && releaseDate > rhs.releaseDate) {
+         return true;
+      }
+      else {
+         return false;
+      }
 }

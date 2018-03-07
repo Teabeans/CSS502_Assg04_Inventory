@@ -29,9 +29,6 @@ std::string InvDB::toString() {
       retString += std::to_string(comedies.at(i).getReleaseDate()) + "\n";
    }
 
-   // display all comedies
-         // sorted by title, then year
-
 
    retString += "Drama Films: \n";
 
@@ -41,8 +38,6 @@ std::string InvDB::toString() {
       retString += dramas.at(i).getDirector() + ", ";
       retString += std::to_string(dramas.at(i).getReleaseDate()) + "\n";
    }
-   // then all dramas
-         // sorted by director, then title
 
 
    retString += "Classic Films: \n";
@@ -53,8 +48,6 @@ std::string InvDB::toString() {
       retString += classics.at(i).getDirector() + ", ";
       retString += std::to_string(classics.at(i).getReleaseDate()) + "\n";
    }
-   // then all classics
-         // sorted by release date, then actor
 
    return (retString);
 }
@@ -65,6 +58,8 @@ void InvDB::display() {
 }
 
 void InvDB::adjustStock(Trans& trans) {
+
+   std::cerr << "Trans Data: " << trans.getTitle() << " : " << trans.getRelease() << std::endl;
 
    if (trans.getGenre() == 'F') {
       Comedy film;
@@ -207,13 +202,37 @@ Film* InvDB::retrieve(Film* film) {
 **/
 bool InvDB::addFilm(Film* film) {
 
+   int index = 0;
+
+   // display all comedies
+         // sorted by title, then year
+
+   // then all dramas
+         // sorted by director, then title
+
+   // then all classics
+         // sorted by release date, then actor
+
    if (contains(film) == false) {
       if (film->getGenre() == 'F') {
-         comedies.push_back(*film);
+
+         auto iterator = comedies.begin();
+         for (int i = 0; i < comedies.size(); i++) {
+            if (comedies.at(i) > *film) break;
+            iterator++;
+            std::cerr << "i: " << i << std::endl;
+         }
+         comedies.insert(iterator, *film);
       }
 
       else if (film->getGenre() == 'D') {
-         dramas.push_back(*film);
+         auto iterator = dramas.begin();
+         for (int i = 0; i < dramas.size(); i++) {
+            if (dramas.at(i) > *film) break;
+            iterator++;
+            std::cerr << "i: " << i << std::endl;
+         }
+         dramas.insert(iterator, *film);
       }
 
       else if (film->getGenre() == 'C') {

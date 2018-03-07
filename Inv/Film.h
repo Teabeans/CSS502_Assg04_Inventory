@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include "Drama.h"
 
 class Film {
 
@@ -19,6 +20,8 @@ public:
    void setDirector(std::string);
    bool hasActor(std::string);
    void appendActor(std::string);
+
+   friend class Drama;
 
 
    //-------|---------|---------|---------|---------|---------|---------|---------|
@@ -40,6 +43,7 @@ public:
     * Pre: assumes title and release data are populated
    **/
    bool operator<=(Film&);
+   bool operator<(Film&);
 
    /**
     * >= operator
@@ -47,6 +51,7 @@ public:
     * Pre: assumes title and release data are populated
    **/
    bool operator>=(Film&);
+   bool operator>(Film&);
 
    /**
     * Constructors
