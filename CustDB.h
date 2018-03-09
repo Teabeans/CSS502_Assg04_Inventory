@@ -116,6 +116,13 @@ public:
    void display();
 
 //-----------------|
+// #doesContain()
+//-----------------|
+// Desc:   NULL
+// Invars: NULL
+   bool doesContain(int custID);
+
+//-----------------|
 // #insertCustomer(int)
 //-----------------|
 // Desc:   NULL
