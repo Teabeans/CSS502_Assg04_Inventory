@@ -1,3 +1,38 @@
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+// UW CSS 502A - Assignment 4 - Inventory Management
+// CustDB.h
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+
+//-----------------------------------------------------------------------------|
+// Authorship
+//-----------------------------------------------------------------------------|
+//
+// Matt Gross & Tim Lum
+// mattgrosspersonal@gmail.com + twhlum@gmail.com
+// Created:  2018.03.03
+// Modified: 2018.03.--
+// For the University of Washington Bothell, CSS 502A
+// Winter 2018, Graduate Certificate in Software Design & Development (GCSDD)
+//
+
+//-----------------------------------------------------------------------------|
+// File Description
+//-----------------------------------------------------------------------------|
+//
+// This is the header file for the CustDB class, representing a database of
+// customer objects
+//
+
+//-----------------------------------------------------------------------------|
+// Package Files
+//-----------------------------------------------------------------------------|
+//
+// See Github repository
+// https://github.com/Teabeans/CSS502_Assg04_Inventory
+//
+
 //-------------------------------------|
 // Begin Student Code
 //-------------------------------------|
@@ -5,11 +40,18 @@
 // Requisite in the .h file
 #pragma once
 
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       INCLUDE STATEMENTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+
 // Necessary for customer operations
 #include "Cust.h"
 
 // Necessary for transaction operations
 #include "Trans.h"
+
 
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
@@ -24,6 +66,8 @@
 // Desc:   The maximum anticipated number customer spots needed
 // Invars: Set to 20011
 const static int MAXCUSTOMERS = 20011;
+
+
 
 class CustDB {
 
@@ -83,6 +127,8 @@ private:
 // Desc:   Deallocates all memory
 // Invars: None
    void obliviate();
+
+
 
 public:
 //-------|---------|---------|---------|---------|---------|---------|---------|
@@ -151,6 +197,7 @@ public:
    void appendHistory(Trans);
 
 
+
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
 //       GETTERS / SETTERS (+)
@@ -182,5 +229,9 @@ public:
    ~CustDB();
 
 }; // Closing class CustDB {}
+
+//-------------------------------------|
+// End Student Code
+//-------------------------------------|
 
 // End of file - CustDB.h
