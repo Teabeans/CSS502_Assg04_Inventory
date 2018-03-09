@@ -183,6 +183,20 @@ bool InvDB::addDrama(Drama* film) {
 }
 
 // (+) --------------------------------|
+// #addFilm(Film*)
+//-------------------------------------|
+// Desc:    Adds a new film object to the list
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+bool InvDB::addFilm(Film* film) {
+   // TODO: Implement
+   return true;
+} // Closing addFilm()
+
+// (+) --------------------------------|
 // #adjustStock(Trans&)
 //-------------------------------------|
 // Desc:    NULL
