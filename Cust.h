@@ -8,6 +8,9 @@
 // Necessary for string operations
 #include <string>
 
+// Necessary for rental tracking
+#include <queue>
+
 // Necessary for transaction operations
 #include "Trans.h"
 
@@ -58,6 +61,20 @@ private:
 // Invars: May be an empty string
    std::string history;
 
+//-----------------|
+// #numRentals
+//-----------------|
+// Desc:   The number of titles this customer has checked out
+// Invars: Must be 0 or more, cannot be negative
+   int checkouts;
+
+//-----------------|
+// #rentals
+//-----------------|
+// Desc:   The titles the customer currently has checked out
+// Invars: May be empty
+   std::queue<std::string> rentals;
+
 
 
 public:
@@ -78,12 +95,33 @@ public:
 // Full comments in Cust.cpp - omitted here for clarity
 
 //-----------------|
-// #appendHistory()
+// #appendHistory(string)
 //-----------------|
 // Desc:   Appends values to the customer history
 // Invars: May be called with faulty transaction information
 //         GIGO - No error checking is performed by appendHistory()
    void appendHistory(std::string someTransaction);
+
+//-----------------|
+// #isCheckedOut(string)
+//-----------------|
+// Desc:   Returns whether this title is among those currently checked out by the customer
+// Invars: GIGO - No error checking is performed by isCheckedOut()
+   bool const isCheckedOut(std::string aTitle);
+
+//-----------------|
+// #addToCheckouts(string)
+//-----------------|
+// Desc:   Appends title to the list of current rentals by this customer
+// Invars: GIGO - No error checking is performed by addToCheckouts()
+   void addToCheckouts(std::string aTitle);
+
+//-----------------|
+// #removeFromCheckouts(string)
+//-----------------|
+// Desc:   Removes the earliest occurrence of this title from the current rentals
+// Invars: GIGO - No error checking is performed by removeFromCheckouts()
+   void removeFromCheckouts(std::string aTitle);
 
 //-----------------|
 // #toString()
