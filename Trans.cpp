@@ -59,10 +59,10 @@
 #include "Trans.h"
 
 // Field and method declarations for the Borrow subclass
-#include "Borrow.h"
+#include "TransBorrow.h"
 
 // Field and method declarations for the Return subclass
-#include "Return.h"
+#include "TransReturn.h"
 
 
 
