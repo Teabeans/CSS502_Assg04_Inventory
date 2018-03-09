@@ -138,16 +138,6 @@ bool CustDB::doesConflict(Cust* custPtr, int query) {
    return (false);
 } // Closing doesConflict()
 
-//-----------------|
-// #isValid(string)
-//-----------------|
-// Desc:   Determines whether this string is a valid customerDB command
-// Invars: Return value is variable based on state of DB
-bool CustDB::isValid(std::string) {
-   // TODO: Implement this function
-   return(true);
-} // Closing isValid()
-
 // (-) --------------------------------|
 // #hash(Cust*)
 //-------------------------------------|
@@ -289,6 +279,16 @@ void CustDB::insertCustomer(Cust* custPtr) {
    this->custTableByID[custPtr->getID()] = custPtr;
 
 } // Closing insertCustomer()
+
+//-----------------|
+// #isValid(string)
+//-----------------|
+// Desc:   Determines whether this string is a valid customerDB command
+// Invars: Return value is variable based on state of DB
+bool CustDB::isValid(std::string) {
+   // TODO: Implement this function
+   return(true);
+} // Closing isValid()
 
 // (+) --------------------------------|
 // #getCustomerAt(int)
