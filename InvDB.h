@@ -94,8 +94,6 @@ std::vector<Classic> classics;
 
    int hashTitle(std::string);
 
-   bool isValid(std::string);
-
 public:
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
@@ -127,6 +125,8 @@ public:
 
    bool isLegal(std::string);
 
+   bool isValid(std::string);
+
    Film* retrieve(Film*);
 
    std::string const toString();
@@ -152,5 +152,6 @@ public:
 
    ~InvDB();
 
-
 };
+
+// End of file - InvDB.h
