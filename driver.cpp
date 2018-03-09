@@ -196,7 +196,10 @@ int main() {
    std::cout << "Seattle Qty: " << testInvDB.retrieve(&filmBB)->getStock() << std::endl;
    std::cout << "Lambs Qty: " << testInvDB.retrieve(&filmCC)->getStock() << std::endl;
 
-
+   // Create an invalid return (one that has no borrow)
+   std::cout << "Creating an erroneous return (no corresponding borrow)";
+   // TODO: Write test
+   
    // Create borrow transactions
    std::cout << "Creating borrow transactions..." << std::endl << std::endl;
    Trans BTestC = Trans("B 1234 C The Wizard of Oz, 7 1939");
