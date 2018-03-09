@@ -42,6 +42,9 @@
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
+// Field and method declarations for the Cust (Customer) class
+#include "Cust.h"
+
 // Necessary for input-output operations
 #include <iostream>
 
@@ -60,8 +63,7 @@
 // For tracing visitation routes
 #include <stack>
 
-// Field and method declarations for the Cust (Customer) class
-#include "Cust.h"
+
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
