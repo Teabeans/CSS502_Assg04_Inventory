@@ -47,14 +47,14 @@
 
 // film types
 #include "Film.h"
-#include "Classic.h"
-#include "Drama.h"
-#include "Comedy.h"
+#include "FilmClassic.h"
+#include "FilmDrama.h"
+#include "FilmComedy.h"
 
 // transactions
-#include "Trans.h" // TODO: Revert to ../Trans/
-#include "Borrow.h" // TODO: Revert to ../Trans/
-#include "Return.h" // TODO: Revert to ../Trans/
+#include "Trans.h"
+#include "TransBorrow.h"
+#include "TransReturn.h"
 
 // Necessary for file stream object handling
 #include <fstream>
