@@ -458,11 +458,11 @@ std::string const InvDB::toString() { // TODO: @MG - Verify inclusion of const?
 // RetVal:  None
 // MetCall: NULL
 InvDB::InvDB() {
-   // TODO: Initialize all fields to something (lest g++ balks)
+   // TODO: Initialize all fields (to keep g++ happy)
 } // Closing InvDB()
 
 // (+) --------------------------------|
-// #InvDB()
+// #InvDB(ifstream&)
 //-------------------------------------|
 // Desc:    InvDB constructor by bulk command set
 // Params:  ifstream& arg1 - The bulk set of inventory commands
@@ -505,7 +505,7 @@ InvDB::InvDB(std::ifstream& data) {
 // #~InvDB()
 //-------------------------------------|
 // Desc:    InvDB deconstructor
-// Params:  ifstream& arg1 - The bulk set of inventory commands
+// Params:  None
 // PreCons: NULL
 // PosCons: NULL
 // RetVal:  None
