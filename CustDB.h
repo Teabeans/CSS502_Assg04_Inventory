@@ -9,7 +9,7 @@
 #include "Cust.h"
 
 // Necessary for transaction operations
-#include "../Trans/Trans.h"
+#include "Trans.h"
 
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
