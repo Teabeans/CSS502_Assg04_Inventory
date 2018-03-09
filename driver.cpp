@@ -631,7 +631,7 @@ bool isLegalInvCmd(std::string command, InvDB tgtDB) {
    // TODO: Parse fields
 
    // Test if genre is within range first
-   if (genre != ('C' || 'F' || 'D')) {
+   if ((genre != 'C') || (genre != 'F') || (genre != 'D')) {
       std::cout << "Inventory command error:" << std::endl;
       std::cout << "   - Invalid genre, halting." << std::endl;
       return(false);
@@ -729,7 +729,7 @@ bool isLegalTransCmd(std::string command, CustDB tgtCustDB, InvDB tgtInvDB) {
    char commandType = NULL;
    int custID = 1234512345;
    char format = NULL; // 'D' for DVD on all titles
-   char genre;
+   char genre = NULL;
    int releaseMonth = 0; // (in case of Classic)
    int releaseYear = 0;
    std::string director = "";
@@ -739,7 +739,7 @@ bool isLegalTransCmd(std::string command, CustDB tgtCustDB, InvDB tgtInvDB) {
    // TODO: Parse command type off string
 
    // Test if the commandType is within range first
-   if (commandType != ('I' || 'H' || 'B' || 'R')) {
+   if ((commandType != 'I') || (commandType != 'H') || (commandType != 'B') || (commandType != 'R')) {
       std::cout << "Transaction command error:" << std::endl;
       std::cout << "   - Invalid command type, halting." << std::endl;
       return(false);
@@ -768,7 +768,7 @@ bool isLegalTransCmd(std::string command, CustDB tgtCustDB, InvDB tgtInvDB) {
    }
 
    // Test if customer is in the database
-   if (!tgtCustDB.doesContain[custID]) {
+   if (!tgtCustDB.doesContain(custID)) {
       // Append the error log
       errorLog = errorLog + "   - Non-existent customer" + "\n";
       // And toggle the flag
@@ -796,7 +796,7 @@ bool isLegalTransCmd(std::string command, CustDB tgtCustDB, InvDB tgtInvDB) {
    // TODO: Parse genre
 
    // Test if genre is within range
-   if (genre != ('C' || 'F' || 'D')) {
+   if ((genre != 'C') || (genre != 'F') || (genre != 'D')) {
       std::cout << "Inventory command error:" << std::endl;
       std::cout << "   - Invalid genre, halting." << std::endl;
       std::cout << errorLog << std::endl;
