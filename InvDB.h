@@ -129,7 +129,7 @@ public:
 
    Film* retrieve(Film*);
 
-   std::string toString();
+   std::string const toString();
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
