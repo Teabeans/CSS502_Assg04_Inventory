@@ -59,14 +59,14 @@
 
 // Necessary for transaction objects
 #include "Trans.h"
-#include "Borrow.h"
-#include "Return.h"
+#include "TransBorrow.h"
+#include "TransReturn.h"
 
 // Necessary for film objects
 #include "Film.h"
-#include "Comedy.h"
-#include "Drama.h"
-#include "Classic.h"
+#include "FilmComedy.h"
+#include "FilmDrama.h"
+#include "FilmClassic.h"
 
 // For testing purposes
 #include "Cust.h"
