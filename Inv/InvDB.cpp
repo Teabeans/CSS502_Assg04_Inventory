@@ -1,3 +1,48 @@
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+// UW CSS 502A - Assignment 4 - Inventory Management
+// InvDB.cpp
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+
+//-----------------------------------------------------------------------------|
+// Authorship
+//-----------------------------------------------------------------------------|
+//
+// Matt Gross & Tim Lum
+// mattgrosspersonal@gmail.com + twhlum@gmail.com
+// Created:  2018.03.03
+// Modified: 2018.03.--
+// For the University of Washington Bothell, CSS 502A
+// Winter 2018, Graduate Certificate in Software Design & Development (GCSDD)
+//
+
+//-----------------------------------------------------------------------------|
+// File Description
+//-----------------------------------------------------------------------------|
+//
+// This is the implementation file for the InvDB.h header, representing a
+// database of film objects
+//
+
+//-----------------------------------------------------------------------------|
+// Package Files
+//-----------------------------------------------------------------------------|
+//
+// See Github repository
+// https://github.com/Teabeans/CSS502_Assg04_Inventory
+//
+
+//-------------------------------------|
+// Begin Student Code
+//-------------------------------------|
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       INCLUDE STATEMENTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+
 #include "InvDB.h"
 
 // film types
@@ -48,47 +93,110 @@
 // Invars: NULL
 /// std::vector<Classic> classics;
 
-std::string InvDB::toString() {
-   std::string retString = "";
 
-   retString += "Comedy Films: \n";
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       PRIVATE METHODS (-)
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+
+int InvDB::hashTitle(std::string someTitle) {
+   // TODO: Implement or discard?
+   return(0);
+}
+
+bool InvDB::isValid(std::string someCommand) {
+   // TODO: Implement or discard?
+   return(true);
+}
+
+
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       PUBLIC FIELDS (+)
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+
+// (+) --------------------------------|
+// #addClassic(Classic*)
+//-------------------------------------|
+// Desc:    Adds a new film onject to the list
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+bool InvDB::addClassic(Classic* film) {
+   // sorted by release date, then actor -- 
+
+   // TODO: Update film objects to support actor as just a string
+   // update classic constructor with actor as a string
+   // update display method to just display a list of all classic films sorted by the new actor field
+   // update adjustStock to handle sharing invetory between classic films with the same title and release date
+
+
+   classics.push_back(*film);
+   return true;
+}
+
+// (+) --------------------------------|
+// #addComedy(Comedy*)
+//-------------------------------------|
+// Desc:    Adds a new film onject to the list
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+bool InvDB::addComedy(Comedy* film) {
+
+   int index = 0;
+   auto iterator = comedies.begin();
 
    for (int i = 0; i < comedies.size(); i++) {
-      retString += std::to_string(comedies.at(i).getStock()) + ", ";
-      retString += comedies.at(i).getTitle() + ", ";
-      retString += comedies.at(i).getDirector() + ", ";
-      retString += std::to_string(comedies.at(i).getReleaseDate()) + "\n";
+      if (comedies.at(i) > *film) break;
+      iterator++;
+      std::cerr << "i: " << i << std::endl;
    }
 
+   comedies.insert(iterator, *film);
+   return true;
+}
 
-   retString += "Drama Films: \n";
+// (+) --------------------------------|
+// #addDrama(Drama*)
+//-------------------------------------|
+// Desc:    Adds a new film onject to the list
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+bool InvDB::addDrama(Drama* film) {
 
+   int index = 0;
+   auto iterator = dramas.begin();
    for (int i = 0; i < dramas.size(); i++) {
-      retString += std::to_string(dramas.at(i).getStock()) + ", ";
-      retString += dramas.at(i).getTitle() + ", ";
-      retString += dramas.at(i).getDirector() + ", ";
-      retString += std::to_string(dramas.at(i).getReleaseDate()) + "\n";
+      if (dramas.at(i) > *film) break;
+      iterator++;
+      std::cerr << "i: " << i << std::endl;
    }
-
-
-   retString += "Classic Films: \n";
-
-   for (int i = 0; i < classics.size(); i++) {
-      retString += std::to_string(classics.at(i).getStock()) + ", ";
-      retString += classics.at(i).getTitle() + ", ";
-      retString += classics.at(i).getDirector() + ", ";
-      retString += classics.at(i).getReleaseDate() + "\n";
-   }
-
-   return (retString);
+   dramas.insert(iterator, *film);
+   return true;
 }
 
-void InvDB::display() {
-
-   std::cout << toString();
-}
-
-void InvDB::adjustStock(Trans& trans) {
+// (+) --------------------------------|
+// #adjustStock(Trans&)
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+void InvDB::adjustStock(Trans& trans) { // TODO: Add const to Trans& argument?
 
    std::cerr << "Trans Data: " << trans.getTitle() << " : " << trans.getRelease() << std::endl;
 
@@ -116,9 +224,15 @@ void InvDB::adjustStock(Trans& trans) {
 
 }
 
-
-
-
+// (+) --------------------------------|
+// #contains(Film*)
+//-------------------------------------|
+// Desc:    Outputs a string representation of the InvDB
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
 bool InvDB::contains(Film* film) {
 
    // search the table for the film being added to see if it's already present
@@ -172,7 +286,43 @@ bool InvDB::contains(Film* film) {
    }
 }
 
+// (+) --------------------------------|
+// #display()
+//-------------------------------------|
+// Desc:    Displays to cout the status of the InvDB
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+void InvDB::display() {
+   std::cout << toString();
+}
 
+// (+) --------------------------------|
+// #isLegal()
+//-------------------------------------|
+// Desc:    Tests the legality of a received command string
+//          Outputs an error to cout for illegal conditions
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+bool InvDB::isLegal(std::string command) {
+   // TODO: Implement
+   return true;
+}
+
+// (+) --------------------------------|
+// #retrieve(Film*)
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
 Film* InvDB::retrieve(Film* film) {
 
    // search the table for the film being added to see if it's already present
@@ -222,74 +372,49 @@ Film* InvDB::retrieve(Film* film) {
    }
 }
 
+// (+) --------------------------------|
+// #toString()
+//-------------------------------------|
+// Desc:    Outputs a string representation of the InvDB
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+std::string const InvDB::toString() { // TODO: @MG - Verify inclusion of const?
+   std::string retString = "";
 
-
-
-/**
- * addComedy
- * Desc: adds a new film onject to the list
-**/
-bool InvDB::addComedy(Comedy* film) {
-
-   int index = 0;
-   auto iterator = comedies.begin();
+   retString += "Comedy Films: \n";
 
    for (int i = 0; i < comedies.size(); i++) {
-      if (comedies.at(i) > *film) break;
-      iterator++;
-      std::cerr << "i: " << i << std::endl;
+      retString += std::to_string(comedies.at(i).getStock()) + ", ";
+      retString += comedies.at(i).getTitle() + ", ";
+      retString += comedies.at(i).getDirector() + ", ";
+      retString += std::to_string(comedies.at(i).getReleaseDate()) + "\n";
    }
 
-   comedies.insert(iterator, *film);
-   return true;
-}
 
-/**
- * addDrama
- * Desc: adds a new film onject to the list
-**/
-bool InvDB::addDrama(Drama* film) {
+   retString += "Drama Films: \n";
 
-   int index = 0;
-   auto iterator = dramas.begin();
    for (int i = 0; i < dramas.size(); i++) {
-      if (dramas.at(i) > *film) break;
-      iterator++;
-      std::cerr << "i: " << i << std::endl;
+      retString += std::to_string(dramas.at(i).getStock()) + ", ";
+      retString += dramas.at(i).getTitle() + ", ";
+      retString += dramas.at(i).getDirector() + ", ";
+      retString += std::to_string(dramas.at(i).getReleaseDate()) + "\n";
    }
-   dramas.insert(iterator, *film);
-   return true;
-}
-
-/**
- * addClassic
- * Desc: adds a new film onject to the list
-**/
-bool InvDB::addClassic(Classic* film) {
-   // sorted by release date, then actor -- 
-
-   // TODO: Update film objects to support actor as just a string
-   // update classic constructor with actor as a string
-   // update display method to just display a list of all classic films sorted by the new actor field
-   // update adjustStock to handle sharing invetory between classic films with the same title and release date
 
 
-   classics.push_back(*film);
-   return true;
-}
+   retString += "Classic Films: \n";
 
-/**
- * isLegal
- * Desc: checks that an item exists, 
-**/
-bool InvDB::isLegal(std::string command) {
+   for (int i = 0; i < classics.size(); i++) {
+      retString += std::to_string(classics.at(i).getStock()) + ", ";
+      retString += classics.at(i).getTitle() + ", ";
+      retString += classics.at(i).getDirector() + ", ";
+      retString += classics.at(i).getReleaseDate() + "\n";
+   }
 
-   return true;
-}
-
-
-
-
+   return (retString);
+} // Closing toString()
 
 
 
@@ -299,20 +424,28 @@ bool InvDB::isLegal(std::string command) {
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
-/**
- * Int Constructor
- * Desc: uses a default size to dynamically allocate a new array
-**/
+// (+) --------------------------------|
+// #InvDB()
+//-------------------------------------|
+// Desc:    Default InvDB constructor
+// Params:  NULL
+// PreCons: NULL
+// PosCons: An empty InvDB object has been created
+// RetVal:  None
+// MetCall: NULL
 InvDB::InvDB() {
+   // TODO: Initialize all fields to something (lest g++ balks)
+} // Closing InvDB()
 
-}
-
-/**
- * Int Constructor
- * Desc: takes in a size array and dynamically allocates an array to hold
- * the film titles
- * Pre: expects size to be generated by IntenvoryController
-**/
+// (+) --------------------------------|
+// #InvDB()
+//-------------------------------------|
+// Desc:    InvDB constructor by bulk command set
+// Params:  ifstream& arg1 - The bulk set of inventory commands
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  None
+// MetCall: NULL
 InvDB::InvDB(std::ifstream& data) {
 
    while (!data.eof()) {
@@ -344,8 +477,23 @@ InvDB::InvDB(std::ifstream& data) {
    }
 }
 
+// (+) --------------------------------|
+// #~InvDB()
+//-------------------------------------|
+// Desc:    InvDB deconstructor
+// Params:  ifstream& arg1 - The bulk set of inventory commands
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  None
+// MetCall: NULL
 InvDB::~InvDB() {
    // std::cerr << "destruct invDB" << std::endl;
 
    // std::cerr << "end destruct invDB" << std::endl;
 }
+
+//-------------------------------------|
+// End Student Code
+//-------------------------------------|
+
+// End of file - InvDB.cpp
