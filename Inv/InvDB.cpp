@@ -244,6 +244,7 @@ bool InvDB::addClassic(Classic* film) {
 
 
    classics.push_back(*film);
+   return(true);
 }
 
 /**
