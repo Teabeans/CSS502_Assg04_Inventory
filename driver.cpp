@@ -55,7 +55,7 @@
 
 // Necessary for database objects
 #include "InvDB.h"
-// #include "CustDB.h"
+#include "CustDB.h"
 
 // Necessary for transaction objects
 #include "Trans.h"
@@ -68,9 +68,8 @@
 #include "FilmDrama.h"
 #include "FilmClassic.h"
 
-// For testing purposes
+// Necessary for customer objects
 #include "Cust.h"
-#include "CustDB.h"
 
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
@@ -97,8 +96,16 @@ bool isLegalInvCmd(std::string command, InvDB tgtDB);
 // Legality check - Transaction commands
 bool isLegalTransCmd(std::string command, CustDB tgtDB, InvDB tgtInvDB);
 
-// Begin program
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       MAIN()
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+
 int main() {
+
+
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
@@ -106,6 +113,7 @@ int main() {
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
    if (true) {
+
       std::cerr << "--- BEGIN FILM CLASS TESTS ---" << std::endl;
 
       // default constructor
@@ -161,201 +169,202 @@ int main() {
 //       CUSTOMER DATABASE TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
+   if (false) {
 
-   // std::cout << "--- START CUSTOMER DATABASE TESTS ---" << std::endl << std::endl;
+      std::cout << "--- START CUSTOMER DATABASE TESTS ---" << std::endl << std::endl;
 
-   // // Instantitate a new customer database
-   // std::cout << "Creating a default CustDB..." << std::endl << std::endl;
-   // CustDB testCustDB = CustDB();
+      // Instantitate a new customer database
+      std::cout << "Creating a default CustDB..." << std::endl << std::endl;
+      CustDB testCustDB = CustDB();
 
-   // std::cout << "Creating a transaction from string 'B 1111 D F Ferries and You: A Primer, 2018'..." << std::endl << std::endl;
-   // Trans testTransaction = Trans("B 1111 D F Ferries and You: A Primer, 2018");
+      std::cout << "Creating a transaction from string 'B 1111 D F Ferries and You: A Primer, 2018'..." << std::endl << std::endl;
+      Trans testTransaction = Trans("B 1111 D F Ferries and You: A Primer, 2018");
 
-   // // Create two new customers
-   // std::cout << "Creating two new customers..." << std::endl << std::endl;
-   // // 1111 Jane Doe
-   // Cust* testCustomer1 = new Cust("Jane", "Doe", 1111);
-   // // 9000 Boaty McBoatface
-   // Cust* testCustomer2 = new Cust("Boaty", "McBoatface", 9000);
+      // Create two new customers
+      std::cout << "Creating two new customers..." << std::endl << std::endl;
+      // 1111 Jane Doe
+      Cust* testCustomer1 = new Cust("Jane", "Doe", 1111);
+      // 9000 Boaty McBoatface
+      Cust* testCustomer2 = new Cust("Boaty", "McBoatface", 9000);
 
-   // // Check customer instantiation
-   // std::cout << "Customer 1 & 2 constructor results:" << std::endl;
-   // std::cout << testCustomer1->toString() << std::endl;
-   // std::cout << testCustomer2->toString() << std::endl;
-   // std::cout << std::endl;
+      // Check customer instantiation
+      std::cout << "Customer 1 & 2 constructor results:" << std::endl;
+      std::cout << testCustomer1->toString() << std::endl;
+      std::cout << testCustomer2->toString() << std::endl;
+      std::cout << std::endl;
 
-   // // Check the history of customer 1
-   // std::cout << "Checking history of customer 1:" << std::endl;
-   // std::cout << testCustomer1->getHistory() << std::endl << std::endl;
+      // Check the history of customer 1
+      std::cout << "Checking history of customer 1:" << std::endl;
+      std::cout << testCustomer1->getHistory() << std::endl << std::endl;
 
-   // // Attempt to append history to customer 1
-   // std::cout << "Testing appendHistory(string)..." << std::endl << std::endl;
-   // testCustomer1->appendHistory(testTransaction.toString());
+      // Attempt to append history to customer 1
+      std::cout << "Testing appendHistory(string)..." << std::endl << std::endl;
+      testCustomer1->appendHistory(testTransaction.toString());
 
-   // // Check the history of customer 1 again
-   // std::cout << "Checking the history of customer 1 after append:" << std::endl;
-   // std::cout << testCustomer1->getHistory() << std::endl;
+      // Check the history of customer 1 again
+      std::cout << "Checking the history of customer 1 after append:" << std::endl;
+      std::cout << testCustomer1->getHistory() << std::endl;
 
-   // // Attempt to insert customers to database
-   // std::cout << "Inserting customers 1 and 2 to database..." << std::endl << std::endl;
-   // testCustDB.insertCustomer(testCustomer1);
-   // testCustDB.insertCustomer(testCustomer2);
+      // Attempt to insert customers to database
+      std::cout << "Inserting customers 1 and 2 to database..." << std::endl << std::endl;
+      testCustDB.insertCustomer(testCustomer1);
+      testCustDB.insertCustomer(testCustomer2);
 
-   // // Check insertion
-   // std::cout << "Checking insertion results:" << std::endl;
-   // std::cout << testCustDB.toString() << std::endl << std::endl;
+      // Check insertion
+      std::cout << "Checking insertion results:" << std::endl;
+      std::cout << testCustDB.toString() << std::endl << std::endl;
 
-   // std::cout << "--- END CUSTOMER DATABASE TESTS ---" << std::endl << std::endl;
+      std::cout << "--- END CUSTOMER DATABASE TESTS ---" << std::endl << std::endl;
 
-// END CUSTOMER DATABASE TESTS
+   } // END CUSTOMER DATABASE TESTS
 
 
 
-/*
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
 //       INV DATABASE TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
+   if (false) {
 
-   std::cout << "--- START INVENTORY DATABASE TESTS ---" << std::endl << std::endl;
+      std::cout << "--- START INVENTORY DATABASE TESTS ---" << std::endl << std::endl;
 
-   // Create a new inventory database object
-   std::cout << "Creating an empty InvDB object..." << std::endl << std::endl;
-   InvDB testInvDB;
+      // Create a new inventory database object
+      std::cout << "Creating an empty InvDB object..." << std::endl << std::endl;
+      InvDB testInvDB;
 
-   std::cout << "Create an InvDB object from bulk input..." << std::endl << std::endl;
-   std::ifstream inventoryFile("data4movies.txt");
-   InvDB testinvDB(inventoryFile);
+      std::cout << "Create an InvDB object from bulk input..." << std::endl << std::endl;
+      std::ifstream inventoryFile("data4movies.txt");
+      InvDB testinvDB(inventoryFile);
 
 
-   // Create three new films
-   std::cout << "Creating three new films..." << std::endl << std::endl;
-   Classic filmAA("C, 10, Victor Fleming, The Wizard of Oz, Judy Garland 7 1939");
-   Comedy filmBB("F, 10, Nora Ephron, Sleepless in Seattle, 1993");
-   Drama filmCC("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
+      // Create three new films
+      std::cout << "Creating three new films..." << std::endl << std::endl;
+      Classic filmAA("C, 10, Victor Fleming, The Wizard of Oz, Judy Garland 7 1939");
+      Comedy filmBB("F, 10, Nora Ephron, Sleepless in Seattle, 1993");
+      Drama filmCC("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
 
-   // Attempt to add these films to the inventory database
-   std::cout << "Adding films to the testInvDB..." << std::endl << std::endl;
-   testInvDB.addFilm(&filmAA);
-   testInvDB.addFilm(&filmBB);
+      // Attempt to add these films to the inventory database
+      std::cout << "Adding films to the testInvDB..." << std::endl << std::endl;
+      testInvDB.addFilm(&filmAA);
+      testInvDB.addFilm(&filmBB);
    
-   // Test Display method
-   std::cout << std::endl;
-   std::cout << "State of testInvDB:" << std::endl;
-   std::cout << testInvDB.toString() << std::endl << std::endl;
+      // Test Display method
+      std::cout << std::endl;
+      std::cout << "State of testInvDB:" << std::endl;
+      std::cout << testInvDB.toString() << std::endl << std::endl;
 
-   std::cout << "State of Real testinvDB:" << std::endl;
-   std::cout << testinvDB.toString() << std::endl << std::endl;
+      std::cout << "State of Real testinvDB:" << std::endl;
+      std::cout << testinvDB.toString() << std::endl << std::endl;
 
-   // Query quantities of each film
-   std::cout << "testinvDB contains Oz: " << testInvDB.contains(&filmAA) << std::endl;
-   std::cout << "testinvDB contains Seattle: " << testInvDB.contains(&filmBB) << std::endl;
-   std::cout << "testinvDB contains Lambs: " << testInvDB.contains(&filmCC) << std::endl;
+      // Query quantities of each film
+      std::cout << "testinvDB contains Oz: " << testInvDB.contains(&filmAA) << std::endl;
+      std::cout << "testinvDB contains Seattle: " << testInvDB.contains(&filmBB) << std::endl;
+      std::cout << "testinvDB contains Lambs: " << testInvDB.contains(&filmCC) << std::endl;
 
-   testInvDB.addFilm(&filmCC);
-   std::cout << "Oz Qty: " << testInvDB.retrieve(&filmAA)->getStock() << std::endl;
-   std::cout << "Seattle Qty: " << testInvDB.retrieve(&filmBB)->getStock() << std::endl;
-   std::cout << "Lambs Qty: " << testInvDB.retrieve(&filmCC)->getStock() << std::endl;
+      testInvDB.addFilm(&filmCC);
+      std::cout << "Oz Qty: " << testInvDB.retrieve(&filmAA)->getStock() << std::endl;
+      std::cout << "Seattle Qty: " << testInvDB.retrieve(&filmBB)->getStock() << std::endl;
+      std::cout << "Lambs Qty: " << testInvDB.retrieve(&filmCC)->getStock() << std::endl;
 
-   // Create an invalid return (one that has no borrow)
-   std::cout << "Creating an erroneous return (no corresponding borrow)";
-   // TODO: Write test
+      // Create an invalid return (one that has no borrow)
+      std::cout << "Creating an erroneous return (no corresponding borrow)";
+      // TODO: Write test
    
-   // Create borrow transactions
-   std::cout << "Creating borrow transactions..." << std::endl << std::endl;
-   Trans BTestC = Trans("B 1234 C The Wizard of Oz, 7 1939");
-   Trans BTestD = Trans("B 1234 D Silence of the Lambs, 1991");
-   Trans BTestF = Trans("B 1234 F Sleepless in Seattle, 1993");
+      // Create borrow transactions
+      std::cout << "Creating borrow transactions..." << std::endl << std::endl;
+      Trans BTestC = Trans("B 1234 C The Wizard of Oz, 7 1939");
+      Trans BTestD = Trans("B 1234 D Silence of the Lambs, 1991");
+      Trans BTestF = Trans("B 1234 F Sleepless in Seattle, 1993");
 
-   // Create return transactions
-   std::cout << "Creating return transactions..." << std::endl << std::endl;
-   Trans RTestC = Trans("R 1234 C The Wizard of Oz, 7 1939");
-   Trans RTestD = Trans("R 1234 D Silence of the Lambs, 1991");
-   Trans RTestF = Trans("R 1234 F Sleepless in Seattle, 1993");
+      // Create return transactions
+      std::cout << "Creating return transactions..." << std::endl << std::endl;
+      Trans RTestC = Trans("R 1234 C The Wizard of Oz, 7 1939");
+      Trans RTestD = Trans("R 1234 D Silence of the Lambs, 1991");
+      Trans RTestF = Trans("R 1234 F Sleepless in Seattle, 1993");
 
-   // Send a transaction
-   // TODO: Finish Transaction class constructor string parsing
-   // testInvDB.adjustStock(BTestF);
-   // testInvDB.adjustStock(RTestD);
-   // testInvDB.adjustStock(BTestF);
+      // Send a transaction
+      // TODO: Finish Transaction class constructor string parsing
+      // testInvDB.adjustStock(BTestF);
+      // testInvDB.adjustStock(RTestD);
+      // testInvDB.adjustStock(BTestF);
 
-   // Test Display method
-   std::cout << std::endl;
-   std::cout << "Post-Transaction State of testInvDB:" << std::endl;
-   std::cout << testInvDB.toString() << std::endl << std::endl;
+      // Test Display method
+      std::cout << std::endl;
+      std::cout << "Post-Transaction State of testInvDB:" << std::endl;
+      std::cout << testInvDB.toString() << std::endl << std::endl;
 
-   // Query film states again
+      // Query film states again
 
-   std::cout << "--- END INVENTORY DATABASE TESTS ---" << std::endl << std::endl;
+      std::cout << "--- END INVENTORY DATABASE TESTS ---" << std::endl << std::endl;
 
-// END INVENTORY DATABASE TESTS
+   } // END INVENTORY DATABASE TESTS
 
-*/
 
-   
-   
+
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
 //       BULK CUSTOMERDB INPUT TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
+   if (false) {
 
-   // std::cout << "--- START BULK CUSTOMERDB INPUT TESTS ---" << std::endl << std::endl;
-   
-   // // Test the customerDB bulk inputs
-   // std::cout << "Testing customerDB bulk inputs..." << std::endl << std::endl;
+      std::cout << "--- START BULK CUSTOMERDB INPUT TESTS ---" << std::endl << std::endl;
 
-   // // Test the customerDB bulk inputs
-   // std::cout << "Creating an empty CustDB object..." << std::endl << std::endl;
+      // Test the customerDB bulk inputs
+      std::cout << "Testing customerDB bulk inputs..." << std::endl << std::endl;
 
-   // // Capture command file to filestream
-   // std::cout << "Capture bulk input to fileStream..." << std::endl << std::endl;
-   
-   // // Have the Inventory Controller (main()) parse the file and perform insertion actions
-   // std::cout << "Sending bulk commands to CustDB object..." << std::endl << std::endl;
-   
-   // // Test isLegalCust() logic
-   // std::cout << "The first command isLegal(): " << "<isLegal() result goes here>" << " (0 expected, plus error report)" << std::endl << std::endl;
+      // Test the customerDB bulk inputs
+      std::cout << "Creating an empty CustDB object..." << std::endl << std::endl;
 
-   // // Check if the commands were SUPER EFFECTIVE!
-   // std::cout << "Check state of CustDB after bulk input:" << std::endl << std::endl;
-      
-   // std::cout << "--- END BULK CUSTOMERDB INPUT TESTS ---" << std::endl << std::endl;
-   
-// END BULK CUSTOMERDB INPUT TESTS 
-   
-   
-   
+      // Capture command file to filestream
+      std::cout << "Capture bulk input to fileStream..." << std::endl << std::endl;
+
+      // Have the Inventory Controller (main()) parse the file and perform insertion actions
+      std::cout << "Sending bulk commands to CustDB object..." << std::endl << std::endl;
+
+      // Test isLegalCust() logic
+      std::cout << "The first command isLegal(): " << "<isLegal() result goes here>" << " (0 expected, plus error report)" << std::endl << std::endl;
+
+      // Check if the commands were SUPER EFFECTIVE!
+      std::cout << "Check state of CustDB after bulk input:" << std::endl << std::endl;
+
+      std::cout << "--- END BULK CUSTOMERDB INPUT TESTS ---" << std::endl << std::endl;
+
+   } // END BULK CUSTOMERDB INPUT TESTS 
+
+
+
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
 //       BULK INVENTORYDB INPUT TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
+   if (false) {
 
-   // std::cout << "--- START BULK INVENTORYDB INPUT TESTS ---" << std::endl << std::endl;
+      std::cout << "--- START BULK INVENTORYDB INPUT TESTS ---" << std::endl << std::endl;
    
-   // // Test the inventoryDB bulk inputs
-   // std::cout << "Testing inventoryDB bulk inputs..." << std::endl << std::endl;
+      // Test the inventoryDB bulk inputs
+      std::cout << "Testing inventoryDB bulk inputs..." << std::endl << std::endl;
 
-   // // Test the inventoryDB bulk inputs
-   // std::cout << "Creating an empty InvDB object..." << std::endl << std::endl;
+      // Test the inventoryDB bulk inputs
+      std::cout << "Creating an empty InvDB object..." << std::endl << std::endl;
 
-   // // Capture command file to filestream
-   // std::cout << "Capture bulk input to fileStream..." << std::endl << std::endl;
+      // Capture command file to filestream
+      std::cout << "Capture bulk input to fileStream..." << std::endl << std::endl;
    
-   // // Have the Inventory Controller (main()) parse the file and perform insertion actions
-   // std::cout << "Sending bulk commands to InvDB object..." << std::endl << std::endl;
+      // Have the Inventory Controller (main()) parse the file and perform insertion actions
+      std::cout << "Sending bulk commands to InvDB object..." << std::endl << std::endl;
    
-   // // Test isLegalInv() logic
-   // std::cout << "The first command isLegal(): " << "<isLegal() result goes here>" << " (0 expected, plus error report)" << std::endl << std::endl;
+      // Test isLegalInv() logic
+      std::cout << "The first command isLegal(): " << "<isLegal() result goes here>" << " (0 expected, plus error report)" << std::endl << std::endl;
 
-   // // Check if the commands were SUPER EFFECTIVE!
-   // std::cout << "Check state of InvDB after bulk input:" << std::endl << std::endl;
+      // Check if the commands were SUPER EFFECTIVE!
+      std::cout << "Check state of InvDB after bulk input:" << std::endl << std::endl;
    
-   // std::cout << "--- END BULK INVENTORYDB INPUT TESTS ---" << std::endl << std::endl;
+      std::cout << "--- END BULK INVENTORYDB INPUT TESTS ---" << std::endl << std::endl;
 
-// END BULK CUSTOMERDB INPUT TESTS
+   } // END BULK CUSTOMERDB INPUT TESTS
    
 
    
@@ -364,90 +373,95 @@ int main() {
 //       BULK COMMAND INPUT TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-   
-   // std::cout << "--- START BULK COMMAND INPUT TESTS ---" << std::endl << std::endl;
-   
-   // // Generate a test InvDB and CustDB
-   // std::cout << "Generating empty InvDB and CustDB objects..." << std::endl << std::endl;
-   // InvDB BulkInvDB = InvDB();
-   // CustDB BulkCustDB = CustDB();
-   
-   // // Minimally populate these two DBs
-   // std::cout << "Populating the two databases..." << std::endl << std::endl;
-   
-   // // Capture the command file to a stream
-   // std::cout << "Loading the command file..." << std::endl << std::endl;
-   
-   // // Parse the stream
-   // std::cout << "Parsing the command stream..." << std::endl << std::endl;
-   
-   // // Test isLegal() logic
-   // std::cout << "Testing isLegal() logic:" << std::endl;
-   // std::cout << std::endl;
-   
-   // // Generate transaction objects from legal commands
-   // // Send these transactions to both the InvDB and CustDB
-   // std::cout << "Generating and sending test transactions..." << std::endl << std::endl;
-   // // call bulkProcess()
-         
-   // // Check results
-   // std::cout << "Results of bulk processing" << std::endl;
-   // std::cout << "InvDB status:" << std::endl << BulkInvDB.toString() << std::endl << std::endl;
-   // std::cout << "CustDB status:" << std::endl << BulkCustDB.toString() << std::endl << std::endl;
+   if (false) {
+      std::cout << "--- START BULK COMMAND INPUT TESTS ---" << std::endl << std::endl;
 
-   
-   // std::cout << "--- END BULK COMMAND INPUT TESTS ---" << std::endl << std::endl;
-   
-// END BULK COMMAND INPUT TESTS
+      // Generate a test InvDB and CustDB
+      std::cout << "Generating empty InvDB and CustDB objects..." << std::endl << std::endl;
+      InvDB BulkInvDB = InvDB();
+      CustDB BulkCustDB = CustDB();
 
-   
-   
+      // Minimally populate these two DBs
+      std::cout << "Populating the two databases..." << std::endl << std::endl;
+
+      // Capture the command file to a stream
+      std::cout << "Loading the command file..." << std::endl << std::endl;
+
+      // Parse the stream
+      std::cout << "Parsing the command stream..." << std::endl << std::endl;
+
+      // Test isLegal() logic
+      std::cout << "Testing isLegal() logic:" << std::endl;
+      std::cout << std::endl;
+
+      // Generate transaction objects from legal commands
+      // Send these transactions to both the InvDB and CustDB
+      std::cout << "Generating and sending test transactions..." << std::endl << std::endl;
+      // call bulkProcess()
+
+      // Check results
+      std::cout << "Results of bulk processing" << std::endl;
+      std::cout << "InvDB status:" << std::endl << BulkInvDB.toString() << std::endl << std::endl;
+      std::cout << "CustDB status:" << std::endl << BulkCustDB.toString() << std::endl << std::endl;
+
+      std::cout << "--- END BULK COMMAND INPUT TESTS ---" << std::endl << std::endl;
+
+   } // END BULK COMMAND INPUT TESTS
+
+
+
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
 //       FOR REALSIES EXECUTION
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-   
-   // Acquire the relevant files
+   if (true) {
+      // Acquire the relevant files
 
-   std::ifstream commandFile("data4commands.txt");
-   // std::ifstream customerFile("data4customers.txt");
-   std::ifstream inventoryFile("data4movies.txt");
-   InvDB invDB(inventoryFile);
+      std::ifstream commandFile("data4commands.txt");
+      // std::ifstream customerFile("data4customers.txt");
+      std::ifstream inventoryFile("data4movies.txt");
+      InvDB invDB(inventoryFile);
 
 
 
-   // Generate Transactions from the CommandFile and send Transaction impacts to the appropriate locations
-   while (!commandFile.eof()) {
-      // Read the next relevant line of command
-      std::string command;
-      std::getline(commandFile, command);
+      // Generate Transactions from the CommandFile and send Transaction impacts to the appropriate locations
+      while (!commandFile.eof()) {
+         // Read the next relevant line of command
+         std::string command;
+         std::getline(commandFile, command);
 
-      // create a transaction and check for transaction legality
-      Trans* currTrans = nullptr;
+         // create a transaction and check for transaction legality
+         Trans* currTrans = nullptr;
 
-      // make sure the line contains data
-      if (command.length() >= 1) {
+         // make sure the line contains data
+         if (command.length() >= 1) {
 
-         // call the factory method to determine type of transaction
-         currTrans = currTrans->factory(command);
-      }
+            // call the factory method to determine type of transaction
+            currTrans = currTrans->factory(command);
+         }
 
-      // Queries isLegal() in Transactions, invDB, and custDB
-      if (invDB.isLegal(command) /* && custDB.isLegal(command)*/ ) {
+         // Queries isLegal() in Transactions, invDB, and custDB
+         if (invDB.isLegal(command) /* && custDB.isLegal(command)*/ ) {
 
-         // Send the Transaction to the Databases for execution
-         invDB.adjustStock(*currTrans);
-         // custDB.appendHistory(currTrans);
-      }
+            // Send the Transaction to the Databases for execution
+            invDB.adjustStock(*currTrans);
+            // custDB.appendHistory(currTrans);
+         }
 
-      // deallocate current transaction now that it's been used
-      if (currTrans != nullptr) {
-         delete currTrans;
+         // deallocate current transaction now that it's been used
+         if (currTrans != nullptr) {
+            delete currTrans;
+         }
       }
    }
+
+
+
    return (0);
 } // Closing main()
+
+
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
