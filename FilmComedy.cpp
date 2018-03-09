@@ -1,7 +1,7 @@
 // Comedy.cpp
 #include <string>
 #include <iostream>
-#include "Comedy.h"
+#include "FilmComedy.h"
 
 Comedy::Comedy() {
 
