@@ -263,6 +263,20 @@ void CustDB::display() {
 } // Closing display()
 
 // (+) --------------------------------|
+// #doesContain()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+bool const CustDB::doesContain(int custID) {
+   // TODO: Implement
+   return(true);
+} // Closing doesContain()
+
+// (+) --------------------------------|
 // #insertCustomer(Cust&)
 //-------------------------------------|
 // Desc:    NULL
@@ -368,5 +382,9 @@ Cust* CustDB::getCustomerAt(int query) {
    CustDB::~CustDB() {
       this->obliviate();
    }
+
+//-------------------------------------|
+// End Student Code
+//-------------------------------------|
 
 // End of file - CustDB.cpp
