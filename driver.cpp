@@ -1,9 +1,48 @@
-/**
- * CSS502 Assignment 4: Matt Gross & Tim Lum - Group 7
- * File: Inventory Controller
- * Description: Holds the core business logic to manage two inventory databases
- * and process a list of transactions
-**/
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+// UW CSS 502A - Assignment 4 - Inventory Management
+// Driver.cpp
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+
+//-----------------------------------------------------------------------------|
+// Authorship
+//-----------------------------------------------------------------------------|
+//
+// Matt Gross & Tim Lum
+// mattgrosspersonal@gmail.com + twhlum@gmail.com
+// Created:  2018.03.03
+// Modified: 2018.03.--
+// For the University of Washington Bothell, CSS 502A
+// Winter 2018, Graduate Certificate in Software Design & Development (GCSDD)
+//
+
+//-----------------------------------------------------------------------------|
+// File Description
+//-----------------------------------------------------------------------------|
+//
+// An inventory control system. Utilizes InvDB and CustDB classes to manage a
+// database of film objects, generating and directing transactions created from
+// a set of bulk command documents.
+//
+
+//-----------------------------------------------------------------------------|
+// Package Files
+//-----------------------------------------------------------------------------|
+//
+// See Github repository
+// https://github.com/Teabeans/CSS502_Assg04_Inventory
+//
+
+//-------------------------------------|
+// Begin Student Code
+//-------------------------------------|
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       INCLUDE STATEMENTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
 
 // Necessary for file stream object handling
 #include <fstream>
@@ -15,29 +54,41 @@
 #include <string>
 
 // Necessary for database objects
-#include "Inv/InvDB.h"
+#include "InvDB.h"
 // #include "CustDB.h"
 
 // Necessary for transaction objects
-#include "Trans/Trans.h"
-#include "Trans/Borrow.h"
-#include "Trans/Return.h"
+#include "Trans.h"
+#include "Borrow.h"
+#include "Return.h"
 
 // Necessary for film objects
-#include "Inv/Film.h"
-#include "Inv/Comedy.h"
-#include "Inv/Drama.h"
-#include "Inv/Classic.h"
+#include "Film.h"
+#include "Comedy.h"
+#include "Drama.h"
+#include "Classic.h"
 
 // For testing purposes
-#include "Cust/Cust.h"
-#include "Cust/CustDB.h"
+#include "Cust.h"
+#include "CustDB.h"
 
 
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       METHOD DECLARATIONS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
 
-int main() {
+// TODO: Declare and implement
+// Bulk reader - Customers
+// Bulk reader - Inventory
+// Bulk reader - Transactions
+// Legality check - Customer commands
+// Legality check - Inventory commands
+// Legality check - Transaction commands
 
 // Begin program
+int main() {
    
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
@@ -150,6 +201,7 @@ int main() {
 
 
 
+/*
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
 //       INV DATABASE TESTS
@@ -164,7 +216,7 @@ int main() {
 
    std::cout << "Create an InvDB object from bulk input..." << std::endl << std::endl;
    std::ifstream inventoryFile("data4movies.txt");
-   InvDB invDB(inventoryFile);
+   InvDB testinvDB(inventoryFile);
 
 
    // Create three new films
@@ -175,23 +227,23 @@ int main() {
 
    // Attempt to add these films to the inventory database
    std::cout << "Adding films to the testInvDB..." << std::endl << std::endl;
-   testInvDB.addClassic(&filmAA);
-   testInvDB.addComedy(&filmBB);
+   testInvDB.addFilm(&filmAA);
+   testInvDB.addFilm(&filmBB);
    
    // Test Display method
    std::cout << std::endl;
    std::cout << "State of testInvDB:" << std::endl;
    std::cout << testInvDB.toString() << std::endl << std::endl;
 
-   std::cout << "State of Real invDB:" << std::endl;
-   std::cout << invDB.toString() << std::endl << std::endl;
+   std::cout << "State of Real testinvDB:" << std::endl;
+   std::cout << testinvDB.toString() << std::endl << std::endl;
 
    // Query quantities of each film
-   std::cout << "invDB contains Oz: " << testInvDB.contains(&filmAA) << std::endl;
-   std::cout << "invDB contains Seattle: " << testInvDB.contains(&filmBB) << std::endl;
-   std::cout << "invDB contains Lambs: " << testInvDB.contains(&filmCC) << std::endl;
+   std::cout << "testinvDB contains Oz: " << testInvDB.contains(&filmAA) << std::endl;
+   std::cout << "testinvDB contains Seattle: " << testInvDB.contains(&filmBB) << std::endl;
+   std::cout << "testinvDB contains Lambs: " << testInvDB.contains(&filmCC) << std::endl;
 
-   testInvDB.addDrama(&filmCC);
+   testInvDB.addFilm(&filmCC);
    std::cout << "Oz Qty: " << testInvDB.retrieve(&filmAA)->getStock() << std::endl;
    std::cout << "Seattle Qty: " << testInvDB.retrieve(&filmBB)->getStock() << std::endl;
    std::cout << "Lambs Qty: " << testInvDB.retrieve(&filmCC)->getStock() << std::endl;
@@ -228,6 +280,8 @@ int main() {
    std::cout << "--- END INVENTORY DATABASE TESTS ---" << std::endl << std::endl;
 
 // END INVENTORY DATABASE TESTS
+
+*/
 
    
    
@@ -338,11 +392,18 @@ int main() {
 
    
    
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       FOR REALSIES EXECUTION
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+   
    // Acquire the relevant files
 
    std::ifstream commandFile("data4commands.txt");
    // std::ifstream customerFile("data4customers.txt");
-
+   std::ifstream inventoryFile("data4movies.txt");
+   InvDB invDB(inventoryFile);
 
 
 
@@ -375,15 +436,25 @@ int main() {
          delete currTrans;
       }
    }
-
-
-
-
-
-
-
-
-
-
    return (0);
-} // End program
+} // Closing main()
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       METHOD IMPLEMENTATIONS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+
+// TODO: Declare and implement
+// Bulk reader - Customers
+// Bulk reader - Inventory
+// Bulk reader - Transactions
+// Legality check - Customer commands
+// Legality check - Inventory commands
+// Legality check - Transaction commands
+
+//-------------------------------------|
+// End Student Code
+//-------------------------------------|
+
+// End of file - driver.cpp
