@@ -64,13 +64,6 @@ private:
    bool doesConflict(Cust* custPtr, int query);
 
 //-----------------|
-// #isValid(string)
-//-----------------|
-// Desc:   Determines whether this string is a valid customerDB command
-// Invars: Return value is variable based on state of DB
-   bool isValid(std::string);
-
-//-----------------|
 // #hash(Cust*)
 //-----------------|
 // Desc:   Determines the appropriate index based on a customer pointer
@@ -128,6 +121,13 @@ public:
 // Desc:   NULL
 // Invars: NULL
    void insertCustomer(Cust*);
+
+//-----------------|
+// #isValid(string)
+//-----------------|
+// Desc:   Determines whether this string is a valid customerDB command
+// Invars: Return value is variable based on state of DB
+   bool isValid(std::string someCommand);
 
 //-----------------|
 // #getCustomerAt(int)
