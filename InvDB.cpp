@@ -334,7 +334,7 @@ bool InvDB::isLegal(std::string command) {
 // RetVal:  NULL
 // MetCall: NULL
 bool InvDB::isValid(std::string someCommand) {
-   // TODO: Implement or discard?
+   // TODO: Implement? Driver currently calls 'isValid', but that can be changed
    return(true);
 }
 
