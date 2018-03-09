@@ -46,7 +46,7 @@ std::string InvDB::toString() {
       retString += std::to_string(classics.at(i).getStock()) + ", ";
       retString += classics.at(i).getTitle() + ", ";
       retString += classics.at(i).getDirector() + ", ";
-      retString += std::to_string(classics.at(i).getReleaseDate()) + "\n";
+      retString += classics.at(i).getReleaseDate() + "\n";
    }
 
    return (retString);
@@ -189,70 +189,61 @@ Film* InvDB::retrieve(Film* film) {
    else {
       return NULL;
    }
-
-
 }
 
 
 
 
 /**
- * AddFilm
+ * addComedy
  * Desc: adds a new film onject to the list
 **/
-bool InvDB::addFilm(Film* film) {
+bool InvDB::addComedy(Comedy* film) {
 
    int index = 0;
+   auto iterator = comedies.begin();
 
-   // display all comedies
-         // sorted by title, then year
-
-   // then all dramas
-         // sorted by director, then title
-
-   // then all classics
-         // sorted by release date, then actor
-
-   if (contains(film) == false) {
-      if (film->getGenre() == 'F') {
-
-         auto iterator = comedies.begin();
-         for (int i = 0; i < comedies.size(); i++) {
-            if (comedies.at(i) > *film) break;
-            iterator++;
-            std::cerr << "i: " << i << std::endl;
-         }
-         comedies.insert(iterator, *film);
-      }
-
-      else if (film->getGenre() == 'D') {
-         auto iterator = dramas.begin();
-         for (int i = 0; i < dramas.size(); i++) {
-            if (dramas.at(i) > *film) break;
-            iterator++;
-            std::cerr << "i: " << i << std::endl;
-         }
-         dramas.insert(iterator, *film);
-      }
-
-      else if (film->getGenre() == 'C') {
-         classics.push_back(*film);
-      }
-      return true;
+   for (int i = 0; i < comedies.size(); i++) {
+      if (comedies.at(i) > *film) break;
+      iterator++;
+      std::cerr << "i: " << i << std::endl;
    }
 
-   // otherwise, if this is an existing classic, consolidate the actor name and
-   // inventory count
-   else if (contains(film) == true && film->getGenre() == 'C') {
+   comedies.insert(iterator, *film);
+   return true;
+}
 
-      int stock = retrieve(film)->getStock() + film->getStock();
-      retrieve(film)->setStock(stock);
+/**
+ * addDrama
+ * Desc: adds a new film onject to the list
+**/
+bool InvDB::addDrama(Drama* film) {
 
-      return true;
+   int index = 0;
+   auto iterator = dramas.begin();
+   for (int i = 0; i < dramas.size(); i++) {
+      if (dramas.at(i) > *film) break;
+      iterator++;
+      std::cerr << "i: " << i << std::endl;
    }
-   else {
-      return false;
-   }
+   dramas.insert(iterator, *film);
+   return true;
+}
+
+/**
+ * addClassic
+ * Desc: adds a new film onject to the list
+**/
+bool InvDB::addClassic(Classic* film) {
+   // sorted by release date, then actor -- 
+
+   // TODO: Update film objects to support actor as just a string
+   // update classic constructor with actor as a string
+   // update display method to just display a list of all classic films sorted by the new actor field
+   // update adjustStock to handle sharing invetory between classic films with the same title and release date
+
+
+   classics.push_back(*film);
 }
 
 /**
@@ -292,26 +283,25 @@ InvDB::InvDB() {
 **/
 InvDB::InvDB(std::ifstream& data) {
 
-
    while (!data.eof()) {
       // Read the next relevant line of command
       std::string filmData;
       std::getline(data, filmData);
 
       if (filmData.length() > 10) {
-         // create borrow object and run transaction
+         // create Comedy object and add to database
          if (filmData.at(0) == 'F') {
-            addFilm(new Comedy(filmData));
+            addComedy(new Comedy(filmData));
          }
 
-         // create return object and run transaction
+         // create Drama object and add to database
          else if (filmData.at(0) == 'D') {
-            addFilm(new Drama(filmData));
+            addDrama(new Drama(filmData));
          }
 
-         // check customer and display history
+         // check Classic object and add to database
          else if (filmData.at(0) == 'C') {
-            addFilm(new Classic(filmData));
+            addClassic(new Classic(filmData));
          }
 
          // otherwise, this is an invalid film type

@@ -175,8 +175,8 @@ int main() {
 
    // Attempt to add these films to the inventory database
    std::cout << "Adding films to the testInvDB..." << std::endl << std::endl;
-   testInvDB.addFilm(&filmAA);
-   testInvDB.addFilm(&filmBB);
+   testInvDB.addClassic(&filmAA);
+   testInvDB.addComedy(&filmBB);
    
    // Test Display method
    std::cout << std::endl;
@@ -191,7 +191,7 @@ int main() {
    std::cout << "invDB contains Seattle: " << testInvDB.contains(&filmBB) << std::endl;
    std::cout << "invDB contains Lambs: " << testInvDB.contains(&filmCC) << std::endl;
 
-   testInvDB.addFilm(&filmCC);
+   testInvDB.addDrama(&filmCC);
    std::cout << "Oz Qty: " << testInvDB.retrieve(&filmAA)->getStock() << std::endl;
    std::cout << "Seattle Qty: " << testInvDB.retrieve(&filmBB)->getStock() << std::endl;
    std::cout << "Lambs Qty: " << testInvDB.retrieve(&filmCC)->getStock() << std::endl;

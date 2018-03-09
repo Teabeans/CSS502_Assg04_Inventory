@@ -2,56 +2,70 @@
 
 #include <string>
 #include <vector>
-#include "Drama.h"
 
 class Film {
 
 public:
-   // get/set methods
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       OPERATORS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+
+   // title
    std::string getTitle();
-   int getStock();
-   int getReleaseDate();
-   char getGenre();
-   std::string getDirector();
    void setTitle(std::string);
+
+   // stock
+   int getStock();
    void setStock(int);
+
+   // release date
+   int getReleaseDate();
    void setReleaseDate(int);
+
+   // genre
+   char getGenre();
    void setGenre(char);
+
+   // director
+   std::string getDirector();
    void setDirector(std::string);
+
+   // actor(s)
    bool hasActor(std::string);
    void appendActor(std::string);
 
-   friend class Drama;
 
-
-   //-------|---------|---------|---------|---------|---------|---------|---------|
-   //
-   //       OPERATORS
-   //
-   //-------|---------|---------|---------|---------|---------|---------|---------|
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       OPERATORS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
 
    /**
     * == operator
     * Desc: compares two films based on title & release date
     * Pre: assumes title and release data are populated
    **/
-   bool operator==(Film&);
+   virtual bool operator==(Film&);
 
    /**
     * <= operator
     * Desc: compares two films based on title & release date
     * Pre: assumes title and release data are populated
    **/
-   bool operator<=(Film&);
-   bool operator<(Film&);
+   virtual bool operator<=(Film&);
+   virtual bool operator<(Film&);
 
    /**
     * >= operator
     * Desc: compares two films based on title & release date
     * Pre: assumes title and release data are populated
    **/
-   bool operator>=(Film&);
-   bool operator>(Film&);
+   virtual bool operator>=(Film&);
+   virtual bool operator>(Film&);
 
    /**
     * Constructors
