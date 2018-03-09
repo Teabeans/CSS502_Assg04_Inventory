@@ -106,11 +106,6 @@ int InvDB::hashTitle(std::string someTitle) {
    return(0);
 }
 
-bool InvDB::isValid(std::string someCommand) {
-   // TODO: Implement or discard?
-   return(true);
-}
-
 
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
@@ -312,6 +307,21 @@ void InvDB::display() {
 bool InvDB::isLegal(std::string command) {
    // TODO: Implement
    return true;
+}
+
+// (+) --------------------------------|
+// #isValid()
+//-------------------------------------|
+// Desc:    Tests the legality of a received command string
+//          Outputs an error to cout for illegal conditions
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+bool InvDB::isValid(std::string someCommand) {
+   // TODO: Implement or discard?
+   return(true);
 }
 
 // (+) --------------------------------|
