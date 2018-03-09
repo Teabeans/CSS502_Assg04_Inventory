@@ -79,73 +79,83 @@
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
-// TODO: Declare and implement
 // Bulk reader - Customers
+void bulkReadCust(std::ifstream& custtxt, CustDB tgtDB);
+
 // Bulk reader - Inventory
+void bulkReadInv(std::ifstream& invtxt, InvDB tgtDB);
+
 // Bulk reader - Transactions
+void bulkReadTrans(std::ifstream& transtxt, CustDB tgtCustDB, InvDB tgtInvDB);
+
 // Legality check - Customer commands
+bool isLegalCustCmd(std::string command, CustDB tgtDB);
+
 // Legality check - Inventory commands
+bool isLegalInvCmd(std::string command, InvDB tgtDB);
+
 // Legality check - Transaction commands
+bool isLegalTransCmd(std::string command, CustDB tgtDB, InvDB tgtInvDB);
 
 // Begin program
 int main() {
-   
+
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
 //       FILM CLASS TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
+   if (true) {
+      std::cerr << "--- BEGIN FILM CLASS TESTS ---" << std::endl;
 
-   std::cerr << "--- BEGIN FILM CLASS TESTS ---" << std::endl;
+      // default constructor
+      Film filmA;
 
-   // default constructor
-   Film filmA;
+      filmA.setTitle("Testing Film");
+      filmA.setStock(20);
+      filmA.setReleaseDate(1995);
+      filmA.setGenre('X');
+      filmA.setDirector("Antonio Testing");
+      filmA.appendActor("Bob Benson");
 
-   filmA.setTitle("Testing Film");
-   filmA.setStock(20);
-   filmA.setReleaseDate(1995);
-   filmA.setGenre('X');
-   filmA.setDirector("Antonio Testing");
-   filmA.appendActor("Bob Benson");
+      std::cerr << filmA.getTitle() << std::endl;
+      std::cerr << filmA.getStock() << std::endl;
+      std::cerr << filmA.getReleaseDate() << std::endl;
+      std::cerr << filmA.getGenre() << std::endl;
+      std::cerr << filmA.getDirector() << std::endl;
 
-   std::cerr << filmA.getTitle() << std::endl;
-   std::cerr << filmA.getStock() << std::endl;
-   std::cerr << filmA.getReleaseDate() << std::endl;
-   std::cerr << filmA.getGenre() << std::endl;
-   std::cerr << filmA.getDirector() << std::endl;
+      // string constructor
+      Film filmB("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
 
-   // string constructor
-   Film filmB("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
+      std::cerr << filmB.getTitle() << std::endl;
+      std::cerr << filmB.getStock() << std::endl;
+      std::cerr << filmB.getReleaseDate() << std::endl;
+      std::cerr << filmB.getGenre() << std::endl;
+      std::cerr << filmB.getDirector() << std::endl;
 
-   std::cerr << filmB.getTitle() << std::endl;
-   std::cerr << filmB.getStock() << std::endl;
-   std::cerr << filmB.getReleaseDate() << std::endl;
-   std::cerr << filmB.getGenre() << std::endl;
-   std::cerr << filmB.getDirector() << std::endl;
-
-   // operators
-   std::cerr << "FilmA == FilmB: " << (filmA == filmB) << std::endl;
-   std::cerr << "FilmA >= FilmB: " << (filmA >= filmB) << std::endl;
-   std::cerr << "FilmA <= FilmB: " << (filmA <= filmB) << std::endl;
+      // operators
+      std::cerr << "FilmA == FilmB: " << (filmA == filmB) << std::endl;
+      std::cerr << "FilmA >= FilmB: " << (filmA >= filmB) << std::endl;
+      std::cerr << "FilmA <= FilmB: " << (filmA <= filmB) << std::endl;
 
 
-   Film filmC("D, 100, Jonathan Demme, Silence of the Lambs, 1991");
-   std::cerr << "FilmA == FilmB: " << (filmC == filmB) << std::endl;
-   std::cerr << "FilmA >= FilmB: " << (filmC >= filmB) << std::endl;
-   std::cerr << "FilmA <= FilmB: " << (filmC <= filmB) << std::endl;
+      Film filmC("D, 100, Jonathan Demme, Silence of the Lambs, 1991");
+      std::cerr << "FilmA == FilmB: " << (filmC == filmB) << std::endl;
+      std::cerr << "FilmA >= FilmB: " << (filmC >= filmB) << std::endl;
+      std::cerr << "FilmA <= FilmB: " << (filmC <= filmB) << std::endl;
 
-   std::cerr << "filmA contains actor: Bob Benson: ";
-   std::cerr << filmA.hasActor("Bob Benson") << std::endl;
+      std::cerr << "filmA contains actor: Bob Benson: ";
+      std::cerr << filmA.hasActor("Bob Benson") << std::endl;
 
-   std::cerr << "filmA contains actor: Bob Johnson: ";
-   std::cerr << filmA.hasActor("Bob Johnson") << std::endl;
+      std::cerr << "filmA contains actor: Bob Johnson: ";
+      std::cerr << filmA.hasActor("Bob Johnson") << std::endl;
 
-   std::cerr << "--- END FILM CLASS TESTS ---" << std::endl;
-   
-// END FILM CLASS TESTS
-   
-   
-   
+      std::cerr << "--- END FILM CLASS TESTS ---" << std::endl;
+
+   } // END FILM CLASS TESTS
+
+
+
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
 //       CUSTOMER DATABASE TESTS
@@ -445,13 +455,386 @@ int main() {
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
-// TODO: Declare and implement
-// Bulk reader - Customers
-// Bulk reader - Inventory
-// Bulk reader - Transactions
-// Legality check - Customer commands
-// Legality check - Inventory commands
-// Legality check - Transaction commands
+// (+) --------------------------------|
+// #bulkReadCust(ifstream&, CustDB)
+//-------------------------------------|
+// Desc:    Bulk reader of a correctly formatted customer command file
+// Params:  ifstream& arg1 - The target text file containing customer commands
+//          CustDB arg2 - The receiving Customer database
+// PreCons: A valid CustDB object must exist.
+// PosCons: The ifstream has been consumed
+//          All valid commands have been sent to the target CustDB
+//          Does not guarantee correct handling of commands at destination DB
+//          Does not handle any error reporting
+// RetVal:  None
+// MetCall: isLegalCustCmd() - Verifies all legality checks of the command
+void bulkReadCust(std::ifstream& custtxt, CustDB tgtDB) {
+   // While there is still filestream to read
+      // Get a line of text (one command)
+      // If the command is legal...
+         // Send it to the Customer Database
+      // Repeat
+} // Closing bulkReadCust()
+
+// (+) --------------------------------|
+// #bulkReadInv(ifstream&, InvDB)
+//-------------------------------------|
+// Desc:    Bulk reader of a correctly formatted inventory command file
+// Params:  ifstream& arg1 - The target text file containing inventory commands
+//          CustDB arg2 - The receiving Inventory database
+// PreCons: A valid InvDB object must exist.
+// PosCons: The ifstream has been consumed
+//          All valid commands have been sent to the target InvDB
+//          Does not guarantee correct handling of commands at destination DB
+//          Does not handle any error reporting
+// RetVal:  None
+// MetCall: isLegalInvCmd() - Verifies all legality checks of the command
+void bulkReadInv(std::ifstream& invtxt, InvDB tgtDB) {
+   // While there is still filestream to read
+      // Get a line of text (one command)
+      // If the command is legal...
+         // Send it to the Inventory Database
+      // Repeat
+} // Closing bulkReadInv()
+
+// (+) --------------------------------|
+// #bulkReadTrans(ifstream&, InvDB)
+//-------------------------------------|
+// Desc:    Bulk reader of a correctly formatted inventory command file
+// Params:  ifstream& arg1 - The target text file containing inventory commands
+//          CustDB arg2 - The receiving Inventory database
+// PreCons: A valid InvDB object must exist.
+// PosCons: The ifstream has been consumed
+//          All valid commands have been sent to the target InvDB
+//          Does not guarantee correct handling of commands at destination DB
+//          Does not handle any error reporting
+// RetVal:  None
+// MetCall: isLegalInvCmd() - Verifies all legality checks of the command
+void bulkReadTrans(std::ifstream& transtxt, CustDB tgtCustDB, InvDB tgtInvDB) {
+   // While there is still filestream to read
+      // Get a line of text (one command)
+      // If the command is legal...
+         // Send it to the Inventory Database
+      // Repeat
+} // Closing bulkReadTrans()
+
+// (+) --------------------------------|
+// #isLegalCustCmd(ifstream&, CustDB)
+//-------------------------------------|
+// Desc:    Verifies the legality of a customer command line
+// Params:  ifstream& arg1 - The target text file containing inventory commands
+//          CustDB arg2 - The database to query
+// PreCons: A valid CustDB object must exist.
+// PosCons: Both the CustDB and this method have examined the command for legality
+//          Does not guarantee correct handling of legality at destination DB
+//          All errors have been reported
+// RetVal:  bool true - No illegal conditions are reported
+//          bool false - At least one illegal condition was detected
+// MetCall: CustDB::isValid() - Verifies all legality checks within the database
+bool isLegalCustCmd(std::string command, CustDB tgtDB) {
+   // Set flag
+   bool isLegal = true;
+   // Begin error log
+   std::string errorLog = "";
+
+   // Initialize field variables
+   int custID = 1234512345;
+   std::string nameF = "";
+   std::string nameL = "";
+
+   // Parse fields
+   // TODO: Load string command to string stream object
+
+   // Verify that field1 is within expected value range
+   if (custID == 1234512345) {
+      // If not, append report
+      errorLog = errorLog + "   - No customer ID entered" + "\n";
+      // And toggle the flag
+      isLegal = false;
+   }
+
+   // Verify that the customerID is within range
+   if (custID != 1234512345 && (custID < 0 || custID > 9999)) {
+      // If not, append report
+      errorLog = errorLog + "   - Invalid customer ID entered (out of range)" + "\n";
+      // And toggle the flag
+      isLegal = false;
+   }
+
+   // Check if both the first name and last name were entered
+   if (nameF == "" || nameL == "") {
+      // If not, append report
+      errorLog = errorLog + "   - No first or last name entered" + "\n";
+      // And toggle the flag
+      isLegal = false;
+   }
+
+   // TODO: Any other ways a customer command can be invalid?
+
+   // If any test has failed, do not forward to database
+   if (isLegal == false) {
+      std::cout << "Customer command error:" << std::endl;
+      std::cout << errorLog << std::endl;
+      return(isLegal);
+   }
+   // Otherwise, this is a correctly formatted command
+   // But it may still be in conflict with the database state, so check that
+   isLegal = tgtDB.isValid(command);
+   // Note: tgtDB.isLegal() handles its own error reporting to cout
+   // Return whether the database confirmed legality or not
+   return(isLegal);
+} // Closing isLegalCustCmd()
+
+// (+) --------------------------------|
+// #isLegalInvCmd(ifstream&, InvDB)
+//-------------------------------------|
+// Desc:    Verifies the legality of an inventory command line
+// Params:  ifstream& arg1 - The target text file containing inventory commands
+//          InvDB arg2 - The database to query
+// PreCons: A valid InvDB object must exist.
+// PosCons: Both the InvDB and this method have examined the command for legality
+//          Does not guarantee correct handling of legality at destination DB
+//          All errors have been reported
+// RetVal:  bool true - No illegal conditions are reported
+//          bool false - At least one illegal condition was detected
+// MetCall: InvDB::isValid() - Verifies all legality checks within the database
+bool isLegalInvCmd(std::string command, InvDB tgtDB) {
+   // Set flag
+   bool isLegal = true;
+   // Begin error log
+   std::string errorLog = "";
+   int currentYear = 2018;
+
+   // Initialize field variables
+   char genre = NULL;
+   int qty = 0;
+   std::string field1 = ""; // Director
+   std::string field2 = ""; // Title
+   std::string field3 = ""; // Actor (in case of Classic)
+   int releaseMonth = 0;
+   int releaseYear = 0;
+
+   // TODO: Parse fields
+
+   // Test if genre is within range first
+   if (genre != ('C' || 'F' || 'D')) {
+      std::cout << "Inventory command error:" << std::endl;
+      std::cout << "   - Invalid genre, halting." << std::endl;
+      return(false);
+   }
+
+   // Verify that quantity is non-zero
+   if (qty == 0) {
+      // If not, append report
+      errorLog = errorLog + "   - Zero quantity (non-inventory)" + "\n";
+      // And toggle the flag
+      isLegal = false;
+   }
+
+   // TODO: Other tests on quantity? Negative values?
+
+   // Verify that a director is entered
+   if (field1 == "") {
+      // If not, append report
+      errorLog = errorLog + "   - No director specified" + "\n";
+      // And toggle the flag
+      isLegal = false;
+   }
+
+   // Verify that a film name is entered
+   if (field2 == "") {
+      // If not, append report
+      errorLog = errorLog + "   - No film title entered" + "\n";
+      // And toggle the flag
+      isLegal = false;
+   }
+
+   // In the case of classic films only, verify that an actor is specified
+   if (genre == 'C' && field3 == "") {
+      // If not, append report
+      errorLog = errorLog + "   - No actor/actress specified" + "\n";
+      // And toggle the flag
+      isLegal = false;
+   }
+
+   // In the case of classic films only, verify that a release month is specified
+   if (genre == 'C' && (releaseMonth < 1 || releaseMonth > 12)) {
+      // If not, append report
+      errorLog = errorLog + "   - Release month not properly entered" + "\n";
+      // And toggle the flag
+      isLegal = false;
+   }
+
+   // Verify that a release year was entered
+   if (releaseYear == 0 || releaseYear > currentYear) {
+      // If not, append report
+      errorLog = errorLog + "   - Release year not properly specified" + "\n";
+      // And toggle the flag
+      isLegal = false;
+   }
+
+   // If any test has failed, do not forward to database
+   if (isLegal == false) {
+      std::cout << "Customer command error:" << std::endl;
+      std::cout << errorLog << std::endl;
+      return(isLegal);
+   }
+   // Otherwise, this is a correctly formatted command
+   // But it may still be in conflict with the database state, so check that
+   isLegal = tgtDB.isValid(command);
+   // Note: tgtDB.isLegal() handles its own error reporting to cout
+   // Return whether the database confirmed legality or not
+   return(isLegal);
+} // Closing isLegalInvCmd()
+
+// (+) --------------------------------|
+// #isLegalTransCmd(ifstream&, CustDB, InvDB)
+//-------------------------------------|
+// Desc:    Verifies the legality of a transaction command line
+// Params:  ifstream& arg1 - The target text file containing inventory commands
+//          InvDB arg2 - The customer database to query
+//          InvDB arg3 - The inventory database to query
+// PreCons: A valid InvDB object must exist
+//          A valid CustDB object must exist
+// PosCons: Both databases and this method have examined the command for legality
+//          Does not guarantee correct handling of legality at destination DBs
+//          All errors have been reported
+// RetVal:  bool true - No illegal conditions are identified
+//          bool false - At least one illegal condition was detected
+// MetCall: CustDB::isValid() - Verifies all legality checks within the customer DB
+//          InvDB::isValid() - Verifies all legality checks within the inventory DB
+bool isLegalTransCmd(std::string command, CustDB tgtCustDB, InvDB tgtInvDB) {
+   // Set flag
+   bool isLegal = true;
+   // Begin error log
+   std::string errorLog = "";
+
+   int currentYear = 2018;
+
+   // Initialize field variables
+   char commandType = NULL;
+   int custID = 1234512345;
+   char format = NULL; // 'D' for DVD on all titles
+   char genre;
+   int releaseMonth = 0; // (in case of Classic)
+   int releaseYear = 0;
+   std::string director = "";
+   std::string title = "";
+   std::string actor = ""; // (in case of Classic)
+
+   // TODO: Parse command type off string
+
+   // Test if the commandType is within range first
+   if (commandType != ('I' || 'H' || 'B' || 'R')) {
+      std::cout << "Transaction command error:" << std::endl;
+      std::cout << "   - Invalid command type, halting." << std::endl;
+      return(false);
+   }
+
+   // Finish testing for an 'I' (inventory query) command
+   if (commandType == 'I' /*&& there's anything else in the string*/) { // TODO
+      std::cout << "Transaction command error:" << std::endl;
+      std::cout << "   - Invalid entry of 'I' (inventory) command, halting." << std::endl;
+      return(false);
+   }
+
+   // All legality checks for an 'I' command complete, so exit
+   if (commandType == 'I') {
+      return(isLegal);
+   }
+
+   // TODO: Parse customerID
+
+   // Test if customerID is within range
+   if (custID < 0 || custID > 9999) {
+      // Append the error log
+      errorLog = errorLog + "   - Customer ID out of range" + "\n";
+      // And toggle the flag
+      isLegal = false;
+   }
+
+   // Test if customer is in the database
+   if (!tgtCustDB.doesContain[custID]) {
+      // Append the error log
+      errorLog = errorLog + "   - Non-existent customer" + "\n";
+      // And toggle the flag
+      isLegal = false;
+   }
+
+   // Check validity of a 'H' (history) command
+   if (commandType == 'H'/*&& there's anything else in the string*/) { // TODO
+      std::cout << "Transaction command error:" << std::endl;
+      std::cout << "   - Invalid entry of 'H' (history) command, halting." << std::endl;
+      std::cout << errorLog << std::endl;
+      return(false);
+   }
+
+   // TODO: Parse format
+
+   // Test if format is within range
+   if (format != 'D') {
+      // Append the error log
+      errorLog = errorLog + "   - Invalid media format." + "\n";
+      // And toggle the flag
+      isLegal = false;
+   }
+
+   // TODO: Parse genre
+
+   // Test if genre is within range
+   if (genre != ('C' || 'F' || 'D')) {
+      std::cout << "Inventory command error:" << std::endl;
+      std::cout << "   - Invalid genre, halting." << std::endl;
+      std::cout << errorLog << std::endl;
+      return(false);
+   }
+
+   // Legality tests for classics only
+   if (genre == 'C') {
+      // TODO: Parse releaseMonth
+      // TODO: Parse releaseYear
+      // TODO: Parse actor
+
+      // TODO: Perform all legality checks for Classics
+      // Verify that releaseMonth is within range
+      // Verify that releaseYear is within range
+      // Verify that an actor is provided
+   }
+
+   if (genre == 'D') {
+      // TODO: Parse director
+      // TODO: Parse title
+
+      // TODO: Perform all legality checks for Dramas
+      // Verify that a director is provided
+      // Verify that a title is provided
+   }
+
+   if (genre == 'F') {
+      // TODO: Parse title
+      // TODO: Parse releaseYear
+
+      // TODO: Perform all legality checks for Comedies
+      // Verify that a title is provided
+      // Verify that releaseYear is within range
+   }
+
+
+   // If any test has failed, do not forward to database
+   if (isLegal == false) {
+      std::cout << "Customer command error:" << std::endl;
+      std::cout << errorLog << std::endl;
+      return(isLegal);
+   }
+   // Otherwise, this is a correctly formatted command
+   // But it may still be in conflict with the database state, so check that
+   isLegal = (tgtCustDB.isValid(command) && tgtInvDB.isValid(command));
+   // Note: Target databases handle their own error reporting to cout
+   // Return whether the database confirmed legality or not
+   return(isLegal);
+} // Closing isLegalTransCmd()
+
+
 
 //-------------------------------------|
 // End Student Code
