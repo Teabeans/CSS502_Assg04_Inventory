@@ -7,15 +7,46 @@
 #include "Comedy.h"
 
 // transactions
-#include "../Trans/Trans.h"
-#include "../Trans/Borrow.h"
-#include "../Trans/Return.h"
+#include "Trans.h" // TODO: Revert to ../Trans/
+#include "Borrow.h" // TODO: Revert to ../Trans/
+#include "Return.h" // TODO: Revert to ../Trans/
 
 // Necessary for file stream object handling
 #include <fstream>
 #include <string>
 
 
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       PRIVATE FIELDS (-)
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+// Do not redeclare these variables in the .cpp.
+// Included here only for reference
+// See associated .h file for variable declarations
+
+//-----------------|
+// #comedies
+//-----------------|
+// Desc:   NULL
+// Invars: NULL
+/// std::vector<Comedy> comedies;
+
+//-----------------|
+// #dramas
+//-----------------|
+// Desc:   NULL
+// Invars: NULL
+/// std::vector<Drama> dramas;
+
+//-----------------|
+// #classics
+//-----------------|
+// Desc:   NULL
+// Invars: NULL
+/// std::vector<Classic> classics;
 
 std::string InvDB::toString() {
    std::string retString = "";
@@ -244,7 +275,7 @@ bool InvDB::addClassic(Classic* film) {
 
 
    classics.push_back(*film);
-   return(true);
+   return true;
 }
 
 /**
