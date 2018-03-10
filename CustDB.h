@@ -166,7 +166,7 @@ public:
 //-----------------|
 // Desc:   NULL
 // Invars: NULL
-   bool doesContain(int custID);
+   bool const doesContain(int custID);
 
 //-----------------|
 // #insertCustomer(int)
