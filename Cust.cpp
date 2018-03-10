@@ -178,7 +178,21 @@ void Cust::appendHistory(std::string someTransaction, char type, std::string tit
 // RetVal:  NULL
 // MetCall: NULL
 bool const Cust::isCheckedOut(std::string aTitle) {
-   return(true);
+   bool wasFound = false;
+   int counter = 0;
+   while (counter < this->checkouts) {
+      // If the first queue element matches the title we're looking for
+      if (this->rentals.front() == aTitle) {
+         // Toggle the flag
+         wasFound = true;
+      }
+      // Either way, move to the next element
+      this->rentals.push(rentals.front());
+      this->rentals.pop();
+      // And increment the counter so we loop through just once
+      counter++;
+   }
+   return(wasFound);
 }
 
 // (+) --------------------------------|
@@ -191,7 +205,8 @@ bool const Cust::isCheckedOut(std::string aTitle) {
 // RetVal:  NULL
 // MetCall: NULL
 void Cust::addToCheckouts(std::string aTitle) {
-   
+   this->rentals.push(aTitle);
+   this->checkouts++;
 }
 
 // (+) --------------------------------|
@@ -204,7 +219,22 @@ void Cust::addToCheckouts(std::string aTitle) {
 // RetVal:  NULL
 // MetCall: NULL
 void Cust::removeFromCheckouts(std::string aTitle) {
-   
+   int counter = 0;
+   while (counter < this->checkouts) {
+      // If the element has been found...
+      if (this->rentals.front() == aTitle) {
+         // Remove it
+         this->rentals.pop();
+         break;
+      }
+      // Otherwise, move to the next element
+      this->rentals.push(rentals.front());
+      this->rentals.pop();
+      // And increment the counter so we loop through just once
+      counter++;
+   }
+   // Decrement the number of elements checked out
+   this->checkouts--;
 }
 
 // (+) --------------------------------|
