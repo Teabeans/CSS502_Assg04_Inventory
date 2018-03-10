@@ -386,7 +386,7 @@ void Trans::setIdentifier2(std::string trait) {
 }
 
 // (+) --------------------------------|
-// #setRelease(string)
+// #setReleaseMonth(int)
 //-------------------------------------|
 // Desc:    NULL
 // Params:  NULL
@@ -394,8 +394,21 @@ void Trans::setIdentifier2(std::string trait) {
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
-void Trans::setRelease(std::string date) {
-   this->release = date;
+void Trans::setReleaseMonth(int month) {
+   this->releaseMonth = month;
+}
+
+// (+) --------------------------------|
+// #setReleaseYear(int)
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+void Trans::setReleaseYear(int year) {
+   this->releaseYear = year;
 }
 
 // (+) --------------------------------|
