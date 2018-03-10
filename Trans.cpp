@@ -480,7 +480,17 @@ Trans* Trans::factory(std::string command) {
 // RetVal:  NULL
 // MetCall: NULL
 Trans::Trans() {
-
+   // Initialize all variables
+   this->type          = NULL;
+   this->typeAsString  = "";
+   this->genre         = NULL;
+   this->genreAsString = "";
+   this->title         = "";
+   this->director      = "";
+   this->actor         = "";
+   this->releaseMonth  = 0;
+   this->releaseYear   = 0;
+   this->customerID    = 1234512345;
 }
 
 // (+) --------------------------------|
@@ -556,44 +566,6 @@ Trans::Trans(std::string command) {
       // TODO: Change to actual substring parsing code
       this->release = "<Placeholder release, Trans::Trans(string)>";
    }
-//-----------------|
-// #genre
-// #genreAsString
-//-----------------|
-// Desc:   Genre of the thing transacted
-// Invars: Initializes to junk values
-///   char genre;
-///   std::string genreAsString;
-
-//-----------------|
-// #title
-//-----------------|
-// Desc:   Identifier of the thing transacted
-// Invars: Initializes to junk values
-///   std::string title;
-
-//-----------------|
-// #identifier1
-// #identifier2
-//-----------------|
-// Desc:   Unique identifiers of the transaction
-// Invars: Initializes to junk values
-///   std::string identifier1; //first identifier (eg. title or major actor)
-///   std::string identifier2; //second identifier (eg. year or release date)
-
-//-----------------|
-// #customerID
-//-----------------|
-// Desc:   The transaction type
-// Invars: Initializes to junk values
-///   int customerID; // To whom it was transacted
-
-//-----------------|
-// #qty
-//-----------------|
-// Desc:   The quantity of the transaction
-// Invars: Initializes to junk values
-///   int qty;
 } // Closing Trans(string)
 
 // (+) --------------------------------|
