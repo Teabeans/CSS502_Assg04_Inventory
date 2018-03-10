@@ -206,7 +206,6 @@ bool InvDB::addFilm(Film* film) {
    return true;
 } // Closing addFilm()
 
-
 // (+) --------------------------------|
 // #adjustStock(Trans&)
 //-------------------------------------|
@@ -218,12 +217,12 @@ bool InvDB::addFilm(Film* film) {
 // MetCall: NULL
 void InvDB::adjustStock(Trans& trans) { // TODO: Add const to Trans& argument?
 
-   std::cerr << "Trans Data: " << trans.getTitle() << " : " << trans.getRelease() << std::endl;
+   std::cerr << "Trans Data: " << trans.getTitle() << " : " << trans.getReleaseYear() << std::endl;
 
    if (trans.getGenre() == 'F') {
       Comedy film;
       film.setTitle(trans.getTitle());
-      film.setReleaseDate(std::stoi(trans.getRelease()));
+      film.setReleaseDate(trans.getReleaseYear());
 
       if (trans.getType() == 'B') {
          retrieve(&film)->setStock(retrieve(&film)->getStock() + 1);
