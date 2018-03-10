@@ -1,7 +1,7 @@
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
 // UW CSS 502A - Assignment 4 - Inventory Management
-// Cust.cpp
+// Driver.cpp
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
@@ -21,7 +21,9 @@
 // File Description
 //-----------------------------------------------------------------------------|
 //
-// This is the implementation file for the Cust.h header.
+// An inventory control system. Utilizes InvDB and CustDB classes to manage a
+// database of film objects, generating and directing transactions created from
+// a set of bulk command documents.
 //
 
 //-----------------------------------------------------------------------------|
@@ -42,393 +44,827 @@
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
-// Field and method declarations for the Cust (Customer) class
-#include "Cust.h"
+// Necessary for file stream object handling
+#include <fstream>
 
-// Necessary for input-output operations
+// Necessary for input-output stream operations
 #include <iostream>
-
-// Necessary for string formatting operations
-#include <iomanip>
-
-// Necessary for string stream buffering operations
-#include <sstream>
 
 // Necessary for string operations
 #include <string>
 
-// Necessary for breadth-first tree traversal
-#include <queue>
-
-// For tracing visitation routes
-#include <stack>
 
 
+// Necessary for transaction objects
+#include "Trans.h"
+#include "TransBorrow.h"
+#include "TransReturn.h"
 
-//-------|---------|---------|---------|---------|---------|---------|---------|
-//
-//       CLASS CONSTANTS
-//
-//-------|---------|---------|---------|---------|---------|---------|---------|
-//
-// Do not redeclare these variables in the .cpp.
-// Included here only for reference
-// See associated .h file for variable declarations
-//
-// None for this class
-//
+// Necessary for film objects
+#include "Film.h"
+#include "FilmComedy.h"
+#include "FilmDrama.h"
+#include "FilmClassic.h"
 
-//-------|---------|---------|---------|---------|---------|---------|---------|
-//
-//       PRIVATE FIELDS (-)
-//
-//-------|---------|---------|---------|---------|---------|---------|---------|
-//
-// Do not redeclare these variables in the .cpp.
-// Included here only for reference
-// See associated .h file for variable declarations
+// Necessary for customer objects
+#include "Cust.h"
 
-//-----------------|
-// #firstName
-//-----------------|
-// Desc:   The customer's first name
-// Invars: Must contain at least one character
-///   std::string firstName;
-
-//-----------------|
-// #lastName
-//-----------------|
-// Desc:   The customer's last name
-// Invars: Must contain at least one character
-///   std::string lastName;
-
-//-----------------|
-// #custID
-//-----------------|
-// Desc:   The customer's ID number
-// Invars: Initializes to junk values - set by hashing
-///   int custID;
-
-//-----------------|
-// #history
-//-----------------|
-// Desc:   The customer's history
-// Invars: May be an empty string
-///   std::string history;
-
-//-----------------|
-// #numRentals
-//-----------------|
-// Desc:   The number of titles this customer has checked out
-// Invars: Must be 0 or more, cannot be negative
-///   int checkouts;
-
-//-----------------|
-// #rentals
-//-----------------|
-// Desc:   The titles the customer currently has checked out
-// Invars: May be empty
-///   std::queue<std::string> rentals;
+// Necessary for database objects
+#include "InvDB.h"
+#include "CustDB.h"
 
 
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
-//       PUBLIC FIELDS (+)
+//       METHOD DECLARATIONS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
-// None for this class
+// Bulk reader - Customers
+void bulkReadCust(std::ifstream& custtxt, CustDB tgtDB);
+
+// Bulk reader - Inventory
+void bulkReadInv(std::ifstream& invtxt, InvDB tgtDB);
+
+// Bulk reader - Transactions
+void bulkReadTrans(std::ifstream& transtxt, CustDB tgtCustDB, InvDB tgtInvDB);
+
+// Legality check - Customer commands
+bool isLegalCustCmd(std::string command, CustDB tgtDB);
+
+// Legality check - Inventory commands
+bool isLegalInvCmd(std::string command, InvDB tgtDB);
+
+// Legality check - Transaction commands
+bool isLegalTransCmd(std::string command, CustDB tgtDB, InvDB tgtInvDB);
+
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
-//       PUBLIC METHODS (+)
+//       MAIN()
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
-// (+) --------------------------------|
-// #appendHistory(String)
-//-------------------------------------|
-// Desc:    Appends values to the customer history
-// Params:  string arg1 - The transaction to append
-// PreCons: String configuration should be handled by the Trans::toString() method
-//          May be called with faulty transaction information
-//          GIGO - No error checking is performed by appendHistory()
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-void Cust::appendHistory(std::string someTransaction, char type, std::string title){
-   if (type == 'B') {
-      this->addToCheckouts(title);
-   }
-   if (type == 'R') {
-      this->removeFromCheckouts(title);
-   }
-   this->history += someTransaction;
-   this->history += "\n";
-}
+int main() {
 
-// (+) --------------------------------|
-// #isCheckedOut(string)
-//-------------------------------------|
-// Desc:    Returns whether this title is among those currently checked out by the customer
-// Params:  NULL
-// PreCons: GIGO - No error checking is performed by isCheckedOut()
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-bool const Cust::isCheckedOut(std::string aTitle) {
-   return(true);
-}
 
-// (+) --------------------------------|
-// #addToCheckouts(string)
-//-------------------------------------|
-// Desc:    Appends title to the list of current rentals by this customer
-// Params:  NULL
-// PreCons: GIGO - No error checking is performed by addToCheckouts()
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-void Cust::addToCheckouts(std::string aTitle) {
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       FILM CLASS TESTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+   if (true) {
+
+      std::cerr << "--- BEGIN FILM CLASS TESTS ---" << std::endl;
+
+      // default constructor
+      Film filmA;
+
+      filmA.setTitle("Testing Film");
+      filmA.setStock(20);
+      filmA.setReleaseDate(1995);
+      filmA.setGenre('X');
+      filmA.setDirector("Antonio Testing");
+      filmA.appendActor("Bob Benson");
+
+      std::cerr << filmA.getTitle() << std::endl;
+      std::cerr << filmA.getStock() << std::endl;
+      std::cerr << filmA.getReleaseDate() << std::endl;
+      std::cerr << filmA.getGenre() << std::endl;
+      std::cerr << filmA.getDirector() << std::endl;
+
+      // string constructor
+      Film filmB("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
+
+      std::cerr << filmB.getTitle() << std::endl;
+      std::cerr << filmB.getStock() << std::endl;
+      std::cerr << filmB.getReleaseDate() << std::endl;
+      std::cerr << filmB.getGenre() << std::endl;
+      std::cerr << filmB.getDirector() << std::endl;
+
+      // operators
+      std::cerr << "FilmA == FilmB: " << (filmA == filmB) << std::endl;
+      std::cerr << "FilmA >= FilmB: " << (filmA >= filmB) << std::endl;
+      std::cerr << "FilmA <= FilmB: " << (filmA <= filmB) << std::endl;
+
+
+      Film filmC("D, 100, Jonathan Demme, Silence of the Lambs, 1991");
+      std::cerr << "FilmA == FilmB: " << (filmC == filmB) << std::endl;
+      std::cerr << "FilmA >= FilmB: " << (filmC >= filmB) << std::endl;
+      std::cerr << "FilmA <= FilmB: " << (filmC <= filmB) << std::endl;
+
+      std::cerr << "filmA contains actor: Bob Benson: ";
+      std::cerr << filmA.hasActor("Bob Benson") << std::endl;
+
+      std::cerr << "filmA contains actor: Bob Johnson: ";
+      std::cerr << filmA.hasActor("Bob Johnson") << std::endl;
+
+      std::cerr << "--- END FILM CLASS TESTS ---" << std::endl << std::endl;
+
+   } // END FILM CLASS TESTS
+
+
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       CUSTOMER DATABASE TESTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+   if (true) {
+
+      std::cout << "--- START CUSTOMER DATABASE TESTS ---" << std::endl << std::endl;
+
+      // Instantitate a new customer database
+      std::cout << "--- Creating a default CustDB... ---" << std::endl << std::endl;
+      CustDB testCustDB = CustDB();
+
+      std::cout << "--- Creating a transaction from string 'B 1111 D F Ferries and You: A Primer, 2018'... ---" << std::endl << std::endl;
+      Trans testBorrow = Trans("B 1111 D F Ferries and You: A Primer, 2018");
+      Trans testReturn = Trans("R 1111 D F Ferries and You: A Primer, 2018");
+
+      // Create two new customers
+      std::cout << "--- Creating two new customers... ---" << std::endl << std::endl;
+      // 1111 Jane Doe
+      // 9000 Boaty McBoatface
+      Cust* testCustomer1 = new Cust("Jane", "Doe", 1111);
+      Cust* testCustomer2 = new Cust("Boaty", "McBoatface", 9000);
+
+      // Check customer instantiation
+      std::cout << "--- Customer 1 & 2 constructor results: ---" << std::endl;
+      std::cout << testCustomer1->toString() << std::endl;
+      std::cout << testCustomer2->toString() << std::endl;
+      std::cout << std::endl;
+
+      // Attempt to process Borrow on Cust1
+      std::cout << "--- Testing appendHistory(string)... ---" << std::endl << std::endl;
+      testCustomer1->appendHistory(testBorrow.toString());
+
+      // Check the history of Cust1 again
+      std::cout << "--- Checking the history of Cust1 after appendHistory(): ---" << std::endl;
+      std::cout << testCustomer1->getHistory() << std::endl;
+
+      // Check the outstanding rentals of customer 1
+      std::cout << "--- Test if Cust1 has a copy of 'Ferries and You: A Primer': ---" << std::endl;
+      std::cout << testCustomer1->isCheckedOut("Ferries and You: A Primer") << "('1' expected)" << std::endl;
+
+      // Attempt to process return on Cust1
+      testCustomer1->appendHistory(testReturn.toString());
+
+      // Check the outstanding rentals of customer 1
+      std::cout << "--- Test if Cust1 has a copy of 'Ferries and You: A Primer': ---" << std::endl;
+      std::cout << testCustomer1->isCheckedOut("Ferries and You: A Primer") << "('0' expected)" << std::endl;
+
+
+
+      // Attempt to insert customers to database
+      std::cout << "--- Inserting Cust1 and Cust2 to database... ---" << std::endl << std::endl;
+      testCustDB.insertCustomer(testCustomer1);
+      testCustDB.insertCustomer(testCustomer2);
+
+      // Check insertion
+      std::cout << "--- Checking insertion results: ---" << std::endl;
+      std::cout << testCustDB.toString() << std::endl << std::endl;
+
+      std::cout << "--- END CUSTOMER DATABASE TESTS ---" << std::endl << std::endl;
+
+   } // END CUSTOMER DATABASE TESTS
+
+
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       INV DATABASE TESTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+   if (false) {
+
+      std::cout << "--- START INVENTORY DATABASE TESTS ---" << std::endl << std::endl;
+
+      // Create a new inventory database object
+      std::cout << "Creating an empty InvDB object..." << std::endl << std::endl;
+      InvDB testInvDB;
+
+      std::cout << "Create an InvDB object from bulk input..." << std::endl << std::endl;
+      std::ifstream inventoryFile("data4movies.txt");
+      InvDB testinvDB(inventoryFile);
+
+
+      // Create three new films
+      std::cout << "Creating three new films..." << std::endl << std::endl;
+      Classic filmAA("C, 10, Victor Fleming, The Wizard of Oz, Judy Garland 7 1939");
+      Comedy filmBB("F, 10, Nora Ephron, Sleepless in Seattle, 1993");
+      Drama filmCC("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
+
+      // Attempt to add these films to the inventory database
+      std::cout << "Adding films to the testInvDB..." << std::endl << std::endl;
+      testInvDB.addFilm(&filmAA);
+      testInvDB.addFilm(&filmBB);
    
-}
+      // Test Display method
+      std::cout << std::endl;
+      std::cout << "State of testInvDB:" << std::endl;
+      std::cout << testInvDB.toString() << std::endl << std::endl;
 
-// (+) --------------------------------|
-// #removeFromCheckouts(string)
-//-------------------------------------|
-// Desc:    Removes the earliest occurrence of this title from the current rentals
-// Params:  NULL
-// PreCons: GIGO - No error checking is performed by removeFromCheckouts()
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-void Cust::removeFromCheckouts(std::string aTitle) {
+      std::cout << "State of Real testinvDB:" << std::endl;
+      std::cout << testinvDB.toString() << std::endl << std::endl;
+
+      // Query quantities of each film
+      std::cout << "testinvDB contains Oz: " << testInvDB.contains(&filmAA) << std::endl;
+      std::cout << "testinvDB contains Seattle: " << testInvDB.contains(&filmBB) << std::endl;
+      std::cout << "testinvDB contains Lambs: " << testInvDB.contains(&filmCC) << std::endl;
+
+      testInvDB.addFilm(&filmCC);
+      std::cout << "Oz Qty: " << testInvDB.retrieve(&filmAA)->getStock() << std::endl;
+      std::cout << "Seattle Qty: " << testInvDB.retrieve(&filmBB)->getStock() << std::endl;
+      std::cout << "Lambs Qty: " << testInvDB.retrieve(&filmCC)->getStock() << std::endl;
+
+      // Create an invalid return (one that has no borrow)
+      std::cout << "Creating an erroneous return (no corresponding borrow)";
+      // TODO: Write test
    
-}
+      // Create borrow transactions
+      std::cout << "Creating borrow transactions..." << std::endl << std::endl;
+      Trans BTestC = Trans("B 1234 C The Wizard of Oz, 7 1939");
+      Trans BTestD = Trans("B 1234 D Silence of the Lambs, 1991");
+      Trans BTestF = Trans("B 1234 F Sleepless in Seattle, 1993");
 
-// (+) --------------------------------|
-// #toString()
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-std::string Cust::toString() {
-   std::string retString = "";
-// retString += "ID        First Name           Last Name\n";
-//               1234      01234567890123456789 01234567890123456789
-   // Generate a temporary stream for appending
-   std::stringstream tempStream;
-   // Append all values, properly formatted
-   // TODO: Test this from driver
-   tempStream << std::setw(4) << std::setfill('0') << this->custID << "      ";
-   tempStream << std::setw(20) << std::setfill(' ') << std::left << this->getFirstName() << " ";
-   tempStream << std::setw(20) << this->getLastName();
-   // Assign the temporary stream to the return string
-   retString = tempStream.str();
-   // Return the result
-   return (retString);
-}
+      // Create return transactions
+      std::cout << "Creating return transactions..." << std::endl << std::endl;
+      Trans RTestC = Trans("R 1234 C The Wizard of Oz, 7 1939");
+      Trans RTestD = Trans("R 1234 D Silence of the Lambs, 1991");
+      Trans RTestF = Trans("R 1234 F Sleepless in Seattle, 1993");
 
+      // Send a transaction
+      // TODO: Finish Transaction class constructor string parsing
+      // testInvDB.adjustStock(BTestF);
+      // testInvDB.adjustStock(RTestD);
+      // testInvDB.adjustStock(BTestF);
 
+      // Test Display method
+      std::cout << std::endl;
+      std::cout << "Post-Transaction State of testInvDB:" << std::endl;
+      std::cout << testInvDB.toString() << std::endl << std::endl;
 
-//-------|---------|---------|---------|---------|---------|---------|---------|
-//
-//       GETTERS / SETTERS (+)
-//
-//-------|---------|---------|---------|---------|---------|---------|---------|
+      // Query film states again
 
-// (+) --------------------------------|
-// #getFirstName()
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-std::string Cust::getFirstName() {
-   return (this->firstName);
-} // Closing getFirstName()
+      std::cout << "--- END INVENTORY DATABASE TESTS ---" << std::endl << std::endl;
 
-// (+) --------------------------------|
-// #getLastName()
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-std::string Cust::getLastName() {
-   return (this->lastName);
-} // Closing getLastName()
-
-// (+) --------------------------------|
-// #getName()
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-std::string Cust::getName() {
-   std::string retString = "";
-   retString += this->firstName;
-   retString += " ";
-   retString += this->lastName;
-   return (retString);
-} // Closing getName()
-
-// (+) --------------------------------|
-// #getID()
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-int Cust::getID() {
-   return (this->custID);
-} // Closing getID()
-
-// (+) --------------------------------|
-// #getHistory()
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-std::string Cust::getHistory() {
-   return (this->history);
-} // Closing getHistory()
-
-// (+) --------------------------------|
-// #setFirstName(string)
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-void Cust::setFirstName(std::string nameF) {
-   this->firstName = nameF;
-}
-
-// (+) --------------------------------|
-// #setFirstName(string)
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-void Cust::setLastName(std::string nameL) {
-   this->lastName = nameL;
-}
-
-// (+) --------------------------------|
-// #setName(string)
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-void Cust::setName(std::string nameF, std::string nameL) {
-   this->setFirstName(nameF);
-   this->setLastName(nameL);
-}
-
-// (+) --------------------------------|
-// #setID(int)
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-void Cust::setID(int IDnum) {
-   this->custID = IDnum;
-}
+   } // END INVENTORY DATABASE TESTS
 
 
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
-//       CONSTRUCTORS / DESTRUCTORS (+)
+//       BULK CUSTOMERDB INPUT TESTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+   if (false) {
+
+      std::cout << "--- START BULK CUSTOMERDB INPUT TESTS ---" << std::endl << std::endl;
+
+      // Test the customerDB bulk inputs
+      std::cout << "Testing customerDB bulk inputs..." << std::endl << std::endl;
+
+      // Test the customerDB bulk inputs
+      std::cout << "Creating an empty CustDB object..." << std::endl << std::endl;
+
+      // Capture command file to filestream
+      std::cout << "Capture bulk input to fileStream..." << std::endl << std::endl;
+
+      // Have the Inventory Controller (main()) parse the file and perform insertion actions
+      std::cout << "Sending bulk commands to CustDB object..." << std::endl << std::endl;
+
+      // Test isLegalCust() logic
+      std::cout << "The first command isLegal(): " << "<isLegal() result goes here>" << " (0 expected, plus error report)" << std::endl << std::endl;
+
+      // Check if the commands were SUPER EFFECTIVE!
+      std::cout << "Check state of CustDB after bulk input:" << std::endl << std::endl;
+
+      std::cout << "--- END BULK CUSTOMERDB INPUT TESTS ---" << std::endl << std::endl;
+
+   } // END BULK CUSTOMERDB INPUT TESTS 
+
+
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       BULK INVENTORYDB INPUT TESTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+   if (false) {
+
+      std::cout << "--- START BULK INVENTORYDB INPUT TESTS ---" << std::endl << std::endl;
+   
+      // Test the inventoryDB bulk inputs
+      std::cout << "Testing inventoryDB bulk inputs..." << std::endl << std::endl;
+
+      // Test the inventoryDB bulk inputs
+      std::cout << "Creating an empty InvDB object..." << std::endl << std::endl;
+
+      // Capture command file to filestream
+      std::cout << "Capture bulk input to fileStream..." << std::endl << std::endl;
+   
+      // Have the Inventory Controller (main()) parse the file and perform insertion actions
+      std::cout << "Sending bulk commands to InvDB object..." << std::endl << std::endl;
+   
+      // Test isLegalInv() logic
+      std::cout << "The first command isLegal(): " << "<isLegal() result goes here>" << " (0 expected, plus error report)" << std::endl << std::endl;
+
+      // Check if the commands were SUPER EFFECTIVE!
+      std::cout << "Check state of InvDB after bulk input:" << std::endl << std::endl;
+   
+      std::cout << "--- END BULK INVENTORYDB INPUT TESTS ---" << std::endl << std::endl;
+
+   } // END BULK CUSTOMERDB INPUT TESTS
+   
+
+   
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       BULK COMMAND INPUT TESTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+   if (false) {
+      std::cout << "--- START BULK COMMAND INPUT TESTS ---" << std::endl << std::endl;
+
+      // Generate a test InvDB and CustDB
+      std::cout << "Generating empty InvDB and CustDB objects..." << std::endl << std::endl;
+      InvDB BulkInvDB = InvDB();
+      CustDB BulkCustDB = CustDB();
+
+      // Minimally populate these two DBs
+      std::cout << "Populating the two databases..." << std::endl << std::endl;
+
+      // Capture the command file to a stream
+      std::cout << "Loading the command file..." << std::endl << std::endl;
+
+      // Parse the stream
+      std::cout << "Parsing the command stream..." << std::endl << std::endl;
+
+      // Test isLegal() logic
+      std::cout << "Testing isLegal() logic:" << std::endl;
+      std::cout << std::endl;
+
+      // Generate transaction objects from legal commands
+      // Send these transactions to both the InvDB and CustDB
+      std::cout << "Generating and sending test transactions..." << std::endl << std::endl;
+      // call bulkProcess()
+
+      // Check results
+      std::cout << "Results of bulk processing" << std::endl;
+      std::cout << "InvDB status:" << std::endl << BulkInvDB.toString() << std::endl << std::endl;
+      std::cout << "CustDB status:" << std::endl << BulkCustDB.toString() << std::endl << std::endl;
+
+      std::cout << "--- END BULK COMMAND INPUT TESTS ---" << std::endl << std::endl;
+
+   } // END BULK COMMAND INPUT TESTS
+
+
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       FOR REALSIES EXECUTION
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+   if (true) {
+      // Acquire the relevant files
+
+      std::ifstream commandFile("data4commands.txt");
+      // std::ifstream customerFile("data4customers.txt");
+      std::ifstream inventoryFile("data4movies.txt");
+      InvDB invDB(inventoryFile);
+
+
+
+      // Generate Transactions from the CommandFile and send Transaction impacts to the appropriate locations
+      while (!commandFile.eof()) {
+         // Read the next relevant line of command
+         std::string command;
+         std::getline(commandFile, command);
+
+         // create a transaction and check for transaction legality
+         Trans* currTrans = nullptr;
+
+         // make sure the line contains data
+         if (command.length() >= 1) {
+
+            // call the factory method to determine type of transaction
+            currTrans = currTrans->factory(command);
+         }
+
+         // Queries isLegal() in Transactions, invDB, and custDB
+         if (invDB.isLegal(command) /* && custDB.isLegal(command)*/ ) {
+
+            // Send the Transaction to the Databases for execution
+            invDB.adjustStock(*currTrans);
+            // custDB.appendHistory(currTrans);
+         }
+
+         // deallocate current transaction now that it's been used
+         if (currTrans != nullptr) {
+            delete currTrans;
+         }
+      }
+   }
+
+
+
+   return (0);
+} // Closing main()
+
+
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       METHOD IMPLEMENTATIONS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
 // (+) --------------------------------|
-// #Cust()
+// #bulkReadCust(ifstream&, CustDB)
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-Cust::Cust() {
-   std::cout << "(ERROR! Default customer constructor called)";
-   this->firstName = "(firstName == NULL)";
-   this->lastName  =  "(lastName == NULL)";
-   this->history   =   "(history == NULL)";
-   this->custID    = 99999; // Number out-of-bounds
-}
+// Desc:    Bulk reader of a correctly formatted customer command file
+// Params:  ifstream& arg1 - The target text file containing customer commands
+//          CustDB arg2 - The receiving Customer database
+// PreCons: A valid CustDB object must exist.
+// PosCons: The ifstream has been consumed
+//          All valid commands have been sent to the target CustDB
+//          Does not guarantee correct handling of commands at destination DB
+//          Does not handle any error reporting
+// RetVal:  None
+// MetCall: isLegalCustCmd() - Verifies all legality checks of the command
+void bulkReadCust(std::ifstream& custtxt, CustDB tgtDB) {
+   // While there is still filestream to read
+      // Get a line of text (one command)
+      // If the command is legal...
+         // Send it to the Customer Database
+      // Repeat
+} // Closing bulkReadCust()
 
 // (+) --------------------------------|
-// #Cust(string, string, int)
+// #bulkReadInv(ifstream&, InvDB)
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-Cust::Cust(std::string nameF, std::string nameL, int IDnum) {
-   this->firstName = nameF;
-   this->lastName  = nameL;
-   this->custID    = IDnum;
-   this->history   = "Transaction history for ";
-   this->history += this->firstName + " " + this->lastName + "(ID ";
-   // Convert the ID integer to a 4-wide formatted string
-   std::ostringstream tempStream;
-   tempStream << std::setw(4) << std::setfill('0') << this->custID;
-   std::string tempString(tempStream.str());
-   // Append that string to the history header
-   this->history += tempString + "): \n";
-}
+// Desc:    Bulk reader of a correctly formatted inventory command file
+// Params:  ifstream& arg1 - The target text file containing inventory commands
+//          CustDB arg2 - The receiving Inventory database
+// PreCons: A valid InvDB object must exist.
+// PosCons: The ifstream has been consumed
+//          All valid commands have been sent to the target InvDB
+//          Does not guarantee correct handling of commands at destination DB
+//          Does not handle any error reporting
+// RetVal:  None
+// MetCall: isLegalInvCmd() - Verifies all legality checks of the command
+void bulkReadInv(std::ifstream& invtxt, InvDB tgtDB) {
+   // While there is still filestream to read
+      // Get a line of text (one command)
+      // If the command is legal...
+         // Send it to the Inventory Database
+      // Repeat
+} // Closing bulkReadInv()
 
 // (+) --------------------------------|
-// #~Cust()
+// #bulkReadTrans(ifstream&, InvDB)
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-Cust::~Cust() {
-   this->firstName = "";
-   this->lastName  = "";
-   this->history   = "";
-   this->custID    = 99999; // Number out-of-bounds
-}
+// Desc:    Bulk reader of a correctly formatted inventory command file
+// Params:  ifstream& arg1 - The target text file containing inventory commands
+//          CustDB arg2 - The receiving Inventory database
+// PreCons: A valid InvDB object must exist.
+// PosCons: The ifstream has been consumed
+//          All valid commands have been sent to the target InvDB
+//          Does not guarantee correct handling of commands at destination DB
+//          Does not handle any error reporting
+// RetVal:  None
+// MetCall: isLegalInvCmd() - Verifies all legality checks of the command
+void bulkReadTrans(std::ifstream& transtxt, CustDB tgtCustDB, InvDB tgtInvDB) {
+   // While there is still filestream to read
+      // Get a line of text (one command)
+      // If the command is legal...
+         // Send it to the Inventory Database
+      // Repeat
+} // Closing bulkReadTrans()
+
+// (+) --------------------------------|
+// #isLegalCustCmd(ifstream&, CustDB)
+//-------------------------------------|
+// Desc:    Verifies the legality of a customer command line
+// Params:  ifstream& arg1 - The target text file containing inventory commands
+//          CustDB arg2 - The database to query
+// PreCons: A valid CustDB object must exist.
+// PosCons: Both the CustDB and this method have examined the command for legality
+//          Does not guarantee correct handling of legality at destination DB
+//          All errors have been reported
+// RetVal:  bool true - No illegal conditions are reported
+//          bool false - At least one illegal condition was detected
+// MetCall: CustDB::isValid() - Verifies all legality checks within the database
+bool isLegalCustCmd(std::string command, CustDB tgtDB) {
+   // Set flag
+   bool isLegal = true;
+   // Begin error log
+   std::string errorLog = "";
+
+   // Initialize field variables
+   int custID = 1234512345;
+   std::string nameF = "";
+   std::string nameL = "";
+
+   // Parse fields
+   // TODO: Load string command to string stream object
+
+   // Verify that field1 is within expected value range
+   if (custID == 1234512345) {
+      // If not, append report
+      errorLog = errorLog + "   - No customer ID entered" + "\n";
+      // And toggle the flag
+      isLegal = false;
+   }
+
+   // Verify that the customerID is within range
+   if (custID != 1234512345 && (custID < 0 || custID > 9999)) {
+      // If not, append report
+      errorLog = errorLog + "   - Invalid customer ID entered (out of range)" + "\n";
+      // And toggle the flag
+      isLegal = false;
+   }
+
+   // Check if both the first name and last name were entered
+   if (nameF == "" || nameL == "") {
+      // If not, append report
+      errorLog = errorLog + "   - No first or last name entered" + "\n";
+      // And toggle the flag
+      isLegal = false;
+   }
+
+   // TODO: Any other ways a customer command can be invalid?
+
+   // If any test has failed, do not forward to database
+   if (isLegal == false) {
+      std::cout << "Customer command error:" << std::endl;
+      std::cout << errorLog << std::endl;
+      return(isLegal);
+   }
+   // Otherwise, this is a correctly formatted command
+   // But it may still be in conflict with the database state, so check that
+   isLegal = tgtDB.isValid(command);
+   // Note: tgtDB.isLegal() handles its own error reporting to cout
+   // Return whether the database confirmed legality or not
+   return(isLegal);
+} // Closing isLegalCustCmd()
+
+// (+) --------------------------------|
+// #isLegalInvCmd(ifstream&, InvDB)
+//-------------------------------------|
+// Desc:    Verifies the legality of an inventory command line
+// Params:  ifstream& arg1 - The target text file containing inventory commands
+//          InvDB arg2 - The database to query
+// PreCons: A valid InvDB object must exist.
+// PosCons: Both the InvDB and this method have examined the command for legality
+//          Does not guarantee correct handling of legality at destination DB
+//          All errors have been reported
+// RetVal:  bool true - No illegal conditions are reported
+//          bool false - At least one illegal condition was detected
+// MetCall: InvDB::isValid() - Verifies all legality checks within the database
+bool isLegalInvCmd(std::string command, InvDB tgtDB) {
+   // Set flag
+   bool isLegal = true;
+   // Begin error log
+   std::string errorLog = "";
+   int currentYear = 2018;
+
+   // Initialize field variables
+   char genre = NULL;
+   int qty = 0;
+   std::string field1 = ""; // Director
+   std::string field2 = ""; // Title
+   std::string field3 = ""; // Actor (in case of Classic)
+   int releaseMonth = 0;
+   int releaseYear = 0;
+
+   // TODO: Parse fields
+
+   // Test if genre is within range first
+   if ((genre != 'C') || (genre != 'F') || (genre != 'D')) {
+      std::cout << "Inventory command error:" << std::endl;
+      std::cout << "   - Invalid genre, halting." << std::endl;
+      return(false);
+   }
+
+   // Verify that quantity is non-zero
+   if (qty == 0) {
+      // If not, append report
+      errorLog = errorLog + "   - Zero quantity (non-inventory)" + "\n";
+      // And toggle the flag
+      isLegal = false;
+   }
+
+   // TODO: Other tests on quantity? Negative values?
+
+   // Verify that a director is entered
+   if (field1 == "") {
+      // If not, append report
+      errorLog = errorLog + "   - No director specified" + "\n";
+      // And toggle the flag
+      isLegal = false;
+   }
+
+   // Verify that a film name is entered
+   if (field2 == "") {
+      // If not, append report
+      errorLog = errorLog + "   - No film title entered" + "\n";
+      // And toggle the flag
+      isLegal = false;
+   }
+
+   // In the case of classic films only, verify that an actor is specified
+   if (genre == 'C' && field3 == "") {
+      // If not, append report
+      errorLog = errorLog + "   - No actor/actress specified" + "\n";
+      // And toggle the flag
+      isLegal = false;
+   }
+
+   // In the case of classic films only, verify that a release month is specified
+   if (genre == 'C' && (releaseMonth < 1 || releaseMonth > 12)) {
+      // If not, append report
+      errorLog = errorLog + "   - Release month not properly entered" + "\n";
+      // And toggle the flag
+      isLegal = false;
+   }
+
+   // Verify that a release year was entered
+   if (releaseYear == 0 || releaseYear > currentYear) {
+      // If not, append report
+      errorLog = errorLog + "   - Release year not properly specified" + "\n";
+      // And toggle the flag
+      isLegal = false;
+   }
+
+   // If any test has failed, do not forward to database
+   if (isLegal == false) {
+      std::cout << "Customer command error:" << std::endl;
+      std::cout << errorLog << std::endl;
+      return(isLegal);
+   }
+   // Otherwise, this is a correctly formatted command
+   // But it may still be in conflict with the database state, so check that
+   isLegal = tgtDB.isValid(command);
+   // Note: tgtDB.isLegal() handles its own error reporting to cout
+   // Return whether the database confirmed legality or not
+   return(isLegal);
+} // Closing isLegalInvCmd()
+
+// (+) --------------------------------|
+// #isLegalTransCmd(ifstream&, CustDB, InvDB)
+//-------------------------------------|
+// Desc:    Verifies the legality of a transaction command line
+// Params:  ifstream& arg1 - The target text file containing inventory commands
+//          InvDB arg2 - The customer database to query
+//          InvDB arg3 - The inventory database to query
+// PreCons: A valid InvDB object must exist
+//          A valid CustDB object must exist
+// PosCons: Both databases and this method have examined the command for legality
+//          Does not guarantee correct handling of legality at destination DBs
+//          All errors have been reported
+// RetVal:  bool true - No illegal conditions are identified
+//          bool false - At least one illegal condition was detected
+// MetCall: CustDB::isValid() - Verifies all legality checks within the customer DB
+//          InvDB::isValid() - Verifies all legality checks within the inventory DB
+bool isLegalTransCmd(std::string command, CustDB tgtCustDB, InvDB tgtInvDB) {
+   // Set flag
+   bool isLegal = true;
+   // Begin error log
+   std::string errorLog = "";
+
+   int currentYear = 2018;
+
+   // Initialize field variables
+   char commandType = NULL;
+   int custID = 1234512345;
+   char format = NULL; // 'D' for DVD on all titles
+   char genre = NULL;
+   int releaseMonth = 0; // (in case of Classic)
+   int releaseYear = 0;
+   std::string director = "";
+   std::string title = "";
+   std::string actor = ""; // (in case of Classic)
+
+   // TODO: Parse command type off string
+
+   // Test if the commandType is within range first
+   if ((commandType != 'I') || (commandType != 'H') || (commandType != 'B') || (commandType != 'R')) {
+      std::cout << "Transaction command error:" << std::endl;
+      std::cout << "   - Invalid command type, halting." << std::endl;
+      return(false);
+   }
+
+   // Finish testing for an 'I' (inventory query) command
+   if (commandType == 'I' /*&& there's anything else in the string*/) { // TODO
+      std::cout << "Transaction command error:" << std::endl;
+      std::cout << "   - Invalid entry of 'I' (inventory) command, halting." << std::endl;
+      return(false);
+   }
+
+   // All legality checks for an 'I' command complete, so exit
+   if (commandType == 'I') {
+      return(isLegal);
+   }
+
+   // TODO: Parse customerID
+
+   // Test if customerID is within range
+   if (custID < 0 || custID > 9999) {
+      // Append the error log
+      errorLog = errorLog + "   - Customer ID out of range" + "\n";
+      // And toggle the flag
+      isLegal = false;
+   }
+
+   // Test if customer is in the database
+   if (!tgtCustDB.doesContain(custID)) {
+      // Append the error log
+      errorLog = errorLog + "   - Non-existent customer" + "\n";
+      // And toggle the flag
+      isLegal = false;
+   }
+
+   // Check validity of a 'H' (history) command
+   if (commandType == 'H'/*&& there's anything else in the string*/) { // TODO
+      std::cout << "Transaction command error:" << std::endl;
+      std::cout << "   - Invalid entry of 'H' (history) command, halting." << std::endl;
+      std::cout << errorLog << std::endl;
+      return(false);
+   }
+
+   // TODO: Parse format
+
+   // Test if format is within range
+   if (format != 'D') {
+      // Append the error log
+      errorLog = errorLog + "   - Invalid media format." + "\n";
+      // And toggle the flag
+      isLegal = false;
+   }
+
+   // TODO: Parse genre
+
+   // Test if genre is within range
+   if ((genre != 'C') || (genre != 'F') || (genre != 'D')) {
+      std::cout << "Inventory command error:" << std::endl;
+      std::cout << "   - Invalid genre, halting." << std::endl;
+      std::cout << errorLog << std::endl;
+      return(false);
+   }
+
+   // Legality tests for classics only
+   if (genre == 'C') {
+      // TODO: Parse releaseMonth
+      // TODO: Parse releaseYear
+      // TODO: Parse actor
+
+      // TODO: Perform all legality checks for Classics
+      // Verify that releaseMonth is within range
+      // Verify that releaseYear is within range
+      // Verify that an actor is provided
+   }
+
+   if (genre == 'D') {
+      // TODO: Parse director
+      // TODO: Parse title
+
+      // TODO: Perform all legality checks for Dramas
+      // Verify that a director is provided
+      // Verify that a title is provided
+   }
+
+   if (genre == 'F') {
+      // TODO: Parse title
+      // TODO: Parse releaseYear
+
+      // TODO: Perform all legality checks for Comedies
+      // Verify that a title is provided
+      // Verify that releaseYear is within range
+   }
+
+
+   // If any test has failed, do not forward to database
+   if (isLegal == false) {
+      std::cout << "Customer command error:" << std::endl;
+      std::cout << errorLog << std::endl;
+      return(isLegal);
+   }
+   // Otherwise, this is a correctly formatted command
+   // But it may still be in conflict with the database state, so check that
+   isLegal = (tgtCustDB.isValid(command) && tgtInvDB.isValid(command));
+   // Note: Target databases handle their own error reporting to cout
+   // Return whether the database confirmed legality or not
+   return(isLegal);
+} // Closing isLegalTransCmd()
+
+
 
 //-------------------------------------|
 // End Student Code
 //-------------------------------------|
 
-// End of file - Cust.cpp
+// End of file - driver.cpp
