@@ -162,10 +162,10 @@ public:
 // #getType()
 // #getGenre()
 // #getTitle()
-// #getIdentifier1()
-// #getIdentifier2()
+// #getDirector()
+// #getActor()
+// #getRelease()
 // #getCustID()
-// #getQty()
 //-----------------|
 // Desc:   Returns transaction data fields
 // Invars: None
@@ -184,10 +184,10 @@ public:
 // #setType()
 // #setGenre()
 // #setTitle()
-// #setIdentifier1()
-// #setIdentifier2()
+// #getDirector()
+// #getActor()
+// #getRelease()
 // #setCustID()
-// #setQty()
 //-----------------|
 // Desc:   Returns transaction data fields
 // Invars: None
