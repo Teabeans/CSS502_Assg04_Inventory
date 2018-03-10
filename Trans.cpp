@@ -140,13 +140,6 @@
 // Invars: Initializes to junk values
 ///   int customerID; // To whom it was transacted
 
-//-----------------|
-// #qty
-//-----------------|
-// Desc:   The quantity of the transaction
-// Invars: Initializes to junk values
-///   int qty;
-
 
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
@@ -185,7 +178,18 @@
 // RetVal:  NULL
 // MetCall: NULL
 void Trans::debug() {
-
+   std::cout << "Trans::debug() - @ address " << this << std::endl;
+   std::cout << "TypeChar:     " << this->type << std::endl;
+   std::cout << "TypeString:   " << this->typeAsString << std::endl;
+   std::cout << "GenreChar:    " << this->genre << std::endl;
+   std::cout << "GenreString:  " << this->genreAsString << std::endl;
+   std::cout << "Title:        " << this->title << std::endl;
+   std::cout << "Director:     " << this->director << std::endl;
+   std::cout << "Actor:        " << this->actor << std::endl;
+   std::cout << "ReleaseMonth: " << this->releaseMonth << std::endl;
+   std::cout << "ReleaseYear:  " << this->releaseYear << std::endl;
+   std::cout << "CustomerID:   " << this->customerID << std::endl;
+   std::cout << std::endl;
 }
 
 // (+) --------------------------------|
@@ -537,6 +541,17 @@ Trans::Trans() {
 // RetVal:  None
 // MetCall: NULL
 Trans::Trans(std::string command) {
+   // Initialize all variables
+   this->type          = NULL;
+   this->typeAsString  = "";
+   this->genre         = NULL;
+   this->genreAsString = "";
+   this->title         = "";
+   this->director      = "";
+   this->actor         = "";
+   this->releaseMonth  = 0;
+   this->releaseYear   = 0;
+   this->customerID    = 1234512345;
 // Sample input:
 // "B 1111 D F Ferries and You: A Primer, 2018"
    // Step 1: Load the command to a stream
