@@ -200,11 +200,11 @@ void InvDB::adjustStock(Trans& trans) { // TODO: Add const to Trans& argument?
    if (trans.getGenre() == 'F') {
       Comedy film;
       film.setTitle(trans.getTitle());
-<<<<<<< HEAD
+
       film.setReleaseYear(std::stoi(trans.getRelease()));
-=======
+
       film.setReleaseDate(trans.getReleaseYear());
->>>>>>> 9034968fbfbaabe6254aa077c4421eda54d975c6
+
 
       if (trans.getType() == 'B') {
          retrieve(&film)->setStock(retrieve(&film)->getStock() + 1);
