@@ -117,7 +117,7 @@ public:
 
    bool addDrama(Drama*);
 
-   bool addFilm(Film* film) {
+   bool addFilm(Film*);
 
    void adjustStock(Trans&);
 
