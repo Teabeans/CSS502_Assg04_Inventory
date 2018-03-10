@@ -110,13 +110,6 @@ private:
 // Invars: Initializes to junk values
    int customerID; // To whom it was transacted
 
-//-----------------|
-// #qty
-//-----------------|
-// Desc:   The quantity of the transaction
-// Invars: Initializes to junk values
-   int qty;
-
 
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
@@ -186,7 +179,6 @@ public:
    int         getReleaseMonth();
    int         getReleaseYear();
    int         getCustID();
-   int         getQty();
 
 //-----------------|
 // #setType()
@@ -209,7 +201,6 @@ public:
    void setReleaseMonth(int month);
    void setReleaseYear(int year);
    void setCustID(int IDnum);
-   void setQty(int quantity);
 
 
  
