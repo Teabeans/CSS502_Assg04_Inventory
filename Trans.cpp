@@ -247,7 +247,7 @@ std::string Trans::getTitle() {
 }
 
 // (+) --------------------------------|
-// #getIdentifier1()
+// #getDirector()
 //-------------------------------------|
 // Desc:    NULL
 // Params:  NULL
@@ -255,12 +255,12 @@ std::string Trans::getTitle() {
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
-std::string Trans::getIdentifier1() {
-   return(this->identifier1);
+std::string Trans::getDirector() {
+   return(this->director);
 }
 
 // (+) --------------------------------|
-// #getIdentifier2()
+// #getActor()
 //-------------------------------------|
 // Desc:    NULL
 // Params:  NULL
@@ -268,8 +268,8 @@ std::string Trans::getIdentifier1() {
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
-std::string Trans::getIdentifier2() {
-   return(this->identifier2);
+std::string Trans::getActor() {
+   return(this->actor);
 }
 
 // (+) --------------------------------|
