@@ -516,8 +516,9 @@ Trans::Trans(std::string command) {
    std::string temp = "";
    stream >> temp;
 
-   // Step 5: Get the genre
+   // Step 5.1: Get the genre
    stream >> this->genre;
+   // Step 5.2: Set the genreAsStrings
    if (this->genre == 'C') {
       this->genreAsString = "Classic";
    }
@@ -528,16 +529,19 @@ Trans::Trans(std::string command) {
       this->genreAsString = "Comedy";
    }
 
-   // Step 6: Find the film:
+   // Step 6: Find the film title:
    if (this->genre == 'C') {
+      // Sample input: "B 5000 D C 3 1971 Ruth Gordon"
       // Classic parse strategy goes here
       // NOTE: Classics are always searched for by MM YYYY ACTOR
    }
    else if (this->genre == 'D') {
+      // Sample input: "B 8888 D D Nancy Savoca, Dogfight,"
       // Drama parse strategies go here
       // NOTE: Dramas are searched for by Director, Title
    }
    else {
+      // Sample input: "B 8000 D F National Lampoon's Animal House, 1978"
       // Comedy parse strategies go here
       // NOTE: Comedies are searched for by Title, Year
 
