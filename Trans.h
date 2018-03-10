@@ -101,7 +101,8 @@ private:
 //-----------------|
 // Desc:   A string representation of the release date
 // Invars: Initializes to junk values
-   std::string release;
+   int releaseMonth = 0;
+   int releaseYear = 0;
 
 //-----------------|
 // #customerID
@@ -147,7 +148,7 @@ public:
 // Desc:   Displays all internal states to cout
 // Invars: None
    void debug();
-   
+
 //-----------------|
 // #toString();
 //-----------------|
@@ -210,7 +211,7 @@ public:
    void setCustID(int IDnum);
 
 
- 
+
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
 //       CONSTRUCTORS / DESTRUCTORS (+)
