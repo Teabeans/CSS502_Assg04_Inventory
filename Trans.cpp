@@ -658,7 +658,17 @@ Trans::Trans(std::string command) {
 // RetVal:  NULL
 // MetCall: NULL
 Trans::~Trans() {
-
+   // Reset all field states before deallocating
+   this->type          = NULL;
+   this->typeAsString  = "";
+   this->genre         = NULL;
+   this->genreAsString = "";
+   this->title         = "";
+   this->director      = "";
+   this->actor         = "";
+   this->releaseMonth  = 0;
+   this->releaseYear   = 0;
+   this->customerID    = 1234512345;
 }
 
 // End of file - Trans.cpp
