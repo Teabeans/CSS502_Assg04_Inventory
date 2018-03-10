@@ -358,7 +358,6 @@ void Trans::setTitle(std::string theTitle) {
    this->title = theTitle;
 }
 
-
 // (+) --------------------------------|
 // #setIdentifier1(string)
 //-------------------------------------|
@@ -368,8 +367,8 @@ void Trans::setTitle(std::string theTitle) {
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
-void Trans::setIdentifier1(std::string trait) {
-   this->identifier1 = trait;
+void Trans::setDirector(std::string director) {
+   this->director = director;
 }
 
 // (+) --------------------------------|
@@ -381,8 +380,8 @@ void Trans::setIdentifier1(std::string trait) {
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
-void Trans::setIdentifier2(std::string trait) {
-   this->identifier2 = trait;
+void Trans::setActor(std::string actor) {
+   this->actor = actor;
 }
 
 // (+) --------------------------------|
