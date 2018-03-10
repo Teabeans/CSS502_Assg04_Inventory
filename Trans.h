@@ -181,8 +181,8 @@ public:
    char        getGenre();
    std::string getGenreAsString();
    std::string getTitle();
-   std::string getIdentifier1();
-   std::string getIdentifier2();
+   std::string getDirector();
+   std::string getActor();
    int         getReleaseMonth();
    int         getReleaseYear();
    int         getCustID();
@@ -204,8 +204,8 @@ public:
    void setGenre(char theGenre);
    void setGenreAsString(std::string theGenre);
    void setTitle(std::string theTitle);
-   void setIdentifier1(std::string trait);
-   void setIdentifier2(std::string trait);
+   void setDirector(std::string director);
+   void setActor(std::string actor);
    void setReleaseMonth(int month);
    void setReleaseYear(int year);
    void setCustID(int IDnum);
