@@ -299,19 +299,6 @@ int Trans::getCustID() {
 }
 
 // (+) --------------------------------|
-// #getQty()
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-int Trans::getQty() {
-   return(this->qty);
-}
-
-// (+) --------------------------------|
 // #setType(char)
 // #setTypeAsString(string)
 //-------------------------------------|
@@ -359,7 +346,7 @@ void Trans::setTitle(std::string theTitle) {
 }
 
 // (+) --------------------------------|
-// #setIdentifier1(string)
+// #setDirector(string)
 //-------------------------------------|
 // Desc:    NULL
 // Params:  NULL
@@ -372,7 +359,7 @@ void Trans::setDirector(std::string director) {
 }
 
 // (+) --------------------------------|
-// #setIdentifier2(string)
+// #setActor(string)
 //-------------------------------------|
 // Desc:    NULL
 // Params:  NULL
