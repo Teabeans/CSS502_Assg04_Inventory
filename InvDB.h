@@ -49,7 +49,7 @@
 #include <string>
 #include <vector>
 #include "Trans.h"
-#include "Film.h" // TODO: Omittable? Does the InvDB know about Films due to child classes?
+#include "Film.h" // TODO: Omittable? Does the InvDB know about films due to child classes?
 #include "FilmClassic.h"
 #include "FilmComedy.h"
 #include "FilmDrama.h"
@@ -66,23 +66,30 @@ private:
 //-----------------|
 // #comedies
 //-----------------|
-// Desc:   NULL
+// Desc:   List of all comedies
 // Invars: NULL
-std::vector<Comedy> comedies;
+std::vector<Film> comedies;
 
 //-----------------|
 // #dramas
 //-----------------|
-// Desc:   NULL
+// Desc:   List of all dramas
 // Invars: NULL
-std::vector<Drama> dramas;
+std::vector<Film> dramas;
 
 //-----------------|
 // #classics
 //-----------------|
-// Desc:   NULL
+// Desc:   List of all classics
 // Invars: NULL
-std::vector<Classic> classics;
+std::vector<Film> classics;
+
+//-----------------|
+// #classics
+//-----------------|
+// Desc:   List of films of any other type
+// Invars: NULL
+std::vector<Film> otherFilms;
 
 
 
@@ -111,11 +118,11 @@ public:
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
-   bool addClassic(Classic*);
+   // bool addClassic(Classic*);
 
-   bool addComedy(Comedy*);
+   // bool addComedy(Comedy*);
 
-   bool addDrama(Drama*);
+   // bool addDrama(Drama*);
 
    bool addFilm(Film*);
 

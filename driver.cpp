@@ -53,8 +53,6 @@
 // Necessary for string operations
 #include <string>
 
-
-
 // Necessary for transaction objects
 #include "Trans.h"
 #include "TransBorrow.h"
@@ -115,7 +113,7 @@ int main() {
 //       FILM CLASS TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-   if (true) {
+   if (false) {
 
       std::cerr << "--- BEGIN FILM CLASS TESTS ---" << std::endl;
 
@@ -124,14 +122,14 @@ int main() {
 
       filmA.setTitle("Testing Film");
       filmA.setStock(20);
-      filmA.setReleaseDate(1995);
+      filmA.setReleaseYear(1995);
       filmA.setGenre('X');
       filmA.setDirector("Antonio Testing");
-      filmA.appendActor("Bob Benson");
+      filmA.setActor("Bob Benson");
 
       std::cerr << filmA.getTitle() << std::endl;
       std::cerr << filmA.getStock() << std::endl;
-      std::cerr << filmA.getReleaseDate() << std::endl;
+      std::cerr << filmA.getReleaseYear() << std::endl;
       std::cerr << filmA.getGenre() << std::endl;
       std::cerr << filmA.getDirector() << std::endl;
 
@@ -140,26 +138,19 @@ int main() {
 
       std::cerr << filmB.getTitle() << std::endl;
       std::cerr << filmB.getStock() << std::endl;
-      std::cerr << filmB.getReleaseDate() << std::endl;
+      std::cerr << filmB.getReleaseYear() << std::endl;
       std::cerr << filmB.getGenre() << std::endl;
       std::cerr << filmB.getDirector() << std::endl;
 
       // operators
       std::cerr << "FilmA == FilmB: " << (filmA == filmB) << std::endl;
-      std::cerr << "FilmA >= FilmB: " << (filmA >= filmB) << std::endl;
-      std::cerr << "FilmA <= FilmB: " << (filmA <= filmB) << std::endl;
-
+      std::cerr << "FilmA >= FilmB: " << (filmA > filmB) << std::endl;
+      std::cerr << "FilmA <= FilmB: " << (filmA < filmB) << std::endl;
 
       Film filmC("D, 100, Jonathan Demme, Silence of the Lambs, 1991");
       std::cerr << "FilmA == FilmB: " << (filmC == filmB) << std::endl;
-      std::cerr << "FilmA >= FilmB: " << (filmC >= filmB) << std::endl;
-      std::cerr << "FilmA <= FilmB: " << (filmC <= filmB) << std::endl;
-
-      std::cerr << "filmA contains actor: Bob Benson: ";
-      std::cerr << filmA.hasActor("Bob Benson") << std::endl;
-
-      std::cerr << "filmA contains actor: Bob Johnson: ";
-      std::cerr << filmA.hasActor("Bob Johnson") << std::endl;
+      std::cerr << "FilmA >= FilmB: " << (filmC > filmB) << std::endl;
+      std::cerr << "FilmA <= FilmB: " << (filmC < filmB) << std::endl;
 
       std::cerr << "--- END FILM CLASS TESTS ---" << std::endl;
 
@@ -228,7 +219,7 @@ int main() {
 //       INV DATABASE TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-   if (false) {
+   if (true) {
 
       std::cout << "--- START INVENTORY DATABASE TESTS ---" << std::endl << std::endl;
 
@@ -238,27 +229,36 @@ int main() {
 
       std::cout << "Create an InvDB object from bulk input..." << std::endl << std::endl;
       std::ifstream inventoryFile("data4movies.txt");
-      InvDB testinvDB(inventoryFile);
+      InvDB testInvDBBulk(inventoryFile);
 
 
       // Create three new films
       std::cout << "Creating three new films..." << std::endl << std::endl;
-      Classic filmAA("C, 10, Victor Fleming, The Wizard of Oz, Judy Garland 7 1939");
+      // Should sort by Title, then year
       Comedy filmBB("F, 10, Nora Ephron, Sleepless in Seattle, 1993");
+      Comedy filmBB2("F, 10, Parody-Man, Sleepless in Seattle, 1997");
+      // Should sort by Director, then Title
       Drama filmCC("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
+      Drama filmCC2("D, 10, Jonathan Demme, Something Different, 1991");
+      // Should sort by Release Date, then major actor
+      Classic filmAA("C, 10, Victor Fleming, The Wizard of Oz, Judy Garland 7 1939");
+      Classic filmAA2("C, 10, Victor Fleming, The Wizard of Oz, Bob Barker 7 1939");
 
       // Attempt to add these films to the inventory database
       std::cout << "Adding films to the testInvDB..." << std::endl << std::endl;
       testInvDB.addFilm(&filmAA);
+      testInvDB.addFilm(&filmAA2);
       testInvDB.addFilm(&filmBB);
+      testInvDB.addFilm(&filmBB2);
+      testInvDB.addFilm(&filmCC2);
    
       // Test Display method
       std::cout << std::endl;
       std::cout << "State of testInvDB:" << std::endl;
       std::cout << testInvDB.toString() << std::endl << std::endl;
 
-      std::cout << "State of Real testinvDB:" << std::endl;
-      std::cout << testinvDB.toString() << std::endl << std::endl;
+      std::cout << "State of testInvDBBulk:" << std::endl;
+      std::cout << testInvDBBulk.toString() << std::endl << std::endl;
 
       // Query quantities of each film
       std::cout << "testinvDB contains Oz: " << testInvDB.contains(&filmAA) << std::endl;
@@ -269,10 +269,6 @@ int main() {
       std::cout << "Oz Qty: " << testInvDB.retrieve(&filmAA)->getStock() << std::endl;
       std::cout << "Seattle Qty: " << testInvDB.retrieve(&filmBB)->getStock() << std::endl;
       std::cout << "Lambs Qty: " << testInvDB.retrieve(&filmCC)->getStock() << std::endl;
-
-      // Create an invalid return (one that has no borrow)
-      std::cout << "Creating an erroneous return (no corresponding borrow)";
-      // TODO: Write test
    
       // Create borrow transactions
       std::cout << "Creating borrow transactions..." << std::endl << std::endl;
@@ -285,6 +281,10 @@ int main() {
       Trans RTestC = Trans("R 1234 C The Wizard of Oz, 7 1939");
       Trans RTestD = Trans("R 1234 D Silence of the Lambs, 1991");
       Trans RTestF = Trans("R 1234 F Sleepless in Seattle, 1993");
+
+      // Create an invalid return (one that has no borrow)
+      std::cout << "Creating an erroneous return (no corresponding borrow)";
+      Trans RTestErr = Trans("R 1234 C Guardians of te Galaxy, 2016");
 
       // Send a transaction
       // TODO: Finish Transaction class constructor string parsing
@@ -422,7 +422,7 @@ int main() {
       // Acquire the relevant files
 
       std::ifstream commandFile("data4commands.txt");
-      // std::ifstream customerFile("data4customers.txt");
+      std::ifstream customerFile("data4customers.txt");
       std::ifstream inventoryFile("data4movies.txt");
       InvDB invDB(inventoryFile);
 

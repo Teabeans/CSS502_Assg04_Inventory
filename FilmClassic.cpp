@@ -48,22 +48,90 @@
 
 
 
-
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
-//       GET/SET METHODS
+//       PUBLIC METHODS (+)
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
-// Override Film::getReleaseDate()
-std::string Classic::getReleaseDate() {
+// (+) --------------------------------|
+// #equals(Film&)
+//-------------------------------------|
+// Desc:    Tests the film against another based on it's release date, then 
+//          major actor
+// Params:  None
+// PreCon:  Release date and release month, and actor must be populated
+// PosCons: NULL
+// RetVal:  True or False
+// MetCall: NULL
+bool Classic::equals(Film& rhs) {
 
-	// convert ints to string
-	std::string rm = std::to_string(releaseMonth);
-	std::string rd = std::to_string(releaseDate);
-	std::string ret = rm + rd;
+   if (releaseMonth == rhs.getReleaseYear() && releaseYear == rhs.getReleaseMonth()
+       && actor == rhs.getActor()) {
+      return true;
+   }
+   else {
+      return false;
+   }
+}
 
-	return ret;
+// (+) --------------------------------|
+// #isLessThan(Film&)
+//-------------------------------------|
+// Desc:    Tests the film against another based on it's release date, then 
+//          major actor
+// Params:  None
+// PreCon:  Release date and release month, and actor must be populated
+// PosCons: NULL
+// RetVal:  True or False
+// MetCall: NULL
+bool Classic::isLessThan(Film& rhs) {
+
+   if (releaseYear < rhs.getReleaseYear()) {
+      return true;
+   }
+   // if the year is the same, check the month
+   else if (releaseYear == rhs.getReleaseYear() && releaseMonth < rhs.getReleaseMonth()) {
+      return true;
+   }
+   // if the year and month are the same, check the major actor
+   else if (releaseYear == rhs.getReleaseYear() && releaseMonth == rhs.getReleaseMonth()
+            && actor < rhs.getActor()) {
+      return true;
+   }
+   else {
+      return false;
+   }
+}
+
+// (+) --------------------------------|
+// #isGreaterThan(Film&)
+//-------------------------------------|
+// Desc:    Tests the film against another based on it's release date, then 
+//          major actor
+// Params:  None
+// PreCon:  Release date and release month, and actor must be populated
+// PosCons: NULL
+// RetVal:  True or False
+// MetCall: NULL
+bool Classic::isGreaterThan(Film& rhs) {
+   std::cerr << "Classic: >" << std::endl;
+
+   if (releaseYear > rhs.getReleaseYear()) {
+      return true;
+   }
+   // if the year is the same, check the month
+   else if (releaseYear == rhs.getReleaseYear() && releaseMonth > rhs.getReleaseMonth()) {
+      return true;
+   }
+   // if the year and month are the same, check the major actor
+   else if (releaseYear == rhs.getReleaseYear() && releaseMonth == rhs.getReleaseMonth()
+            && actor > rhs.getActor()) {
+      return true;
+   }
+   else {
+      return false;
+   }
 }
 
 
@@ -79,8 +147,6 @@ Classic::Classic() {
 }
 
 Classic::Classic(std::string data) {
-   // std::cerr << "creating Classic ";
-   // std::cerr << data << std::endl;
 
    // split the regular film data items by commans and insert those to 
    // the appropriate data members
@@ -105,9 +171,9 @@ Classic::Classic(std::string data) {
       data.erase(0, data.find(delim) + delim.length());
    }
 
-   actors.push_back(items[0] + items[1]); // firstName + lastName
+   actor = items[0] + " " + items[1]; // strings: firstName lastName
    releaseMonth = std::stoi(items[2]); // int
-   releaseDate = std::stoi(items[3]); // int
+   releaseYear = std::stoi(items[3]); // int
 
 
    // std::cerr << "done creating Classic ";

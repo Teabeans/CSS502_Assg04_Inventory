@@ -42,49 +42,163 @@
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
+
+// Necessary for string operations
 #include <string>
+
+// Necessary for input-output operations
 #include <iostream>
+
+// Field and method declarations for the Film class
 #include "Film.h"
 
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
-//       CONSTRUCTORS/DESTRUCTORS
+//       CLASS CONSTANTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+// Do not redeclare these variables in the .cpp.
+// Included here only for reference
+// See associated .h file for variable declarations
+//
+// None for this class
+//
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       PROTECTED FIELDS (-)
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+// Do not redeclare these variables in the .cpp.
+// Included here only for reference
+// See associated .h file for variable declarations
+
+
+//-----------------|
+// #title
+//-----------------|
+// Desc:   The film's title
+// Invars: Must contain at least one character
+///   std::string title;
+
+//-----------------|
+// #stock
+//-----------------|
+// Desc:   The film's stock value
+// Invars: None
+///   int stock;
+
+//-----------------|
+// #releaseYear
+//-----------------|
+// Desc:   The film's release date (year)
+// Invars: None
+///   int releaseYear;
+
+//-----------------|
+// #director
+//-----------------|
+// Desc:   The name of the film's director
+// Invars: Must contain at least one character
+///   std::string director;
+
+//-----------------|
+// #genre
+//-----------------|
+// Desc:   A single-character code indicating the film's genre
+// Invars: Must contain at least one character
+///   char genre;
+
+//-----------------|
+// #actor
+//-----------------|
+// Desc:   The name of the film's major actor
+// Invars: Must contain at least one character
+///   std::string actor;
+
+
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       PUBLIC FIELDS (+)
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
-Film::Film() {
-   title = "Placeholder Title";
-   stock = 0;
-   releaseDate = 2000;
-   director = "Placeholder Director";
-   genre = ' ';
-}
+// None for this class
 
-Film::Film(std::string data) {
-   // std::cerr << "creating film";
-   // std::cerr << data << std::endl;
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       PUBLIC METHODS (+)
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
 
-   // split the data string by commas and parse into object data
-   std::string delim = ", ";
-   std::string items[5];
+// (+) --------------------------------|
+// #equals(Film&)
+//-------------------------------------|
+// Desc:    Tests the film against another based on it's title & year
+// Params:  NULL
+// PreCons: Title and release date must be populated
+// PosCons: NULL
+// RetVal:  True or False
+// MetCall: NULL
+bool Film::equals(Film& rhs) {
 
-   for (int i = 0; i < 5; i++) {
-      items[i] = data.substr(0, data.find(delim));
-      data.erase(0, data.find(delim) + delim.length());
+   if (title == rhs.title && releaseYear == rhs.releaseYear) {
+      return true;
    }
-
-   genre = items[0][0]; // char
-   stock = std::stoi(items[1]); // int
-   director = items[2];
-   title = items[3];
-   releaseDate = std::stoi(items[4]); // int
-
+   else {
+      return false;
+   }
 }
 
-Film::~Film() {
+// (+) --------------------------------|
+// #isLessThan(Film&)
+//-------------------------------------|
+// Desc:    Tests the film against another based on it's title & year
+// Params:  NULL
+// PreCons: Title and release date must be populated
+// PosCons: NULL
+// RetVal:  True or False
+// MetCall: NULL
+bool Film::isLessThan(Film& rhs) {
 
+   if (title < rhs.title) {
+      return true;
+   }
+   else if (title == rhs.title && releaseYear < rhs.releaseYear) {
+      return true;
+   }
+   else {
+      return false;
+   }
 }
+
+// (+) --------------------------------|
+// #isGreaterThan(Film&)
+//-------------------------------------|
+// Desc:    Tests the film against another based on it's title & year
+// Params:  NULL
+// PreCons: Title and release date must be populated
+// PosCons: NULL
+// RetVal:  True or False
+// MetCall: NULL
+bool Film::isGreaterThan(Film& rhs) {
+   std::cerr << "Film: checking greater than" << std::endl;
+
+   if (title > rhs.title) {
+         return true;
+      }
+      else if (title == rhs.title && releaseYear > rhs.releaseYear) {
+         return true;
+      }
+      else {
+         return false;
+      }
+}
+
 
 
 
@@ -95,66 +209,190 @@ Film::~Film() {
 //-------|---------|---------|---------|---------|---------|---------|---------|
 // TODO: Add virtual to all methods we expect to be overriden by child classes
 // TODO: Check if virtual should be added to all methods irregardless
-// title
+
+// (+) --------------------------------|
+// #getTitle()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
 std::string Film::getTitle() {
    return title;
-}
+} // Closing getTitle()
 
+// (+) --------------------------------|
+// #setTitle()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
 void Film::setTitle(std::string data) {
    title = data;
-}
+} // Closing setTitle()
 
-// stock
+// (+) --------------------------------|
+// #getStock()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
 int Film::getStock() {
    return stock;
-}
+} // Closing getStock()
 
+// (+) --------------------------------|
+// #setStock()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
 void Film::setStock(int data) {
    stock = data;
-}
+} // Closing setStock()
 
-// release date
-int Film::getReleaseDate() {
-   return releaseDate;
-}
+// (+) --------------------------------|
+// #getreleaseYear()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+int Film::getReleaseYear() {
+   return releaseYear;
+} // Closing getreleaseYear()
 
-void Film::setReleaseDate(int data) {
-   releaseDate = data;
-}
+// (+) --------------------------------|
+// #setreleaseYear()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+void Film::setReleaseYear(int data) {
+   releaseYear = data;
+} // Closing setreleaseYear()
 
-// genre
+// (+) --------------------------------|
+// #getreleaseYear()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+int Film::getReleaseMonth() {
+   return releaseMonth;
+} // Closing getreleaseYear()
+
+// (+) --------------------------------|
+// #setreleaseYear()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+void Film::setReleaseMonth(int data) {
+   releaseMonth = data;
+} // Closing setreleaseYear()
+
+// (+) --------------------------------|
+// #getGenre()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
 char Film::getGenre() {
    return genre;
-}
+} // Closing getGenre()
 
+// (+) --------------------------------|
+// #setGenre()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
 void Film::setGenre(char data) {
    genre = data;
-}
+} // Closing setGenre()
 
-// director
+// (+) --------------------------------|
+// #getDirector()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
 std::string Film::getDirector() {
    return director;
-}
+} // Closing getDirector()
 
+// (+) --------------------------------|
+// #setDirector()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
 void Film::setDirector(std::string data) {
    director = data;
-}
+} // Closing setDirector()
 
-// actors
-bool Film::hasActor(std::string actor) {
+// (+) --------------------------------|
+// #getActor()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+std::string Film::getActor() {
+   return actor;
+} // Closing getActor()
 
-   // if the specified actor is present in the list, return true
-   for (int i = 0; i < actors.size(); i++) {
-      if (actors.at(i) == actor) {
-         return true;
-      }
-   }
-   return false;
-}
+// (+) --------------------------------|
+// #setActor()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+void Film::setActor(std::string data) {
+   actor = data;
+} // Closing setActor()
 
-void Film::appendActor(std::string actor) {
-   actors.push_back(actor);
-}
+
 
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
@@ -163,77 +401,110 @@ void Film::appendActor(std::string actor) {
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
-/**
- * == operator
- * Desc: compares two films based on title & release date
- * Pre: assumes title and release data are populated
-**/
+// (+) --------------------------------|
+// #operator==(Film&)
+//-------------------------------------|
+// Desc:    Tests the film against another based on it's title & year
+// Params:  NULL
+// PreCons: Title and release date must be populated
+// PosCons: NULL
+// RetVal:  True or False
+// MetCall: NULL
 bool Film::operator==(Film& rhs) {
-
-   if (title == rhs.title && releaseDate == rhs.releaseDate) {
-      return true;
-   }
-   else {
-      return false;
-   }
+   return equals(rhs);
 }
 
-/**
- * <= & < operators
- * Desc: compares two films based on title & release date
- * Pre: assumes title and release data are populated
-**/
-bool Film::operator<=(Film& rhs) {
-
-   if (title < rhs.title) {
-      return true;
-   }
-   else if (title == rhs.title && releaseDate <= rhs.releaseDate) {
-      return true;
-   }
-   else {
-      return false;
-   }
-}
+// (+) --------------------------------|
+// #operator<(Film&)
+//-------------------------------------|
+// Desc:    Tests the film against another based on it's title & year
+// Params:  NULL
+// PreCons: Title and release date must be populated
+// PosCons: NULL
+// RetVal:  True or False
+// MetCall: NULL
 bool Film::operator<(Film& rhs) {
-
-   if (title < rhs.title) {
-      return true;
-   }
-   else if (title == rhs.title && releaseDate < rhs.releaseDate) {
-      return true;
-   }
-   else {
-      return false;
-   }
+   return isLessThan(rhs);
 }
 
-/**
- * >= & > operators
- * Desc: compares two films based on title & release date
- * Pre: assumes title and release data are populated
-**/
-bool Film::operator>=(Film& rhs) {
-
-   if (title > rhs.title) {
-         return true;
-      }
-      else if (title == rhs.title && releaseDate >= rhs.releaseDate) {
-         return true;
-      }
-      else {
-         return false;
-      }
-}
+// (+) --------------------------------|
+// #operator>(Film&)
+//-------------------------------------|
+// Desc:    Tests the film against another based on it's title & year
+// Params:  NULL
+// PreCons: Title and release date must be populated
+// PosCons: NULL
+// RetVal:  True or False
+// MetCall: NULL
 bool Film::operator>(Film& rhs) {
+   std::cerr << "Film: >" << std::endl;
+   return isGreaterThan(rhs);
+}
 
-   if (title > rhs.title) {
-         return true;
-      }
-      else if (title == rhs.title && releaseDate > rhs.releaseDate) {
-         return true;
-      }
-      else {
-         return false;
-      }
+
+
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       CONSTRUCTORS/DESTRUCTORS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+
+// (+) --------------------------------|
+// #Film()
+//-------------------------------------|
+// Desc:    Populate data-members with placeholder data
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+Film::Film() {
+   title = "Placeholder Title";
+   stock = 0;
+   releaseYear = 2000;
+   director = "Placeholder Director";
+   genre = ' ';
+}
+
+// (+) --------------------------------|
+// #Film(string)
+//-------------------------------------|
+// Desc:    Take in a string and generate the appropriate data-members
+// Params:  Comma-delimited string
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+Film::Film(std::string data) {
+
+   // split the data string by commas and parse into object data
+   std::string delim = ", ";
+   std::string items[5];
+
+   for (int i = 0; i < 5; i++) {
+      items[i] = data.substr(0, data.find(delim));
+      data.erase(0, data.find(delim) + delim.length());
+   }
+
+   // set data members based on data segments
+   genre = items[0][0]; // char
+   stock = std::stoi(items[1]); // int
+   director = items[2];
+   title = items[3];
+   releaseYear = std::stoi(items[4]); // int
+
+}
+
+// (+) --------------------------------|
+// #~Film()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+Film::~Film() {
+
 }
