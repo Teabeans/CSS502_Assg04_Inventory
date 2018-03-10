@@ -43,7 +43,7 @@
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
-#include "InvDB.h"
+
 
 // film types
 #include "Film.h"
@@ -55,6 +55,8 @@
 #include "Trans.h"
 #include "TransBorrow.h"
 #include "TransReturn.h"
+
+#include "InvDB.h"
 
 // Necessary for file stream object handling
 #include <fstream>
@@ -111,6 +113,14 @@ int InvDB::hashTitle(std::string someTitle) {
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
 //       PUBLIC FIELDS (+)
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+
+
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       PUBLIC METHODS (+)
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
@@ -195,6 +205,7 @@ bool InvDB::addFilm(Film* film) {
    // TODO: Implement
    return true;
 } // Closing addFilm()
+
 
 // (+) --------------------------------|
 // #adjustStock(Trans&)
