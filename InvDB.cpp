@@ -105,6 +105,9 @@
 
 int InvDB::hashTitle(std::string someTitle) {
    // TODO: Implement or discard?
+   // @TB: Let'd discard it. The hash function won't provide anything for storing
+   //      the films, and it'll mess up the sorting. So long as we have the hash in
+   //      the custDB we'll be fine.
    return(0);
 }
 
@@ -142,7 +145,7 @@ bool InvDB::addFilm(Film* film) {
       // find the appropriate position in the comedies vector
       auto iterator = comedies.begin();
       for (int i = 0; i < comedies.size(); i++) {
-         if (comedies.at(i).isGreaterThan(*film)) break;
+         if (comedies.at(i) > *film) break;
          iterator++;
       }
       comedies.insert(iterator, *film);
@@ -187,52 +190,52 @@ bool InvDB::addFilm(Film* film) {
 // (+) --------------------------------|
 // #adjustStock(Trans&)
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
+// Desc:    Updates the stock value of a film based on the arg transaction
+// Params:  transaction object
 // PreCons: NULL
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
 void InvDB::adjustStock(Trans& trans) { // TODO: Add const to Trans& argument?
 
-   std::cerr << "Trans Data: " << trans.getTitle() << " : " << trans.getReleaseYear() << std::endl;
+   // std::cerr << "Trans Data: " << trans.getTitle() << " : " << trans.getReleaseYear() << std::endl;
 
-   if (trans.getGenre() == 'F') {
-      Comedy film;
-      film.setTitle(trans.getTitle());
+   // if (trans.getGenre() == 'F') {
+   //    Comedy film;
+   //    film.setTitle(trans.getTitle());
 
-      film.setReleaseYear(std::stoi(trans.getRelease()));
+   //    film.setReleaseYear(std::stoi(trans.getRelease()));
 
-      film.setReleaseDate(trans.getReleaseYear());
+   //    film.setReleaseDate(trans.getReleaseYear());
 
 
-      if (trans.getType() == 'B') {
-         retrieve(&film)->setStock(retrieve(&film)->getStock() + 1);
-      }
-      else {
-         retrieve(&film)->setStock(retrieve(&film)->getStock() - 1);
-      }
-   }
+   //    if (trans.getType() == 'B') {
+   //       retrieve(&film)->setStock(retrieve(&film)->getStock() + 1);
+   //    }
+   //    else {
+   //       retrieve(&film)->setStock(retrieve(&film)->getStock() - 1);
+   //    }
+   // }
 
-   else if (trans.getGenre() == 'D') {
+   // else if (trans.getGenre() == 'D') {
       
-   }
+   // }
 
-   else if (trans.getGenre() == 'C') {
-      Classic filmAA("C, 0, , , ");
+   // else if (trans.getGenre() == 'C') {
+   //    Classic filmAA("C, 0, , , ");
       
-   }
+   // }
 
 }
 
 // (+) --------------------------------|
 // #contains(Film*)
 //-------------------------------------|
-// Desc:    Outputs a string representation of the InvDB
-// Params:  NULL
+// Desc:    Checks the DB for a particular film
+// Params:  Ptr to film object
 // PreCons: NULL
 // PosCons: NULL
-// RetVal:  NULL
+// RetVal:  True if the film is present, False otherwise
 // MetCall: NULL
 bool InvDB::contains(Film* film) {
 
@@ -281,19 +284,6 @@ bool InvDB::contains(Film* film) {
 }
 
 // (+) --------------------------------|
-// #display()
-//-------------------------------------|
-// Desc:    Displays to cout the status of the InvDB
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-void InvDB::display() {
-   std::cout << toString();
-}
-
-// (+) --------------------------------|
 // #isLegal()
 //-------------------------------------|
 // Desc:    Tests the legality of a received command string
@@ -309,28 +299,13 @@ bool InvDB::isLegal(std::string command) {
 }
 
 // (+) --------------------------------|
-// #isValid()
-//-------------------------------------|
-// Desc:    Tests the legality of a received command string
-//          Outputs an error to cout for illegal conditions
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-bool InvDB::isValid(std::string someCommand) {
-   // TODO: Implement? Driver currently calls 'isValid', but that can be changed
-   return(true);
-}
-
-// (+) --------------------------------|
 // #retrieve(Film*)
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
+// Desc:    Searches for a film object and returns it instead of a bool
+// Params:  Film object to be found
 // PreCons: NULL
 // PosCons: NULL
-// RetVal:  NULL
+// RetVal:  Pointer to the film object
 // MetCall: NULL
 Film* InvDB::retrieve(Film* film) {
 
@@ -382,13 +357,26 @@ Film* InvDB::retrieve(Film* film) {
 }
 
 // (+) --------------------------------|
+// #display()
+//-------------------------------------|
+// Desc:    Displays to cout the status of the InvDB
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+void InvDB::display() {
+   std::cout << toString();
+}
+
+// (+) --------------------------------|
 // #toString()
 //-------------------------------------|
 // Desc:    Outputs a string representation of the InvDB
 // Params:  NULL
 // PreCons: NULL
 // PosCons: NULL
-// RetVal:  NULL
+// RetVal:  string
 // MetCall: NULL
 std::string const InvDB::toString() { // TODO: @MG - Verify inclusion of const?
    std::string retString = "";

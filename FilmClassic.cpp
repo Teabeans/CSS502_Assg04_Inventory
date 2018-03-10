@@ -65,6 +65,7 @@
 // RetVal:  True or False
 // MetCall: NULL
 bool Classic::equals(Film& rhs) {
+   std::cerr << "Classic:equals" << std::endl;
 
    if (releaseMonth == rhs.getReleaseYear() && releaseYear == rhs.getReleaseMonth()
        && actor == rhs.getActor()) {
@@ -115,7 +116,6 @@ bool Classic::isLessThan(Film& rhs) {
 // RetVal:  True or False
 // MetCall: NULL
 bool Classic::isGreaterThan(Film& rhs) {
-   std::cerr << "Classic: >" << std::endl;
 
    if (releaseYear > rhs.getReleaseYear()) {
       return true;
@@ -141,11 +141,15 @@ bool Classic::isGreaterThan(Film& rhs) {
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
-
-Classic::Classic() {
-
-}
-
+// (+) --------------------------------|
+// #Classic(string)
+//-------------------------------------|
+// Desc:    Overrides the Film(string) constructor, adding logic to parse actors
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
 Classic::Classic(std::string data) {
 
    // split the regular film data items by commans and insert those to 
@@ -174,14 +178,6 @@ Classic::Classic(std::string data) {
    actor = items[0] + " " + items[1]; // strings: firstName lastName
    releaseMonth = std::stoi(items[2]); // int
    releaseYear = std::stoi(items[3]); // int
-
-
-   // std::cerr << "done creating Classic ";
-}
-
-Classic::~Classic() {
-   // std::cerr << "destruct Classic" << std::endl;
-
 }
 
 // End of File - FilmClassic.cpp

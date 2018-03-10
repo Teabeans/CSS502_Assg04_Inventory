@@ -145,6 +145,7 @@
 // RetVal:  True or False
 // MetCall: NULL
 bool Film::equals(Film& rhs) {
+   std::cerr << "Film:equals" << std::endl;
 
    if (title == rhs.title && releaseYear == rhs.releaseYear) {
       return true;
@@ -186,7 +187,6 @@ bool Film::isLessThan(Film& rhs) {
 // RetVal:  True or False
 // MetCall: NULL
 bool Film::isGreaterThan(Film& rhs) {
-   std::cerr << "Film: checking greater than" << std::endl;
 
    if (title > rhs.title) {
          return true;
@@ -411,6 +411,7 @@ void Film::setActor(std::string data) {
 // RetVal:  True or False
 // MetCall: NULL
 bool Film::operator==(Film& rhs) {
+   std::cerr << "Film:==" << std::endl;
    return equals(rhs);
 }
 
@@ -437,7 +438,6 @@ bool Film::operator<(Film& rhs) {
 // RetVal:  True or False
 // MetCall: NULL
 bool Film::operator>(Film& rhs) {
-   std::cerr << "Film: >" << std::endl;
    return isGreaterThan(rhs);
 }
 
@@ -460,11 +460,12 @@ bool Film::operator>(Film& rhs) {
 // RetVal:  NULL
 // MetCall: NULL
 Film::Film() {
-   title = "Placeholder Title";
+   title = "";
    stock = 0;
-   releaseYear = 2000;
-   director = "Placeholder Director";
+   releaseYear = 0;
+   director = "";
    genre = ' ';
+   actor = "";
 }
 
 // (+) --------------------------------|

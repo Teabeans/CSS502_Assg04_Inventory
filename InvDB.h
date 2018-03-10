@@ -118,26 +118,54 @@ public:
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
-   // bool addClassic(Classic*);
-
-   // bool addComedy(Comedy*);
-
-   // bool addDrama(Drama*);
-
+   // (+) --------------------------------|
+   // #addFilm(Film*)
+   //-------------------------------------|
+   // Desc:    Adds a new generic film object to the list
+   // Invars:  NULL
    bool addFilm(Film*);
 
+   // (+) --------------------------------|
+   // #adjustStock(Trans&)
+   //-------------------------------------|
+   // Desc:    Updates the stock value of a film based on the arg transaction
+   // Invars:  NULL
    void adjustStock(Trans&);
 
+   // (+) --------------------------------|
+   // #contains(Film*)
+   //-------------------------------------|
+   // Desc:    Checks the DB for a particular film
+   // Invars:  NULL
    bool contains(Film*);
 
-   void display();
-
+   // (+) --------------------------------|
+   // #isLegal()
+   //-------------------------------------|
+   // Desc:    Tests the legality of a received command string
+   //          Outputs an error to cout for illegal conditions
+   // Invars:  NULL
    bool isLegal(std::string);
 
-   bool isValid(std::string);
-
+   // (+) --------------------------------|
+   // #retrieve(Film*)
+   //-------------------------------------|
+   // Desc:    Searches for a film object and returns it instead of a bool
+   // Invars:  NULL
    Film* retrieve(Film*);
 
+   // (+) --------------------------------|
+   // #display()
+   //-------------------------------------|
+   // Desc:    Displays to cout the status of the InvDB by calling toString
+   // Invars:  NULL
+   void display();
+
+   // (+) --------------------------------|
+   // #toString()
+   //-------------------------------------|
+   // Desc:    Outputs a string representation of the InvDB
+   // Invars:  NULL
    std::string const toString();
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
