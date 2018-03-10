@@ -1,7 +1,7 @@
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
 // UW CSS 502A - Assignment 4 - Inventory Management
-// Driver.cpp
+// driver.cpp
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
@@ -53,9 +53,7 @@
 // Necessary for string operations
 #include <string>
 
-// Necessary for database objects
-#include "InvDB.h"
-#include "CustDB.h"
+
 
 // Necessary for transaction objects
 #include "Trans.h"
@@ -70,6 +68,11 @@
 
 // Necessary for customer objects
 #include "Cust.h"
+
+// Necessary for database objects
+#include "InvDB.h"
+#include "CustDB.h"
+
 
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
