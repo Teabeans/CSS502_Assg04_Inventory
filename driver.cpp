@@ -200,6 +200,10 @@ int main() {
       // Attempt to process Borrow on Cust1
       std::cout << "--- Testing appendHistory(string)... ---" << std::endl << std::endl;
       testCustomer1->appendHistory(testBorrow.toString(), testBorrow.getType(), testBorrow.getTitle());
+      std::cout << "testBorrow.toString(): " << testBorrow.toString() << std::endl;
+      std::cout << "testBorrow.getType() : " << testBorrow.getType() << std::endl;
+      std::cout << "testBorrow.getTitle(): " << testBorrow.getTitle() << std::endl;
+      std::cout << std::endl;
 
       // Check the history of Cust1 again
       std::cout << "--- Checking the history of Cust1 after appendHistory(): ---" << std::endl;
@@ -207,16 +211,20 @@ int main() {
 
       // Check the outstanding rentals of customer 1
       std::cout << "--- Test if Cust1 has a copy of 'Ferries and You: A Primer': ---" << std::endl;
-      std::cout << testCustomer1->isCheckedOut("Ferries and You: A Primer") << "('1' expected)" << std::endl;
+      std::cout << testCustomer1->isCheckedOut("Ferries and You: A Primer") << " ('1' expected)" << std::endl << std::endl;
+
+      std::cout << "--- Test if Cust1 has a copy of 'Jurassic Park': ---" << std::endl;
+      std::cout << testCustomer1->isCheckedOut("Jurassic Park") << " ('0' expected)" << std::endl << std::endl;
 
       // Attempt to process return on Cust1
       testCustomer1->appendHistory(testReturn.toString(), testReturn.getType(), testReturn.getTitle());
 
       // Check the outstanding rentals of customer 1
       std::cout << "--- Test if Cust1 has a copy of 'Ferries and You: A Primer': ---" << std::endl;
-      std::cout << testCustomer1->isCheckedOut("Ferries and You: A Primer") << "('0' expected)" << std::endl;
+      std::cout << testCustomer1->isCheckedOut("Ferries and You: A Primer") << " ('0' expected)" << std::endl << std::endl;
 
-
+      std::cout << "--- Test if Cust1 has a copy of 'Jurassic Park': ---" << std::endl;
+      std::cout << testCustomer1->isCheckedOut("Jurassic Park") << " ('0' expected)" << std::endl << std::endl;
 
       // Attempt to insert customers to database
       std::cout << "--- Inserting Cust1 and Cust2 to database... ---" << std::endl << std::endl;
