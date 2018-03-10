@@ -117,13 +117,13 @@
 ///   std::string title;
 
 //-----------------|
-// #identifier1
-// #identifier2
+// #director
+// #actor
 //-----------------|
 // Desc:   Unique identifiers of the transaction
 // Invars: Initializes to junk values
-///   std::string identifier1; //first identifier (eg. title or major actor)
-///   std::string identifier2; //second identifier (eg. year or release date)
+///   std::string director;
+///   std::string actor;
 
 //-----------------|
 // #release
