@@ -140,7 +140,7 @@ public:
 // Desc:   Appends values to the customer history
 // Invars: May be called with faulty transaction information
 //         GIGO - No error checking is performed by appendHistory()
-   void appendHistory(std::string someTransaction);
+   void appendHistory(std::string someTransaction, char type, std::string title);
 
 //-----------------|
 // #isCheckedOut(string)
