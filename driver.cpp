@@ -263,6 +263,7 @@ int main() {
       std::cout << "--- Test if Cust1 has a copy of 'Jurassic Park': ---" << std::endl;
       std::cout << testCustomer1->isCheckedOut("Jurassic Park") << " ('0' expected)" << std::endl << std::endl;
 
+      std::cout << "--- Execute a return transaction via Cust::appendHistory()... ---" << std::endl << std::endl;
       // Attempt to process return on Cust1
       testCustomer1->appendHistory(testReturn.toString(), testReturn.getType(), testReturn.getTitle());
 
