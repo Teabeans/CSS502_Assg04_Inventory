@@ -88,20 +88,21 @@ private:
    std::string title;
 
 //-----------------|
-// #identifier1
-// #identifier2
+// #director
+// #actor
 //-----------------|
 // Desc:   Unique identifiers of the transaction
 // Invars: Initializes to junk values
-   std::string identifier1; //first identifier (eg. title or major actor)
-   std::string identifier2; //second identifier (eg. year or release date)
+   std::string director; // Director
+   std::string actor; // Note, one transaction can only hold one actor
 
 //-----------------|
 // #release
 //-----------------|
 // Desc:   A string representation of the release date
 // Invars: Initializes to junk values
-   std::string release;
+   int releaseMonth = 0;
+   int releaseYear = 0;
 
 //-----------------|
 // #customerID
@@ -109,13 +110,6 @@ private:
 // Desc:   The transaction type
 // Invars: Initializes to junk values
    int customerID; // To whom it was transacted
-
-//-----------------|
-// #qty
-//-----------------|
-// Desc:   The quantity of the transaction
-// Invars: Initializes to junk values
-   int qty;
 
 
 
@@ -149,6 +143,13 @@ public:
 // Full comments in Cust.cpp - omitted here for clarity
 
 //-----------------|
+// #debug();
+//-----------------|
+// Desc:   Displays all internal states to cout
+// Invars: None
+   void debug();
+
+//-----------------|
 // #toString();
 //-----------------|
 // Desc:   Converts this transaction to a string representation
@@ -169,10 +170,10 @@ public:
 // #getType()
 // #getGenre()
 // #getTitle()
-// #getIdentifier1()
-// #getIdentifier2()
+// #getDirector()
+// #getActor()
+// #getRelease()
 // #getCustID()
-// #getQty()
 //-----------------|
 // Desc:   Returns transaction data fields
 // Invars: None
@@ -181,20 +182,20 @@ public:
    char        getGenre();
    std::string getGenreAsString();
    std::string getTitle();
-   std::string getIdentifier1();
-   std::string getIdentifier2();
-   std::string getRelease();
+   std::string getDirector();
+   std::string getActor();
+   int         getReleaseMonth();
+   int         getReleaseYear();
    int         getCustID();
-   int         getQty();
 
 //-----------------|
 // #setType()
 // #setGenre()
 // #setTitle()
-// #setIdentifier1()
-// #setIdentifier2()
+// #getDirector()
+// #getActor()
+// #getRelease()
 // #setCustID()
-// #setQty()
 //-----------------|
 // Desc:   Returns transaction data fields
 // Invars: None
@@ -203,14 +204,14 @@ public:
    void setGenre(char theGenre);
    void setGenreAsString(std::string theGenre);
    void setTitle(std::string theTitle);
-   void setIdentifier1(std::string trait);
-   void setIdentifier2(std::string trait);
-   void setRelease(std::string);
+   void setDirector(std::string director);
+   void setActor(std::string actor);
+   void setReleaseMonth(int month);
+   void setReleaseYear(int year);
    void setCustID(int IDnum);
-   void setQty(int quantity);
 
 
- 
+
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
 //       CONSTRUCTORS / DESTRUCTORS (+)

@@ -107,7 +107,54 @@ bool isLegalTransCmd(std::string command, CustDB tgtDB, InvDB tgtInvDB);
 int main() {
 
 
+   
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       TRANS CLASS TESTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+   if (true) {
 
+      std::cout << "--- BEGIN FILM CLASS TESTS ---" << std::endl;
+
+      std::cout << "--- Creating a default Transaction... ---" << std::endl << std::endl;
+      Trans testTrans;
+
+      std::cout << "--- Test of Trans::debug() and Trans::toString(): ---" << std::endl << std::endl;
+      std::cout << "toString(): " << testTrans.toString() << std::endl;
+      std::cout << "debug():" << std::endl;
+      testTrans.debug();
+
+      std::cout << "--- Partially create a Drama transaction by string... ---" << std::endl << std::endl;
+      Trans testTrans2("B 1111 D D Phillippe De Broca, King of Hearts,");
+      std::cout << "toString(): " << testTrans2.toString() << std::endl;
+      std::cout << "debug():" << std::endl;
+      testTrans2.debug();
+
+      std::cout << "--- Partially create a Comedy transaction by string... ---" << std::endl << std::endl;
+      Trans testTrans3("R 2222 D F You've Got Mail, 1998");
+      std::cout << "toString(): " << testTrans3.toString() << std::endl;
+      std::cout << "debug():" << std::endl;
+      testTrans3.debug();
+
+      std::cout << "--- Partially create a Classic transaction by string... ---" << std::endl << std::endl;
+      Trans testTrans4("B 3333 D C 3 1971 Ruth Gordon");
+      std::cout << "toString(): " << testTrans4.toString() << std::endl;
+      std::cout << "debug():" << std::endl;
+      testTrans4.debug();
+
+      std::cout << "--- Append title to classic transaction: ---" << std::endl << std::endl;
+      testTrans4.setTitle("<Title pulled from database>");
+      std::cout << "toString(): " << testTrans4.toString() << std::endl;
+      std::cout << "debug():" << std::endl;
+      testTrans4.debug();
+
+      std::cout << "--- END FILM CLASS TESTS ---" << std::endl << std::endl;
+
+   } // END TRANS CLASS TESTS
+
+   
+   
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
 //       FILM CLASS TESTS
@@ -152,7 +199,7 @@ int main() {
       std::cerr << "FilmA >= FilmB: " << (filmC > filmB) << std::endl;
       std::cerr << "FilmA <= FilmB: " << (filmC < filmB) << std::endl;
 
-      std::cerr << "--- END FILM CLASS TESTS ---" << std::endl;
+      std::cerr << "--- END FILM CLASS TESTS ---" << std::endl << std::endl;
 
    } // END FILM CLASS TESTS
 
@@ -163,49 +210,68 @@ int main() {
 //       CUSTOMER DATABASE TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-   if (false) {
+   if (true) {
 
       std::cout << "--- START CUSTOMER DATABASE TESTS ---" << std::endl << std::endl;
 
       // Instantitate a new customer database
-      std::cout << "Creating a default CustDB..." << std::endl << std::endl;
+      std::cout << "--- Creating a default CustDB... ---" << std::endl << std::endl;
       CustDB testCustDB = CustDB();
 
-      std::cout << "Creating a transaction from string 'B 1111 D F Ferries and You: A Primer, 2018'..." << std::endl << std::endl;
-      Trans testTransaction = Trans("B 1111 D F Ferries and You: A Primer, 2018");
+      std::cout << "--- Creating a transaction from string 'B 1111 D F Ferries and You: A Primer, 2018'... ---" << std::endl << std::endl;
+      Trans testBorrow = Trans("B 1111 D F Ferries and You: A Primer, 2018");
+      Trans testReturn = Trans("R 1111 D F Ferries and You: A Primer, 2018");
 
       // Create two new customers
-      std::cout << "Creating two new customers..." << std::endl << std::endl;
+      std::cout << "--- Creating two new customers... ---" << std::endl << std::endl;
       // 1111 Jane Doe
-      Cust* testCustomer1 = new Cust("Jane", "Doe", 1111);
       // 9000 Boaty McBoatface
+      Cust* testCustomer1 = new Cust("Jane", "Doe", 1111);
       Cust* testCustomer2 = new Cust("Boaty", "McBoatface", 9000);
 
       // Check customer instantiation
-      std::cout << "Customer 1 & 2 constructor results:" << std::endl;
+      std::cout << "--- Customer 1 & 2 constructor results: ---" << std::endl;
       std::cout << testCustomer1->toString() << std::endl;
       std::cout << testCustomer2->toString() << std::endl;
       std::cout << std::endl;
 
-      // Check the history of customer 1
-      std::cout << "Checking history of customer 1:" << std::endl;
-      std::cout << testCustomer1->getHistory() << std::endl << std::endl;
+      // Attempt to process Borrow on Cust1
+      std::cout << "--- Testing appendHistory(string)... ---" << std::endl << std::endl;
+      testCustomer1->appendHistory(testBorrow.toString(), testBorrow.getType(), testBorrow.getTitle());
+      std::cout << "testBorrow.toString(): " << testBorrow.toString() << std::endl;
+      std::cout << "testBorrow.getType() : " << testBorrow.getType() << std::endl;
+      std::cout << "testBorrow.getTitle(): " << testBorrow.getTitle() << std::endl;
+      std::cout << std::endl;
 
-      // Attempt to append history to customer 1
-      std::cout << "Testing appendHistory(string)..." << std::endl << std::endl;
-      testCustomer1->appendHistory(testTransaction.toString());
-
-      // Check the history of customer 1 again
-      std::cout << "Checking the history of customer 1 after append:" << std::endl;
+      // Check the history of Cust1 again
+      std::cout << "--- Checking the history of Cust1 after appendHistory(): ---" << std::endl;
       std::cout << testCustomer1->getHistory() << std::endl;
 
+      // Check the outstanding rentals of customer 1
+      std::cout << "--- Test if Cust1 has a copy of 'Ferries and You: A Primer': ---" << std::endl;
+      std::cout << testCustomer1->isCheckedOut("Ferries and You: A Primer") << " ('1' expected)" << std::endl << std::endl;
+
+      std::cout << "--- Test if Cust1 has a copy of 'Jurassic Park': ---" << std::endl;
+      std::cout << testCustomer1->isCheckedOut("Jurassic Park") << " ('0' expected)" << std::endl << std::endl;
+
+      std::cout << "--- Execute a return transaction via Cust::appendHistory()... ---" << std::endl << std::endl;
+      // Attempt to process return on Cust1
+      testCustomer1->appendHistory(testReturn.toString(), testReturn.getType(), testReturn.getTitle());
+
+      // Check the outstanding rentals of customer 1
+      std::cout << "--- Test if Cust1 has a copy of 'Ferries and You: A Primer': ---" << std::endl;
+      std::cout << testCustomer1->isCheckedOut("Ferries and You: A Primer") << " ('0' expected)" << std::endl << std::endl;
+
+      std::cout << "--- Test if Cust1 has a copy of 'Jurassic Park': ---" << std::endl;
+      std::cout << testCustomer1->isCheckedOut("Jurassic Park") << " ('0' expected)" << std::endl << std::endl;
+
       // Attempt to insert customers to database
-      std::cout << "Inserting customers 1 and 2 to database..." << std::endl << std::endl;
+      std::cout << "--- Inserting Cust1 and Cust2 to database... ---" << std::endl << std::endl;
       testCustDB.insertCustomer(testCustomer1);
       testCustDB.insertCustomer(testCustomer2);
 
       // Check insertion
-      std::cout << "Checking insertion results:" << std::endl;
+      std::cout << "--- Checking insertion results: ---" << std::endl;
       std::cout << testCustDB.toString() << std::endl << std::endl;
 
       std::cout << "--- END CUSTOMER DATABASE TESTS ---" << std::endl << std::endl;
@@ -433,16 +499,39 @@ int main() {
          // Read the next relevant line of command
          std::string command;
          std::getline(commandFile, command);
-
-         // create a transaction and check for transaction legality
+         // create a transaction ptr
          Trans* currTrans = nullptr;
+         
+         /* - TL - In process
+         // Check for transaction syntax legality
+         if (!isLegal(command)) {
+            break;
+         }
+         */
 
+         // TODO: Move to isLegal() block
          // make sure the line contains data
          if (command.length() >= 1) {
-
+  
+            // TODO: Change to Trans(string)?
             // call the factory method to determine type of transaction
             currTrans = currTrans->factory(command);
-         }
+         } // Closing if - Partially filled transaction by string command created
+
+         // TODO: I and H cases
+         // If the command is an "I", pass to invDB for execution
+         // If the command is an "H", attempt to query custDB for execution
+         // Loop again
+         
+         // Otherwise...
+         // Pad out remainder of relevant information fields that might be missing. Fields needed:
+            // Title
+            // ReleaseMonth (classics only)
+            // ReleaseYear
+            // 
+         /* - TL - In process - aggregate inventory information from the databases to add info to the transaction
+         padOut(currTrans, invDB);
+         */
 
          // Queries isLegal() in Transactions, invDB, and custDB
          if (invDB.isLegal(command) /* && custDB.isLegal(command)*/ ) {
@@ -456,8 +545,9 @@ int main() {
          if (currTrans != nullptr) {
             delete currTrans;
          }
-      }
-   }
+      } // Closing while - All lines of command read from file / filestream
+      std::cout << "--- All command lines parsed ---" << std::endl << std::endl;
+   } // Closing if - End of for realsies execution "unit test"
 
 
 

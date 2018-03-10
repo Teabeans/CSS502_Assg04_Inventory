@@ -117,13 +117,21 @@
 ///   std::string title;
 
 //-----------------|
-// #identifier1
-// #identifier2
+// #director
+// #actor
 //-----------------|
 // Desc:   Unique identifiers of the transaction
 // Invars: Initializes to junk values
-///   std::string identifier1; //first identifier (eg. title or major actor)
-///   std::string identifier2; //second identifier (eg. year or release date)
+///   std::string director;
+///   std::string actor;
+
+//-----------------|
+// #release
+//-----------------|
+// Desc:   A string representation of the release date
+// Invars: Initializes to junk values
+///   int releaseMonth = 0;
+///   int releaseYear = 0;
 
 //-----------------|
 // #customerID
@@ -131,13 +139,6 @@
 // Desc:   The transaction type
 // Invars: Initializes to junk values
 ///   int customerID; // To whom it was transacted
-
-//-----------------|
-// #qty
-//-----------------|
-// Desc:   The quantity of the transaction
-// Invars: Initializes to junk values
-///   int qty;
 
 
 
@@ -168,6 +169,30 @@
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
 // (+) --------------------------------|
+// #display()
+//-------------------------------------|
+// Desc:    Outputs internal state of transaction to cout
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+void Trans::debug() {
+   std::cout << "Trans::debug() - @ address " << this << std::endl;
+   std::cout << "TypeChar:     " << this->type << std::endl;
+   std::cout << "TypeString:   " << this->typeAsString << std::endl;
+   std::cout << "GenreChar:    " << this->genre << std::endl;
+   std::cout << "GenreString:  " << this->genreAsString << std::endl;
+   std::cout << "Title:        " << this->title << std::endl;
+   std::cout << "Director:     " << this->director << std::endl;
+   std::cout << "Actor:        " << this->actor << std::endl;
+   std::cout << "ReleaseMonth: " << this->releaseMonth << std::endl;
+   std::cout << "ReleaseYear:  " << this->releaseYear << std::endl;
+   std::cout << "CustomerID:   " << this->customerID << std::endl;
+   std::cout << std::endl;
+}
+
+// (+) --------------------------------|
 // #toString()
 //-------------------------------------|
 // Desc:    Outputs a string representation of the transaction
@@ -188,8 +213,17 @@ std::string Trans::toString() {
 
 // Sample output:
 // (ID: <customerID>) <type> - '<title>' (<genre>), <release>
-// (ID: 1234) Borrow - 'Jurassic Park' (Drama), 1993 (-1)
-   retString += "(ID: " + IDnumString + ") " + this->typeAsString + " - '" + this->title + "' (" + this->genreAsString + "), " + this->release;
+// (ID: 1234) Borrow - 'Jurassic Park' (Drama), 1993
+   // (ID: 1234) Borrow - '
+   retString += "(ID: " + IDnumString + ") " + this->typeAsString + " - '";
+   // (ID: 1234) Borrow - 'Jurassic Park' (Drama), 
+   retString += this->title + "' (" + this->genreAsString + "), ";
+   // (ID: 1234) Borrow - 'Jurassic Park' (Drama), 
+   if (this->releaseMonth != 0) {
+      retString += std::to_string(this->releaseMonth) + " ";
+   }
+   // (ID: 1234) Borrow - 'Jurassic Park' (Drama), 1993
+   retString += std::to_string(this->releaseYear);
    return(retString);
 }
 
@@ -255,8 +289,8 @@ std::string Trans::getTitle() {
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
-std::string Trans::getIdentifier1() {
-   return(this->identifier1);
+std::string Trans::getDirector() {
+   return(this->director);
 }
 
 // (+) --------------------------------|
@@ -268,12 +302,12 @@ std::string Trans::getIdentifier1() {
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
-std::string Trans::getIdentifier2() {
-   return(this->identifier2);
+std::string Trans::getActor() {
+   return(this->actor);
 }
 
 // (+) --------------------------------|
-// #getRelease()
+// #getReleaseMonth()
 //-------------------------------------|
 // Desc:    NULL
 // Params:  NULL
@@ -281,9 +315,23 @@ std::string Trans::getIdentifier2() {
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
-std::string Trans::getRelease() {
-   return(this->release);
+int Trans::getReleaseMonth() {
+   return(this->releaseMonth);
 }
+
+// (+) --------------------------------|
+// #getReleaseYear()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+int Trans::getReleaseYear() {
+   return(this->releaseYear);
+}
+
 
 // (+) --------------------------------|
 // #getCustID()
@@ -296,19 +344,6 @@ std::string Trans::getRelease() {
 // MetCall: NULL
 int Trans::getCustID() {
    return(this->customerID);
-}
-
-// (+) --------------------------------|
-// #getQty()
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-int Trans::getQty() {
-   return(this->qty);
 }
 
 // (+) --------------------------------|
@@ -358,9 +393,8 @@ void Trans::setTitle(std::string theTitle) {
    this->title = theTitle;
 }
 
-
 // (+) --------------------------------|
-// #setIdentifier1(string)
+// #setDirector(string)
 //-------------------------------------|
 // Desc:    NULL
 // Params:  NULL
@@ -368,12 +402,12 @@ void Trans::setTitle(std::string theTitle) {
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
-void Trans::setIdentifier1(std::string trait) {
-   this->identifier1 = trait;
+void Trans::setDirector(std::string director) {
+   this->director = director;
 }
 
 // (+) --------------------------------|
-// #setIdentifier2(string)
+// #setActor(string)
 //-------------------------------------|
 // Desc:    NULL
 // Params:  NULL
@@ -381,12 +415,12 @@ void Trans::setIdentifier1(std::string trait) {
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
-void Trans::setIdentifier2(std::string trait) {
-   this->identifier2 = trait;
+void Trans::setActor(std::string actor) {
+   this->actor = actor;
 }
 
 // (+) --------------------------------|
-// #setRelease(string)
+// #setReleaseMonth(int)
 //-------------------------------------|
 // Desc:    NULL
 // Params:  NULL
@@ -394,8 +428,21 @@ void Trans::setIdentifier2(std::string trait) {
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
-void Trans::setRelease(std::string date) {
-   this->release = date;
+void Trans::setReleaseMonth(int month) {
+   this->releaseMonth = month;
+}
+
+// (+) --------------------------------|
+// #setReleaseYear(int)
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+void Trans::setReleaseYear(int year) {
+   this->releaseYear = year;
 }
 
 // (+) --------------------------------|
@@ -409,19 +456,6 @@ void Trans::setRelease(std::string date) {
 // MetCall: NULL
 void Trans::setCustID(int IDnum) {
    this->customerID = IDnum;
-}
-
-// (+) --------------------------------|
-// #setQty(int)
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-void Trans::setQty(int quantity) {
-   this->qty = quantity;
 }
 
 
@@ -481,19 +515,43 @@ Trans* Trans::factory(std::string command) {
 // RetVal:  NULL
 // MetCall: NULL
 Trans::Trans() {
-
-}
+   // Initialize all variables
+   this->type          = NULL;
+   this->typeAsString  = "";
+   this->genre         = NULL;
+   this->genreAsString = "";
+   this->title         = "";
+   this->director      = "";
+   this->actor         = "";
+   this->releaseMonth  = 0;
+   this->releaseYear   = 0;
+   this->customerID    = 1234512345;
+} // Closing Trans()
 
 // (+) --------------------------------|
 // #Trans(string)
 //-------------------------------------|
 // Desc:    Constructor of Transaction object by string
-// Params:  NULL
+// Params:  string arg1 - The command to construct a transaction out of
 // PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
+// PosCons: As many fields as possible of the Transaction are populated
+//          Populated fields will be inconsistent depending on genre
+//          Certain fields will remain unitialized
+//          Filling these fields will require the use of setter methods from outside
+// RetVal:  None
 // MetCall: NULL
 Trans::Trans(std::string command) {
+   // Initialize all variables
+   this->type          = NULL;
+   this->typeAsString  = "";
+   this->genre         = NULL;
+   this->genreAsString = "";
+   this->title         = "";
+   this->director      = "";
+   this->actor         = "";
+   this->releaseMonth  = 0;
+   this->releaseYear   = 0;
+   this->customerID    = 1234512345;
 // Sample input:
 // "B 1111 D F Ferries and You: A Primer, 2018"
    // Step 1: Load the command to a stream
@@ -516,8 +574,9 @@ Trans::Trans(std::string command) {
    std::string temp = "";
    stream >> temp;
 
-   // Step 5: Get the genre
+   // Step 5.1: Get the genre
    stream >> this->genre;
+   // Step 5.2: Set the genreAsStrings
    if (this->genre == 'C') {
       this->genreAsString = "Classic";
    }
@@ -527,70 +586,66 @@ Trans::Trans(std::string command) {
    else if (this->genre == 'F') {
       this->genreAsString = "Comedy";
    }
+   
+   // Set the Skip White Space flag to off
+   stream >> std::noskipws;
 
-   // Step 6: Find the film:
+   // Step 6.C: Parse film info (classic)
    if (this->genre == 'C') {
+      // Sample input: "B 5000 D C 3 1971 Ruth Gordon"
       // Classic parse strategy goes here
       // NOTE: Classics are always searched for by MM YYYY ACTOR
+      stream >> std::skipws;
+      stream >> this->releaseMonth;
+      stream >> this->releaseYear;
+      stream >> this->actor;
    }
+
+   // Step 6.D: Parse film info (drama)
    else if (this->genre == 'D') {
+      // Sample input: "B 8888 D D Nancy Savoca, Dogfight,"
       // Drama parse strategies go here
       // NOTE: Dramas are searched for by Director, Title
+      char temp = NULL;
+      stream >> temp;
+      // Load the first valid char from the stream to the director
+      stream >> temp;
+      // Append characters to the director until a ',' is encountered
+      while (temp != ',') {
+         this->director += temp;
+         stream >> temp;
+      } // Closing while - All chars appended, director is complete
+
+      // Remove the ' '
+      stream >> temp;
+
+      // Load the first letter of the title
+      stream >> temp;
+      // And load the next valid string from the stream to the title
+      while (temp != ',') {
+         this->title += temp;
+         stream >> temp;
+      } // Closing while - All chars appended, title is complete
    }
-   else {
+
+   // Step 6.F: Parse film info (comedy)
+   else if (this->genre == 'F') {
+      // Sample input: "B 8000 D F National Lampoon's Animal House, 1978"
       // Comedy parse strategies go here
       // NOTE: Comedies are searched for by Title, Year
-
-      // Store the remainder of the stream to the temp string
-
-      // Set the delimiter to ", "
-
-      // Set this->title to the first substring
-      // TODO: Change to actual substring parsing code
-      this->title = "<Placeholder title, Trans::Trans(string)>";
-
-      // Set this->identifier1 to the second substring (release year)
-      // TODO: Change to actual substring parsing code
-      this->release = "<Placeholder release, Trans::Trans(string)>";
+      char temp = NULL;
+      stream >> temp;
+      stream >> temp;
+      // Append characters to the title until a ',' is encountered
+      while (temp != ',') {
+         this->title += temp;
+         stream >> temp;
+      } // Closing while - All chars appended, title is complete
+      // Remove the ' '
+      stream >> temp;
+      // And load the next valid int from the stream to the release date
+      stream >> this->releaseYear;
    }
-//-----------------|
-// #genre
-// #genreAsString
-//-----------------|
-// Desc:   Genre of the thing transacted
-// Invars: Initializes to junk values
-///   char genre;
-///   std::string genreAsString;
-
-//-----------------|
-// #title
-//-----------------|
-// Desc:   Identifier of the thing transacted
-// Invars: Initializes to junk values
-///   std::string title;
-
-//-----------------|
-// #identifier1
-// #identifier2
-//-----------------|
-// Desc:   Unique identifiers of the transaction
-// Invars: Initializes to junk values
-///   std::string identifier1; //first identifier (eg. title or major actor)
-///   std::string identifier2; //second identifier (eg. year or release date)
-
-//-----------------|
-// #customerID
-//-----------------|
-// Desc:   The transaction type
-// Invars: Initializes to junk values
-///   int customerID; // To whom it was transacted
-
-//-----------------|
-// #qty
-//-----------------|
-// Desc:   The quantity of the transaction
-// Invars: Initializes to junk values
-///   int qty;
 } // Closing Trans(string)
 
 // (+) --------------------------------|
@@ -603,7 +658,17 @@ Trans::Trans(std::string command) {
 // RetVal:  NULL
 // MetCall: NULL
 Trans::~Trans() {
-
+   // Reset all field states before deallocating
+   this->type          = NULL;
+   this->typeAsString  = "";
+   this->genre         = NULL;
+   this->genreAsString = "";
+   this->title         = "";
+   this->director      = "";
+   this->actor         = "";
+   this->releaseMonth  = 0;
+   this->releaseYear   = 0;
+   this->customerID    = 1234512345;
 }
 
 // End of file - Trans.cpp

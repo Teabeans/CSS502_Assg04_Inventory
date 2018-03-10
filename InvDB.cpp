@@ -125,76 +125,6 @@ int InvDB::hashTitle(std::string someTitle) {
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
 // (+) --------------------------------|
-// #addComedy(Comedy*)
-//-------------------------------------|
-// Desc:    Adds a new Comedy onject to the list in sorted order
-// Note:    Sorts by Title, then year
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-// bool InvDB::addComedy(Comedy* film) {
-
-//    int index = 0;
-//    auto iterator = comedies.begin();
-
-//    for (int i = 0; i < comedies.size(); i++) {
-//       if (comedies.at(i) > *film) break;
-//       iterator++;
-//       std::cerr << "i: " << i << std::endl;
-//    }
-
-//    comedies.insert(iterator, *film);
-//    return true;
-// }
-
-// (+) --------------------------------|
-// #addDrama(Drama*)
-//-------------------------------------|
-// Desc:    Adds a new Drama onject to the list in sorted order
-// Note:    Sorts by Director, then Title
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-// bool InvDB::addDrama(Drama* film) {
-
-//    int index = 0;
-//    auto iterator = dramas.begin();
-//    for (int i = 0; i < dramas.size(); i++) {
-//       if (dramas.at(i) > *film) break;
-//       iterator++;
-//       std::cerr << "i: " << i << std::endl;
-//    }
-//    dramas.insert(iterator, *film);
-//    return true;
-// }
-
-// (+) --------------------------------|
-// #addClassic(Classic*)
-//-------------------------------------|
-// Desc:    Adds a new film onject to the list
-// Note:    Sorts by Release Date (month & year), then Major Actor
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-// bool InvDB::addClassic(Classic* film) {
-
-//    // TODO: 
-//    // update classic constructor with actor as a string
-//    // update display method to just display a list of all classic films sorted by the new actor field
-//    // update adjustStock to handle sharing invetory between classic films with the same title and release date
-
-
-//    classics.push_back(*film);
-//    return true;
-// }
-
-// (+) --------------------------------|
 // #addFilm(Film*)
 //-------------------------------------|
 // Desc:    Adds a new generic film object to the list
@@ -254,7 +184,6 @@ bool InvDB::addFilm(Film* film) {
    return true;
 } // Closing addFilm()
 
-
 // (+) --------------------------------|
 // #adjustStock(Trans&)
 //-------------------------------------|
@@ -266,12 +195,16 @@ bool InvDB::addFilm(Film* film) {
 // MetCall: NULL
 void InvDB::adjustStock(Trans& trans) { // TODO: Add const to Trans& argument?
 
-   std::cerr << "Trans Data: " << trans.getTitle() << " : " << trans.getRelease() << std::endl;
+   std::cerr << "Trans Data: " << trans.getTitle() << " : " << trans.getReleaseYear() << std::endl;
 
    if (trans.getGenre() == 'F') {
       Comedy film;
       film.setTitle(trans.getTitle());
+<<<<<<< HEAD
       film.setReleaseYear(std::stoi(trans.getRelease()));
+=======
+      film.setReleaseDate(trans.getReleaseYear());
+>>>>>>> 9034968fbfbaabe6254aa077c4421eda54d975c6
 
       if (trans.getType() == 'B') {
          retrieve(&film)->setStock(retrieve(&film)->getStock() + 1);
