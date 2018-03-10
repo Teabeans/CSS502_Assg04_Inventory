@@ -142,6 +142,13 @@ public:
 // Full comments in Cust.cpp - omitted here for clarity
 
 //-----------------|
+// #debug();
+//-----------------|
+// Desc:   Displays all internal states to cout
+// Invars: None
+   void debug();
+   
+//-----------------|
 // #toString();
 //-----------------|
 // Desc:   Converts this transaction to a string representation
