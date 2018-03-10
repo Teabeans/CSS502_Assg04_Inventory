@@ -220,10 +220,10 @@ std::string Trans::toString() {
    retString += this->title + "' (" + this->genreAsString + "), ";
    // (ID: 1234) Borrow - 'Jurassic Park' (Drama), 
    if (this->releaseMonth != 0) {
-      retString += releaseMonth + " ";
+      retString += std::to_string(this->releaseMonth) + " ";
    }
    // (ID: 1234) Borrow - 'Jurassic Park' (Drama), 1993
-   retString += releaseYear;
+   retString += std::to_string(this->releaseYear);
    return(retString);
 }
 
@@ -586,12 +586,16 @@ Trans::Trans(std::string command) {
    else if (this->genre == 'F') {
       this->genreAsString = "Comedy";
    }
+   
+   // Set the Skip White Space flag to off
+   stream >> std::noskipws;
 
    // Step 6.C: Parse film info (classic)
    if (this->genre == 'C') {
       // Sample input: "B 5000 D C 3 1971 Ruth Gordon"
       // Classic parse strategy goes here
       // NOTE: Classics are always searched for by MM YYYY ACTOR
+      stream >> std::skipws;
       stream >> this->releaseMonth;
       stream >> this->releaseYear;
       stream >> this->actor;
@@ -603,15 +607,25 @@ Trans::Trans(std::string command) {
       // Drama parse strategies go here
       // NOTE: Dramas are searched for by Director, Title
       char temp = NULL;
+      stream >> temp;
+      // Load the first valid char from the stream to the director
+      stream >> temp;
       // Append characters to the director until a ',' is encountered
       while (temp != ',') {
-         stream >> temp;
          this->director += temp;
+         stream >> temp;
       } // Closing while - All chars appended, director is complete
+
       // Remove the ' '
       stream >> temp;
+
+      // Load the first letter of the title
+      stream >> temp;
       // And load the next valid string from the stream to the title
-      stream >> this->title;
+      while (temp != ',') {
+         this->title += temp;
+         stream >> temp;
+      } // Closing while - All chars appended, title is complete
    }
 
    // Step 6.F: Parse film info (comedy)
@@ -620,10 +634,12 @@ Trans::Trans(std::string command) {
       // Comedy parse strategies go here
       // NOTE: Comedies are searched for by Title, Year
       char temp = NULL;
+      stream >> temp;
+      stream >> temp;
       // Append characters to the title until a ',' is encountered
       while (temp != ',') {
-         stream >> temp;
          this->title += temp;
+         stream >> temp;
       } // Closing while - All chars appended, title is complete
       // Remove the ' '
       stream >> temp;
