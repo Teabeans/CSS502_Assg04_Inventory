@@ -183,7 +183,8 @@ public:
    std::string getTitle();
    std::string getIdentifier1();
    std::string getIdentifier2();
-   std::string getRelease();
+   int         getReleaseMonth();
+   int         getReleaseYear();
    int         getCustID();
    int         getQty();
 
@@ -205,7 +206,8 @@ public:
    void setTitle(std::string theTitle);
    void setIdentifier1(std::string trait);
    void setIdentifier2(std::string trait);
-   void setRelease(std::string);
+   void setReleaseMonth(int month);
+   void setReleaseYear(int year);
    void setCustID(int IDnum);
    void setQty(int quantity);
 
