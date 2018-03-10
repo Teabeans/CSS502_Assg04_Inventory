@@ -109,7 +109,54 @@ bool isLegalTransCmd(std::string command, CustDB tgtDB, InvDB tgtInvDB);
 int main() {
 
 
+   
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       TRANS CLASS TESTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+   if (true) {
 
+      std::cout << "--- BEGIN FILM CLASS TESTS ---" << std::endl;
+
+      std::cout << "--- Creating a default Transaction... ---" << std::endl << std::endl;
+      Trans testTrans;
+
+      std::cout << "--- Test of Trans::debug() and Trans::toString(): ---" << std::endl << std::endl;
+      std::cout << "toString(): " << testTrans.toString() << std::endl;
+      std::cout << "debug():" << std::endl;
+      testTrans.debug();
+
+      std::cout << "--- Partially create a Drama transaction by string... ---" << std::endl << std::endl;
+      Trans testTrans2("B 1111 D D Phillippe De Broca, King of Hearts,");
+      std::cout << "toString(): " << testTrans2.toString() << std::endl;
+      std::cout << "debug():" << std::endl;
+      testTrans2.debug();
+
+      std::cout << "--- Partially create a Comedy transaction by string... ---" << std::endl << std::endl;
+      Trans testTrans3("R 2222 D F You've Got Mail, 1998");
+      std::cout << "toString(): " << testTrans3.toString() << std::endl;
+      std::cout << "debug():" << std::endl;
+      testTrans3.debug();
+
+      std::cout << "--- Partially create a Classic transaction by string... ---" << std::endl << std::endl;
+      Trans testTrans4("B 3333 D C 3 1971 Ruth Gordon");
+      std::cout << "toString(): " << testTrans4.toString() << std::endl;
+      std::cout << "debug():" << std::endl;
+      testTrans4.debug();
+
+      std::cout << "--- Append title to classic transaction: ---" << std::endl << std::endl;
+      testTrans4.setTitle("<Title pulled from database>");
+      std::cout << "toString(): " << testTrans4.toString() << std::endl;
+      std::cout << "debug():" << std::endl;
+      testTrans4.debug();
+
+      std::cout << "--- END FILM CLASS TESTS ---" << std::endl << std::endl;
+
+   } // END TRANS CLASS TESTS
+
+   
+   
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
 //       FILM CLASS TESTS
