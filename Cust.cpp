@@ -157,7 +157,13 @@
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
-void Cust::appendHistory(std::string someTransaction){
+void Cust::appendHistory(std::string someTransaction, char type, std::string title){
+   if (type == 'B') {
+      this->addToCheckouts(title);
+   }
+   if (type == 'R') {
+      this->removeFromCheckouts(title);
+   }
    this->history += someTransaction;
    this->history += "\n";
 }
