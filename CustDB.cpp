@@ -380,9 +380,9 @@ Cust* CustDB::getCustomerAt(int query) {
       int         IDnum    = someTransaction.getCustID();
       Cust*       tgt      = this->custTableByID[IDnum];
       std::string appendix = someTransaction.toString();
-      // Send to the target customer for history append
+      // Send to the target customer for history append and checkout correction
       tgt->appendHistory(appendix, someTransaction.getType(), someTransaction.getTitle());
-   }
+   } // Closing appendHistory()
 
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
