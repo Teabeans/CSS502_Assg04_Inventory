@@ -45,6 +45,9 @@
 // Field and method declarations for the Cust (Customer) class
 #include "Cust.h"
 
+// Necessary for transaction operations
+#include "Trans.h"
+
 // Necessary for input-output operations
 #include <iostream>
 
@@ -158,12 +161,14 @@
 // RetVal:  NULL
 // MetCall: NULL
 void Cust::appendHistory(std::string someTransaction, char type, std::string title){
+   // Add or remove from customer checkouts
    if (type == 'B') {
       this->addToCheckouts(title);
    }
    if (type == 'R') {
       this->removeFromCheckouts(title);
    }
+   // Append history
    this->history += someTransaction;
    this->history += "\n";
 }
