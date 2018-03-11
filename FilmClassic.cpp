@@ -142,6 +142,19 @@ bool Classic::isGreaterThan(Film& rhs) {
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
 // (+) --------------------------------|
+// #Classic()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+Classic::Classic() {
+
+}
+
+// (+) --------------------------------|
 // #Classic(string)
 //-------------------------------------|
 // Desc:    Overrides the Film(string) constructor, adding logic to parse actors
@@ -178,6 +191,19 @@ Classic::Classic(std::string data) {
    actor = items[0] + " " + items[1]; // strings: firstName lastName
    releaseMonth = std::stoi(items[2]); // int
    releaseYear = std::stoi(items[3]); // int
+}
+
+// (+) --------------------------------|
+// #~Classic()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+Classic::~Classic() {
+
 }
 
 // End of File - FilmClassic.cpp
