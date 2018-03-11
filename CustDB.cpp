@@ -43,6 +43,9 @@
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
 // Field and method declarations for the Cust (Customer) class
+#include "Cust.h"
+
+// Field and method declarations for the CustDB (Customer Database) class
 #include "CustDB.h"
 
 // Necessary for input-output operations
