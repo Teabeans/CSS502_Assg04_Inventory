@@ -178,16 +178,16 @@
 // RetVal:  NULL
 // MetCall: NULL
 void Trans::debug() {
-   std::cout << "Trans::debug() - @ address " << this << std::endl;
+   std::cout << "Trans::debug() - @ address (" << this << ") - CAPS denote required fields" << std::endl;
    std::cout << "TypeChar:     " << this->type << std::endl;
-   std::cout << "TypeString:   " << this->typeAsString << std::endl;
+   std::cout << "TYPESTRING:   " << this->typeAsString << std::endl;
    std::cout << "GenreChar:    " << this->genre << std::endl;
-   std::cout << "GenreString:  " << this->genreAsString << std::endl;
-   std::cout << "Title:        " << this->title << std::endl;
+   std::cout << "GENRESTRING:  " << this->genreAsString << std::endl;
+   std::cout << "TITLE:        " << this->title << std::endl;
    std::cout << "Director:     " << this->director << std::endl;
    std::cout << "Actor:        " << this->actor << std::endl;
-   std::cout << "ReleaseMonth: " << this->releaseMonth << std::endl;
-   std::cout << "ReleaseYear:  " << this->releaseYear << std::endl;
+   std::cout << "RELEASEMONTH: " << this->releaseMonth << std::endl;
+   std::cout << "RELEASERYEAR:  " << this->releaseYear << std::endl;
    std::cout << "CustomerID:   " << this->customerID << std::endl;
    std::cout << std::endl;
 }
