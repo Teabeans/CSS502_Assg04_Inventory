@@ -198,7 +198,7 @@ int CustDB::probe(Cust* custPtr, int query) {
 void CustDB::obliviate() {
    for (int i = 0 ; i < MAXCUSTOMERS ; i++) {
       if (this->custTable[i] != nullptr) {
-         delete custTable[i];
+         delete this->custTable[i];
       }
    }
    for (int i = 0 ; i <= 9999 ; i++) {
@@ -241,9 +241,9 @@ std::string CustDB::toString() {
    // Go down the custTable
    for (int i = 0 ; i < MAXCUSTOMERS ; i++) {
       // And for every valid Customer...
-      if (custTable[i] != nullptr) {
+      if (this->custTable[i] != nullptr) {
          // Append them to the string
-         retString += custTable[i]->toString() + "\n";
+         retString += this->custTable[i]->toString() + "\n";
       }
    }
    return (retString);
@@ -259,10 +259,8 @@ std::string CustDB::toString() {
 // RetVal:  NULL
 // MetCall: NULL
 void CustDB::display() {
-   // TODO: Write display() function
    std::cout << "CustDB::display()" << std::endl;
    std::cout << this->toString() << std::endl;
-
 } // Closing display()
 
 // (+) --------------------------------|
@@ -276,7 +274,7 @@ void CustDB::display() {
 // MetCall: NULL
 bool const CustDB::doesContain(int custID) {
    // If the customer table by ID contains anything other than nullptr...
-   if (custTableByID[custID] != nullptr) {
+   if (this->custTableByID[custID] != nullptr) {
       // A customer has been assigned that position, so
       return(true);
    }
@@ -308,8 +306,51 @@ void CustDB::insertCustomer(Cust* custPtr) {
 // Desc:   Determines whether this string is a valid customerDB command
 // Invars: Return value is variable based on state of DB
 bool CustDB::isValid(std::string) {
-   // TODO: Implement this function
-   return(true);
+   std::string errorLog = "";
+   bool isValid = true;
+
+   // Sample input
+   // 6666 Donkey Darrell
+
+   // Load string to stream
+   std::stringstream stream;
+
+   // Capture the first number
+   int custID;
+   stream >> custID;
+
+   // Capture the first name
+   std::string fName;
+   stream >> fName;
+
+   // Capture the last name
+   std::string lName;
+   stream >> lName;
+
+   Cust* theCust = this->custTableByID[custID];
+
+   // If there's something at the custID position already...
+   if (theCust != nullptr) {
+      // Append the error log
+      errorLog = errorLog + "   - Customer ID already in use" + "\n";
+      // And toggle the flag
+      isValid = false;
+   }
+
+   // If the customer fName and lName match...
+   if ((theCust->getFirstName() == fName) && (theCust->getLastName() == lName)) {
+      // Append the error log
+      errorLog = errorLog + "   - Repeat customer entry" + "\n";
+   }
+
+         // If any test has failed, report as much
+   if (isValid == false) {
+      std::cout << "Customer Database error:" << std::endl;
+      std::cout << errorLog << std::endl;
+      return(isValid);
+   }
+
+   return(isValid);
 } // Closing isValid()
 
 // (+) --------------------------------|
