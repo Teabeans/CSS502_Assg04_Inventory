@@ -507,67 +507,21 @@ int main() {
    std::ifstream commandFile("data4commands.txt");
    std::ifstream customerFile("data4customers.txt");
    std::ifstream inventoryFile("data4movies.txt");
-   InvDB invDB(inventoryFile);
 
+   // Create a customer database
+   CustDB custDB;
+   // Read all customer commands into it
+   bulkReadCust(customerFile, custDB);
 
+   // Create an inventory database
+   InvDB invDB;
+   // Read all inventory commands into it
+   bulkReadInv(inventoryFile, invDB);
 
-      // Generate Transactions from the CommandFile and send Transaction impacts to the appropriate locations
-      while (!commandFile.eof()) {
-         // Read the next relevant line of command
-         std::string command;
-         std::getline(commandFile, command);
-         // create a transaction ptr
-         Trans* currTrans = nullptr;
-         
-         /* - TL - In process
-         // Check for transaction syntax legality
-         if (!isLegal(command)) {
-            break;
-         }
-         */
+   // Read, parse, verify, and forward all transaction commands to the databases
+   bulkReadTrans(commandFile, custDB, invDB);
 
-         // TODO: Move to isLegal() block
-         // make sure the line contains data
-         if (command.length() >= 1) {
-  
-            // TODO: Change to Trans(string)?
-            // call the factory method to determine type of transaction
-            currTrans = currTrans->factory(command);
-         } // Closing if - Partially filled transaction by string command created
-
-         // TODO: I and H cases
-         // If the command is an "I", pass to invDB for execution
-         // If the command is an "H", attempt to query custDB for execution
-         // Loop again
-         
-         // Otherwise...
-         // Pad out remainder of relevant information fields that might be missing. Fields needed:
-            // Title
-            // ReleaseMonth (classics only)
-            // ReleaseYear
-            // 
-         /* - TL - In process - aggregate inventory information from the databases to add info to the transaction
-         padOut(currTrans, invDB);
-         */
-
-         // Queries isLegal() in Transactions, invDB, and custDB
-         if (invDB.isLegal(command) /* && custDB.isLegal(command)*/ ) {
-
-            // Send the Transaction to the Databases for execution
-            invDB.adjustStock(*currTrans);
-            // custDB.appendHistory(currTrans);
-         }
-
-         // deallocate current transaction now that it's been used
-         if (currTrans != nullptr) {
-            delete currTrans;
-         }
-      } // Closing while - All lines of command read from file / filestream
-      std::cout << "--- All command lines parsed ---" << std::endl << std::endl;
    } // Closing if - End of for realsies execution "unit test"
-
-
-
    return (0);
 } // Closing main()
 
