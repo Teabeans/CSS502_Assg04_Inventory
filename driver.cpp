@@ -1011,21 +1011,21 @@ void padOut(Trans* transPtr, InvDB tgtInvDB) {
    // RELEASEYEAR
 
    // Classics
-   if (transPtr->getGenre == 'C') {
+   if (transPtr->getGenre() == 'C') {
       // TITLE
       std::string title = "<Title retrieval from InvDB goes here>";
       transPtr->setTitle(title);
    }
 
    // Drama
-   else if (transPtr->getGenre == 'D') {
+   else if (transPtr->getGenre() == 'D') {
       // RELEASEYEAR
       int year = 0; // TODO: Get the release date out of the InvDB based on director/title
       transPtr->setReleaseYear(year);
    }
 
    // Comedy, missing fields:
-   else if (transPtr->getGenre == 'F') {
+   else if (transPtr->getGenre() == 'F') {
       // All necessary data is acquired
       // So do nothing
    }
