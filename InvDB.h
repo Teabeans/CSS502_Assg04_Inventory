@@ -119,6 +119,15 @@ public:
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
    // (+) --------------------------------|
+   // #acceptCmd(Film*)
+   //-------------------------------------|
+   // Desc:    Accepts a line of command and executes it
+   // Invars:  GIGO - No error checking is performed by acceptCmd
+   //          Format and content are verified to be correct before being sent
+   void acceptCmd(std::string);
+
+   
+   // (+) --------------------------------|
    // #addFilm(Film*)
    //-------------------------------------|
    // Desc:    Adds a new generic film object to the list
