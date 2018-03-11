@@ -627,8 +627,7 @@ void bulkReadTrans(std::ifstream& commandFile, CustDB tgtCustDB, InvDB tgtInvDB)
             std::cout << tgtCustDB.getCustomerAt(custID)->getHistory() << std::endl;
          }
       } // Closing if - 'H' condition handled
-         // Attempt to query custDB for execution
-      // Loop again
+
       // Prepare to receive a transaction
       Trans* currTrans = nullptr;
       // If the command is legal (based on the command and DB states
@@ -637,25 +636,17 @@ void bulkReadTrans(std::ifstream& commandFile, CustDB tgtCustDB, InvDB tgtInvDB)
          currTrans = new Trans(command);
       }
 
-
-         
-      // Otherwise...
       // Pad out remainder of relevant information fields that might be missing. Fields needed:
          // Title
          // ReleaseMonth (classics only)
          // ReleaseYear
-         // 
-      /* - TL - In process - aggregate inventory information from the databases to add info to the transaction
+         // ???
+      // Aggregate inventory information from the databases to add needed info to the transaction
       padOut(currTrans, invDB);
-      */
 
-      // Queries isLegal() in Transactions, invDB, and custDB
-      if (tgtInvDB.isLegal(command) /* && custDB.isLegal(command)*/ ) {
-
-         // Send the Transaction to the Databases for execution
-         tgtInvDB.adjustStock(*currTrans);
-         // custDB.appendHistory(currTrans);
-      }
+      // Send the Transaction to the Databases for execution
+      tgtInvDB.adjustStock(*currTrans);
+      tgtCustDB.appendHistory(*currTrans);
 
       // deallocate current transaction now that it's been used
       if (currTrans != nullptr) {
