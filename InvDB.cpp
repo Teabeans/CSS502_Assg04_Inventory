@@ -143,6 +143,27 @@ void InvDB::runCmd(std::string command) {
    // C, 10, Victor Fleming, The Wizard of Oz, Judy Garland 7 1939
    // D, 10, Steven Spielberg, Schindler's List, 1993
    // F, 10, Rob Reiner, When Harry Met Sally, 1989
+   if (command.length() > 10) {
+      // create Comedy object and add to database
+      if (command.at(0) == 'F') {
+         addFilm(new Comedy(command));
+      }
+
+      // create Drama object and add to database
+      else if (command.at(0) == 'D') {
+         addFilm(new Drama(command));
+      }
+
+      // check Classic object and add to database
+      else if (command.at(0) == 'C') {
+         addFilm(new Classic(command));
+      }
+
+      // otherwise, this is an invalid film type
+      else {
+         std::cerr << "Invalid film type: " << command.at(0) << std::endl;
+      }
+   } // Closing if - command string processed
 }
 
 // (+) --------------------------------|
@@ -470,6 +491,8 @@ InvDB::InvDB(std::ifstream& data) {
       std::string filmData;
       std::getline(data, filmData);
 
+      // --- Suggested replacement ---
+      // this->runCmd(filmData);
       if (filmData.length() > 10) {
          // create Comedy object and add to database
          if (filmData.at(0) == 'F') {
@@ -491,8 +514,9 @@ InvDB::InvDB(std::ifstream& data) {
             std::cerr << "Invalid film type: " << filmData.at(0) << std::endl;
          }
       }
+      // --- End suggested replacement ---
    }
-}
+} // Closing InvDB(ifstream)
 
 // (+) --------------------------------|
 // #~InvDB()
