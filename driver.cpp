@@ -50,6 +50,9 @@
 // Necessary for input-output stream operations
 #include <iostream>
 
+// Necessary for string stream operations
+#include <sstream>
+
 // Necessary for string operations
 #include <string>
 
@@ -631,12 +634,82 @@ void bulkReadInv(std::ifstream& invtxt, InvDB tgtDB) {
 //          Does not handle any error reporting
 // RetVal:  None
 // MetCall: isLegalInvCmd() - Verifies all legality checks of the command
-void bulkReadTrans(std::ifstream& transtxt, CustDB tgtCustDB, InvDB tgtInvDB) {
-   // While there is still filestream to read
-   // Get a line of text (one command)
-   // If the command is legal...
-      // Send it to the Inventory Database
-   // Repeat
+void bulkReadTrans(std::ifstream& commandFile, CustDB tgtCustDB, InvDB tgtInvDB) {
+   // Generate Transactions from the CommandFile and send Transaction impacts to the appropriate locations
+   while (!commandFile.eof()) {
+      // Read the next relevant line of command
+      std::string command;
+      std::getline(commandFile, command);
+
+      // TODO: I and H cases
+      // If the command is an 'I'
+      if (command == "I") {
+         // Ping invDB for execution
+         tgtInvDB.display();
+      }
+
+      // If the command is an 'H'
+      if (command[0] == 'H') {
+         // Convert the command line to a string stream
+         std::stringstream stream;
+         stream << command;
+         // Discard leading character
+         char temp;
+         stream >> temp;
+         // Capture the int
+         int custID;
+         stream >> custID;
+         // If the custID is out of range, halt
+         if (custID < 0 || custID > 9999) {
+            std::cout << "Error @ bulkReadTrans(): Customer ID out of range (0-9999)" << std::endl;
+         }
+         // If the custDB does not have this customer...
+         else if (!tgtCustDB.doesContain(custID)) {
+            std::cout << "Error @ history (H) command: No such customer" << std::endl;
+         }
+         // Otherwise...
+         else {
+            // Output the history of the customer at this position
+            std::cout << tgtCustDB.getCustomerAt(custID)->getHistory() << std::endl;
+         }
+      } // Closing if - 'H' condition handled
+         // Attempt to query custDB for execution
+      // Loop again
+      // Prepare to receive a transaction
+      Trans* currTrans = nullptr;
+      // If the command is legal (based on the command and DB states
+      if (isLegalTransCmd(command, tgtCustDB, tgtInvDB)) {
+         // Create a transaction from it
+         currTrans = new Trans(command);
+      }
+
+
+         
+      // Otherwise...
+      // Pad out remainder of relevant information fields that might be missing. Fields needed:
+         // Title
+         // ReleaseMonth (classics only)
+         // ReleaseYear
+         // 
+      /* - TL - In process - aggregate inventory information from the databases to add info to the transaction
+      padOut(currTrans, invDB);
+      */
+
+      // Queries isLegal() in Transactions, invDB, and custDB
+      if (tgtInvDB.isLegal(command) /* && custDB.isLegal(command)*/ ) {
+
+         // Send the Transaction to the Databases for execution
+         tgtInvDB.adjustStock(*currTrans);
+         // custDB.appendHistory(currTrans);
+      }
+
+      // deallocate current transaction now that it's been used
+      if (currTrans != nullptr) {
+         delete currTrans;
+      }
+   } // Closing while - All lines of command read from file / filestream
+   std::cout << "--- All command lines parsed ---" << std::endl << std::endl;
+
 } // Closing bulkReadTrans()
 
 // (+) --------------------------------|
