@@ -53,8 +53,6 @@
 
 // Necessary for transaction objects
 #include "Trans.h"
-#include "TransBorrow.h"
-#include "TransReturn.h"
 
 #include "InvDB.h"
 
@@ -458,7 +456,44 @@ std::string const InvDB::toString() { // TODO: @MG - Verify inclusion of const?
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
-//       CONSTRUCTORS/DSTRUCTOR
+//       GETTERS / SETTERS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+
+// (+) --------------------------------|
+// #getCTitleByTuple()
+//-------------------------------------|
+// Desc:    Default InvDB constructor
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+std::string InvDB::getCTitleByTuple(int month, int year, std::string actor) {
+
+   return("<InvDB::getCTitleByTuple() placeholder>");
+} // Closing getCTitleByTuple()
+
+// (+) --------------------------------|
+// #getDYearByTuple()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+int InvDB::getDYearByTuple(std::string director, std::string title) {
+   int retYear = 2002;
+
+   return(retYear);
+} // Closing getDYearByTuple()
+
+
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       CONSTRUCTORS/DESTRUCTOR
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
