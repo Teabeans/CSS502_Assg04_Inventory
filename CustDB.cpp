@@ -319,13 +319,13 @@ bool CustDB::isValid(std::string) {
    int custID;
    stream >> custID;
 
-   // Capture the first name
-   std::string fName;
-   stream >> fName;
-
    // Capture the last name
    std::string lName;
    stream >> lName;
+
+   // Capture the first name
+   std::string fName;
+   stream >> fName;
 
    Cust* theCust = this->custTableByID[custID];
 
