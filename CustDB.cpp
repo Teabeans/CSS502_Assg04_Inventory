@@ -272,8 +272,13 @@ void CustDB::display() {
 // RetVal:  NULL
 // MetCall: NULL
 bool const CustDB::doesContain(int custID) {
-   // TODO: Implement
-   return(true);
+   // If the customer table by ID contains anything other than nullptr...
+   if (custTableByID[custID] != nullptr) {
+      // A customer has been assigned that position, so
+      return(true);
+   }
+   // Otherwise
+   return(false);
 } // Closing doesContain()
 
 // (+) --------------------------------|
