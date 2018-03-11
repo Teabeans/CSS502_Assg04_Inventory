@@ -460,6 +460,7 @@ void Trans::setCustID(int IDnum) {
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
+/*
 // TODO: Resolve @MG - Factory method logic is the same as Trans(string) constructor? Should the Trans(string) call this method, or would you rather have it packed right into the constructor?
 // (+) --------------------------------|
 // #factory(string)
@@ -496,8 +497,8 @@ Trans* Trans::factory(std::string command) {
       std::cerr << "Invalid command: " << command.at(0) << std::endl;
       return new Trans(command);
    }
+
 */
-}
 
 // (+) --------------------------------|
 // #Trans()
