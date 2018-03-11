@@ -44,17 +44,17 @@
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
+// Necessary for string operations
+#include <string>
+
 // Necessary for file stream object handling
 #include <fstream>
 
 // Necessary for input-output stream operations
 #include <iostream>
 
-// Necessary for string stream operations
+// Necessary for stream operations
 #include <sstream>
-
-// Necessary for string operations
-#include <string>
 
 // Necessary for transaction objects
 #include "Trans.h"
@@ -99,6 +99,9 @@ bool isLegalInvCmd(std::string command, InvDB tgtDB);
 
 // Legality check - Transaction commands
 bool isLegalTransCmd(std::string command, CustDB tgtDB, InvDB tgtInvDB);
+
+// Appends missing information to a transaction
+void padOut(Trans* transPtr, InvDB tgtInvDB);
 
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
@@ -567,12 +570,21 @@ void bulkReadCust(std::ifstream& custtxt, CustDB tgtDB) {
 //          Does not handle any error reporting
 // RetVal:  None
 // MetCall: isLegalInvCmd() - Verifies all legality checks of the command
-void bulkReadInv(std::ifstream& invtxt, InvDB tgtDB) {
+void bulkReadInv(std::ifstream& invFile, InvDB tgtDB) {
    // While there is still filestream to read
-   // Get a line of text (one command)
-   // If the command is legal...
-      // Send it to the Inventory Database
-   // Repeat
+   while (!invFile.eof()) {
+      // Get a line of text (one command)
+
+      std::string command;
+
+      // If the command is legal...
+      if (isLegalInvCmd(command, tgtDB)) {
+
+         // Send it to the Inventory Database
+         tgtDB.runCmd(command);
+
+      } // Closing if - Legal inventory command sent
+   } // Closing while - All lines of input consumed
 } // Closing bulkReadInv()
 
 // (+) --------------------------------|
@@ -628,21 +640,22 @@ void bulkReadTrans(std::ifstream& commandFile, CustDB tgtCustDB, InvDB tgtInvDB)
          }
       } // Closing if - 'H' condition handled
 
-      // Prepare to receive a transaction
+      // Prepare to hold a transaction
       Trans* currTrans = nullptr;
       // If the command is legal (based on the command and DB states
       if (isLegalTransCmd(command, tgtCustDB, tgtInvDB)) {
          // Create a transaction from it
          currTrans = new Trans(command);
-      }
-
-      // Pad out remainder of relevant information fields that might be missing. Fields needed:
+         // Pad out remainder of relevant information fields that might be missing. Fields needed:
          // Title
          // ReleaseMonth (classics only)
          // ReleaseYear
          // ???
-      // Aggregate inventory information from the databases to add needed info to the transaction
-      padOut(currTrans, invDB);
+         // Aggregate inventory information from the databases to add needed info to the transaction
+         padOut(currTrans, tgtInvDB);
+
+      }
+
 
       // Send the Transaction to the Databases for execution
       tgtInvDB.adjustStock(*currTrans);
@@ -973,7 +986,52 @@ bool isLegalTransCmd(std::string command, CustDB tgtCustDB, InvDB tgtInvDB) {
    return(isLegal);
 } // Closing isLegalTransCmd()
 
+// (+) --------------------------------|
+// #padOut(ifstream&, CustDB, InvDB)
+//-------------------------------------|
+// Desc:    Acquires and appends missing information for a transaction
+// Params:  transPtr* arg1 - 
+//          InvDB arg2 - 
+// PreCons: A valid InvDB object must exist
+//          A valid transaction constructed from a legal command must exist
+// PosCons: Sufficient data has been appended to the transaction to allow for proper output
+// RetVal:  None
+// MetCall: NULL
+void padOut(Trans* transPtr, InvDB tgtInvDB) {
+   // Sample inputs:
+   // B 4444 D C 2 1971 Malcolm McDowell
+   // B 1000 D D Gus Van Sant, Good Will Hunting,
+   // B 8000 D F You've Got Mail, 1998
 
+   // Fields needed:
+   // TYPESTRING - Got it
+   // GENRESTRING - Got it
+   // TITLE
+   // RELEASEMONTH
+   // RELEASEYEAR
+
+   // Classics
+   if (transPtr->getGenre == 'C') {
+      // TITLE
+      std::string title = "<Title retrieval from InvDB goes here>";
+      transPtr->setTitle(title);
+   }
+
+   // Drama
+   else if (transPtr->getGenre == 'D') {
+      // RELEASEYEAR
+      int year = 0; // TODO: Get the release date out of the InvDB based on director/title
+      transPtr->setReleaseYear(year);
+   }
+
+   // Comedy, missing fields:
+   else if (transPtr->getGenre == 'F') {
+      // All necessary data is acquired
+      // So do nothing
+   }
+
+   // Transaction holds sufficient data for CustDB to process
+}
 
 //-------------------------------------|
 // End Student Code
