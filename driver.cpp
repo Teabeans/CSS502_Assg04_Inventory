@@ -820,7 +820,7 @@ bool isLegalInvCmd(std::string command, InvDB tgtDB) {
    }
    // Otherwise, this is a correctly formatted command
    // But it may still be in conflict with the database state, so check that
-   isLegal = tgtDB.isValid(command);
+   isLegal = tgtDB.isLegal(command);
    // Note: tgtDB.isLegal() handles its own error reporting to cout
    // Return whether the database confirmed legality or not
    return(isLegal);
