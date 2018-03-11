@@ -119,15 +119,6 @@ public:
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
    // (+) --------------------------------|
-   // #runCmd(Film*)
-   //-------------------------------------|
-   // Desc:    Accepts a line of command and executes it
-   // Invars:  GIGO - No error checking is performed by acceptCmd
-   //          Format and content are verified to be correct before being sent
-   void runCmd(std::string);
-
-   
-   // (+) --------------------------------|
    // #addFilm(Film*)
    //-------------------------------------|
    // Desc:    Adds a new generic film object to the list
@@ -149,6 +140,13 @@ public:
    bool contains(Film*);
 
    // (+) --------------------------------|
+   // #display()
+   //-------------------------------------|
+   // Desc:    Displays to cout the status of the InvDB by calling toString
+   // Invars:  NULL
+   void display();
+
+   // (+) --------------------------------|
    // #isLegal()
    //-------------------------------------|
    // Desc:    Tests the legality of a received command string
@@ -162,13 +160,14 @@ public:
    // Desc:    Searches for a film object and returns it instead of a bool
    // Invars:  NULL
    Film* retrieve(Film*);
-
+   
    // (+) --------------------------------|
-   // #display()
+   // #runCmd(Film*)
    //-------------------------------------|
-   // Desc:    Displays to cout the status of the InvDB by calling toString
-   // Invars:  NULL
-   void display();
+   // Desc:    Accepts a line of command and executes it
+   // Invars:  GIGO - No error checking is performed by acceptCmd
+   //          Format and content are verified to be correct before being sent
+   void runCmd(std::string);
 
    // (+) --------------------------------|
    // #toString()
@@ -177,13 +176,28 @@ public:
    // Invars:  NULL
    std::string const toString();
 
+
+
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
 //       GETTERS / SETTERS (+)
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
-// None for this class
+   // (+) --------------------------------|
+   // #getCTitleByTuple()
+   //-------------------------------------|
+   // Desc:    Outputs a string representation of the InvDB
+   // Invars:  NULL
+   std::string getCTitleByTuple(int month, int year, std::string actor);
+
+   // (+) --------------------------------|
+   // #getDYearByTuple()
+   //-------------------------------------|
+   // Desc:    Outputs a string representation of the InvDB
+   // Invars:  NULL
+   int getDYearByTuple(std::string director, std::string title);
+
 
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
