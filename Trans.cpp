@@ -58,12 +58,6 @@
 // Field and method declarations for the Trans (Transaction) class
 #include "Trans.h"
 
-// Field and method declarations for the Borrow subclass
-#include "TransBorrow.h"
-
-// Field and method declarations for the Return subclass
-#include "TransReturn.h"
-
 
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
