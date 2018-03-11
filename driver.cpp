@@ -1006,21 +1006,21 @@ void padOut(Trans* transPtr, InvDB tgtInvDB) {
    // Fields needed:
    // TYPESTRING - Got it
    // GENRESTRING - Got it
-   // TITLE
-   // RELEASEMONTH
-   // RELEASEYEAR
+   // TITLE - Classics only
+   // RELEASEMONTH - Got it, if applicable
+   // RELEASEYEAR - Dramas only
 
    // Classics
    if (transPtr->getGenre() == 'C') {
       // TITLE
-      std::string title = "<Title retrieval from InvDB goes here>";
+      std::string title = tgtInvDB.getCTitleByTuple(transPtr->getReleaseMonth(), transPtr->getReleaseYear(), transPtr->getActor());
       transPtr->setTitle(title);
    }
 
    // Drama
    else if (transPtr->getGenre() == 'D') {
       // RELEASEYEAR
-      int year = 0; // TODO: Get the release date out of the InvDB based on director/title
+      int year = tgtInvDB.getDYearByTuple(transPtr->getDirector(), transPtr->getTitle()); // TODO: Get the release date out of the InvDB based on director/title
       transPtr->setReleaseYear(year);
    }
 
