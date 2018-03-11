@@ -128,6 +128,24 @@ int InvDB::hashTitle(std::string someTitle) {
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
 // (+) --------------------------------|
+// #runCmd(string)
+//-------------------------------------|
+// Desc:    Accepts a command string and executes it
+// Note:    For establishing inventory only, not for transactions afterwards
+// Params:  string arg1 - The line of command (sourced from data4movies.txt)
+// PreCons: All error checks have been performed prior to command receival
+//          arg1 is verified to be a syntactically and logically valid command
+// PosCons: The inventory database holds the film and data provided by the command
+// RetVal:  None
+// MetCall: NULL
+void InvDB::runCmd(std::string command) {
+   // Example inputs:
+   // C, 10, Victor Fleming, The Wizard of Oz, Judy Garland 7 1939
+   // D, 10, Steven Spielberg, Schindler's List, 1993
+   // F, 10, Rob Reiner, When Harry Met Sally, 1989
+}
+
+// (+) --------------------------------|
 // #addFilm(Film*)
 //-------------------------------------|
 // Desc:    Adds a new generic film object to the list
