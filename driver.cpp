@@ -117,41 +117,52 @@ int main() {
 //       TRANS CLASS TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-   if (false) {
+   if (true) {
 
-      std::cout << "--- BEGIN FILM CLASS TESTS ---" << std::endl;
+      std::cout << "--- (1) BEGIN FILM CLASS TESTS ---" << std::endl;
 
-      std::cout << "--- Creating a default Transaction... ---" << std::endl << std::endl;
+      std::cout << "--- (1.1) Creating a default Transaction... ---" << std::endl << std::endl;
       Trans testTrans;
 
-      std::cout << "--- Test of Trans::debug() and Trans::toString(): ---" << std::endl << std::endl;
+      std::cout << "--- (1.2) Test of Trans::debug() and Trans::toString(): ---" << std::endl << std::endl;
       std::cout << "toString(): " << testTrans.toString() << std::endl;
       std::cout << "debug():" << std::endl;
       testTrans.debug();
 
-      std::cout << "--- Partially create a Drama transaction by string... ---" << std::endl << std::endl;
+      std::cout << "--- (1.3) Partially create a Drama transaction by string... ---" << std::endl << std::endl;
       Trans testTrans2("B 1111 D D Phillippe De Broca, King of Hearts,");
       std::cout << "toString(): " << testTrans2.toString() << std::endl;
       std::cout << "debug():" << std::endl;
       testTrans2.debug();
 
-      std::cout << "--- Partially create a Comedy transaction by string... ---" << std::endl << std::endl;
+      std::cout << "--- (1.4) Partially create a Comedy transaction by string... ---" << std::endl << std::endl;
       Trans testTrans3("R 2222 D F You've Got Mail, 1998");
       std::cout << "toString(): " << testTrans3.toString() << std::endl;
       std::cout << "debug():" << std::endl;
       testTrans3.debug();
 
-      std::cout << "--- Partially create a Classic transaction by string... ---" << std::endl << std::endl;
+      std::cout << "--- (1.5) Partially create a Classic transaction by string... ---" << std::endl << std::endl;
       Trans testTrans4("B 3333 D C 3 1971 Ruth Gordon");
       std::cout << "toString(): " << testTrans4.toString() << std::endl;
       std::cout << "debug():" << std::endl;
       testTrans4.debug();
 
-      std::cout << "--- Append title to classic transaction: ---" << std::endl << std::endl;
+      std::cout << "--- (1.6) Append title to transaction: ---" << std::endl << std::endl;
       testTrans4.setTitle("<Title pulled from database>");
       std::cout << "toString(): " << testTrans4.toString() << std::endl;
       std::cout << "debug():" << std::endl;
       testTrans4.debug();
+
+      std::cout << "--- (1.7) Append year to transaction: ---" << std::endl << std::endl;
+      testTrans2.setReleaseYear(2000);
+      std::cout << "toString(): " << testTrans4.toString() << std::endl;
+      std::cout << "debug():" << std::endl;
+      testTrans4.debug();
+
+      std::cout << "--- (1.8) Final transaction states: ---" << std::endl << std::endl;
+      std::cout << testTrans4.toString() << std::endl;
+      std::cout << testTrans2.toString() << std::endl;
+      std::cout << testTrans3.toString() << std::endl;
 
       std::cout << "--- END FILM CLASS TESTS ---" << std::endl << std::endl;
 
@@ -491,6 +502,7 @@ int main() {
       std::cout << "Results of bulk processing" << std::endl;
       std::cout << "InvDB status:" << std::endl << BulkInvDB.toString() << std::endl << std::endl;
       std::cout << "CustDB status:" << std::endl << BulkCustDB.toString() << std::endl << std::endl;
+      std::cout << std::endl;
 
       std::cout << "--- END BULK COMMAND INPUT TESTS ---" << std::endl << std::endl;
 
