@@ -58,8 +58,6 @@
 
 // Necessary for transaction objects
 #include "Trans.h"
-#include "TransBorrow.h"
-#include "TransReturn.h"
 
 // Necessary for film objects
 #include "Film.h"
@@ -113,7 +111,7 @@ void padOut(Trans* transPtr, InvDB tgtInvDB);
 int main() {
 
 
-   
+
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
 //       TRANS CLASS TESTS
@@ -121,41 +119,41 @@ int main() {
 //-------|---------|---------|---------|---------|---------|---------|---------|
    if (false) {
 
-   std::cout << "--- BEGIN FILM CLASS TESTS ---" << std::endl;
+      std::cout << "--- BEGIN FILM CLASS TESTS ---" << std::endl;
 
-   std::cout << "--- Creating a default Transaction... ---" << std::endl << std::endl;
-   Trans testTrans;
+      std::cout << "--- Creating a default Transaction... ---" << std::endl << std::endl;
+      Trans testTrans;
 
-   std::cout << "--- Test of Trans::debug() and Trans::toString(): ---" << std::endl << std::endl;
-   std::cout << "toString(): " << testTrans.toString() << std::endl;
-   std::cout << "debug():" << std::endl;
-   testTrans.debug();
+      std::cout << "--- Test of Trans::debug() and Trans::toString(): ---" << std::endl << std::endl;
+      std::cout << "toString(): " << testTrans.toString() << std::endl;
+      std::cout << "debug():" << std::endl;
+      testTrans.debug();
 
-   std::cout << "--- Partially create a Drama transaction by string... ---" << std::endl << std::endl;
-   Trans testTrans2("B 1111 D D Phillippe De Broca, King of Hearts,");
-   std::cout << "toString(): " << testTrans2.toString() << std::endl;
-   std::cout << "debug():" << std::endl;
-   testTrans2.debug();
+      std::cout << "--- Partially create a Drama transaction by string... ---" << std::endl << std::endl;
+      Trans testTrans2("B 1111 D D Phillippe De Broca, King of Hearts,");
+      std::cout << "toString(): " << testTrans2.toString() << std::endl;
+      std::cout << "debug():" << std::endl;
+      testTrans2.debug();
 
-   std::cout << "--- Partially create a Comedy transaction by string... ---" << std::endl << std::endl;
-   Trans testTrans3("R 2222 D F You've Got Mail, 1998");
-   std::cout << "toString(): " << testTrans3.toString() << std::endl;
-   std::cout << "debug():" << std::endl;
-   testTrans3.debug();
+      std::cout << "--- Partially create a Comedy transaction by string... ---" << std::endl << std::endl;
+      Trans testTrans3("R 2222 D F You've Got Mail, 1998");
+      std::cout << "toString(): " << testTrans3.toString() << std::endl;
+      std::cout << "debug():" << std::endl;
+      testTrans3.debug();
 
-   std::cout << "--- Partially create a Classic transaction by string... ---" << std::endl << std::endl;
-   Trans testTrans4("B 3333 D C 3 1971 Ruth Gordon");
-   std::cout << "toString(): " << testTrans4.toString() << std::endl;
-   std::cout << "debug():" << std::endl;
-   testTrans4.debug();
+      std::cout << "--- Partially create a Classic transaction by string... ---" << std::endl << std::endl;
+      Trans testTrans4("B 3333 D C 3 1971 Ruth Gordon");
+      std::cout << "toString(): " << testTrans4.toString() << std::endl;
+      std::cout << "debug():" << std::endl;
+      testTrans4.debug();
 
-   std::cout << "--- Append title to classic transaction: ---" << std::endl << std::endl;
-   testTrans4.setTitle("<Title pulled from database>");
-   std::cout << "toString(): " << testTrans4.toString() << std::endl;
-   std::cout << "debug():" << std::endl;
-   testTrans4.debug();
+      std::cout << "--- Append title to classic transaction: ---" << std::endl << std::endl;
+      testTrans4.setTitle("<Title pulled from database>");
+      std::cout << "toString(): " << testTrans4.toString() << std::endl;
+      std::cout << "debug():" << std::endl;
+      testTrans4.debug();
 
-   std::cout << "--- END FILM CLASS TESTS ---" << std::endl << std::endl;
+      std::cout << "--- END FILM CLASS TESTS ---" << std::endl << std::endl;
 
    } // END TRANS CLASS TESTS
 
@@ -168,44 +166,44 @@ int main() {
 //-------|---------|---------|---------|---------|---------|---------|---------|
    if (false) {
 
-   std::cerr << "--- BEGIN FILM CLASS TESTS ---" << std::endl;
+      std::cerr << "--- BEGIN FILM CLASS TESTS ---" << std::endl;
 
-   // default constructor
-   Film filmA;
+      // default constructor
+      Film filmA;
 
-   filmA.setTitle("Testing Film");
-   filmA.setStock(20);
-   filmA.setReleaseYear(1995);
-   filmA.setGenre('X');
-   filmA.setDirector("Antonio Testing");
-   filmA.setActor("Bob Benson");
+      filmA.setTitle("Testing Film");
+      filmA.setStock(20);
+      filmA.setReleaseYear(1995);
+      filmA.setGenre('X');
+      filmA.setDirector("Antonio Testing");
+      filmA.setActor("Bob Benson");
 
-   std::cerr << filmA.getTitle() << std::endl;
-   std::cerr << filmA.getStock() << std::endl;
-   std::cerr << filmA.getReleaseYear() << std::endl;
-   std::cerr << filmA.getGenre() << std::endl;
-   std::cerr << filmA.getDirector() << std::endl;
+      std::cerr << filmA.getTitle() << std::endl;
+      std::cerr << filmA.getStock() << std::endl;
+      std::cerr << filmA.getReleaseYear() << std::endl;
+      std::cerr << filmA.getGenre() << std::endl;
+      std::cerr << filmA.getDirector() << std::endl;
 
-   // string constructor
-   Film filmB("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
+      // string constructor
+      Film filmB("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
 
-   std::cerr << filmB.getTitle() << std::endl;
-   std::cerr << filmB.getStock() << std::endl;
-   std::cerr << filmB.getReleaseYear() << std::endl;
-   std::cerr << filmB.getGenre() << std::endl;
-   std::cerr << filmB.getDirector() << std::endl;
+      std::cerr << filmB.getTitle() << std::endl;
+      std::cerr << filmB.getStock() << std::endl;
+      std::cerr << filmB.getReleaseYear() << std::endl;
+      std::cerr << filmB.getGenre() << std::endl;
+      std::cerr << filmB.getDirector() << std::endl;
 
-   // operators
-   std::cerr << "FilmA == FilmB: " << (filmA == filmB) << std::endl;
-   std::cerr << "FilmA >= FilmB: " << (filmA > filmB) << std::endl;
-   std::cerr << "FilmA <= FilmB: " << (filmA < filmB) << std::endl;
+      // operators
+      std::cerr << "FilmA == FilmB: " << (filmA == filmB) << std::endl;
+      std::cerr << "FilmA >= FilmB: " << (filmA > filmB) << std::endl;
+      std::cerr << "FilmA <= FilmB: " << (filmA < filmB) << std::endl;
 
-   Film filmC("D, 100, Jonathan Demme, Silence of the Lambs, 1991");
-   std::cerr << "FilmA == FilmB: " << (filmC == filmB) << std::endl;
-   std::cerr << "FilmA >= FilmB: " << (filmC > filmB) << std::endl;
-   std::cerr << "FilmA <= FilmB: " << (filmC < filmB) << std::endl;
+      Film filmC("D, 100, Jonathan Demme, Silence of the Lambs, 1991");
+      std::cerr << "FilmA == FilmB: " << (filmC == filmB) << std::endl;
+      std::cerr << "FilmA >= FilmB: " << (filmC > filmB) << std::endl;
+      std::cerr << "FilmA <= FilmB: " << (filmC < filmB) << std::endl;
 
-   std::cerr << "--- END FILM CLASS TESTS ---" << std::endl << std::endl;
+      std::cerr << "--- END FILM CLASS TESTS ---" << std::endl << std::endl;
 
    } // END FILM CLASS TESTS
 
@@ -218,69 +216,69 @@ int main() {
 //-------|---------|---------|---------|---------|---------|---------|---------|
    if (false) {
 
-   std::cout << "--- START CUSTOMER DATABASE TESTS ---" << std::endl << std::endl;
+      std::cout << "--- START CUSTOMER DATABASE TESTS ---" << std::endl << std::endl;
 
-   // Instantitate a new customer database
-   std::cout << "--- Creating a default CustDB... ---" << std::endl << std::endl;
-   CustDB testCustDB = CustDB();
+      // Instantitate a new customer database
+      std::cout << "--- Creating a default CustDB... ---" << std::endl << std::endl;
+      CustDB testCustDB = CustDB();
 
-   std::cout << "--- Creating a transaction from string 'B 1111 D F Ferries and You: A Primer, 2018'... ---" << std::endl << std::endl;
-   Trans testBorrow = Trans("B 1111 D F Ferries and You: A Primer, 2018");
-   Trans testReturn = Trans("R 1111 D F Ferries and You: A Primer, 2018");
+      std::cout << "--- Creating a transaction from string 'B 1111 D F Ferries and You: A Primer, 2018'... ---" << std::endl << std::endl;
+      Trans testBorrow = Trans("B 1111 D F Ferries and You: A Primer, 2018");
+      Trans testReturn = Trans("R 1111 D F Ferries and You: A Primer, 2018");
 
-   // Create two new customers
-   std::cout << "--- Creating two new customers... ---" << std::endl << std::endl;
-   // 1111 Jane Doe
-   // 9000 Boaty McBoatface
-   Cust* testCustomer1 = new Cust("Jane", "Doe", 1111);
-   Cust* testCustomer2 = new Cust("Boaty", "McBoatface", 9000);
+      // Create two new customers
+      std::cout << "--- Creating two new customers... ---" << std::endl << std::endl;
+      // 1111 Jane Doe
+      // 9000 Boaty McBoatface
+      Cust* testCustomer1 = new Cust("Jane", "Doe", 1111);
+      Cust* testCustomer2 = new Cust("Boaty", "McBoatface", 9000);
 
-   // Check customer instantiation
-   std::cout << "--- Customer 1 & 2 constructor results: ---" << std::endl;
-   std::cout << testCustomer1->toString() << std::endl;
-   std::cout << testCustomer2->toString() << std::endl;
-   std::cout << std::endl;
+      // Check customer instantiation
+      std::cout << "--- Customer 1 & 2 constructor results: ---" << std::endl;
+      std::cout << testCustomer1->toString() << std::endl;
+      std::cout << testCustomer2->toString() << std::endl;
+      std::cout << std::endl;
 
-   // Attempt to process Borrow on Cust1
-   std::cout << "--- Testing appendHistory(string)... ---" << std::endl << std::endl;
-   testCustomer1->appendHistory(testBorrow.toString(), testBorrow.getType(), testBorrow.getTitle());
-   std::cout << "testBorrow.toString(): " << testBorrow.toString() << std::endl;
-   std::cout << "testBorrow.getType() : " << testBorrow.getType() << std::endl;
-   std::cout << "testBorrow.getTitle(): " << testBorrow.getTitle() << std::endl;
-   std::cout << std::endl;
+      // Attempt to process Borrow on Cust1
+      std::cout << "--- Testing appendHistory(string)... ---" << std::endl << std::endl;
+      testCustomer1->appendHistory(testBorrow.toString(), testBorrow.getType(), testBorrow.getTitle());
+      std::cout << "testBorrow.toString(): " << testBorrow.toString() << std::endl;
+      std::cout << "testBorrow.getType() : " << testBorrow.getType() << std::endl;
+      std::cout << "testBorrow.getTitle(): " << testBorrow.getTitle() << std::endl;
+      std::cout << std::endl;
 
-   // Check the history of Cust1 again
-   std::cout << "--- Checking the history of Cust1 after appendHistory(): ---" << std::endl;
-   std::cout << testCustomer1->getHistory() << std::endl;
+      // Check the history of Cust1 again
+      std::cout << "--- Checking the history of Cust1 after appendHistory(): ---" << std::endl;
+      std::cout << testCustomer1->getHistory() << std::endl;
 
-   // Check the outstanding rentals of customer 1
-   std::cout << "--- Test if Cust1 has a copy of 'Ferries and You: A Primer': ---" << std::endl;
-   std::cout << testCustomer1->isCheckedOut("Ferries and You: A Primer") << " ('1' expected)" << std::endl << std::endl;
+      // Check the outstanding rentals of customer 1
+      std::cout << "--- Test if Cust1 has a copy of 'Ferries and You: A Primer': ---" << std::endl;
+      std::cout << testCustomer1->isCheckedOut("Ferries and You: A Primer") << " ('1' expected)" << std::endl << std::endl;
 
-   std::cout << "--- Test if Cust1 has a copy of 'Jurassic Park': ---" << std::endl;
-   std::cout << testCustomer1->isCheckedOut("Jurassic Park") << " ('0' expected)" << std::endl << std::endl;
+      std::cout << "--- Test if Cust1 has a copy of 'Jurassic Park': ---" << std::endl;
+      std::cout << testCustomer1->isCheckedOut("Jurassic Park") << " ('0' expected)" << std::endl << std::endl;
 
-   std::cout << "--- Execute a return transaction via Cust::appendHistory()... ---" << std::endl << std::endl;
-   // Attempt to process return on Cust1
-   testCustomer1->appendHistory(testReturn.toString(), testReturn.getType(), testReturn.getTitle());
+      std::cout << "--- Execute a return transaction via Cust::appendHistory()... ---" << std::endl << std::endl;
+      // Attempt to process return on Cust1
+      testCustomer1->appendHistory(testReturn.toString(), testReturn.getType(), testReturn.getTitle());
 
-   // Check the outstanding rentals of customer 1
-   std::cout << "--- Test if Cust1 has a copy of 'Ferries and You: A Primer': ---" << std::endl;
-   std::cout << testCustomer1->isCheckedOut("Ferries and You: A Primer") << " ('0' expected)" << std::endl << std::endl;
+      // Check the outstanding rentals of customer 1
+      std::cout << "--- Test if Cust1 has a copy of 'Ferries and You: A Primer': ---" << std::endl;
+      std::cout << testCustomer1->isCheckedOut("Ferries and You: A Primer") << " ('0' expected)" << std::endl << std::endl;
 
-   std::cout << "--- Test if Cust1 has a copy of 'Jurassic Park': ---" << std::endl;
-   std::cout << testCustomer1->isCheckedOut("Jurassic Park") << " ('0' expected)" << std::endl << std::endl;
+      std::cout << "--- Test if Cust1 has a copy of 'Jurassic Park': ---" << std::endl;
+      std::cout << testCustomer1->isCheckedOut("Jurassic Park") << " ('0' expected)" << std::endl << std::endl;
 
-   // Attempt to insert customers to database
-   std::cout << "--- Inserting Cust1 and Cust2 to database... ---" << std::endl << std::endl;
-   testCustDB.insertCustomer(testCustomer1);
-   testCustDB.insertCustomer(testCustomer2);
+      // Attempt to insert customers to database
+      std::cout << "--- Inserting Cust1 and Cust2 to database... ---" << std::endl << std::endl;
+      testCustDB.insertCustomer(testCustomer1);
+      testCustDB.insertCustomer(testCustomer2);
 
-   // Check insertion
-   std::cout << "--- Checking insertion results: ---" << std::endl;
-   std::cout << testCustDB.toString() << std::endl << std::endl;
+      // Check insertion
+      std::cout << "--- Checking insertion results: ---" << std::endl;
+      std::cout << testCustDB.toString() << std::endl << std::endl;
 
-   std::cout << "--- END CUSTOMER DATABASE TESTS ---" << std::endl << std::endl;
+      std::cout << "--- END CUSTOMER DATABASE TESTS ---" << std::endl << std::endl;
 
    } // END CUSTOMER DATABASE TESTS
 
@@ -293,99 +291,99 @@ int main() {
 //-------|---------|---------|---------|---------|---------|---------|---------|
    if (true) {
 
-   std::cout << "--- START INVENTORY DATABASE TESTS ---" << std::endl << std::endl;
+      std::cout << "--- START INVENTORY DATABASE TESTS ---" << std::endl << std::endl;
 
-   // Create a new inventory database object
-   std::cout << "Creating an empty InvDB object..." << std::endl << std::endl;
-   InvDB testInvDB;
+      // Create a new inventory database object
+      std::cout << "Creating an empty InvDB object..." << std::endl << std::endl;
+      InvDB testInvDB;
 
-   std::cout << "Create an InvDB object from bulk input..." << std::endl << std::endl;
-   std::ifstream inventoryFile("data4movies.txt");
-   InvDB testInvDBBulk(inventoryFile);
+      std::cout << "Create an InvDB object from bulk input..." << std::endl << std::endl;
+      std::ifstream inventoryFile("data4movies.txt");
+      InvDB testInvDBBulk(inventoryFile);
 
 
-   // Create three new films
-   std::cout << "Creating three new films..." << std::endl << std::endl;
-   // Should sort by Title, then year
-   Comedy filmBB("F, 10, Nora Ephron, Sleepless in Seattle, 1993");
-   Comedy filmBB2("F, 10, Parody-Man, Sleepless in Seattle, 1997");
-   // Should sort by Director, then Title
-   Drama filmCC("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
-   Drama filmCC2("D, 10, Jonathan Demme, Something Different, 1991");
-   // Should sort by Release Date, then major actor
-   Classic filmAA("C, 10, Victor Fleming, The Wizard of Oz, Judy Garland 7 1939");
-   Classic filmAA2("C, 10, Victor Fleming, The Wizard of Oz, Bob Barker 7 1939");
+      // Create three new films
+      std::cout << "Creating three new films..." << std::endl << std::endl;
+      // Should sort by Title, then year
+      Comedy filmBB("F, 10, Nora Ephron, Sleepless in Seattle, 1993");
+      Comedy filmBB2("F, 10, Parody-Man, Sleepless in Seattle, 1997");
+      // Should sort by Director, then Title
+      Drama filmCC("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
+      Drama filmCC2("D, 10, Jonathan Demme, Something Different, 1991");
+      // Should sort by Release Date, then major actor
+      Classic filmAA("C, 10, Victor Fleming, The Wizard of Oz, Judy Garland 7 1939");
+      Classic filmAA2("C, 10, Victor Fleming, The Wizard of Oz, Bob Barker 7 1939");
 
-   // Attempt to add these films to the inventory database
-   std::cout << "Adding films to the testInvDB..." << std::endl << std::endl;
-   testInvDB.addFilm(&filmAA);
-   testInvDB.addFilm(&filmAA2);
-   testInvDB.addFilm(&filmBB);
-   testInvDB.addFilm(&filmBB2);
-   testInvDB.addFilm(&filmCC2);
+      // Attempt to add these films to the inventory database
+      std::cout << "Adding films to the testInvDB..." << std::endl << std::endl;
+      testInvDB.addFilm(&filmAA);
+      testInvDB.addFilm(&filmAA2);
+      testInvDB.addFilm(&filmBB);
+      testInvDB.addFilm(&filmBB2);
+      testInvDB.addFilm(&filmCC2);
    
-   // Test Display method
-   std::cout << std::endl;
-   std::cout << "State of testInvDB:" << std::endl;
-   std::cout << testInvDB.toString() << std::endl << std::endl;
+      // Test Display method
+      std::cout << std::endl;
+      std::cout << "State of testInvDB:" << std::endl;
+      std::cout << testInvDB.toString() << std::endl << std::endl;
 
-   std::cout << "State of testInvDBBulk:" << std::endl;
-   std::cout << testInvDBBulk.toString() << std::endl << std::endl;
+      std::cout << "State of testInvDBBulk:" << std::endl;
+      std::cout << testInvDBBulk.toString() << std::endl << std::endl;
 
-   // Query quantities of each film
-   std::cout << "testinvDB contains Oz: " << testInvDB.contains(&filmAA) << std::endl;
-   std::cout << "testinvDB contains Seattle: " << testInvDB.contains(&filmBB) << std::endl;
-   std::cout << "testinvDB contains Lambs: " << testInvDB.contains(&filmCC) << std::endl;
+      // Query quantities of each film
+      std::cout << "testinvDB contains Oz: " << testInvDB.contains(&filmAA) << std::endl;
+      std::cout << "testinvDB contains Seattle: " << testInvDB.contains(&filmBB) << std::endl;
+      std::cout << "testinvDB contains Lambs: " << testInvDB.contains(&filmCC) << std::endl;
 
-   testInvDB.addFilm(&filmCC);
-   std::cout << "Oz Qty: " << testInvDB.retrieve(&filmAA)->getStock() << std::endl;
-   std::cout << "Seattle Qty: " << testInvDB.retrieve(&filmBB)->getStock() << std::endl;
-   std::cout << "Lambs Qty: " << testInvDB.retrieve(&filmCC)->getStock() << std::endl;
+      testInvDB.addFilm(&filmCC);
+      std::cout << "Oz Qty: " << testInvDB.retrieve(&filmAA)->getStock() << std::endl;
+      std::cout << "Seattle Qty: " << testInvDB.retrieve(&filmBB)->getStock() << std::endl;
+      std::cout << "Lambs Qty: " << testInvDB.retrieve(&filmCC)->getStock() << std::endl;
    
-   // Create borrow transactions
-   std::cout << "Creating borrow transactions..." << std::endl << std::endl;
-   Trans BTestC = Trans("B 1234 C The Wizard of Oz, 7 1939");
-   Trans BTestD = Trans("B 1234 D Silence of the Lambs, 1991");
-   Trans BTestF = Trans("B 1234 F Sleepless in Seattle, 1993");
+      // Create borrow transactions
+      std::cout << "Creating borrow transactions..." << std::endl << std::endl;
+      Trans BTestC = Trans("B 1234 C The Wizard of Oz, 7 1939");
+      Trans BTestD = Trans("B 1234 D Silence of the Lambs, 1991");
+      Trans BTestF = Trans("B 1234 F Sleepless in Seattle, 1993");
 
-   // Create return transactions
-   std::cout << "Creating return transactions..." << std::endl << std::endl;
-   Trans RTestC = Trans("R 1234 C The Wizard of Oz, 7 1939");
-   Trans RTestD = Trans("R 1234 D Silence of the Lambs, 1991");
-   Trans RTestF = Trans("R 1234 F Sleepless in Seattle, 1993");
+      // Create return transactions
+      std::cout << "Creating return transactions..." << std::endl << std::endl;
+      Trans RTestC = Trans("R 1234 C The Wizard of Oz, 7 1939");
+      Trans RTestD = Trans("R 1234 D Silence of the Lambs, 1991");
+      Trans RTestF = Trans("R 1234 F Sleepless in Seattle, 1993");
 
-   // Create an invalid return (one that has no borrow)
-   std::cout << "Creating an erroneous return (no corresponding borrow)";
-   Trans RTestErr = Trans("R 1234 C Guardians of te Galaxy, 2016");
+      // Create an invalid return (one that has no borrow)
+      std::cout << "Creating an erroneous return (no corresponding borrow)";
+      Trans RTestErr = Trans("R 1234 C Guardians of te Galaxy, 2016");
 
-   // Send a transaction
-   // TODO: Finish Transaction class constructor string parsing
-   // testInvDB.adjustStock(BTestF);
-   // testInvDB.adjustStock(RTestD);
-   // testInvDB.adjustStock(BTestF);
+      // Send a transaction
+      // TODO: Finish Transaction class constructor string parsing
+      // testInvDB.adjustStock(BTestF);
+      // testInvDB.adjustStock(RTestD);
+      // testInvDB.adjustStock(BTestF);
 
-   // Test Display method
-   std::cout << std::endl;
-   std::cout << "Post-Transaction State of testInvDB:" << std::endl;
-   std::cout << testInvDB.toString() << std::endl << std::endl;
+      // Test Display method
+      std::cout << std::endl;
+      std::cout << "Post-Transaction State of testInvDB:" << std::endl;
+      std::cout << testInvDB.toString() << std::endl << std::endl;
 
-   // Query film states again
+      // Query film states again
 
-   // test operators
-   std::cout << "Test filmAA == filmAA2 using Film::operator==, Film::equals()" << std::endl;
-   if (filmAA == filmAA2) {
-      std::cout << "filmAA == filmAA2: true" << std::endl;
-   }
+      // test operators
+      std::cout << "Test filmAA == filmAA2 using Film::operator==, Film::equals()" << std::endl;
+      if (filmAA == filmAA2) {
+         std::cout << "filmAA == filmAA2: true" << std::endl;
+      }
 
-   std::cout << "Test filmAA.equals(filmAA2) using Classic::equals()" << std::endl;
-   if (filmAA.equals(filmAA2)) {
-      std::cout << "filmAA.equals(filmAA2): true" << std::endl;
-   }
-
-
+      std::cout << "Test filmAA.equals(filmAA2) using Classic::equals()" << std::endl;
+      if (filmAA.equals(filmAA2)) {
+         std::cout << "filmAA.equals(filmAA2): true" << std::endl;
+      }
 
 
-   std::cout << "--- END INVENTORY DATABASE TESTS ---" << std::endl << std::endl;
+
+
+      std::cout << "--- END INVENTORY DATABASE TESTS ---" << std::endl << std::endl;
 
    } // END INVENTORY DATABASE TESTS
 
@@ -398,27 +396,27 @@ int main() {
 //-------|---------|---------|---------|---------|---------|---------|---------|
    if (false) {
 
-   std::cout << "--- START BULK CUSTOMERDB INPUT TESTS ---" << std::endl << std::endl;
+      std::cout << "--- START BULK CUSTOMERDB INPUT TESTS ---" << std::endl << std::endl;
 
-   // Test the customerDB bulk inputs
-   std::cout << "Testing customerDB bulk inputs..." << std::endl << std::endl;
+      // Test the customerDB bulk inputs
+      std::cout << "Testing customerDB bulk inputs..." << std::endl << std::endl;
 
-   // Test the customerDB bulk inputs
-   std::cout << "Creating an empty CustDB object..." << std::endl << std::endl;
+      // Test the customerDB bulk inputs
+      std::cout << "Creating an empty CustDB object..." << std::endl << std::endl;
 
-   // Capture command file to filestream
-   std::cout << "Capture bulk input to fileStream..." << std::endl << std::endl;
+      // Capture command file to filestream
+      std::cout << "Capture bulk input to fileStream..." << std::endl << std::endl;
 
-   // Have the Inventory Controller (main()) parse the file and perform insertion actions
-   std::cout << "Sending bulk commands to CustDB object..." << std::endl << std::endl;
+      // Have the Inventory Controller (main()) parse the file and perform insertion actions
+      std::cout << "Sending bulk commands to CustDB object..." << std::endl << std::endl;
 
-   // Test isLegalCust() logic
-   std::cout << "The first command isLegal(): " << "<isLegal() result goes here>" << " (0 expected, plus error report)" << std::endl << std::endl;
+      // Test isLegalCust() logic
+      std::cout << "The first command isLegal(): " << "<isLegal() result goes here>" << " (0 expected, plus error report)" << std::endl << std::endl;
 
-   // Check if the commands were SUPER EFFECTIVE!
-   std::cout << "Check state of CustDB after bulk input:" << std::endl << std::endl;
+      // Check if the commands were SUPER EFFECTIVE!
+      std::cout << "Check state of CustDB after bulk input:" << std::endl << std::endl;
 
-   std::cout << "--- END BULK CUSTOMERDB INPUT TESTS ---" << std::endl << std::endl;
+      std::cout << "--- END BULK CUSTOMERDB INPUT TESTS ---" << std::endl << std::endl;
 
    } // END BULK CUSTOMERDB INPUT TESTS 
 
@@ -431,27 +429,27 @@ int main() {
 //-------|---------|---------|---------|---------|---------|---------|---------|
    if (false) {
 
-   std::cout << "--- START BULK INVENTORYDB INPUT TESTS ---" << std::endl << std::endl;
+      std::cout << "--- START BULK INVENTORYDB INPUT TESTS ---" << std::endl << std::endl;
    
-   // Test the inventoryDB bulk inputs
-   std::cout << "Testing inventoryDB bulk inputs..." << std::endl << std::endl;
+      // Test the inventoryDB bulk inputs
+      std::cout << "Testing inventoryDB bulk inputs..." << std::endl << std::endl;
 
-   // Test the inventoryDB bulk inputs
-   std::cout << "Creating an empty InvDB object..." << std::endl << std::endl;
+      // Test the inventoryDB bulk inputs
+      std::cout << "Creating an empty InvDB object..." << std::endl << std::endl;
 
-   // Capture command file to filestream
-   std::cout << "Capture bulk input to fileStream..." << std::endl << std::endl;
+      // Capture command file to filestream
+      std::cout << "Capture bulk input to fileStream..." << std::endl << std::endl;
    
-   // Have the Inventory Controller (main()) parse the file and perform insertion actions
-   std::cout << "Sending bulk commands to InvDB object..." << std::endl << std::endl;
+      // Have the Inventory Controller (main()) parse the file and perform insertion actions
+      std::cout << "Sending bulk commands to InvDB object..." << std::endl << std::endl;
    
-   // Test isLegalInv() logic
-   std::cout << "The first command isLegal(): " << "<isLegal() result goes here>" << " (0 expected, plus error report)" << std::endl << std::endl;
+      // Test isLegalInv() logic
+      std::cout << "The first command isLegal(): " << "<isLegal() result goes here>" << " (0 expected, plus error report)" << std::endl << std::endl;
 
-   // Check if the commands were SUPER EFFECTIVE!
-   std::cout << "Check state of InvDB after bulk input:" << std::endl << std::endl;
+      // Check if the commands were SUPER EFFECTIVE!
+      std::cout << "Check state of InvDB after bulk input:" << std::endl << std::endl;
    
-   std::cout << "--- END BULK INVENTORYDB INPUT TESTS ---" << std::endl << std::endl;
+      std::cout << "--- END BULK INVENTORYDB INPUT TESTS ---" << std::endl << std::endl;
 
    } // END BULK CUSTOMERDB INPUT TESTS
    
@@ -463,37 +461,38 @@ int main() {
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
    if (false) {
-   std::cout << "--- START BULK COMMAND INPUT TESTS ---" << std::endl << std::endl;
 
-   // Generate a test InvDB and CustDB
-   std::cout << "Generating empty InvDB and CustDB objects..." << std::endl << std::endl;
-   InvDB BulkInvDB = InvDB();
-   CustDB BulkCustDB = CustDB();
+      std::cout << "--- START BULK COMMAND INPUT TESTS ---" << std::endl << std::endl;
 
-   // Minimally populate these two DBs
-   std::cout << "Populating the two databases..." << std::endl << std::endl;
+      // Generate a test InvDB and CustDB
+      std::cout << "Generating empty InvDB and CustDB objects..." << std::endl << std::endl;
+      InvDB BulkInvDB = InvDB();
+      CustDB BulkCustDB = CustDB();
 
-   // Capture the command file to a stream
-   std::cout << "Loading the command file..." << std::endl << std::endl;
+      // Minimally populate these two DBs
+      std::cout << "Populating the two databases..." << std::endl << std::endl;
 
-   // Parse the stream
-   std::cout << "Parsing the command stream..." << std::endl << std::endl;
+      // Capture the command file to a stream
+      std::cout << "Loading the command file..." << std::endl << std::endl;
 
-   // Test isLegal() logic
-   std::cout << "Testing isLegal() logic:" << std::endl;
-   std::cout << std::endl;
+      // Parse the stream
+      std::cout << "Parsing the command stream..." << std::endl << std::endl;
 
-   // Generate transaction objects from legal commands
-   // Send these transactions to both the InvDB and CustDB
-   std::cout << "Generating and sending test transactions..." << std::endl << std::endl;
-   // call bulkProcess()
+      // Test isLegal() logic
+      std::cout << "Testing isLegal() logic:" << std::endl;
+      std::cout << std::endl;
 
-   // Check results
-   std::cout << "Results of bulk processing" << std::endl;
-   std::cout << "InvDB status:" << std::endl << BulkInvDB.toString() << std::endl << std::endl;
-   std::cout << "CustDB status:" << std::endl << BulkCustDB.toString() << std::endl << std::endl;
+      // Generate transaction objects from legal commands
+      // Send these transactions to both the InvDB and CustDB
+      std::cout << "Generating and sending test transactions..." << std::endl << std::endl;
+      // call bulkProcess()
 
-   std::cout << "--- END BULK COMMAND INPUT TESTS ---" << std::endl << std::endl;
+      // Check results
+      std::cout << "Results of bulk processing" << std::endl;
+      std::cout << "InvDB status:" << std::endl << BulkInvDB.toString() << std::endl << std::endl;
+      std::cout << "CustDB status:" << std::endl << BulkCustDB.toString() << std::endl << std::endl;
+
+      std::cout << "--- END BULK COMMAND INPUT TESTS ---" << std::endl << std::endl;
 
    } // END BULK COMMAND INPUT TESTS
 
@@ -505,26 +504,27 @@ int main() {
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
    if (false) {
-   // Acquire the relevant files
 
-   std::ifstream commandFile("data4commands.txt");
-   std::ifstream customerFile("data4customers.txt");
-   std::ifstream inventoryFile("data4movies.txt");
+      // Acquire the relevant files
+      std::ifstream commandFile("data4commands.txt");
+      std::ifstream customerFile("data4customers.txt");
+      std::ifstream inventoryFile("data4movies.txt");
 
-   // Create a customer database
-   CustDB custDB;
-   // Read all customer commands into it
-   bulkReadCust(customerFile, custDB);
+     // Create a customer database
+      CustDB custDB;
+      // Read all customer commands into it
+      bulkReadCust(customerFile, custDB);
 
-   // Create an inventory database
-   InvDB invDB;
-   // Read all inventory commands into it
-   bulkReadInv(inventoryFile, invDB);
+      // Create an inventory database
+      InvDB invDB;
+      // Read all inventory commands into it
+      bulkReadInv(inventoryFile, invDB);
 
-   // Read, parse, verify, and forward all transaction commands to the databases
-   bulkReadTrans(commandFile, custDB, invDB);
+      // Read, parse, verify, and forward all transaction commands to the databases
+      bulkReadTrans(commandFile, custDB, invDB);
 
    } // Closing if - End of for realsies execution "unit test"
+
    return (0);
 } // Closing main()
 
@@ -549,12 +549,43 @@ int main() {
 //          Does not handle any error reporting
 // RetVal:  None
 // MetCall: isLegalCustCmd() - Verifies all legality checks of the command
-void bulkReadCust(std::ifstream& custtxt, CustDB tgtDB) {
-   // While there is still filestream to read
-   // Get a line of text (one command)
-   // If the command is legal...
-      // Send it to the Customer Database
-   // Repeat
+void bulkReadCust(std::ifstream& custFile, CustDB tgtDB) {
+   while (!custFile.eof()) {
+      // Get a line of text (one command)
+
+      std::string command;
+      std::getline(custFile, command);
+
+      // If the command is legal...
+      if (isLegalCustCmd(command, tgtDB)) {
+         // Acquire info by...
+         // Sample input
+         // 1111 Mouse Mickey
+         // Prepare variables
+         int custID;
+         std::string nameL;
+         std::string nameF;
+
+         // Encapsulate string in a stringstream
+         std::stringstream stream(command);
+
+         // Parse stream to variables
+         stream >> custID;
+         stream >> nameL;
+         stream >> nameF;
+
+         // Make a customer from variables
+         Cust* newCust = new Cust(nameF, nameL, custID);
+
+         // Send customer to the Inventory Database
+         tgtDB.insertCustomer(newCust);
+
+      } // Closing if - Legal inventory command sent
+
+      // Otherwise, command was not legal, so do nothing
+      // Repeat
+
+   } // Closing while - All lines of input consumed
 } // Closing bulkReadCust()
 
 // (+) --------------------------------|
@@ -576,6 +607,7 @@ void bulkReadInv(std::ifstream& invFile, InvDB tgtDB) {
       // Get a line of text (one command)
 
       std::string command;
+      std::getline(invFile, command);
 
       // If the command is legal...
       if (isLegalInvCmd(command, tgtDB)) {
@@ -646,11 +678,6 @@ void bulkReadTrans(std::ifstream& commandFile, CustDB tgtCustDB, InvDB tgtInvDB)
       if (isLegalTransCmd(command, tgtCustDB, tgtInvDB)) {
          // Create a transaction from it
          currTrans = new Trans(command);
-         // Pad out remainder of relevant information fields that might be missing. Fields needed:
-         // Title
-         // ReleaseMonth (classics only)
-         // ReleaseYear
-         // ???
          // Aggregate inventory information from the databases to add needed info to the transaction
          padOut(currTrans, tgtInvDB);
 
