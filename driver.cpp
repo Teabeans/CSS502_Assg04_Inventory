@@ -175,12 +175,15 @@ int main() {
 //       FILM CLASS TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-   if (false) {
+   if (true) {
 
-      std::cerr << "--- BEGIN FILM CLASS TESTS ---" << std::endl;
+      std::cerr << "--- (2) BEGIN FILM CLASS TESTS ---" << std::endl << std::endl;
 
+      std::cout << "--- (2.1) Creating a default Film... ---" << std::endl << std::endl;
       // default constructor
       Film filmA;
+
+      std::cout << "--- (2.2) Test of Film Setters/Getters... ---" << std::endl << std::endl;
 
       filmA.setTitle("Testing Film");
       filmA.setStock(20);
@@ -189,30 +192,39 @@ int main() {
       filmA.setDirector("Antonio Testing");
       filmA.setActor("Bob Benson");
 
-      std::cerr << filmA.getTitle() << std::endl;
-      std::cerr << filmA.getStock() << std::endl;
-      std::cerr << filmA.getReleaseYear() << std::endl;
-      std::cerr << filmA.getGenre() << std::endl;
-      std::cerr << filmA.getDirector() << std::endl;
+      std::cerr << "Title:       " << filmA.getTitle() << std::endl;
+      std::cerr << "Stock:       " << filmA.getStock() << std::endl;
+      std::cerr << "ReleaseYear: " << filmA.getReleaseYear() << std::endl;
+      std::cerr << "Genre:       " << filmA.getGenre() << std::endl;
+      std::cerr << "Director:    " << filmA.getDirector() << std::endl;
+      std::cout << std::endl;
 
+      std::cout << "--- (2.3) Creating a Film from string ('D, 10, Jonathan Demme, Silence of the Lambs, 1991')... ---" << std::endl << std::endl;
       // string constructor
       Film filmB("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
 
-      std::cerr << filmB.getTitle() << std::endl;
-      std::cerr << filmB.getStock() << std::endl;
-      std::cerr << filmB.getReleaseYear() << std::endl;
-      std::cerr << filmB.getGenre() << std::endl;
-      std::cerr << filmB.getDirector() << std::endl;
+      std::cerr << "Title:       " << filmB.getTitle() << std::endl;
+      std::cerr << "Stock:       " << filmB.getStock() << std::endl;
+      std::cerr << "ReleaseYear: " << filmB.getReleaseYear() << std::endl;
+      std::cerr << "Genre:       " << filmB.getGenre() << std::endl;
+      std::cerr << "Director:    " << filmB.getDirector() << std::endl;
+      std::cout << std::endl;
 
+      std::cout << "--- (2.4) Test of Film comparison operators... ---" << std::endl << std::endl;
       // operators
       std::cerr << "FilmA == FilmB: " << (filmA == filmB) << std::endl;
       std::cerr << "FilmA >= FilmB: " << (filmA > filmB) << std::endl;
       std::cerr << "FilmA <= FilmB: " << (filmA < filmB) << std::endl;
+      std::cout << std::endl;
+
+      std::cout << "--- (2.5) Test of Film comparison operators... ---" << std::endl << std::endl;
 
       Film filmC("D, 100, Jonathan Demme, Silence of the Lambs, 1991");
-      std::cerr << "FilmA == FilmB: " << (filmC == filmB) << std::endl;
-      std::cerr << "FilmA >= FilmB: " << (filmC > filmB) << std::endl;
-      std::cerr << "FilmA <= FilmB: " << (filmC < filmB) << std::endl;
+      std::cerr << "FilmC == FilmB: " << (filmC == filmB) << std::endl;
+      std::cerr << "FilmC >= FilmB: " << (filmC > filmB) << std::endl;
+      std::cerr << "FilmC <= FilmB: " << (filmC < filmB) << std::endl;
+      
+      std::cout << std::endl;
 
       std::cerr << "--- END FILM CLASS TESTS ---" << std::endl << std::endl;
 
