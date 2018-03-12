@@ -152,7 +152,7 @@ public:
    //-------------------------------------|
    // Desc:   Factory method; Returns a film of differing types based on input
    // Invars: The command is legal
-   Film makeFilm(std::string command);
+   Film* makeFilm(std::string command);
 
 
 
