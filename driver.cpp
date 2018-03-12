@@ -301,6 +301,27 @@ int main() {
       delete cTestFilm5;
       delete cTestFilm6;
 
+      std::cout << "--- (3.9) Test of Classic Film factory construction ---" << std::endl << std::endl;
+
+      // TODO: High chance of memory leak in this area of code
+      Film* cTestFilm7 = nullptr;
+      cTestFilm7 = cTestFilm7->makeFilm("C, 10, Michael Curtiz, Casablanca, Bonna Beed 11 1940");
+      std::cout << "Title:        " << cTestFilm7->getTitle() << std::endl;
+      std::cout << "Stock:        " << cTestFilm7->getStock() << std::endl;
+      std::cout << "ReleaseMonth: " << cTestFilm7->getReleaseMonth() << std::endl;
+      std::cout << "ReleaseYear:  " << cTestFilm7->getReleaseYear() << std::endl;
+      std::cout << "Genre:        " << cTestFilm7->getGenre() << std::endl;
+      std::cout << "Director:     " << cTestFilm7->getDirector() << std::endl;
+      std::cout << std::endl;
+
+      std::cout << "--- (3.10) Test of factory-built method calls ---" << std::endl << std::endl;
+
+      std::cout << "CFilm7 == CFilm7: " << (*cTestFilm7 ==  *cTestFilm7) <<  " (1 expected - should utilize Classic::operator==() )" << std::endl;
+
+      delete cTestFilm7;
+
+      std::cout << std::endl;
+
       std::cout << std::endl;
 
       std::cout << "--- END CLASSIC FILM CLASS TESTS ---" << std::endl << std::endl;
