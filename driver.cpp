@@ -514,7 +514,7 @@ int main() {
 //       CUSTOMER DATABASE TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-   if (true) {
+   if (false) {
 
       std::cout << "--- (6.0) START CUSTOMER DATABASE TESTS ---" << std::endl << std::endl;
 
@@ -604,41 +604,26 @@ int main() {
 
       // Create three new films
       std::cout << "Creating three new films..." << std::endl << std::endl;
-      // Should sort by Title, then year
-      Comedy filmBB("F, 10, Nora Ephron, Sleepless in Seattle, 1993");
-      Comedy filmBB2("F, 10, Parody-Man, Sleepless in Seattle, 1997");
-      // Should sort by Director, then Title
-      Drama filmCC("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
-      Drama filmCC2("D, 10, Jonathan Demme, Something Different, 1991");
-      // Should sort by Release Date, then major actor
-      Classic filmAA("C, 10, Victor Fleming, The Wizard of Oz, Judy Garland 7 1939");
-      Classic filmAA2("C, 10, Victor Fleming, The Wizard of Oz, Bob Barker 7 1939");
 
       // Attempt to add these films to the inventory database
       std::cout << "Adding films to the testInvDB..." << std::endl << std::endl;
-      testInvDB.addFilm(&filmAA);
-      testInvDB.addFilm(&filmAA2);
-      testInvDB.addFilm(&filmBB);
-      testInvDB.addFilm(&filmBB2);
-      testInvDB.addFilm(&filmCC2);
+      testInvDB.addFilm("F, 10, Nora Ephron, Sleepless in Seattle, 1993");
+      testInvDB.addFilm("F, 10, Parody-Man, Sleepless in Seattle, 1997");
+      testInvDB.addFilm("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
+      testInvDB.addFilm("D, 10, Jonathan Demme, Something Different, 1991");
+      testInvDB.addFilm("C, 10, Victor Fleming, The Wizard of Oz, Judy Garland 7 1939");
    
       // Test Display method
       std::cout << std::endl;
       std::cout << "State of testInvDB:" << std::endl;
-      std::cout << testInvDB.toString() << std::endl << std::endl;
+      testInvDB.display();
+      std::cout << std::endl;
 
       std::cout << "State of testInvDBBulk:" << std::endl;
-      std::cout << testInvDBBulk.toString() << std::endl << std::endl;
+      testInvDBBulk.display();
+      std::cout << std::endl;
 
-      // Query quantities of each film
-      std::cout << "testinvDB contains Oz: " << testInvDB.contains(&filmAA) << std::endl;
-      std::cout << "testinvDB contains Seattle: " << testInvDB.contains(&filmBB) << std::endl;
-      std::cout << "testinvDB contains Lambs: " << testInvDB.contains(&filmCC) << std::endl;
-
-      testInvDB.addFilm(&filmCC);
-      std::cout << "Oz Qty: " << testInvDB.retrieve(&filmAA)->getStock() << std::endl;
-      std::cout << "Seattle Qty: " << testInvDB.retrieve(&filmBB)->getStock() << std::endl;
-      std::cout << "Lambs Qty: " << testInvDB.retrieve(&filmCC)->getStock() << std::endl;
+      testInvDB.addFilm("C, 10, Victor Fleming, The Wizard of Oz, Bob Barker 7 1939");
    
       // Create borrow transactions
       std::cout << "Creating borrow transactions..." << std::endl << std::endl;
@@ -665,23 +650,8 @@ int main() {
       // Test Display method
       std::cout << std::endl;
       std::cout << "Post-Transaction State of testInvDB:" << std::endl;
-      std::cout << testInvDB.toString() << std::endl << std::endl;
-
-      // Query film states again
-
-      // test operators
-      std::cout << "Test filmAA == filmAA2 using Film::operator==, Film::equals()" << std::endl;
-      if (filmAA == filmAA2) {
-         std::cout << "filmAA == filmAA2: true" << std::endl;
-      }
-
-      std::cout << "Test filmAA.equals(filmAA2) using Classic::equals()" << std::endl;
-      if (filmAA.equals(filmAA2)) {
-         std::cout << "filmAA.equals(filmAA2): true" << std::endl;
-      }
-
-
-
+      testInvDB.display();
+      std::cout << std::endl;
 
       std::cout << "--- END INVENTORY DATABASE TESTS ---" << std::endl << std::endl;
 
@@ -914,7 +884,7 @@ void bulkReadInv(std::ifstream& invFile, InvDB tgtDB) {
       if (isLegalInvCmd(command, tgtDB)) {
 
          // Send it to the Inventory Database
-         tgtDB.runCmd(command);
+         tgtDB.addFilm(command);
 
       } // Closing if - Legal inventory command sent
    } // Closing while - All lines of input consumed

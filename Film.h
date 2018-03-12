@@ -219,19 +219,23 @@ public:
 
    //-----------------|
    // #operator<(Film&)
+   // #operator<=(Film&)
    //-----------------|
    // Desc:   Tests the film against another based on it's title & release date
    // PreCon: Title and release date must be populated
    // Invars: None
    bool operator<(Film&);
+   bool operator<=(Film&);
 
    //-----------------|
    // #operator>(Film&)
+   // #operator>=(Film&)
    //-----------------|
    // Desc:   Tests the film against another based on it's title & release date
    // PreCon: Title and release date must be populated
    // Invars: None
    bool operator>(Film&);
+   bool operator>=(Film&);
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //

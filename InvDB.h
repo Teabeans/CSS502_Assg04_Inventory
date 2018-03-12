@@ -68,28 +68,21 @@ private:
 //-----------------|
 // Desc:   List of all comedies
 // Invars: NULL
-std::vector<Film> comedies;
+std::vector<Comedy> comedies;
 
 //-----------------|
 // #dramas
 //-----------------|
 // Desc:   List of all dramas
 // Invars: NULL
-std::vector<Film> dramas;
+std::vector<Drama> dramas;
 
 //-----------------|
 // #classics
 //-----------------|
 // Desc:   List of all classics
 // Invars: NULL
-std::vector<Film> classics;
-
-//-----------------|
-// #classics
-//-----------------|
-// Desc:   List of films of any other type
-// Invars: NULL
-std::vector<Film> otherFilms;
+std::vector<Classic> classics;
 
 
 
@@ -99,7 +92,6 @@ std::vector<Film> otherFilms;
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
-   int hashTitle(std::string someTitle);
 
 public:
 //-------|---------|---------|---------|---------|---------|---------|---------|
@@ -123,7 +115,7 @@ public:
    //-------------------------------------|
    // Desc:    Adds a new generic film object to the list
    // Invars:  NULL
-   bool addFilm(Film*);
+   bool addFilm(std::string);
 
    // (+) --------------------------------|
    // #adjustStock(Trans&)
@@ -137,14 +129,14 @@ public:
    //-------------------------------------|
    // Desc:    Checks the DB for a particular film
    // Invars:  NULL
-   bool contains(Film*);
+   // bool contains(Film*);
 
    // (+) --------------------------------|
    // #display()
    //-------------------------------------|
    // Desc:    Displays to cout the status of the InvDB by calling toString
    // Invars:  NULL
-   void display();
+   void const display();
 
    // (+) --------------------------------|
    // #isLegal()
@@ -159,7 +151,7 @@ public:
    //-------------------------------------|
    // Desc:    Searches for a film object and returns it instead of a bool
    // Invars:  NULL
-   Film* retrieve(Film*);
+   // Film* retrieve(Film*);
    
    // (+) --------------------------------|
    // #runCmd(Film*)
@@ -167,7 +159,7 @@ public:
    // Desc:    Accepts a line of command and executes it
    // Invars:  GIGO - No error checking is performed by acceptCmd
    //          Format and content are verified to be correct before being sent
-   void runCmd(std::string);
+   // void runCmd(std::string);
 
    // (+) --------------------------------|
    // #toString()

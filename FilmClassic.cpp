@@ -65,15 +65,10 @@
 // RetVal:  True or False
 // MetCall: NULL
 bool Classic::equals(Film& rhs) {
-   std::cerr << "(Classic::equals() called)" << std::endl;
 
-   if (releaseMonth == rhs.getReleaseYear() && releaseYear == rhs.getReleaseMonth()
-       && actor == rhs.getActor()) {
-      return true;
-   }
-   else {
-      return false;
-   }
+   return (releaseMonth == rhs.getReleaseYear() 
+           && releaseYear == rhs.getReleaseMonth()
+           && actor == rhs.getActor());
 }
 
 // (+) --------------------------------|
@@ -117,21 +112,7 @@ bool Classic::isLessThan(Film& rhs) {
 // MetCall: NULL
 bool Classic::isGreaterThan(Film& rhs) {
 
-   if (releaseYear > rhs.getReleaseYear()) {
-      return true;
-   }
-   // if the year is the same, check the month
-   else if (releaseYear == rhs.getReleaseYear() && releaseMonth > rhs.getReleaseMonth()) {
-      return true;
-   }
-   // if the year and month are the same, check the major actor
-   else if (releaseYear == rhs.getReleaseYear() && releaseMonth == rhs.getReleaseMonth()
-            && actor > rhs.getActor()) {
-      return true;
-   }
-   else {
-      return false;
-   }
+   return (!isLessThan(rhs) && !equals(rhs));
 }
 
 

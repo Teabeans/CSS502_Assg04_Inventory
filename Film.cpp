@@ -149,14 +149,8 @@
 // RetVal:  True or False
 // MetCall: NULL
 bool Film::equals(Film& rhs) {
-   std::cout << "(Film::equals() called)" << std::endl;
 
-   if (title == rhs.title && releaseYear == rhs.releaseYear) {
-      return true;
-   }
-   else {
-      return false;
-   }
+   return (title == rhs.title && releaseYear == rhs.releaseYear);
 }
 
 // (+) --------------------------------|
@@ -192,15 +186,7 @@ bool Film::isLessThan(Film& rhs) {
 // MetCall: NULL
 bool Film::isGreaterThan(Film& rhs) {
 
-   if (title > rhs.title) {
-         return true;
-      }
-      else if (title == rhs.title && releaseYear > rhs.releaseYear) {
-         return true;
-      }
-      else {
-         return false;
-      }
+   return (!isLessThan(rhs) && !equals(rhs));
 }
 
 // (+) --------------------------------|
@@ -458,6 +444,9 @@ bool Film::operator==(Film& rhs) {
 bool Film::operator<(Film& rhs) {
    return isLessThan(rhs);
 }
+bool Film::operator<=(Film& rhs) {
+   return (isLessThan(rhs) || equals(rhs));
+}
 
 // (+) --------------------------------|
 // #operator>(Film&)
@@ -470,6 +459,9 @@ bool Film::operator<(Film& rhs) {
 // MetCall: NULL
 bool Film::operator>(Film& rhs) {
    return isGreaterThan(rhs);
+}
+bool Film::operator>=(Film& rhs) {
+   return (isGreaterThan(rhs) || equals(rhs));
 }
 
 

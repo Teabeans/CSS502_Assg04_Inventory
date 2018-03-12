@@ -67,12 +67,8 @@
 // MetCall: NULL
 bool Comedy::equals(Film& rhs) {
 
-   if (this->getTitle() == rhs.getTitle() && this->getReleaseYear() == rhs.getReleaseYear()) {
-      return true;
-   }
-   else {
-      return false;
-   }
+   return (this->getTitle() == rhs.getTitle() 
+           && this->getReleaseYear() == rhs.getReleaseYear());
 }
 
 // (+) --------------------------------|
@@ -118,8 +114,7 @@ bool Comedy::isLessThan(Film& rhs) {
 // MetCall: NULL
 bool Comedy::isGreaterThan(Film& rhs) {
 
-
-   return(!isLessThan(rhs));
+   return (!isLessThan(rhs) && !equals(rhs));
 }
 
 

@@ -66,12 +66,9 @@
 // RetVal:  True or False
 // MetCall: NULL
 bool Drama::equals(Film& rhs) {
-   if (this->getDirector() == rhs.getDirector() && this->getTitle() == rhs.getTitle()) {
-      return true;
-   }
-   else {
-      return false;
-   }
+   
+   return (this->getDirector() == rhs.getDirector() 
+           && this->getTitle() == rhs.getTitle());
 }
 
 // (+) --------------------------------|
@@ -85,22 +82,23 @@ bool Drama::equals(Film& rhs) {
 // RetVal:  True or False
 // MetCall: NULL
 bool Drama::isLessThan(Film& rhs) {
+
    // If the director is lesser...
    if (this->getDirector() < rhs.getDirector()) {
-      return(true);
+      return true;
    }
    // If the director matches
    else if (this->getDirector() == rhs.getDirector()) {
       // Then compare titles
       if (this->getTitle() < rhs.getTitle()) {
-         return(true);
+         return true;
       }
       // Greater than or equal to case
-      return(false);
+      return false;
    }
    // Director must by greater than
    else {
-      return(false);
+      return false;
    }
 }
 
@@ -115,9 +113,8 @@ bool Drama::isLessThan(Film& rhs) {
 // RetVal:  True or False
 // MetCall: NULL
 bool Drama::isGreaterThan(Film& rhs) {
-   std::cout << "(Drama::isGreaterThan() called)" << std::endl;
 
-   return(!isLessThan(rhs));
+   return (!isLessThan(rhs) && !equals(rhs));
 }
 
 

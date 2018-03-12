@@ -101,14 +101,6 @@
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
-int InvDB::hashTitle(std::string someTitle) {
-   // TODO: Implement or discard?
-   // @TB: Let'd discard it. The hash function won't provide anything for storing
-   //      the films, and it'll mess up the sorting. So long as we have the hash in
-   //      the custDB we'll be fine.
-   return(0);
-}
-
 
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
@@ -136,33 +128,10 @@ int InvDB::hashTitle(std::string someTitle) {
 // PosCons: The inventory database holds the film and data provided by the command
 // RetVal:  None
 // MetCall: NULL
-void InvDB::runCmd(std::string command) {
-   // Example inputs:
-   // C, 10, Victor Fleming, The Wizard of Oz, Judy Garland 7 1939
-   // D, 10, Steven Spielberg, Schindler's List, 1993
-   // F, 10, Rob Reiner, When Harry Met Sally, 1989
-   if (command.length() > 10) {
-      // create Comedy object and add to database
-      if (command.at(0) == 'F') {
-         addFilm(new Comedy(command));
-      }
+// void InvDB::runCmd(std::string command) {
 
-      // create Drama object and add to database
-      else if (command.at(0) == 'D') {
-         addFilm(new Drama(command));
-      }
-
-      // check Classic object and add to database
-      else if (command.at(0) == 'C') {
-         addFilm(new Classic(command));
-      }
-
-      // otherwise, this is an invalid film type
-      else {
-         std::cerr << "Invalid film type: " << command.at(0) << std::endl;
-      }
-   } // Closing if - command string processed
-}
+//    addFilm(command);
+// }
 
 // (+) --------------------------------|
 // #addFilm(Film*)
@@ -174,10 +143,13 @@ void InvDB::runCmd(std::string command) {
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
-bool InvDB::addFilm(Film* film) {
+bool InvDB::addFilm(std::string filmData) {
    int index = 0;
 
-   if (film->getGenre() == 'F') {
+   // if Comedy, add to comedies
+   if (filmData.at(0) == 'F') {
+
+      Comedy* film = new Comedy(filmData);
 
       // find the appropriate position in the comedies vector
       auto iterator = comedies.begin();
@@ -188,7 +160,10 @@ bool InvDB::addFilm(Film* film) {
       comedies.insert(iterator, *film);
    }
 
-   else if (film->getGenre() == 'D') {
+   // if Drama, add to dramas
+   else if (filmData.at(0) == 'D') {
+
+      Drama* film = new Drama(filmData);
 
       // find the appropriate position in the dramas vector
       auto iterator = dramas.begin();
@@ -199,7 +174,10 @@ bool InvDB::addFilm(Film* film) {
       dramas.insert(iterator, *film);
    }
 
-   else if (film->getGenre() == 'C') {
+   // if Classic, add to classics
+   else if (filmData.at(0) == 'C') {
+
+      Classic* film = new Classic(filmData);
 
       // find the appropriate position in the classics vector
       auto iterator = classics.begin();
@@ -211,14 +189,7 @@ bool InvDB::addFilm(Film* film) {
    }
 
    else {
-
-      // find the appropriate position in the otherFilms vector
-      auto iterator = otherFilms.begin();
-      for (int i = 0; i < otherFilms.size(); i++) {
-         if (otherFilms.at(i) > *film) break;
-         iterator++;
-      }
-      otherFilms.insert(iterator, *film);
+      std::cout << "Invalid film type: " << filmData.at(0) << ". Ignoring..." << std::endl;
    }
 
    return true;
@@ -274,51 +245,51 @@ void InvDB::adjustStock(Trans& trans) { // TODO: Add const to Trans& argument?
 // PosCons: NULL
 // RetVal:  True if the film is present, False otherwise
 // MetCall: NULL
-bool InvDB::contains(Film* film) {
+// bool InvDB::contains(Film* film) {
 
-   // search the table for the film being added to see if it's already present
-   bool alreadyContainsFilm = false;
-   int index = 0; 
+//    // search the table for the film being added to see if it's already present
+//    bool alreadyContainsFilm = false;
+//    int index = 0; 
 
-   // if this film is a comedy
-   if (film->getGenre() == 'F') {
-      while (index < comedies.size()) {
-         if (comedies.at(index) == *film) {
-            alreadyContainsFilm = true;
-            break;
-         }
-         else {
-            index++;
-         }
-      }
-   }
-   // if this film is a drama
-   else if (film->getGenre() == 'D') {
-      while (index < dramas.size()) {
-         if (dramas.at(index) == *film) {
-            alreadyContainsFilm = true;
-            break;
-         }
-         else {
-            index++;
-         }
-      }
-   }
-   // if this film is a classic
-   else if (film->getGenre() == 'C') {
-      while (index < classics.size()) {
-         if (classics.at(index) == *film) {
-            alreadyContainsFilm = true;
-            break;
-         }
-         else {
-            index++;
-         }
-      }
-   }
-   return alreadyContainsFilm;
+//    // if this film is a comedy
+//    if (film->getGenre() == 'F') {
+//       while (index < comedies.size()) {
+//          if (comedies.at(index) == *film) {
+//             alreadyContainsFilm = true;
+//             break;
+//          }
+//          else {
+//             index++;
+//          }
+//       }
+//    }
+//    // if this film is a drama
+//    else if (film->getGenre() == 'D') {
+//       while (index < dramas.size()) {
+//          if (dramas.at(index) == *film) {
+//             alreadyContainsFilm = true;
+//             break;
+//          }
+//          else {
+//             index++;
+//          }
+//       }
+//    }
+//    // if this film is a classic
+//    else if (film->getGenre() == 'C') {
+//       while (index < classics.size()) {
+//          if (classics.at(index) == *film) {
+//             alreadyContainsFilm = true;
+//             break;
+//          }
+//          else {
+//             index++;
+//          }
+//       }
+//    }
+//    return alreadyContainsFilm;
 
-}
+// }
 
 // (+) --------------------------------|
 // #isLegal()
@@ -344,54 +315,54 @@ bool InvDB::isLegal(std::string command) {
 // PosCons: NULL
 // RetVal:  Pointer to the film object
 // MetCall: NULL
-Film* InvDB::retrieve(Film* film) {
+// Film* InvDB::retrieve(Film* film) {
 
-   // search the table for the film being added to see if it's already present
-   int index = 0; 
+//    // search the table for the film being added to see if it's already present
+//    int i = 0; 
 
-   // if this film is a comedy
-   if (film->getGenre() == 'F') {
-      while (index < comedies.size()) {
-         if (comedies.at(index) == *film) {
-            break;
-         }
-         else {
-            index++;
-         }
-      }
+//    // if this film is a comedy
+//    if (film->getGenre() == 'F') {
+//       while (i < comedies.size()) {
+//          if (comedies.at(i) == *film) {
+//             break;
+//          }
+//          else {
+//             i++;
+//          }
+//       }
 
-      return &comedies.at(index);
-   }
+//       return &comedies.at(i);
+//    }
 
-   else if (film->getGenre() == 'D') {
-      while (index < dramas.size()) {
-         if (dramas.at(index) == *film) {
-            break;
-         }
-         else {
-            index++;
-         }
-      }
+//    else if (film->getGenre() == 'D') {
+//       while (i < dramas.size()) {
+//          if (dramas.at(i) == *film) {
+//             break;
+//          }
+//          else {
+//             i++;
+//          }
+//       }
 
-      return &dramas.at(index);
-   }
+//       return &dramas.at(i);
+//    }
 
-   else if (film->getGenre() == 'C') {
-      while (index < classics.size()) {
-         if (classics.at(index) == *film) {
-            break;
-         }
-         else {
-            index++;
-         }
-      }
+//    else if (film->getGenre() == 'C') {
+//       while (i < classics.size()) {
+//          if (classics.at(i) == *film) {
+//             break;
+//          }
+//          else {
+//             i++;
+//          }
+//       }
 
-      return &classics.at(index);
-   }
-   else {
-      return NULL;
-   }
-}
+//       return &classics.at(i);
+//    }
+//    else {
+//       return NULL;
+//    }
+// }
 
 // (+) --------------------------------|
 // #display()
@@ -402,7 +373,7 @@ Film* InvDB::retrieve(Film* film) {
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
-void InvDB::display() {
+void const InvDB::display() {
    std::cout << toString();
 }
 
@@ -415,38 +386,51 @@ void InvDB::display() {
 // PosCons: NULL
 // RetVal:  string
 // MetCall: NULL
-std::string const InvDB::toString() { // TODO: @MG - Verify inclusion of const?
+std::string const InvDB::toString() {
    std::string retString = "";
-
+   retString += "\n";
    retString += "Comedy films: \n";
 
    for (int i = 0; i < comedies.size(); i++) {
-      retString += std::to_string(comedies.at(i).getStock()) + ", ";
-      retString += comedies.at(i).getTitle() + ", ";
-      retString += comedies.at(i).getDirector() + ", ";
-      retString += std::to_string(comedies.at(i).getReleaseYear()) + "\n";
+      retString += std::to_string(comedies.at(i).getStock());
+      retString += ", ";
+      retString += comedies.at(i).getTitle();
+      retString += ", ";
+      retString += comedies.at(i).getDirector();
+      retString += ", ";
+      retString += std::to_string(comedies.at(i).getReleaseYear());
+      retString += "\n";
    }
 
-
+   retString += "\n";
    retString += "Drama films: \n";
 
    for (int i = 0; i < dramas.size(); i++) {
-      retString += std::to_string(dramas.at(i).getStock()) + ", ";
-      retString += dramas.at(i).getTitle() + ", ";
-      retString += dramas.at(i).getDirector() + ", ";
-      retString += std::to_string(dramas.at(i).getReleaseYear()) + "\n";
+      retString += std::to_string(dramas.at(i).getStock());
+      retString += ", ";
+      retString += dramas.at(i).getTitle();
+      retString += ", ";
+      retString += dramas.at(i).getDirector();
+      retString += ", ";
+      retString += std::to_string(dramas.at(i).getReleaseYear());
+      retString += "\n";
    }
 
-
+   retString += "\n";
    retString += "Classic films: \n";
 
    for (int i = 0; i < classics.size(); i++) {
-      retString += std::to_string(classics.at(i).getStock()) + ", ";
-      retString += classics.at(i).getTitle() + ", ";
-      retString += classics.at(i).getDirector() + ", ";
-      retString += classics.at(i).getActor() + ", ";
+      retString += std::to_string(classics.at(i).getStock());
+      retString += ", ";
+      retString += classics.at(i).getTitle();
+      retString += ", ";
+      retString += classics.at(i).getDirector();
+      retString += ", ";
+      retString += classics.at(i).getActor();
+      retString += ", ";
       retString += std::to_string(classics.at(i).getReleaseMonth()) + " ";
-      retString += std::to_string(classics.at(i).getReleaseYear()) + "\n";
+      retString += std::to_string(classics.at(i).getReleaseYear());
+      retString += "\n";
    }
 
    return (retString);
@@ -526,30 +510,8 @@ InvDB::InvDB(std::ifstream& data) {
       std::string filmData;
       std::getline(data, filmData);
 
-      // --- Suggested replacement ---
-      // this->runCmd(filmData);
-      if (filmData.length() > 10) {
-         // create Comedy object and add to database
-         if (filmData.at(0) == 'F') {
-            addFilm(new Comedy(filmData));
-         }
-
-         // create Drama object and add to database
-         else if (filmData.at(0) == 'D') {
-            addFilm(new Drama(filmData));
-         }
-
-         // check Classic object and add to database
-         else if (filmData.at(0) == 'C') {
-            addFilm(new Classic(filmData));
-         }
-
-         // otherwise, this is an invalid film type
-         else {
-            std::cerr << "Invalid film type: " << filmData.at(0) << std::endl;
-         }
-      }
-      // --- End suggested replacement ---
+      // add this film to the database from it's data-string
+      addFilm(filmData);
    }
 } // Closing InvDB(ifstream)
 
