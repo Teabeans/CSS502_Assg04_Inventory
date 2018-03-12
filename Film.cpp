@@ -199,6 +199,27 @@ bool Film::isGreaterThan(Film& rhs) {
       }
 }
 
+// (+) --------------------------------|
+// #isGreaterThan(Film&)
+//-------------------------------------|
+// Desc:    Tests the film against another based on it's title & year
+// Params:  NULL
+// PreCons: Title and release date must be populated
+// PosCons: NULL
+// RetVal:  True or False
+// MetCall: NULL
+bool Film::isGreaterThan(Film& rhs) {
+
+   if (title > rhs.title) {
+         return true;
+      }
+      else if (title == rhs.title && releaseYear > rhs.releaseYear) {
+         return true;
+      }
+      else {
+         return false;
+      }
+}
 
 
 
