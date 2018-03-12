@@ -518,65 +518,72 @@ int main() {
 
       std::cout << "--- (6.0) START CUSTOMER DATABASE TESTS ---" << std::endl << std::endl;
 
-      // Instantitate a new customer database
       std::cout << "--- (6.1) Creating a default CustDB... ---" << std::endl << std::endl;
+
       CustDB testCustDB = CustDB();
 
       std::cout << "--- (6.2) Creating a transaction from string 'B 1111 D F Ferries and You: A Primer, 2018'... ---" << std::endl << std::endl;
+
       Trans testBorrow = Trans("B 1111 D F Ferries and You: A Primer, 2018");
       Trans testReturn = Trans("R 1111 D F Ferries and You: A Primer, 2018");
 
-      // Create two new customers
       std::cout << "--- (6.3) Creating two new customers... ---" << std::endl << std::endl;
       // 1111 Jane Doe
       // 9000 Boaty McBoatface
       Cust* testCustomer1 = new Cust("Jane", "Doe", 1111);
       Cust* testCustomer2 = new Cust("Boaty", "McBoatface", 9000);
 
-      // Check customer instantiation
       std::cout << "--- (6.4) Customer 1 & 2 constructor results: ---" << std::endl << std::endl;
+
       std::cout << testCustomer1->toString() << std::endl;
       std::cout << testCustomer2->toString() << std::endl;
       std::cout << std::endl;
 
-      // Attempt to process Borrow on Cust1
       std::cout << "--- (6.5) Testing appendHistory(string)... ---" << std::endl << std::endl;
+
       testCustomer1->appendHistory(testBorrow.toString(), testBorrow.getType(), testBorrow.getTitle());
       std::cout << "testBorrow.toString(): " << testBorrow.toString() << std::endl;
       std::cout << "testBorrow.getType() : " << testBorrow.getType() << std::endl;
       std::cout << "testBorrow.getTitle(): " << testBorrow.getTitle() << std::endl;
       std::cout << std::endl;
 
-      // Check the history of Cust1 again
       std::cout << "--- (6.6) Checking the history of Cust1 after appendHistory(): ---" << std::endl << std::endl;
+
       std::cout << testCustomer1->getHistory() << std::endl;
 
-      // Check the outstanding rentals of customer 1
       std::cout << "--- (6.7) Test if Cust1 has a copy of 'Ferries and You: A Primer': ---" << std::endl << std::endl;
+
       std::cout << testCustomer1->isCheckedOut("Ferries and You: A Primer") << " ('1' expected)" << std::endl << std::endl;
 
       std::cout << "--- (6.8) Test if Cust1 has a copy of 'Jurassic Park': ---" << std::endl << std::endl;
+
       std::cout << testCustomer1->isCheckedOut("Jurassic Park") << " ('0' expected)" << std::endl << std::endl;
 
       std::cout << "--- (6.9) Execute a return transaction via Cust::appendHistory()... ---" << std::endl << std::endl;
-      // Attempt to process return on Cust1
+
       testCustomer1->appendHistory(testReturn.toString(), testReturn.getType(), testReturn.getTitle());
 
-      // Check the outstanding rentals of customer 1
       std::cout << "--- (6.10) Test if Cust1 has a copy of 'Ferries and You: A Primer': ---" << std::endl << std::endl;
+
       std::cout << testCustomer1->isCheckedOut("Ferries and You: A Primer") << " ('0' expected)" << std::endl << std::endl;
 
       std::cout << "--- (6.11) Test if Cust1 has a copy of 'Jurassic Park': ---" << std::endl << std::endl;
+
       std::cout << testCustomer1->isCheckedOut("Jurassic Park") << " ('0' expected)" << std::endl << std::endl;
 
-      // Attempt to insert customers to database
       std::cout << "--- (6.12) Inserting Cust1 and Cust2 to database... ---" << std::endl << std::endl;
+
       testCustDB.insertCustomer(testCustomer1);
       testCustDB.insertCustomer(testCustomer2);
 
-      // Check insertion
       std::cout << "--- (6.13) Checking insertion results: ---" << std::endl << std::endl;
+
       std::cout << testCustDB.toString() << std::endl;
+
+      std::cout << "--- (6.14) Acquire customer history @ 1111: ---" << std::endl << std::endl;
+
+      Cust* tgtCust = testCustDB.getCustomerAt(1111);
+      std::cout << tgtCust->getHistory() << std::endl;
 
       std::cout << "--- END CUSTOMER DATABASE TESTS ---" << std::endl << std::endl;
 
