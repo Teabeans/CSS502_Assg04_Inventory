@@ -380,10 +380,10 @@ int main() {
 
       std::cout << "--- (4.8) Test of Drama Film comparison operators (by director, then title) ---" << std::endl << std::endl;
 
-      std::cout << "DFilm4 >  DFilm3: " << (*dTestFilm4 <  *dTestFilm3) <<  " (1 expected - 'Clint' == 'Clint', 'Unforgiven' > 'Funforgiven')" << std::endl;
-      std::cout << "DFilm3 >  DFilm2: " << (*dTestFilm3 <  *dTestFilm2) <<  " (1 expected - 'Clint' > 'Blint')" << std::endl;
-      std::cout << "DFilm2 >  DFilm1: " << (*dTestFilm2 <  *dTestFilm1) <<  " (1 expected - 'Clint' == 'Clint', 'Unforgiven' > 'Funforgiven')" << std::endl;
-      std::cout << "DFilm1 >  DFilm4: " << (*dTestFilm1 <  *dTestFilm4) <<  " (0 expected - 'Blint' !> 'Clint')" << std::endl;
+      std::cout << "DFilm4 >  DFilm3: " << (*dTestFilm4 >  *dTestFilm3) <<  " (1 expected - 'Clint' == 'Clint', 'Unforgiven' > 'Funforgiven')" << std::endl;
+      std::cout << "DFilm3 >  DFilm2: " << (*dTestFilm3 >  *dTestFilm2) <<  " (1 expected - 'Clint' > 'Blint')" << std::endl;
+      std::cout << "DFilm2 >  DFilm1: " << (*dTestFilm2 >  *dTestFilm1) <<  " (1 expected - 'Clint' == 'Clint', 'Unforgiven' > 'Funforgiven')" << std::endl;
+      std::cout << "DFilm1 >  DFilm4: " << (*dTestFilm1 >  *dTestFilm4) <<  " (0 expected - 'Blint' !> 'Clint')" << std::endl;
       std::cout << std::endl;
 
       delete dTestFilm1;
