@@ -120,6 +120,13 @@
 ///   std::string history;
 
 //-----------------|
+// #historyHeader
+//-----------------|
+// Desc:   The customer's history header
+// Invars: May not be an empty string
+///   std::string historyHeader;
+
+//-----------------|
 // #numRentals
 //-----------------|
 // Desc:   The number of titles this customer has checked out
@@ -169,8 +176,7 @@ void Cust::appendHistory(std::string someTransaction, char type, std::string tit
       this->removeFromCheckouts(title);
    }
    // Append history
-   this->history += someTransaction;
-   this->history += "\n";
+   this->history += someTransaction + "\n" + this->history;
 }
 
 // (+) --------------------------------|
@@ -436,14 +442,14 @@ Cust::Cust(std::string nameF, std::string nameL, int IDnum) {
    this->firstName = nameF;
    this->lastName  = nameL;
    this->custID    = IDnum;
-   this->history   = "Transaction history for ";
-   this->history += this->firstName + " " + this->lastName + " (ID ";
+   this->historyHeader = "Transaction history for ";
+   this->historyHeader += this->firstName + " " + this->lastName + " (ID ";
    // Convert the ID integer to a 4-wide formatted string
    std::ostringstream tempStream;
    tempStream << std::setw(4) << std::setfill('0') << this->custID;
    std::string tempString(tempStream.str());
    // Append that string to the history header
-   this->history += tempString + "): \n";
+   this->historyHeader += tempString + "): \n";
 }
 
 // (+) --------------------------------|
