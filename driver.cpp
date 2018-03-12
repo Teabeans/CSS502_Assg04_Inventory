@@ -238,7 +238,7 @@ int main() {
 //       CLASSIC FILM SUBCLASS TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-   if (true) {
+   if (false) {
       std::cout << "--- (3.0) BEGIN CLASSIC FILM CLASS TESTS ---" << std::endl << std::endl;
 
       std::cout << "--- (3.1) Creating a Classic Film by string ('C, 10, Michael Curtiz, Casablanca, Langrid Bergman 11 1942') ---" << std::endl << std::endl;
@@ -249,6 +249,7 @@ int main() {
       std::cout << "ReleaseYear:  " << cTestFilm1->getReleaseYear() << std::endl;
       std::cout << "Genre:        " << cTestFilm1->getGenre() << std::endl;
       std::cout << "Director:     " << cTestFilm1->getDirector() << std::endl;
+      std::cout << "Actor:        " << cTestFilm1->getActor() << std::endl;
       std::cout << std::endl;
 
       std::cout << "--- (3.2) Creating a Classic Film by string ('C, 10, Michael Curtiz, Casablanca, Bonna Beed 11 1942') ---" << std::endl << std::endl;
@@ -260,6 +261,7 @@ int main() {
       std::cout << "ReleaseYear:  " << cTestFilm2->getReleaseYear() << std::endl;
       std::cout << "Genre:        " << cTestFilm2->getGenre() << std::endl;
       std::cout << "Director:     " << cTestFilm2->getDirector() << std::endl;
+      std::cout << "Actor:        " << cTestFilm2->getActor() << std::endl;
       std::cout << std::endl;
 
       std::cout << "--- (3.3) Test of Classic Film comparison operators (by year, then month, then actor) ---" << std::endl << std::endl;
@@ -312,6 +314,7 @@ int main() {
       std::cout << "ReleaseYear:  " << cTestFilm7->getReleaseYear() << std::endl;
       std::cout << "Genre:        " << cTestFilm7->getGenre() << std::endl;
       std::cout << "Director:     " << cTestFilm7->getDirector() << std::endl;
+      std::cout << "Actor:        " << cTestFilm7->getActor() << std::endl;
       std::cout << std::endl;
 
       std::cout << "--- (3.10) Test of factory-built method calls ---" << std::endl << std::endl;
@@ -335,6 +338,83 @@ int main() {
 //-------|---------|---------|---------|---------|---------|---------|---------|
    if (true) {
       std::cout << "--- (4.0) BEGIN DRAMA FILM CLASS TESTS ---" << std::endl << std::endl;
+
+      std::cout << "--- (4.1) Creating a Drama Film by string ('D, 10, Blint Eastwood, Funforgiven, 1992') ---" << std::endl << std::endl;
+      Film* dTestFilm1 = new Drama("D, 10, Blint Eastwood, Funforgiven, 1992");
+      std::cout << "Title:        " << dTestFilm1->getTitle() << std::endl;
+      std::cout << "Stock:        " << dTestFilm1->getStock() << std::endl;
+      std::cout << "ReleaseMonth: " << dTestFilm1->getReleaseMonth() << std::endl;
+      std::cout << "ReleaseYear:  " << dTestFilm1->getReleaseYear() << std::endl;
+      std::cout << "Genre:        " << dTestFilm1->getGenre() << std::endl;
+      std::cout << "Director:     " << dTestFilm1->getDirector() << std::endl;
+      std::cout << "Actor:        " << dTestFilm1->getActor() << std::endl;
+      std::cout << std::endl;
+
+      std::cout << "--- (4.2) Creating a Drama Film by string ('D, 10, Blint Eastwood, Unforgiven, 1992') ---" << std::endl << std::endl;
+
+      Film* dTestFilm2 = new Drama("D, 10, Blint Eastwood, Unforgiven, 1992");
+      std::cout << "Title:        " << dTestFilm2->getTitle() << std::endl;
+      std::cout << "Stock:        " << dTestFilm2->getStock() << std::endl;
+      std::cout << "ReleaseMonth: " << dTestFilm2->getReleaseMonth() << std::endl;
+      std::cout << "ReleaseYear:  " << dTestFilm2->getReleaseYear() << std::endl;
+      std::cout << "Genre:        " << dTestFilm2->getGenre() << std::endl;
+      std::cout << "Director:     " << dTestFilm2->getDirector() << std::endl;
+      std::cout << "Actor:        " << dTestFilm2->getActor() << std::endl;
+      std::cout << std::endl;
+
+      std::cout << "--- (4.3) Test of Drama Film comparison operators (by Director, then Title) ---" << std::endl << std::endl;
+
+      std::cout << "(" << dTestFilm1->getDirector() << ":" << dTestFilm1->getTitle() <<
+              ") vs (" << dTestFilm2->getDirector() << ":" << dTestFilm2->getTitle() <<
+              ")" << std::endl;
+      std::cout << "DFilm1 == DFilm2: " << (*dTestFilm1 == *dTestFilm2) <<  " (0 expected)" << std::endl;
+      std::cout << "DFilm1 >  DFilm2: " << (*dTestFilm1 >  *dTestFilm2) <<  " (0 expected)" << std::endl;
+      std::cout << "DFilm1 <  DFilm2: " << (*dTestFilm1 <  *dTestFilm2) <<  " (1 expected)" << std::endl;
+      std::cout << std::endl;
+
+      std::cout << "--- (4.4) Creating a Drama Film by string ('D, 10, Clint Eastwood, Funforgiven, 1992') ---" << std::endl << std::endl;
+      Film* dTestFilm3 = new Drama("D, 10, Clint Eastwood, Funforgiven, 1992");
+
+      std::cout << "--- (4.5) Creating a Drama Film by string ('D, 10, Clint Eastwood, Unforgiven, 1992') ---" << std::endl << std::endl;
+      Film* dTestFilm4 = new Drama("D, 10, Clint Eastwood, Unforgiven, 1992");
+
+      std::cout << "--- (4.8) Test of Drama Film comparison operators (by director, then title) ---" << std::endl << std::endl;
+
+      std::cout << "DFilm4 >  DFilm3: " << (*dTestFilm4 <  *dTestFilm3) <<  " (1 expected - 'Clint' == 'Clint', 'Unforgiven' > 'Funforgiven')" << std::endl;
+      std::cout << "DFilm3 >  DFilm2: " << (*dTestFilm3 <  *dTestFilm2) <<  " (1 expected - 'Clint' > 'Blint')" << std::endl;
+      std::cout << "DFilm2 >  DFilm1: " << (*dTestFilm2 <  *dTestFilm1) <<  " (1 expected - 'Clint' == 'Clint', 'Unforgiven' > 'Funforgiven')" << std::endl;
+      std::cout << "DFilm1 >  DFilm4: " << (*dTestFilm1 <  *dTestFilm4) <<  " (0 expected - 'Blint' !> 'Clint')" << std::endl;
+      std::cout << std::endl;
+
+      delete dTestFilm1;
+      delete dTestFilm2;
+      delete dTestFilm3;
+      delete dTestFilm4;
+
+      std::cout << "--- (3.9) Test of Drama Film factory construction ---" << std::endl << std::endl;
+
+      // TODO: High chance of memory leak in this area of code
+      Film* dTestFilm7 = nullptr;
+      dTestFilm7 = dTestFilm7->makeFilm("D, 10, Clint Eastwood, Unforgiven, 1992");
+      std::cout << "Title:        " << dTestFilm7->getTitle() << std::endl;
+      std::cout << "Stock:        " << dTestFilm7->getStock() << std::endl;
+      std::cout << "ReleaseMonth: " << dTestFilm7->getReleaseMonth() << std::endl;
+      std::cout << "ReleaseYear:  " << dTestFilm7->getReleaseYear() << std::endl;
+      std::cout << "Genre:        " << dTestFilm7->getGenre() << std::endl;
+      std::cout << "Director:     " << dTestFilm7->getDirector() << std::endl;
+      std::cout << "Actor:        " << dTestFilm7->getActor() << std::endl;
+      std::cout << std::endl;
+
+      std::cout << "--- (3.10) Test of factory-built method calls ---" << std::endl << std::endl;
+
+      std::cout << "DFilm7 == DFilm7: " << (*dTestFilm7 ==  *dTestFilm7) <<  " (1 expected - should utilize Drama::operator==() )" << std::endl;
+
+      delete dTestFilm7;
+
+      std::cout << std::endl;
+
+      std::cout << "--- END DRAMA FILM CLASS TESTS ---" << std::endl << std::endl;
+
    } // END DRAMA FILM SUBCLASS TESTS
 
 
@@ -344,6 +424,7 @@ int main() {
 //       COMEDY FILM SUBCLASS TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
+   // Note: Sort by Title, then Year
    if (true) {
       std::cout << "--- (5.0) BEGIN COMEDY FILM CLASS TESTS ---" << std::endl << std::endl;
    } // END COMEDY FILM SUBCLASS TESTS
