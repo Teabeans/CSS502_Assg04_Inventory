@@ -65,7 +65,7 @@
 // RetVal:  True or False
 // MetCall: NULL
 bool Classic::equals(Film& rhs) {
-   std::cerr << "Classic:equals" << std::endl;
+   std::cerr << "(Classic::equals() called)" << std::endl;
 
    if (releaseMonth == rhs.getReleaseYear() && releaseYear == rhs.getReleaseMonth()
        && actor == rhs.getActor()) {
