@@ -145,7 +145,7 @@
 // RetVal:  True or False
 // MetCall: NULL
 bool Film::equals(Film& rhs) {
-   std::cerr << "Film:equals" << std::endl;
+   std::cout << "(Film::equals() called)" << std::endl;
 
    if (title == rhs.title && releaseYear == rhs.releaseYear) {
       return true;
@@ -411,7 +411,7 @@ void Film::setActor(std::string data) {
 // RetVal:  True or False
 // MetCall: NULL
 bool Film::operator==(Film& rhs) {
-   std::cerr << "Film:==" << std::endl;
+   std::cout << "(Film::operator==() called)" << std::endl;
    return equals(rhs);
 }
 
