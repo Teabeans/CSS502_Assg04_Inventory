@@ -363,7 +363,7 @@ bool CustDB::isValid(std::string) {
 // RetVal:  NULL
 // MetCall: NULL
 Cust* CustDB::getCustomerAt(int query) {
-   return (this->custTable[query]);
+   return (this->custTableByID[query]);
 } // Closing getCustomerAt()
 
 // (+) --------------------------------|
