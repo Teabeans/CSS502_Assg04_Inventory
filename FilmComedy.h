@@ -21,8 +21,9 @@
 // File Description
 //-----------------------------------------------------------------------------|
 //
-// This is the header file for the Comedy class, representing a single film
-// of the Comedy variety
+// This is the header file for the Comedy Film class, representing a single film
+// of the comedy type, primarily separated from the generic film by identifying
+// title and year as the relevant sorting criteria
 //
 
 //-----------------------------------------------------------------------------|
@@ -61,7 +62,17 @@ private:
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
-// No unique data-members
+// None for this class
+
+
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       PRIVATE METHODS (-)
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+
+// None for this class
 
 
 
@@ -74,6 +85,8 @@ public:
 
 // None for this class
 
+
+
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
 //       PUBLIC METHODS (+)
@@ -81,6 +94,27 @@ public:
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
 // Full comments in Film.cpp - omitted here for clarity
+
+   // (+) --------------------------------|
+   // #equals(Film&)
+   //-------------------------------------|
+   // Desc:   Tests the film against another based on it's director and title
+   // Invars: None
+   bool equals(Film&);
+
+   // (+) --------------------------------|
+   // #isLessThan(Film&)
+   //-------------------------------------|
+   // Desc:   Tests the film against another based on it's director and title
+   // Invars: None
+   bool isLessThan(Film&);
+
+   // (+) --------------------------------|
+   // #isGreaterThan(Film&)
+   //-------------------------------------|
+   // Desc:   Tests the film against another based on it's director and title
+   // Invars: None
+   bool isGreaterThan(Film&);
 
 
 
@@ -98,7 +132,7 @@ public:
    Comedy();
 
    //-----------------|
-   // #Comedy(string)
+   // #Comedy()
    //-----------------|
    // Desc:   NULL
    // Invars: NULL
@@ -110,10 +144,11 @@ public:
    // Desc:   NULL
    // Invars: NULL
    ~Comedy();
+
 }; // Closing class Comedy {}
 
 //-------------------------------------|
 // End Student Code
 //-------------------------------------|
 
-// End of File - FilmComedy.h
+// End of File - FilmDrama.h
