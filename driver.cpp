@@ -117,9 +117,9 @@ int main() {
 //       TRANS CLASS TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-   if (true) {
+   if (false) {
 
-      std::cout << "--- (1) BEGIN FILM CLASS TESTS ---" << std::endl;
+      std::cout << "--- (1.0) BEGIN FILM CLASS TESTS ---" << std::endl << std::endl;
 
       std::cout << "--- (1.1) Creating a default Transaction... ---" << std::endl << std::endl;
       Trans testTrans;
@@ -163,6 +163,7 @@ int main() {
       std::cout << testTrans4.toString() << std::endl;
       std::cout << testTrans2.toString() << std::endl;
       std::cout << testTrans3.toString() << std::endl;
+      std::cout << std::endl;
 
       std::cout << "--- END FILM CLASS TESTS ---" << std::endl << std::endl;
 
@@ -175,9 +176,9 @@ int main() {
 //       FILM CLASS TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-   if (true) {
+   if (false) {
 
-      std::cerr << "--- (2) BEGIN FILM CLASS TESTS ---" << std::endl << std::endl;
+      std::cout << "--- (2.0) BEGIN FILM CLASS TESTS ---" << std::endl << std::endl;
 
       std::cout << "--- (2.1) Creating a default Film... ---" << std::endl << std::endl;
       // default constructor
@@ -192,43 +193,139 @@ int main() {
       filmA.setDirector("Antonio Testing");
       filmA.setActor("Bob Benson");
 
-      std::cerr << "Title:       " << filmA.getTitle() << std::endl;
-      std::cerr << "Stock:       " << filmA.getStock() << std::endl;
-      std::cerr << "ReleaseYear: " << filmA.getReleaseYear() << std::endl;
-      std::cerr << "Genre:       " << filmA.getGenre() << std::endl;
-      std::cerr << "Director:    " << filmA.getDirector() << std::endl;
+      std::cout << "Title:       " << filmA.getTitle() << std::endl;
+      std::cout << "Stock:       " << filmA.getStock() << std::endl;
+      std::cout << "ReleaseYear: " << filmA.getReleaseYear() << std::endl;
+      std::cout << "Genre:       " << filmA.getGenre() << std::endl;
+      std::cout << "Director:    " << filmA.getDirector() << std::endl;
       std::cout << std::endl;
 
       std::cout << "--- (2.3) Creating a Film from string ('D, 10, Jonathan Demme, Silence of the Lambs, 1991')... ---" << std::endl << std::endl;
       // string constructor
       Film filmB("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
 
-      std::cerr << "Title:       " << filmB.getTitle() << std::endl;
-      std::cerr << "Stock:       " << filmB.getStock() << std::endl;
-      std::cerr << "ReleaseYear: " << filmB.getReleaseYear() << std::endl;
-      std::cerr << "Genre:       " << filmB.getGenre() << std::endl;
-      std::cerr << "Director:    " << filmB.getDirector() << std::endl;
+      std::cout << "Title:       " << filmB.getTitle() << std::endl;
+      std::cout << "Stock:       " << filmB.getStock() << std::endl;
+      std::cout << "ReleaseYear: " << filmB.getReleaseYear() << std::endl;
+      std::cout << "Genre:       " << filmB.getGenre() << std::endl;
+      std::cout << "Director:    " << filmB.getDirector() << std::endl;
       std::cout << std::endl;
 
-      std::cout << "--- (2.4) Test of Film comparison operators... ---" << std::endl << std::endl;
+      std::cout << "--- (2.4) Test of Film comparison operators (by title, then year) ---" << std::endl << std::endl;
       // operators
-      std::cerr << "FilmA == FilmB: " << (filmA == filmB) << std::endl;
-      std::cerr << "FilmA >= FilmB: " << (filmA > filmB) << std::endl;
-      std::cerr << "FilmA <= FilmB: " << (filmA < filmB) << std::endl;
+      std::cout << "(" << filmA.getTitle() << ":" << filmA.getReleaseYear() << ") vs (" << filmB.getTitle() << ":" << filmB.getReleaseYear() << ")" << std::endl;
+      std::cout << "FilmA == FilmB: " << (filmA == filmB) << " (0 expected)" << std::endl;
+      std::cout << "FilmA >  FilmB: " << (filmA >  filmB) << " (1 expected)" << std::endl;
+      std::cout << "FilmA <  FilmB: " << (filmA <  filmB) << " (0 expected)" << std::endl;
       std::cout << std::endl;
 
-      std::cout << "--- (2.5) Test of Film comparison operators... ---" << std::endl << std::endl;
+      std::cout << "--- (2.5) Test of Film comparison operators (by title, then year) ---" << std::endl << std::endl;
 
       Film filmC("D, 100, Jonathan Demme, Silence of the Lambs, 1991");
-      std::cerr << "FilmC == FilmB: " << (filmC == filmB) << std::endl;
-      std::cerr << "FilmC >= FilmB: " << (filmC > filmB) << std::endl;
-      std::cerr << "FilmC <= FilmB: " << (filmC < filmB) << std::endl;
+      std::cout << "(" << filmC.getTitle() << ":" << filmC.getReleaseYear() << ") vs (" << filmB.getTitle() << ":" << filmB.getReleaseYear() << ")" << std::endl;
+      std::cout << "FilmC == FilmB: " << (filmC == filmB) <<  " (1 expected)" << std::endl;
+      std::cout << "FilmC >  FilmB: " << (filmC >  filmB) <<  " (0 expected)" << std::endl;
+      std::cout << "FilmC <  FilmB: " << (filmC <  filmB) <<  " (0 expected)" << std::endl;
       
       std::cout << std::endl;
 
-      std::cerr << "--- END FILM CLASS TESTS ---" << std::endl << std::endl;
+      std::cout << "--- END FILM CLASS TESTS ---" << std::endl << std::endl;
 
    } // END FILM CLASS TESTS
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       CLASSIC FILM SUBCLASS TESTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+   if (true) {
+      std::cout << "--- (3.0) BEGIN CLASSIC FILM CLASS TESTS ---" << std::endl << std::endl;
+
+      std::cout << "--- (3.1) Creating a Classic Film by string ('C, 10, Michael Curtiz, Casablanca, Langrid Bergman 11 1942') ---" << std::endl << std::endl;
+      Film* cTestFilm1 = new Classic("C, 10, Michael Curtiz, Casablanca, Langrid Bergman 11 1942");
+      std::cout << "Title:        " << cTestFilm1->getTitle() << std::endl;
+      std::cout << "Stock:        " << cTestFilm1->getStock() << std::endl;
+      std::cout << "ReleaseMonth: " << cTestFilm1->getReleaseMonth() << std::endl;
+      std::cout << "ReleaseYear:  " << cTestFilm1->getReleaseYear() << std::endl;
+      std::cout << "Genre:        " << cTestFilm1->getGenre() << std::endl;
+      std::cout << "Director:     " << cTestFilm1->getDirector() << std::endl;
+      std::cout << std::endl;
+
+      std::cout << "--- (3.2) Creating a Classic Film by string ('C, 10, Michael Curtiz, Casablanca, Bonna Beed 11 1942') ---" << std::endl << std::endl;
+
+      Film* cTestFilm2 = new Classic("C, 10, Michael Curtiz, Casablanca, Bonna Beed 11 1942");
+      std::cout << "Title:        " << cTestFilm2->getTitle() << std::endl;
+      std::cout << "Stock:        " << cTestFilm2->getStock() << std::endl;
+      std::cout << "ReleaseMonth: " << cTestFilm2->getReleaseMonth() << std::endl;
+      std::cout << "ReleaseYear:  " << cTestFilm2->getReleaseYear() << std::endl;
+      std::cout << "Genre:        " << cTestFilm2->getGenre() << std::endl;
+      std::cout << "Director:     " << cTestFilm2->getDirector() << std::endl;
+      std::cout << std::endl;
+
+      std::cout << "--- (3.3) Test of Classic Film comparison operators (by year, then month, then actor) ---" << std::endl << std::endl;
+
+      std::cout << "(" << cTestFilm1->getReleaseYear() << ":" << cTestFilm1->getReleaseMonth() << ":" << cTestFilm1->getActor() <<
+              ") vs (" << cTestFilm2->getReleaseYear() << ":" << cTestFilm2->getReleaseMonth() << ":" << cTestFilm2->getActor() <<
+              ")" << std::endl;
+      std::cout << "CFilm1 == CFilm2: " << (*cTestFilm1 == *cTestFilm2) <<  " (0 expected)" << std::endl;
+      std::cout << "CFilm1 >  CFilm2: " << (*cTestFilm1 >  *cTestFilm2) <<  " (0 expected)" << std::endl;
+      std::cout << "CFilm1 <  CFilm2: " << (*cTestFilm1 <  *cTestFilm2) <<  " (1 expected)" << std::endl;
+      std::cout << std::endl;
+
+      std::cout << "--- (3.4) Creating a Classic Film by string ('C, 10, Michael Curtiz, Casablanca, Dangrid Bergman 8 1942') ---" << std::endl << std::endl;
+      Film* cTestFilm3 = new Classic("C, 10, Michael Curtiz, Casablanca, Dangrid Bergman 8 1942");
+
+      std::cout << "--- (3.5) Creating a Classic Film by string ('C, 10, Michael Curtiz, Casablanca, Bonna Beed 8 1942') ---" << std::endl << std::endl;
+      Film* cTestFilm4 = new Classic("C, 10, Michael Curtiz, Casablanca, Bonna Beed 8 1942");
+
+      std::cout << "--- (3.6) Creating a Classic Film by string ('C, 10, Michael Curtiz, Casablanca, Cangrid Bergman 11 1940') ---" << std::endl << std::endl;
+      Film* cTestFilm5 = new Classic("C, 10, Michael Curtiz, Casablanca, Cangrid Bergman 11 1940");
+
+      std::cout << "--- (3.7) Creating a Classic Film by string ('C, 10, Michael Curtiz, Casablanca, Bonna Beed 11 1940') ---" << std::endl << std::endl;
+      Film* cTestFilm6 = new Classic("C, 10, Michael Curtiz, Casablanca, Bonna Beed 11 1940");
+
+      std::cout << "--- (3.8) Test of Classic Film comparison operators (by year, then month, then actor) ---" << std::endl << std::endl;
+
+      std::cout << "CFilm6 <  CFilm5: " << (*cTestFilm6 <  *cTestFilm5) <<  " (1 expected - Year==, Month==, 'Bonna' < 'Cangrid')" << std::endl;
+      std::cout << "CFilm5 <  CFilm4: " << (*cTestFilm5 <  *cTestFilm4) <<  " (1 expected - 1940 < 1942)" << std::endl;
+      std::cout << "CFilm4 <  CFilm3: " << (*cTestFilm4 <  *cTestFilm3) <<  " (1 expected - Year==, Month==, 'Bonna' < 'Dangrid')" << std::endl;
+      std::cout << "CFilm3 <  CFilm2: " << (*cTestFilm3 <  *cTestFilm2) <<  " (1 expected - Year==, 8 < 11)" << std::endl;
+      std::cout << "CFilm2 <  CFilm1: " << (*cTestFilm2 <  *cTestFilm1) <<  " (1 expected - Year==, Month==, 'Bonna' < 'Langrid')" << std::endl;
+      std::cout << "CFilm1 <  CFilm6: " << (*cTestFilm1 <  *cTestFilm6) <<  " (0 expected - 1940 !< 1942)" << std::endl;
+      std::cout << std::endl;
+
+      delete cTestFilm1;
+      delete cTestFilm2;
+      delete cTestFilm3;
+      delete cTestFilm4;
+      delete cTestFilm5;
+      delete cTestFilm6;
+
+      std::cout << std::endl;
+
+      std::cout << "--- END CLASSIC FILM CLASS TESTS ---" << std::endl << std::endl;
+   } // END CLASSIC FILM SUBCLASS TESTS
+
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       DRAMA FILM SUBCLASS TESTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+   if (true) {
+      std::cout << "--- (4.0) BEGIN DRAMA FILM CLASS TESTS ---" << std::endl << std::endl;
+   } // END DRAMA FILM SUBCLASS TESTS
+
+
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+//
+//       COMEDY FILM SUBCLASS TESTS
+//
+//-------|---------|---------|---------|---------|---------|---------|---------|
+   if (true) {
+      std::cout << "--- (5.0) BEGIN COMEDY FILM CLASS TESTS ---" << std::endl << std::endl;
+   } // END COMEDY FILM SUBCLASS TESTS
 
 
 
