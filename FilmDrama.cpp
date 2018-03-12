@@ -43,6 +43,7 @@
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
 #include <string>
+#include <sstream>
 #include <iostream>
 #include "FilmDrama.h"
 
@@ -157,40 +158,89 @@ Drama::Drama() {
 // (+) --------------------------------|
 // #Drama(string)
 //-------------------------------------|
-// Desc:    Overrides the Film(string) constructor, adding logic to parse actors
+// Desc:    Overrides the Film(string) constructor, adding logic to parse director and title
 // Params:  NULL
 // PreCons: NULL
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
 Drama::Drama(std::string data) {
-
+   // Sample input
+   // "D, 10, Clint Eastwood, Unforgiven, 1992"
    // split the regular film data items by commans and insert those to 
    // the appropriate data members
-   std::string delim = ", ";
-   std::string items[4];
 
-   for (int i = 0; i < 4; i++) {
-      items[i] = data.substr(0, data.find(delim));
-      data.erase(0, data.find(delim) + delim.length());
+   std::stringstream stream(data);
+   stream>>std::noskipws;
+
+   char temp;
+
+   // Capture the first letter
+   stream >> this->genre;
+   // D, 10, Clint Eastwood, Unforgiven, 1992
+   // ^
+
+   // Remove the ", "
+   stream >> temp;
+   stream >> temp;
+   // D, 10, Clint Eastwood, Unforgiven, 1992
+   //   ^
+
+   // Capture the stock amount
+   stream >> this->stock;
+   // D, 10, Clint Eastwood, Unforgiven, 1992
+   //   ^  -
+
+   // Remove the ", "
+   stream >> temp;
+   stream >> temp;
+   // D, 10, Clint Eastwood, Unforgiven, 1992
+   //       ^
+
+   // Capture the first letter of the director
+   stream >> temp;
+   // D, 10, Clint Eastwood, Unforgiven, 1992
+   //        ^
+
+   // Capture the director
+   std::string theDirector;
+   while (temp != ',') {
+     theDirector += temp;
+     stream >> temp;
    }
+   // Assign the director
+   this->setDirector(theDirector);
+   // D, 10, Clint Eastwood, Unforgiven, 1992
+   //                      ^
 
-   genre = items[0][0]; // char
-   stock = std::stoi(items[1]); // int
-   director = items[2];
-   title = items[3];
+   // Remove the ", "
+   stream >> temp;
+   stream >> temp;
 
-   // split the last two items by spaces to incorprate the major actor and date
-   delim = " ";
+   // D, 10, Clint Eastwood, Unforgiven, 1992
+   //                        ^
 
-   for (int i = 0; i < 4; i++) {
-      items[i] = data.substr(0, data.find(delim));
-      data.erase(0, data.find(delim) + delim.length());
+   std::string theTitle;
+   while (temp != ',') {
+      theTitle += temp;
+      stream >> temp;
    }
+   // Assign the title
+   this->setTitle(theTitle);
+   // D, 10, Clint Eastwood, Unforgiven, 1992
+   //                                  ^
 
-   actor = items[0] + " " + items[1]; // strings: firstName lastName
-   releaseMonth = std::stoi(items[2]); // int
-   releaseYear = std::stoi(items[3]); // int
+
+   // Remove the ", "
+   stream >> temp;
+   // D, 10, Clint Eastwood, Unforgiven, 1992
+   //                                   ^
+
+   int theYear;
+   stream >> theYear;
+
+   //Capture the releaseYear
+   this->setReleaseYear(theYear);
 }
 
 // (+) --------------------------------|
