@@ -66,10 +66,7 @@
 // RetVal:  True or False
 // MetCall: NULL
 bool Drama::equals(Film& rhs) {
-   std::cerr << "(Drama::equals() called)" << std::endl;
-
-   if (releaseMonth == rhs.getReleaseYear() && releaseYear == rhs.getReleaseMonth()
-       && actor == rhs.getActor()) {
+   if (this->getDirector() == rhs.getDirector() && this->getTitle() == rhs.getTitle()) {
       return true;
    }
    else {
@@ -88,21 +85,22 @@ bool Drama::equals(Film& rhs) {
 // RetVal:  True or False
 // MetCall: NULL
 bool Drama::isLessThan(Film& rhs) {
-
-   if (releaseYear < rhs.getReleaseYear()) {
-      return true;
+   // If the director is lesser...
+   if (this->getDirector() < rhs.getDirector()) {
+      return(true);
    }
-   // if the year is the same, check the month
-   else if (releaseYear == rhs.getReleaseYear() && releaseMonth < rhs.getReleaseMonth()) {
-      return true;
+   // If the director matches
+   else if (this->getDirector() == rhs.getDirector()) {
+      // Then compare titles
+      if (this->getTitle() < rhs.getTitle()) {
+         return(true);
+      }
+      // Greater than or equal to case
+      return(false);
    }
-   // if the year and month are the same, check the major actor
-   else if (releaseYear == rhs.getReleaseYear() && releaseMonth == rhs.getReleaseMonth()
-            && actor < rhs.getActor()) {
-      return true;
-   }
+   // Director must by greater than
    else {
-      return false;
+      return(false);
    }
 }
 
@@ -117,22 +115,9 @@ bool Drama::isLessThan(Film& rhs) {
 // RetVal:  True or False
 // MetCall: NULL
 bool Drama::isGreaterThan(Film& rhs) {
+   std::cout << "(Drama::isGreaterThan() called)" << std::endl;
 
-   if (releaseYear > rhs.getReleaseYear()) {
-      return true;
-   }
-   // if the year is the same, check the month
-   else if (releaseYear == rhs.getReleaseYear() && releaseMonth > rhs.getReleaseMonth()) {
-      return true;
-   }
-   // if the year and month are the same, check the major actor
-   else if (releaseYear == rhs.getReleaseYear() && releaseMonth == rhs.getReleaseMonth()
-            && actor > rhs.getActor()) {
-      return true;
-   }
-   else {
-      return false;
-   }
+   return(!isLessThan(rhs));
 }
 
 
