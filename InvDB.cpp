@@ -470,8 +470,21 @@ std::string const InvDB::toString() { // TODO: @MG - Verify inclusion of const?
 // RetVal:  NULL
 // MetCall: NULL
 std::string InvDB::getCTitleByTuple(int month, int year, std::string actor) {
+   // TODO: Implement
+   std::string retString = "";
 
-   return("<InvDB::getCTitleByTuple() placeholder>");
+   // Go to vector<Classics>
+
+   // Search for the year
+
+   // Search for the month
+
+   // Search for the actor
+
+   // At the resultant film, assign the title to the returnString
+   retString = "<InvDB::getCTitleByTuple() placeholder>";
+
+   return(retString);
 } // Closing getCTitleByTuple()
 
 // (+) --------------------------------|
