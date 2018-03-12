@@ -348,7 +348,8 @@ int Cust::getID() {
 // RetVal:  NULL
 // MetCall: NULL
 std::string Cust::getHistory() {
-   return (this->history);
+   std::string retString = this->historyHeader + this->history;
+   return(retString);
 } // Closing getHistory()
 
 // (+) --------------------------------|
