@@ -473,7 +473,7 @@ std::string InvDB::getCTitleByTuple(int month, int year, std::string actor) {
    // TODO: Implement
    std::string retString = "";
 
-   // Go to vector<Classics>
+   // Go to vector<Classic> classics
 
    // Search for the year
 
@@ -497,7 +497,17 @@ std::string InvDB::getCTitleByTuple(int month, int year, std::string actor) {
 // RetVal:  NULL
 // MetCall: NULL
 int InvDB::getDYearByTuple(std::string director, std::string title) {
-   int retYear = 2002;
+   // TODO: Implement
+   int retYear = 0;
+
+   // Go to vector<Drama> dramas
+
+   // Search for the director
+
+   // Search for the title
+
+   // At the resultant film, assign the year to the returnInt
+   retYear = 2002;
 
    return(retYear);
 } // Closing getDYearByTuple()
