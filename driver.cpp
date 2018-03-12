@@ -378,7 +378,7 @@ int main() {
       std::cout << "--- (4.5) Creating a Drama Film by string ('D, 10, Clint Eastwood, Unforgiven, 1992') ---" << std::endl << std::endl;
       Film* dTestFilm4 = new Drama("D, 10, Clint Eastwood, Unforgiven, 1992");
 
-      std::cout << "--- (4.8) Test of Drama Film comparison operators (by director, then title) ---" << std::endl << std::endl;
+      std::cout << "--- (4.6) Test of Drama Film comparison operators (by director, then title) ---" << std::endl << std::endl;
 
       std::cout << "DFilm4 >  DFilm3: " << (*dTestFilm4 >  *dTestFilm3) <<  " (1 expected - 'Clint' == 'Clint', 'Unforgiven' > 'Funforgiven')" << std::endl;
       std::cout << "DFilm3 >  DFilm2: " << (*dTestFilm3 >  *dTestFilm2) <<  " (1 expected - 'Clint' > 'Blint')" << std::endl;
@@ -391,7 +391,7 @@ int main() {
       delete dTestFilm3;
       delete dTestFilm4;
 
-      std::cout << "--- (3.9) Test of Drama Film factory construction ---" << std::endl << std::endl;
+      std::cout << "--- (4.7) Test of Drama Film factory construction ---" << std::endl << std::endl;
 
       // TODO: High chance of memory leak in this area of code
       Film* dTestFilm7 = nullptr;
@@ -405,7 +405,7 @@ int main() {
       std::cout << "Actor:        " << dTestFilm7->getActor() << std::endl;
       std::cout << std::endl;
 
-      std::cout << "--- (3.10) Test of factory-built method calls ---" << std::endl << std::endl;
+      std::cout << "--- (4.8) Test of factory-built method calls ---" << std::endl << std::endl;
 
       std::cout << "DFilm7 == DFilm7: " << (*dTestFilm7 ==  *dTestFilm7) <<  " (1 expected - should utilize Drama::operator==() )" << std::endl;
 
@@ -426,7 +426,85 @@ int main() {
 //-------|---------|---------|---------|---------|---------|---------|---------|
    // Note: Sort by Title, then Year
    if (true) {
+
       std::cout << "--- (5.0) BEGIN COMEDY FILM CLASS TESTS ---" << std::endl << std::endl;
+
+      std::cout << "--- (5.1) Creating a Comedy Film by string ('F, 10, Nora Ephron, You've Got Mail, 1998') ---" << std::endl << std::endl;
+      Film* fTestFilm1 = new Comedy("F, 10, Nora Ephron, You've Got Mail, 1998");
+      std::cout << "Title:        " << fTestFilm1->getTitle() << std::endl;
+      std::cout << "Stock:        " << fTestFilm1->getStock() << std::endl;
+      std::cout << "ReleaseMonth: " << fTestFilm1->getReleaseMonth() << std::endl;
+      std::cout << "ReleaseYear:  " << fTestFilm1->getReleaseYear() << std::endl;
+      std::cout << "Genre:        " << fTestFilm1->getGenre() << std::endl;
+      std::cout << "Director:     " << fTestFilm1->getDirector() << std::endl;
+      std::cout << "Actor:        " << fTestFilm1->getActor() << std::endl;
+      std::cout << std::endl;
+
+      std::cout << "--- (5.2) Creating a Comedy Film by string ('F, 10, Nora Ephron, You've Got Mail, 2000') ---" << std::endl << std::endl;
+
+      Film* fTestFilm2 = new Comedy("F, 10, Nora Ephron, You've Got Mail, 2000");
+      std::cout << "Title:        " << fTestFilm2->getTitle() << std::endl;
+      std::cout << "Stock:        " << fTestFilm2->getStock() << std::endl;
+      std::cout << "ReleaseMonth: " << fTestFilm2->getReleaseMonth() << std::endl;
+      std::cout << "ReleaseYear:  " << fTestFilm2->getReleaseYear() << std::endl;
+      std::cout << "Genre:        " << fTestFilm2->getGenre() << std::endl;
+      std::cout << "Director:     " << fTestFilm2->getDirector() << std::endl;
+      std::cout << "Actor:        " << fTestFilm2->getActor() << std::endl;
+      std::cout << std::endl;
+
+      std::cout << "--- (5.3) Test of Comedy Film comparison operators (by Title, then Year) ---" << std::endl << std::endl;
+
+      std::cout << "(" << fTestFilm1->getDirector() << ":" << fTestFilm1->getTitle() <<
+              ") vs (" << fTestFilm2->getDirector() << ":" << fTestFilm2->getTitle() <<
+              ")" << std::endl;
+      std::cout << "FFilm1 == FFilm2: " << (*fTestFilm1 == *fTestFilm2) <<  " (0 expected)" << std::endl;
+      std::cout << "FFilm1 >  FFilm2: " << (*fTestFilm1 >  *fTestFilm2) <<  " (0 expected)" << std::endl;
+      std::cout << "FFilm1 <  FFilm2: " << (*fTestFilm1 <  *fTestFilm2) <<  " (1 expected)" << std::endl;
+      std::cout << std::endl;
+
+      std::cout << "--- (5.4) Creating a Comedy Film by string ('F, 10, Quora Ephron, Zooz Got Mail, 1998') ---" << std::endl << std::endl;
+      Film* fTestFilm3 = new Comedy("F, 10, Quora Ephron, Zooz Got Mail, 1998");
+
+      std::cout << "--- (5.5) Creating a Comedy Film by string ('F, 10, Quora Ephron, Zooz Got Mail, 2000') ---" << std::endl << std::endl;
+      Film* fTestFilm4 = new Comedy("F, 10, Quora Ephron, Zooz Got Mail, 2000");
+
+      std::cout << "--- (5.6) Test of Comedy Film comparison operators (by title, then year) ---" << std::endl << std::endl;
+
+      std::cout << "FFilm4 >  FFilm3: " << (*fTestFilm4 >  *fTestFilm3) <<  " (1 expected - 'Zooz' == 'Zooz', 2000 > 1998)" << std::endl;
+      std::cout << "FFilm3 >  FFilm2: " << (*fTestFilm3 >  *fTestFilm2) <<  " (1 expected - 'Zooz' > 'You've')" << std::endl;
+      std::cout << "FFilm2 >  FFilm1: " << (*fTestFilm2 >  *fTestFilm1) <<  " (1 expected - 'You've' == 'You've', 2000 > 1998)" << std::endl;
+      std::cout << "FFilm1 >  FFilm4: " << (*fTestFilm1 >  *fTestFilm4) <<  " (0 expected - 'You've' !> 'Zooz')" << std::endl;
+      std::cout << std::endl;
+
+      delete fTestFilm1;
+      delete fTestFilm2;
+      delete fTestFilm3;
+      delete fTestFilm4;
+
+      std::cout << "--- (5.7) Test of Comedy Film factory construction ---" << std::endl << std::endl;
+
+      // TODO: High chance of memory leak in this area of code
+      Film* fTestFilm7 = nullptr;
+      fTestFilm7 = fTestFilm7->makeFilm("F, 10, Nora Ephron, You've Got Mail, 1998");
+      std::cout << "Title:        " << fTestFilm7->getTitle() << std::endl;
+      std::cout << "Stock:        " << fTestFilm7->getStock() << std::endl;
+      std::cout << "ReleaseMonth: " << fTestFilm7->getReleaseMonth() << std::endl;
+      std::cout << "ReleaseYear:  " << fTestFilm7->getReleaseYear() << std::endl;
+      std::cout << "Genre:        " << fTestFilm7->getGenre() << std::endl;
+      std::cout << "Director:     " << fTestFilm7->getDirector() << std::endl;
+      std::cout << "Actor:        " << fTestFilm7->getActor() << std::endl;
+      std::cout << std::endl;
+
+      std::cout << "--- (5.8) Test of factory-built method calls ---" << std::endl << std::endl;
+
+      std::cout << "FFilm7 == FFilm7: " << (*fTestFilm7 ==  *fTestFilm7) <<  " (1 expected - should utilize Comedy::operator==() )" << std::endl;
+
+      delete fTestFilm7;
+
+      std::cout << std::endl;
+
+
+      std::cout << "--- END COMEDY FILM CLASS TESTS ---" << std::endl << std::endl;
    } // END COMEDY FILM SUBCLASS TESTS
 
 
