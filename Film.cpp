@@ -52,6 +52,10 @@
 // Field and method declarations for the Film class
 #include "Film.h"
 
+// Necessary for factory method
+#include "FilmClassic.h"
+#include "FilmDrama.h"
+#include "FilmComedy.h"
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
@@ -200,25 +204,30 @@ bool Film::isGreaterThan(Film& rhs) {
 }
 
 // (+) --------------------------------|
-// #isGreaterThan(Film&)
+// #makeFilm(string)
 //-------------------------------------|
-// Desc:    Tests the film against another based on it's title & year
+// Desc:    Factory method: Returns a film subclass depending on input
 // Params:  NULL
-// PreCons: Title and release date must be populated
+// PreCons: NULL
 // PosCons: NULL
-// RetVal:  True or False
+// RetVal:  Film - A Film Subclass
 // MetCall: NULL
-bool Film::isGreaterThan(Film& rhs) {
-
-   if (title > rhs.title) {
-         return true;
-      }
-      else if (title == rhs.title && releaseYear > rhs.releaseYear) {
-         return true;
-      }
-      else {
-         return false;
-      }
+Film* Film::makeFilm(std::string command) {
+   Film* retFilm;
+   // Sample input: 'F, 10, Nora Ephron, You've Got Mail, 1998'
+   if (command[0] == 'C') {
+      retFilm = new Classic(command);
+      return(retFilm);
+   }
+   if (command[0] == 'D') {
+      retFilm = new Drama(command);
+      return(retFilm);
+   }
+   if (command[0] == 'F') {
+      retFilm = new Comedy(command);
+      return(retFilm);
+   }
+   return(nullptr);
 }
 
 
@@ -230,162 +239,6 @@ bool Film::isGreaterThan(Film& rhs) {
 //-------|---------|---------|---------|---------|---------|---------|---------|
 // TODO: Add virtual to all methods we expect to be overriden by child classes
 // TODO: Check if virtual should be added to all methods irregardless
-
-// (+) --------------------------------|
-// #getTitle()
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-std::string Film::getTitle() {
-   return title;
-} // Closing getTitle()
-
-// (+) --------------------------------|
-// #setTitle()
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-void Film::setTitle(std::string data) {
-   title = data;
-} // Closing setTitle()
-
-// (+) --------------------------------|
-// #getStock()
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-int Film::getStock() {
-   return stock;
-} // Closing getStock()
-
-// (+) --------------------------------|
-// #setStock()
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-void Film::setStock(int data) {
-   stock = data;
-} // Closing setStock()
-
-// (+) --------------------------------|
-// #getreleaseYear()
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-int Film::getReleaseYear() {
-   return releaseYear;
-} // Closing getreleaseYear()
-
-// (+) --------------------------------|
-// #setreleaseYear()
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-void Film::setReleaseYear(int data) {
-   releaseYear = data;
-} // Closing setreleaseYear()
-
-// (+) --------------------------------|
-// #getreleaseYear()
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-int Film::getReleaseMonth() {
-   return releaseMonth;
-} // Closing getreleaseYear()
-
-// (+) --------------------------------|
-// #setreleaseYear()
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-void Film::setReleaseMonth(int data) {
-   releaseMonth = data;
-} // Closing setreleaseYear()
-
-// (+) --------------------------------|
-// #getGenre()
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-char Film::getGenre() {
-   return genre;
-} // Closing getGenre()
-
-// (+) --------------------------------|
-// #setGenre()
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-void Film::setGenre(char data) {
-   genre = data;
-} // Closing setGenre()
-
-// (+) --------------------------------|
-// #getDirector()
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-std::string Film::getDirector() {
-   return director;
-} // Closing getDirector()
-
-// (+) --------------------------------|
-// #setDirector()
-//-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-void Film::setDirector(std::string data) {
-   director = data;
-} // Closing setDirector()
 
 // (+) --------------------------------|
 // #getActor()
@@ -401,6 +254,86 @@ std::string Film::getActor() {
 } // Closing getActor()
 
 // (+) --------------------------------|
+// #getDirector()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+std::string Film::getDirector() {
+   return director;
+} // Closing getDirector()
+
+// (+) --------------------------------|
+// #getGenre()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+char Film::getGenre() {
+   return genre;
+} // Closing getGenre()
+
+// (+) --------------------------------|
+// #getreleaseMonth()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+int Film::getReleaseMonth() {
+   return releaseMonth;
+} // Closing getreleaseMonth()
+
+// (+) --------------------------------|
+// #getreleaseYear()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+int Film::getReleaseYear() {
+   return releaseYear;
+} // Closing getreleaseYear()
+
+// (+) --------------------------------|
+// #getStock()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+int Film::getStock() {
+   return stock;
+} // Closing getStock()
+
+// (+) --------------------------------|
+// #getTitle()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+std::string Film::getTitle() {
+   return title;
+} // Closing getTitle()
+
+
+
+// (+) --------------------------------|
 // #setActor()
 //-------------------------------------|
 // Desc:    NULL
@@ -413,6 +346,83 @@ void Film::setActor(std::string data) {
    actor = data;
 } // Closing setActor()
 
+// (+) --------------------------------|
+// #setDirector()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+void Film::setDirector(std::string data) {
+   director = data;
+} // Closing setDirector()
+
+// (+) --------------------------------|
+// #setGenre()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+void Film::setGenre(char data) {
+   genre = data;
+} // Closing setGenre()
+
+// (+) --------------------------------|
+// #setreleaseMonth()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+void Film::setReleaseMonth(int data) {
+   releaseMonth = data;
+} // Closing setreleaseMonth()
+
+// (+) --------------------------------|
+// #setreleaseYear()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+void Film::setReleaseYear(int data) {
+   releaseYear = data;
+} // Closing setreleaseYear()
+
+// (+) --------------------------------|
+// #setStock()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+void Film::setStock(int data) {
+   stock = data;
+} // Closing setStock()
+
+// (+) --------------------------------|
+// #setTitle()
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+void Film::setTitle(std::string data) {
+   title = data;
+} // Closing setTitle()
 
 
 
