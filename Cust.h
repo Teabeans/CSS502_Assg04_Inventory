@@ -101,6 +101,13 @@ private:
 // Invars: May be an empty string
    std::string history;
 
+   //-----------------|
+// #history
+//-----------------|
+// Desc:   The customer's history
+// Invars: May be an empty string
+   std::string historyHeader;
+
 //-----------------|
 // #numRentals
 //-----------------|
