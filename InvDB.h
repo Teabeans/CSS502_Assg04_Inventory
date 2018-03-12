@@ -122,7 +122,7 @@ public:
    //-------------------------------------|
    // Desc:    Updates the stock value of a film based on the arg transaction
    // Invars:  NULL
-   void adjustStock(Trans&);
+   void adjustStock(const Trans&);
 
    // (+) --------------------------------|
    // #contains(Film*)

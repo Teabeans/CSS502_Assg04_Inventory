@@ -204,12 +204,13 @@ bool InvDB::addFilm(std::string filmData) {
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
-void InvDB::adjustStock(Trans& trans) { // TODO: Add const to Trans& argument?
+void InvDB::adjustStock(const Trans& trans) { // TODO: Add const to Trans& argument?
 
-   // std::cerr << "Trans Data: " << trans.getTitle() << " : " << trans.getReleaseYear() << std::endl;
 
-   // if (trans.getGenre() == 'F') {
-   //    Comedy film;
+   if (trans.getGenre() == 'F') {
+
+      // confirm that there is a film for this transaction
+      if (this->isLegal())
    //    film.setTitle(trans.getTitle());
 
    //    film.setReleaseYear(std::stoi(trans.getRelease()));
@@ -232,7 +233,7 @@ void InvDB::adjustStock(Trans& trans) { // TODO: Add const to Trans& argument?
    // else if (trans.getGenre() == 'C') {
    //    Classic filmAA("C, 0, , , ");
       
-   // }
+   }
 
 }
 
