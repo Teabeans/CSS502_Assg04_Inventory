@@ -181,7 +181,7 @@ void Trans::debug() {
    std::cout << "Director:     " << this->director << std::endl;
    std::cout << "Actor:        " << this->actor << std::endl;
    std::cout << "RELEASEMONTH: " << this->releaseMonth << std::endl;
-   std::cout << "RELEASERYEAR:  " << this->releaseYear << std::endl;
+   std::cout << "RELEASERYEAR: " << this->releaseYear << std::endl;
    std::cout << "CustomerID:   " << this->customerID << std::endl;
    std::cout << std::endl;
 }
