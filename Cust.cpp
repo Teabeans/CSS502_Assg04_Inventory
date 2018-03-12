@@ -437,7 +437,7 @@ Cust::Cust(std::string nameF, std::string nameL, int IDnum) {
    this->lastName  = nameL;
    this->custID    = IDnum;
    this->history   = "Transaction history for ";
-   this->history += this->firstName + " " + this->lastName + "(ID ";
+   this->history += this->firstName + " " + this->lastName + " (ID ";
    // Convert the ID integer to a 4-wide formatted string
    std::ostringstream tempStream;
    tempStream << std::setw(4) << std::setfill('0') << this->custID;
