@@ -22,7 +22,7 @@
 //-----------------------------------------------------------------------------|
 //
 // This is the declaration file for the Trans class, representing a
-// transaction of a Film object
+// transaction (attempted borrow or return) of a Film object
 //
 
 //-----------------------------------------------------------------------------|
@@ -101,8 +101,8 @@ private:
 //-----------------|
 // Desc:   A string representation of the release date
 // Invars: Initializes to junk values
-   int releaseMonth = 0;
-   int releaseYear = 0;
+   int releaseMonth;
+   int releaseYear;
 
 //-----------------|
 // #customerID
@@ -197,7 +197,7 @@ public:
 // #getRelease()
 // #setCustID()
 //-----------------|
-// Desc:   Returns transaction data fields
+// Desc:   Sets transaction data fields
 // Invars: None
    void setType(char transType);
    void setTypeAsString(std::string transType);
@@ -221,13 +221,6 @@ public:
 // Full comments in Cust.cpp - omitted here for clarity
 
 //-----------------|
-// #factory(string);
-//-----------------|
-// Desc:   Factory constructor
-// Invars: GIGO - No error checking is performed by factory()
-   Trans* factory(std::string);
-
-//-----------------|
 // #Trans()
 //-----------------|
 // Desc:   Default Transaction constructor. Should not be used.
@@ -248,5 +241,9 @@ public:
 // Invars: None
    ~Trans();
 };
+
+//-------------------------------------|
+// End Student Code
+//-------------------------------------|
 
 // End of file - Trans.h
