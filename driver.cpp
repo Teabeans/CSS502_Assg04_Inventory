@@ -675,49 +675,23 @@ int main() {
 
       std::cout << "--- (8.0) START BULK CUSTOMERDB INPUT TESTS ---" << std::endl << std::endl;
 
-      // Test the customerDB bulk inputs
       std::cout << "--- (8.1) Testing customerDB bulk inputs... ---" << std::endl << std::endl;
 
-      // Test the customerDB bulk inputs
       std::cout << "--- (8.2) Create an empty CustDB object ---" << std::endl << std::endl;
 
       CustDB custDB;
 
-      // Capture command file to filestream
       std::cout << "--- (8.3) Capture bulk input to fileStream ---" << std::endl << std::endl;
 
       std::ifstream customerFile("data4customers.txt");
 
-      // Have the Inventory Controller (main()) parse the file and perform insertion actions
       std::cout << "--- (8.4) Sending bulk commands to CustDB object... ---" << std::endl << std::endl;
 
-      std::string command;
-      while (!customerFile.eof()) {
+      bulkReadCust(customerFile, custDB);
 
-         std::cout << "--- (8.5) Parse ---" << std::endl << std::endl;
-
-         std::getline(customerFile, command);
-         std::cout << "(" << command << ")" << std::endl;
-
-         std::cout << "--- (8.6) Test of isLegal() logic ---" << std::endl << std::endl;
-
-         bool isLegal = isLegalCustCmd(command, custDB);
-
-         std::cout << "The command isLegal(): " << isLegal << std::endl;
-
-         if (isLegal) {
-
-            // Make a new customer
-            Cust* newCust = new Cust(command);
-
-            // And send it to the database
-            custDB.insertCustomer(newCust);
-         }
-
-      }
-
-      // Check if the commands were SUPER EFFECTIVE!
       std::cout << "--- (8.7) Check state of CustDB after bulk input: ---" << std::endl << std::endl;
+
+      std::cout << custDB.toString();
 
       std::cout << "--- END BULK CUSTOMERDB INPUT TESTS ---" << std::endl << std::endl;
 
