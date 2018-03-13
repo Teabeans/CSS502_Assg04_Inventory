@@ -211,17 +211,17 @@ bool InvDB::adjustStock(const Trans& trans) {
    bool anyErrors = false;
 
    // Retrieve film
-   // search the table for the film being added to see if it's already present
+   // Search the table for the film being added to see if it's already present
 
-   // if this film is a comedy
+   // If this film is a comedy
    if (trans.getGenre() == 'F') {
 
-      // look through the comedies vector for a Comedy that matches the transaction
+      // Look through the comedies vector for a Comedy that matches the transaction
       for (int i = 0; i < comedies.size(); i++) {
          if (comedies.at(i).getTitle() == trans.getTitle()
              && comedies.at(i).getReleaseYear() == trans.getReleaseYear()) {
 
-            // once it's found, adjust the film's stock value
+            // Once it's found, adjust the film's stock value
             if (trans.getType() == 'B') {
                if (comedies.at(i).getStock() > 0) {
                   comedies.at(i).setStock(comedies.at(i).getStock() - 1);
@@ -238,15 +238,15 @@ bool InvDB::adjustStock(const Trans& trans) {
          }
       }
    }
-   // if this film is a drama
+   // If this film is a drama
    else if (trans.getGenre() == 'D') {
 
-      // look through the dramas vector for a Drama that matches the transaction
+      // Look through the dramas vector for a Drama that matches the transaction
       for (int i = 0; i < dramas.size(); i++) {
          if (dramas.at(i).getDirector() == trans.getDirector()
              && dramas.at(i).getTitle() == trans.getTitle()) {
 
-            // once it's found, adjust the film's stock value
+            // Once it's found, adjust the film's stock value
             if (trans.getType() == 'B') {
                if (dramas.at(i).getStock() > 0) {
                   dramas.at(i).setStock(dramas.at(i).getStock() - 1);
@@ -263,25 +263,25 @@ bool InvDB::adjustStock(const Trans& trans) {
          }
       }
    }
-   // if this film is a classic
+   // If this film is a classic
    else if (trans.getGenre() == 'C') {
       int year;
       std::string title;
 
-      // look through the classics vector for a Classic that matches the transaction
+      // Look through the classics vector for a Classic that matches the transaction
       for (int i = 0; i < classics.size(); i++) {
          if (classics.at(i).getReleaseYear() == trans.getReleaseYear()
              && classics.at(i).getReleaseMonth() == trans.getReleaseMonth()
              && classics.at(i).getActor() == trans.getActor()) {
 
-            // once it's found, adjust the film's stock value
+            // Once it's found, adjust the film's stock value
             if (trans.getType() == 'B') {
                if (classics.at(i).getStock() > 0) {
                   classics.at(i).setStock(classics.at(i).getStock() - 1);
                }
                else {
                   noStock = true;
-                  // save the year and title for looking at alternate classics
+                  // Save the year and title for looking at alternate classics
                   year = classics.at(i).getReleaseYear();
                   title = classics.at(i).getTitle();
                }
@@ -293,25 +293,28 @@ bool InvDB::adjustStock(const Trans& trans) {
             break;
          }
       }
-      // special condition for sharing stock between classics with the same title but different actors
+      // Special condition for sharing stock between classics with the same title but different actors
       if (noStock == true) {
          for (int i = 0; i < classics.size(); i++) {
+
+            // if classic matches title and year, and has some available stock
             if (classics.at(i).getTitle() == title
                 && classics.at(i).getReleaseYear() == year
                 && classics.at(i).getStock() > 0) {
 
-               // once it's found, adjust the film's stock value
+               // adjust the film's stock value
                classics.at(i).setStock(classics.at(i).getStock() - 1);
                noStock = false;
+               break;
             }
-            break;
          }
       }
    }
 
+   // Report any errors
    if (foundFilm == false) {
       trans.debug();
-      std::cout << "Invalid transaction, film does not exist in database" << std::endl;
+      std::cout << "Invalid " << trans.getType() << ", film does not exist in database" << std::endl;
       anyErrors = true;
    }
    if (noStock == true) {
@@ -319,7 +322,8 @@ bool InvDB::adjustStock(const Trans& trans) {
       std::cout << "No stock available for this film" << std::endl;
       anyErrors = true;
    }
-   // if no errors, return success
+   
+   // If no errors, return success
    return(!anyErrors);
 }
 

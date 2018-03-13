@@ -593,7 +593,12 @@ Trans::Trans(std::string command) {
       stream >> std::skipws;
       stream >> this->releaseMonth;
       stream >> this->releaseYear;
-      stream >> this->actor;
+      std::string fname;
+      std::string lname;
+
+      stream >> fname; // Gets first name
+      stream >> lname; // Gets last name
+      this->actor = fname + " " + lname;
    }
 
    // Step 6.D: Parse film info (drama)

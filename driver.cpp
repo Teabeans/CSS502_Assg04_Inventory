@@ -596,7 +596,7 @@ int main() {
 //       INV DATABASE TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-   if (true) {
+   if (false) {
 
       std::cout << "--- (7.0) START INVENTORY DATABASE TESTS ---" << std::endl << std::endl;
 
@@ -617,7 +617,7 @@ int main() {
       testInvDB.addFilm("F, 10, Nora Ephron, Sleepless in Seattle, 1993");
       testInvDB.addFilm("D, 10, Barry Levinson, Good Morning Vietnam, 1997");
       testInvDB.addFilm("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
-      testInvDB.addFilm("D, 10, Jonathan Demme, Something Different, 1991");
+      testInvDB.addFilm("C, 10, Jonathan Demme, Something Different, Bill Frank 2 1991");
       testInvDB.addFilm("C, 10, Victor Fleming, The Wizard of Oz, Judy Garland 7 1939");
    
       // Test Display method
@@ -652,7 +652,7 @@ int main() {
       std::cout << std::endl;
 
       // Borrow past stock value
-      std::cout << "--- Borrow past inventory: Dramas" << std:: endl;
+      std::cout << "--- Borrow past inventory limit: Dramas" << std:: endl;
       Trans BTestD = Trans("B 1000 D D Barry Levinson, Good Morning Vietnam,");
       // borrow 9 copies of this movie
       testInvDB.adjustStock(BTestD);
@@ -663,14 +663,15 @@ int main() {
       testInvDB.adjustStock(BTestD);
       testInvDB.adjustStock(BTestD);
       testInvDB.adjustStock(BTestD);
+      testInvDB.adjustStock(BTestD);
 
-      std::cout << "--- DB after 9th borrow (stock should be 0) ---" << std::endl;
+      std::cout << "--- DB after 10th borrow (stock should be 0) ---" << std::endl;
       testInvDB.adjustStock(BTestD);
 
       testInvDB.display();
       std::cout << std::endl;
 
-      std::cout << "--- DB after 10th borrow --- (should throw stock error)" << std::endl;
+      std::cout << "--- DB after 11th borrow --- (should throw stock error)" << std::endl;
       testInvDB.adjustStock(BTestD);
 
       testInvDB.display();
@@ -683,12 +684,7 @@ int main() {
       testInvDB.display();
       std::cout << std::endl;
 
-      // TODO
-      // test transactions with classics
-      // borrow past inventory with one classic and take inventory from another
-      // return a classic
-      // Borrow past stock value
-      std::cout << "--- Borrow past inventory: Classics" << std:: endl;
+      std::cout << "--- Borrow past inventory limit: Classics" << std:: endl;
       Trans BTestC = Trans("B 1000 D C 7 1939 Bob Barker");
       // borrow 9 copies of this movie
       testInvDB.adjustStock(BTestC);
@@ -699,21 +695,22 @@ int main() {
       testInvDB.adjustStock(BTestC);
       testInvDB.adjustStock(BTestC);
       testInvDB.adjustStock(BTestC);
+      testInvDB.adjustStock(BTestC);
 
-      std::cout << "--- DB after 9th borrow (stock should be 0) ---" << std::endl;
+      std::cout << "--- DB after 10th borrow (stock should be 0) ---" << std::endl;
       testInvDB.adjustStock(BTestC);
 
       testInvDB.display();
       std::cout << std::endl;
 
-      std::cout << "--- DB after 10th borrow --- (should borrow from Judy Garland 7 1939)" << std::endl;
+      std::cout << "--- DB after 11th borrow --- (should borrow from Judy Garland 7 1939)" << std::endl;
       testInvDB.adjustStock(BTestC);
 
       testInvDB.display();
       std::cout << std::endl;
 
-      std::cout << "--- DB after 10th borrow and 1 return --- (stock should be 1, Judy Garland should be 9)" << std::endl;
-      Trans RTestC = Trans("B 1000 D C 5 1939 Bob Barker");
+      std::cout << "--- DB after 11th borrow and 1 return --- (stock should be 1, Judy Garland should be 9)" << std::endl;
+      Trans RTestC = Trans("R 1000 D C 7 1939 Bob Barker");
       testInvDB.adjustStock(RTestC);
 
       testInvDB.display();
@@ -764,7 +761,7 @@ int main() {
 //       BULK INVENTORYDB INPUT TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-   if (false) {
+   if (true) {
 
       std::cout << "--- (9.0) START BULK INVENTORYDB INPUT TESTS ---" << std::endl << std::endl;
 
@@ -797,7 +794,7 @@ int main() {
 //       BULK COMMAND INPUT TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-   if (true) {
+   if (false) {
 
       std::cout << "--- (10.0) START BULK TRANSACTION INPUT TESTS ---" << std::endl << std::endl;
 
@@ -1128,36 +1125,35 @@ bool isLegalInvCmd(std::string command, InvDB& tgtDB) {
    std::string errorLog = "";
    int currentYear = 2018;
 
-   // Initialize field variables
-   char genre = NULL;
-   int qty = 0;
-   std::string field1 = ""; // Director
-   std::string field2 = ""; // Title
-   std::string field3 = ""; // Actor (in case of Classic)
-   int releaseMonth = 0;
-   int releaseYear = 0;
+   // Parse command data
+   std::string delim = ", ";
+   std::string cmdData[5];
 
-   // TODO: Parse fields
+   // Get each term from the string
+   for (int i = 0; i < 5; i++) {
+      cmdData[i] = command.substr(0, command.find(delim));
+      command.erase(0, command.find(delim) + delim.length());
+   }
 
    // Test if genre is within range first
-   if ((genre != 'C') || (genre != 'F') || (genre != 'D')) {
-      std::cout << "Inventory command error:" << std::endl;
-      std::cout << "   - Invalid genre, halting." << std::endl;
+   char genre = cmdData[0][0];
+   if (genre != 'C' && genre != 'F' && genre != 'D') {
+      std::cout <<"   - Invalid genre: " << genre << " -> halting test" << std::endl;
       return(false);
    }
 
    // Verify that quantity is non-zero
-   if (qty == 0) {
+   int stock = std::stoi(cmdData[1]);
+   if (stock <= 0) {
       // If not, append report
       errorLog = errorLog + "   - Zero quantity (non-inventory)" + "\n";
       // And toggle the flag
       isLegal = false;
    }
 
-   // TODO: Other tests on quantity? Negative values?
-
    // Verify that a director is entered
-   if (field1 == "") {
+   std::string director = cmdData[2];
+   if (director == "") {
       // If not, append report
       errorLog = errorLog + "   - No director specified" + "\n";
       // And toggle the flag
@@ -1165,7 +1161,8 @@ bool isLegalInvCmd(std::string command, InvDB& tgtDB) {
    }
 
    // Verify that a film name is entered
-   if (field2 == "") {
+   std::string title = cmdData[3];
+   if (title == "") {
       // If not, append report
       errorLog = errorLog + "   - No film title entered" + "\n";
       // And toggle the flag
@@ -1173,27 +1170,50 @@ bool isLegalInvCmd(std::string command, InvDB& tgtDB) {
    }
 
    // In the case of classic films only, verify that an actor is specified
-   if (genre == 'C' && field3 == "") {
-      // If not, append report
-      errorLog = errorLog + "   - No actor/actress specified" + "\n";
-      // And toggle the flag
-      isLegal = false;
-   }
+   if (genre == 'C') {
 
-   // In the case of classic films only, verify that a release month is specified
-   if (genre == 'C' && (releaseMonth < 1 || releaseMonth > 12)) {
-      // If not, append report
-      errorLog = errorLog + "   - Release month not properly entered" + "\n";
-      // And toggle the flag
-      isLegal = false;
-   }
+      // split the last two items by spaces to incorprate the major actor and date
+      delim = " ";
 
-   // Verify that a release year was entered
-   if (releaseYear == 0 || releaseYear > currentYear) {
-      // If not, append report
-      errorLog = errorLog + "   - Release year not properly specified" + "\n";
-      // And toggle the flag
-      isLegal = false;
+      for (int i = 0; i < 4; i++) {
+         cmdData[i] = command.substr(0, command.find(delim));
+         command.erase(0, command.find(delim) + delim.length());
+      }
+
+      std::string actor = cmdData[0] + " " + cmdData[1]; // strings: firstName lastName
+      int releaseMonth = std::stoi(cmdData[2]); // int
+      int releaseYear = std::stoi(cmdData[3]); // int
+
+      if (actor == "") {
+         // If not, append report
+         errorLog = errorLog + "   - No actor/actress specified" + "\n";
+         // And toggle the flag
+         isLegal = false;
+      }
+
+      // In the case of classic films only, verify that a release month is specified
+      if (releaseMonth < 1 || releaseMonth > 12) {
+         // If not, append report
+         errorLog = errorLog + "   - Release month not properly entered" + "\n";
+         // And toggle the flag
+         isLegal = false;
+      }
+      if (releaseYear < 1880 || releaseYear > 2018) {
+         // If not, append report
+         errorLog = errorLog + "   - Release year not properly entered" + "\n";
+         // And toggle the flag
+         isLegal = false;
+      }
+   }
+   // if this isn't a classic, check the year normally
+   else {
+      int releaseYear = std::stoi(cmdData[4]);
+      if (releaseYear < 1880 || releaseYear > currentYear) {
+         // If not, append report
+         errorLog = errorLog + "   - Release year not properly entered" + "\n";
+         // And toggle the flag
+         isLegal = false;
+      }
    }
 
    // If any test has failed, do not forward to database
