@@ -133,6 +133,8 @@
 
 // None for this class
 
+
+
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
 //       PUBLIC METHODS (+)
@@ -362,12 +364,12 @@ void Film::setGenre(char data) {
 // (+) --------------------------------|
 // #setreleaseMonth()
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Sets the release month of 'this' Film
+// Params:  int arg1 - The month this Film was released
+// PreCons: GIGO - No error checking is performed for valid months (1-12)
+// PosCons: The release month has been set
+// RetVal:  None
+// MetCall: None
 void Film::setReleaseMonth(int data) {
    releaseMonth = data;
 } // Closing setreleaseMonth()
@@ -375,27 +377,27 @@ void Film::setReleaseMonth(int data) {
 // (+) --------------------------------|
 // #setreleaseYear()
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-void Film::setReleaseYear(int data) {
-   releaseYear = data;
+// Desc:    Sets the release year of 'this' Film
+// Params:  int arg1 - The year this Film was released
+// PreCons: GIGO - No error checking is performed for valid years (1888-2018)
+// PosCons: The release year has been set
+// RetVal:  None
+// MetCall: None
+void Film::setReleaseYear(int year) {
+   releaseYear = year;
 } // Closing setreleaseYear()
 
 // (+) --------------------------------|
 // #setStock()
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-void Film::setStock(int data) {
-   stock = data;
+// Desc:    Sets the Film stock of 'this' Film
+// Params:  int arg1 - The number of this Film object remaining in stock
+// PreCons: GIGO - No error checking is performed against out-of-bound values
+// PosCons: The quantity has been set
+// RetVal:  None
+// MetCall: None
+void Film::setStock(int qty) {
+   stock = qty;
 } // Closing setStock()
 
 // (+) --------------------------------|
