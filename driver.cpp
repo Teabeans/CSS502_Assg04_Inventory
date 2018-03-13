@@ -1014,7 +1014,7 @@ void bulkReadTrans(std::ifstream& commandFile, CustDB& tgtCustDB, InvDB& tgtInvD
 // RetVal:  bool true - No illegal conditions are reported
 //          bool false - At least one illegal condition was detected
 // MetCall: CustDB::isValid() - Verifies all legality checks within the database
-bool isLegalCustCmd(std::string command, CustDB tgtDB) {
+bool isLegalCustCmd(std::string command, CustDB& tgtDB) {
    // Set flag
    bool isLegal = true;
    // Begin error log
@@ -1084,7 +1084,7 @@ bool isLegalCustCmd(std::string command, CustDB tgtDB) {
 // RetVal:  bool true - No illegal conditions are reported
 //          bool false - At least one illegal condition was detected
 // MetCall: InvDB::isValid() - Verifies all legality checks within the database
-bool isLegalInvCmd(std::string command, InvDB tgtDB) {
+bool isLegalInvCmd(std::string command, InvDB& tgtDB) {
    // Set flag
    bool isLegal = true;
    // Begin error log
@@ -1189,7 +1189,7 @@ bool isLegalInvCmd(std::string command, InvDB tgtDB) {
 //          bool false - At least one illegal condition was detected
 // MetCall: CustDB::isValid() - Verifies all legality checks within the customer DB
 //          InvDB::isValid() - Verifies all legality checks within the inventory DB
-bool isLegalTransCmd(std::string command, CustDB tgtCustDB, InvDB tgtInvDB) {
+bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
    // Set flag
    bool isLegal = true;
    // Begin error log
