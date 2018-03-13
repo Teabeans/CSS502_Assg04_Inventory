@@ -351,14 +351,14 @@ void Film::setDirector(std::string data) {
 // (+) --------------------------------|
 // #setGenre()
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Sets the genre of 'this' Film
+// Params:  char arg1 - The month this Film was released
+// PreCons: GIGO - No error checking is performed for valid months (1-12)
+// PosCons: The release month has been set
+// RetVal:  None
+// MetCall: None
 void Film::setGenre(char data) {
-   genre = data;
+   this->genre = data;
 } // Closing setGenre()
 
 // (+) --------------------------------|
