@@ -12,7 +12,7 @@
 // Matt Gross & Tim Lum
 // mattgrosspersonal@gmail.com + twhlum@gmail.com
 // Created:  2018.03.03
-// Modified: 2018.03.--
+// Modified: 2018.03.14
 // For the University of Washington Bothell, CSS 502A
 // Winter 2018, Graduate Certificate in Software Design & Development (GCSDD)
 //
@@ -59,32 +59,11 @@ protected:
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
    //-----------------|
-   // #title
+   // #actor
    //-----------------|
-   // Desc:   The film's title
+   // Desc:   The name of the film's major actor
    // Invars: Must contain at least one character
-   std::string title;
-
-   //-----------------|
-   // #stock
-   //-----------------|
-   // Desc:   The film's stock value
-   // Invars: None
-   int stock;
-
-   //-----------------|
-   // #releaseYear
-   //-----------------|
-   // Desc:   The film's release year
-   // Invars: None
-   int releaseYear;
-
-   //-----------------|
-   // #releaseMonth
-   //-----------------|
-   // Desc:   The release month for the film
-   // Invars: None
-   int releaseMonth;
+   std::string actor;
 
    //-----------------|
    // #director
@@ -101,11 +80,32 @@ protected:
    char genre;
 
    //-----------------|
-   // #actor
+   // #releaseMonth
    //-----------------|
-   // Desc:   The name of the film's major actor
+   // Desc:   The release month for the film
+   // Invars: None
+   int releaseMonth;
+
+   //-----------------|
+   // #releaseYear
+   //-----------------|
+   // Desc:   The film's release year
+   // Invars: None
+   int releaseYear;
+
+   //-----------------|
+   // #stock
+   //-----------------|
+   // Desc:   The film's stock value
+   // Invars: None
+   int stock;
+
+   //-----------------|
+   // #title
+   //-----------------|
+   // Desc:   The film's title
    // Invars: Must contain at least one character
-   std::string actor;
+   std::string title;
 
 
 
@@ -129,21 +129,21 @@ public:
    // (+) --------------------------------|
    // #equals(Film&)
    //-------------------------------------|
-   // Desc:   Tests the film against another based on it's title & year
+   // Desc:   Tests 'this' film against another based on it's title & year
    // Invars: None
    virtual bool equals(Film&);
    
    // (+) --------------------------------|
    // #isGreaterThan(Film&)
    //-------------------------------------|
-   // Desc:   Tests the film against another based on it's title & year
+   // Desc:   Tests 'this' film against another based on it's title & year
    // Invars: None
    virtual bool isGreaterThan(Film&);
 
    // (+) --------------------------------|
    // #isLessThan(Film&)
    //-------------------------------------|
-   // Desc:   Tests the film against another based on it's title & year
+   // Desc:   Tests 'this' film against another based on it's title & year
    // Invars: None
    virtual bool isLessThan(Film&);
 
@@ -180,7 +180,6 @@ public:
    int getReleaseYear();
    int getStock();
    std::string getTitle();
-
 
    //-----------------|
    // #setActor(string)
