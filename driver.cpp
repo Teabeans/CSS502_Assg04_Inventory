@@ -706,32 +706,32 @@ int main() {
 //-------|---------|---------|---------|---------|---------|---------|---------|
    if (true) {
 
-      std::cout << "--- START BULK INVENTORYDB INPUT TESTS ---" << std::endl << std::endl;
-   
-      // Test the inventoryDB bulk inputs
-      std::cout << "Testing inventoryDB bulk inputs..." << std::endl << std::endl;
+      std::cout << "--- (9.0) START BULK INVENTORYDB INPUT TESTS ---" << std::endl << std::endl;
 
-      // Test the inventoryDB bulk inputs
-      std::cout << "Creating an empty InvDB object..." << std::endl << std::endl;
+      std::cout << "--- (9.1) Testing inventoryDB bulk inputs... ---" << std::endl << std::endl;
 
-      // Capture command file to filestream
-      std::cout << "Capture bulk input to fileStream..." << std::endl << std::endl;
-   
-      // Have the Inventory Controller (main()) parse the file and perform insertion actions
-      std::cout << "Sending bulk commands to InvDB object..." << std::endl << std::endl;
-   
-      // Test isLegalInv() logic
-      std::cout << "The first command isLegal(): " << "<isLegal() result goes here>" << " (0 expected, plus error report)" << std::endl << std::endl;
+      std::cout << "--- (9.2) Create an empty InvDB object ---" << std::endl << std::endl;
 
-      // Check if the commands were SUPER EFFECTIVE!
-      std::cout << "Check state of InvDB after bulk input:" << std::endl << std::endl;
-   
+      InvDB invDB;
+
+      std::cout << "--- (9.3) Capture bulk input to fileStream ---" << std::endl << std::endl;
+
+      std::ifstream inventoryFile("data4movies.txt");
+
+      std::cout << "--- (9.4) Sending bulk commands to InvDB object... ---" << std::endl << std::endl;
+
+      bulkReadInv(inventoryFile, invDB);
+
+      std::cout << "--- (9.5) Check state of InvDB after bulk input: ---" << std::endl << std::endl;
+
+      std::cout << invDB.toString() << std::endl;
+
       std::cout << "--- END BULK INVENTORYDB INPUT TESTS ---" << std::endl << std::endl;
 
-   } // END BULK CUSTOMERDB INPUT TESTS
-   
+   } // END BULK INVENTORYDB INPUT TESTS
 
-   
+
+
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
 //       BULK COMMAND INPUT TESTS
