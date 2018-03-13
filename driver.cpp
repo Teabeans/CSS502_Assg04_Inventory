@@ -514,7 +514,7 @@ int main() {
 //       CUSTOMER DATABASE TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-   if (true) {
+   if (false) {
 
       std::cout << "--- (6.0) START CUSTOMER DATABASE TESTS ---" << std::endl << std::endl;
 
@@ -524,13 +524,13 @@ int main() {
 
       std::cout << "--- (6.2) Creating a transaction from string 'B 1111 D F Ferries and You: A Primer, 2018'... ---" << std::endl << std::endl;
 
-      Trans testBorrow = Trans("B 1111 D F Ferries and You: A Primer, 2018");
-      Trans testReturn = Trans("R 1111 D F Ferries and You: A Primer, 2018");
+      Trans testBorrow = Trans("B 111 D F Ferries and You: A Primer, 2018");
+      Trans testReturn = Trans("R 111 D F Ferries and You: A Primer, 2018");
 
       std::cout << "--- (6.3) Creating two new customers... ---" << std::endl << std::endl;
       // 1111 Jane Doe
       // 9000 Boaty McBoatface
-      Cust* testCustomer1 = new Cust("Jane", "Doe", 1111);
+      Cust* testCustomer1 = new Cust("Jane", "Doe", 111);
       Cust* testCustomer2 = new Cust("Boaty", "McBoatface", 9000);
 
       std::cout << "--- (6.4) Customer 1 & 2 constructor results: ---" << std::endl << std::endl;
@@ -580,9 +580,9 @@ int main() {
 
       std::cout << testCustDB.toString() << std::endl;
 
-      std::cout << "--- (6.14) Acquire customer history @ 1111: ---" << std::endl << std::endl;
+      std::cout << "--- (6.14) Acquire customer history @ 111: ---" << std::endl << std::endl;
 
-      Cust* tgtCust = testCustDB.getCustomerAt(1111);
+      Cust* tgtCust = testCustDB.getCustomerAt(111);
       std::cout << tgtCust->getHistory() << std::endl;
 
       std::cout << "--- END CUSTOMER DATABASE TESTS ---" << std::endl << std::endl;
