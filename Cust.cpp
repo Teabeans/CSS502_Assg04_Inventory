@@ -450,8 +450,6 @@ Cust::Cust(std::string command) {
    stream >> nameL;
    stream >> nameF;
 
-   std::cout << IDnum << ":" << nameL << ":" << nameF;
-
    this->custID    = IDnum;
    this->lastName  = nameL;
    this->firstName = nameF;
