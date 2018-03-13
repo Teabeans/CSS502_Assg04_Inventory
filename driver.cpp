@@ -81,25 +81,25 @@
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
 // Bulk reader - Customers
-void bulkReadCust(std::ifstream& custtxt, CustDB tgtDB);
+void bulkReadCust(std::ifstream& custtxt, CustDB& tgtDB);
 
 // Bulk reader - Inventory
-void bulkReadInv(std::ifstream& invtxt, InvDB tgtDB);
+void bulkReadInv(std::ifstream& invtxt, InvDB& tgtDB);
 
 // Bulk reader - Transactions
-void bulkReadTrans(std::ifstream& transtxt, CustDB tgtCustDB, InvDB tgtInvDB);
+void bulkReadTrans(std::ifstream& transtxt, CustDB& tgtCustDB, InvDB& tgtInvDB);
 
 // Legality check - Customer commands
-bool isLegalCustCmd(std::string command, CustDB tgtDB);
+bool isLegalCustCmd(std::string command, CustDB& tgtDB);
 
 // Legality check - Inventory commands
-bool isLegalInvCmd(std::string command, InvDB tgtDB);
+bool isLegalInvCmd(std::string command, InvDB& tgtDB);
 
 // Legality check - Transaction commands
-bool isLegalTransCmd(std::string command, CustDB tgtDB, InvDB tgtInvDB);
+bool isLegalTransCmd(std::string command, CustDB& tgtDB, InvDB& tgtInvDB);
 
 // Appends missing information to a transaction
-void padOut(Trans* transPtr, InvDB tgtInvDB);
+void padOut(Trans* transPtr, InvDB& tgtInvDB);
 
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
@@ -853,7 +853,7 @@ int main() {
 //          Does not handle any error reporting
 // RetVal:  None
 // MetCall: isLegalCustCmd() - Verifies all legality checks of the command
-void bulkReadCust(std::ifstream& custFile, CustDB tgtDB) {
+void bulkReadCust(std::ifstream& custFile, CustDB& tgtDB) {
    while (!custFile.eof()) {
       // Get a line of text (one command)
 
@@ -893,7 +893,7 @@ void bulkReadCust(std::ifstream& custFile, CustDB tgtDB) {
 } // Closing bulkReadCust()
 
 // (+) --------------------------------|
-// #bulkReadInv(ifstream&, InvDB)
+// #bulkReadInv(ifstream&, InvDB&)
 //-------------------------------------|
 // Desc:    Bulk reader of a correctly formatted inventory command file
 // Params:  ifstream& arg1 - The target text file containing inventory commands
@@ -905,7 +905,7 @@ void bulkReadCust(std::ifstream& custFile, CustDB tgtDB) {
 //          Does not handle any error reporting
 // RetVal:  None
 // MetCall: isLegalInvCmd() - Verifies all legality checks of the command
-void bulkReadInv(std::ifstream& invFile, InvDB tgtDB) {
+void bulkReadInv(std::ifstream& invFile, InvDB& tgtDB) {
    // While there is still filestream to read
    while (!invFile.eof()) {
       // Get a line of text (one command)
@@ -924,7 +924,7 @@ void bulkReadInv(std::ifstream& invFile, InvDB tgtDB) {
 } // Closing bulkReadInv()
 
 // (+) --------------------------------|
-// #bulkReadTrans(ifstream&, InvDB)
+// #bulkReadTrans(ifstream&, CustDB&, InvDB&)
 //-------------------------------------|
 // Desc:    Bulk reader of a correctly formatted inventory command file
 // Params:  ifstream& arg1 - The target text file containing inventory commands
@@ -936,7 +936,7 @@ void bulkReadInv(std::ifstream& invFile, InvDB tgtDB) {
 //          Does not handle any error reporting
 // RetVal:  None
 // MetCall: isLegalInvCmd() - Verifies all legality checks of the command
-void bulkReadTrans(std::ifstream& commandFile, CustDB tgtCustDB, InvDB tgtInvDB) {
+void bulkReadTrans(std::ifstream& commandFile, CustDB& tgtCustDB, InvDB& tgtInvDB) {
    // Generate Transactions from the CommandFile and send Transaction impacts to the appropriate locations
    while (!commandFile.eof()) {
       // Read the next relevant line of command
@@ -1002,7 +1002,7 @@ void bulkReadTrans(std::ifstream& commandFile, CustDB tgtCustDB, InvDB tgtInvDB)
 } // Closing bulkReadTrans()
 
 // (+) --------------------------------|
-// #isLegalCustCmd(ifstream&, CustDB)
+// #isLegalCustCmd(ifstream&, CustDB&)
 //-------------------------------------|
 // Desc:    Verifies the legality of a customer command line
 // Params:  ifstream& arg1 - The target text file containing inventory commands
@@ -1072,7 +1072,7 @@ bool isLegalCustCmd(std::string command, CustDB tgtDB) {
 } // Closing isLegalCustCmd()
 
 // (+) --------------------------------|
-// #isLegalInvCmd(ifstream&, InvDB)
+// #isLegalInvCmd(ifstream&, InvDB&)
 //-------------------------------------|
 // Desc:    Verifies the legality of an inventory command line
 // Params:  ifstream& arg1 - The target text file containing inventory commands
@@ -1174,7 +1174,7 @@ bool isLegalInvCmd(std::string command, InvDB tgtDB) {
 } // Closing isLegalInvCmd()
 
 // (+) --------------------------------|
-// #isLegalTransCmd(ifstream&, CustDB, InvDB)
+// #isLegalTransCmd(ifstream&, CustDB&, InvDB&)
 //-------------------------------------|
 // Desc:    Verifies the legality of a transaction command line
 // Params:  ifstream& arg1 - The target text file containing inventory commands
@@ -1321,7 +1321,7 @@ bool isLegalTransCmd(std::string command, CustDB tgtCustDB, InvDB tgtInvDB) {
 } // Closing isLegalTransCmd()
 
 // (+) --------------------------------|
-// #padOut(ifstream&, CustDB, InvDB)
+// #padOut(ifstream&, InvDB&)
 //-------------------------------------|
 // Desc:    Acquires and appends missing information for a transaction
 // Params:  transPtr* arg1 - 
@@ -1331,7 +1331,7 @@ bool isLegalTransCmd(std::string command, CustDB tgtCustDB, InvDB tgtInvDB) {
 // PosCons: Sufficient data has been appended to the transaction to allow for proper output
 // RetVal:  None
 // MetCall: NULL
-void padOut(Trans* transPtr, InvDB tgtInvDB) {
+void padOut(Trans* transPtr, InvDB& tgtInvDB) {
    // Sample inputs:
    // B 4444 D C 2 1971 Malcolm McDowell
    // B 1000 D D Gus Van Sant, Good Will Hunting,
