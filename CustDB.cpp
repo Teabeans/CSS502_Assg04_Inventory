@@ -336,6 +336,8 @@ bool CustDB::isValid(std::string command) {
    stream >> lName;
    stream >> fName;
 
+//   std::cout << command << ":" << custID << ":" << fName << ":" << lName << std::endl; // DEBUG
+
    Cust* theCust = this->custTableByID[custID];
 
    // If there's something at the custID position already...
@@ -353,13 +355,23 @@ bool CustDB::isValid(std::string command) {
    }
          // If any test has failed, report as much
    if (isValid == false) {
-      std::cout << "Customer Database error:" << std::endl;
+      std::cout << "Customer Database error ('" << command << "'):" << std::endl;
       std::cout << errorLog << std::endl;
       return(isValid);
    }
 
    return(isValid);
 } // Closing isValid()
+
+bool CustDB::isValidTransCmd(int custID, std::string title) {
+   // What do we need to check?
+   // Sample input:
+   // B 1000 D C 5 1940 Katherine Hepburn
+   // B 1000 D D Barry Levinson, Good Morning Vietnam,
+   // B 8000 D F You've Got Mail, 1998
+   bool isValid = true;
+   return (isValid);
+}
 
 // (+) --------------------------------|
 // #getCustomerAt(int)

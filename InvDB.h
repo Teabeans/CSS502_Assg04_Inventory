@@ -138,6 +138,8 @@ public:
    //          Outputs an error to cout for illegal conditions
    // Invars:  NULL
    bool isLegal(std::string);
+
+   bool isValidTransCmd(std::string);
    
    // (+) --------------------------------|
    // #runCmd(Film*)

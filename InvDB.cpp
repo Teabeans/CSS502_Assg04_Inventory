@@ -58,7 +58,9 @@
 
 // Necessary for file stream object handling
 #include <fstream>
+#include <sstream>
 #include <string>
+#include <iomanip>
 
 
 
@@ -153,7 +155,7 @@ bool InvDB::addFilm(std::string filmData) {
 
       // find the appropriate position in the comedies vector
       auto iterator = comedies.begin();
-      for (int i = 0; i < comedies.size(); i++) {
+      for (unsigned int i = 0; i < comedies.size(); i++) {
          if (comedies.at(i) > *film) break;
          iterator++;
       }
@@ -167,7 +169,7 @@ bool InvDB::addFilm(std::string filmData) {
 
       // find the appropriate position in the dramas vector
       auto iterator = dramas.begin();
-      for (int i = 0; i < dramas.size(); i++) {
+      for (unsigned int i = 0; i < dramas.size(); i++) {
          if (dramas.at(i) > *film) break;
          iterator++;
       }
@@ -181,7 +183,7 @@ bool InvDB::addFilm(std::string filmData) {
 
       // find the appropriate position in the classics vector
       auto iterator = classics.begin();
-      for (int i = 0; i < classics.size(); i++) {
+      for (unsigned int i = 0; i < classics.size(); i++) {
          if (classics.at(i) > *film) break;
          iterator++;
       }
@@ -217,7 +219,7 @@ bool InvDB::adjustStock(const Trans& trans) {
    if (trans.getGenre() == 'F') {
 
       // Look through the comedies vector for a Comedy that matches the transaction
-      for (int i = 0; i < comedies.size(); i++) {
+      for (unsigned int i = 0; i < comedies.size(); i++) {
          if (comedies.at(i).getTitle() == trans.getTitle()
              && comedies.at(i).getReleaseYear() == trans.getReleaseYear()) {
 
@@ -242,7 +244,7 @@ bool InvDB::adjustStock(const Trans& trans) {
    else if (trans.getGenre() == 'D') {
 
       // Look through the dramas vector for a Drama that matches the transaction
-      for (int i = 0; i < dramas.size(); i++) {
+      for (unsigned int i = 0; i < dramas.size(); i++) {
          if (dramas.at(i).getDirector() == trans.getDirector()
              && dramas.at(i).getTitle() == trans.getTitle()) {
 
@@ -269,7 +271,7 @@ bool InvDB::adjustStock(const Trans& trans) {
       std::string title;
 
       // Look through the classics vector for a Classic that matches the transaction
-      for (int i = 0; i < classics.size(); i++) {
+      for (unsigned int i = 0; i < classics.size(); i++) {
          if (classics.at(i).getReleaseYear() == trans.getReleaseYear()
              && classics.at(i).getReleaseMonth() == trans.getReleaseMonth()
              && classics.at(i).getActor() == trans.getActor()) {
@@ -295,7 +297,7 @@ bool InvDB::adjustStock(const Trans& trans) {
       }
       // Special condition for sharing stock between classics with the same title but different actors
       if (noStock == true) {
-         for (int i = 0; i < classics.size(); i++) {
+         for (unsigned int i = 0; i < classics.size(); i++) {
 
             // if classic matches title and year, and has some available stock
             if (classics.at(i).getTitle() == title
@@ -327,11 +329,10 @@ bool InvDB::adjustStock(const Trans& trans) {
    return(!anyErrors);
 }
 
-
 // (+) --------------------------------|
 // #isLegal()
 //-------------------------------------|
-// Desc:    Tests the legality of a received command string
+// Desc:    Tests the legality of a received inventory command
 //          Outputs an error to cout for illegal conditions
 // Params:  NULL
 // PreCons: NULL
@@ -340,9 +341,220 @@ bool InvDB::adjustStock(const Trans& trans) {
 // MetCall: NULL
 bool InvDB::isLegal(std::string command) {
    // TODO: Implement
-   return true;
-}
+   // Sample inputs
+   // C, 10, Michael Curtiz, Casablanca, Ingrid Bergman 8 1942
+   // D, 10, Barry Levinson, Good Morning Vietnam, 1988
+   // F, 10, Nora Ephron, Sleepless in Seattle, 1993
 
+   bool isLegal = true;
+
+   // Things to check:
+   // Is the correct position in the vector already occupied (duplicate sort criteria)?
+   // Do not implement - Assignment specification guarantees this not to happen
+
+   // Does the seed value place the stock into the net negatives? (0 is okay where alternate criteria )
+   // Do not implement - Establishing negative starting inventory values is nonsensical
+
+   return (isLegal);
+} // Closing isLegal()
+
+// (+) --------------------------------|
+// #isValidTransCmd()
+//-------------------------------------|
+// Desc:    Tests the legality of a received transaction command
+//          Outputs an error to cout for illegal conditions
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+bool InvDB::isValidTransCmd(std::string command) {
+   // TODO: Implement
+   // Sample inputs
+   // B 1000 D C 5 1940 Katherine Hepburn
+   // B 1000 D D Barry Levinson, Good Morning Vietnam,
+   // B 8000 D F You've Got Mail, 1998
+   bool isValid = false;
+   std::string errLog = "";
+   // Things to check:
+   // Can a matching film be found in the database (does the film exist)?
+   // Are there enough movies in stock to fulfill the transaction?
+
+   // Initialize field variables
+   char commandType = NULL;
+   int custID = 1234512345;
+   char format = NULL; // 'D' for DVD on all titles
+   char genre = NULL;
+   int releaseMonth = 0; // (in case of Classic)
+   int releaseYear = 0;
+   std::string director = "";
+   std::string title = "";
+   std::string actor = ""; // (in case of Classic)
+
+   std::stringstream stream;
+   stream << command;
+
+   // Step 2: Get the transaction type, assign fields properly
+   stream >> commandType;
+
+   // Step 3: Get the customer ID number
+   stream >> custID;
+
+   // Step 4: Remove the DVD format
+   stream >> format;
+
+   // Step 5.1: Get the genre
+   stream >> genre;
+
+   // Set the Skip White Space flag to off
+   stream >> std::noskipws;
+
+
+   // CLASSIC CASE
+   if (genre == 'C') {
+      // Parse fields
+      stream >> std::skipws;
+      stream >> releaseMonth;
+      stream >> releaseYear;
+      std::string fname;
+      std::string lname;
+
+      stream >> fname; // Gets first name
+      stream >> lname; // Gets last name
+      actor = fname + " " + lname;
+
+      // Check things with them
+      // Assuming the film will not be found:
+      errLog = "   - Film not found in Classics table";
+
+      // Iterate over vector<Classic> classics
+      for (unsigned int i = 0; i < classics.size(); i++) {
+         // Search for the year
+         if (classics.at(i).getReleaseYear() == releaseYear) {
+            // Search for the month
+            if (classics.at(i).getReleaseMonth() == releaseMonth) {
+               // Search for the actor
+               if (classics.at(i).getActor() == actor) {
+                  // All fields are a match! It's looking like this is legal!
+                  isValid = true;
+                  // Unless the stock check fails
+                  if (classics.at(i).getStock() < 1) {
+                     isValid = false;
+                     errLog = "   - Insufficient stock to fulfill order";
+                  }
+               } // Closing actor match
+            } // Closing month match
+         } // Closing year match
+      } // Closing for - All classic entries examined
+      if (isValid == false) {
+         std::cout << "Transaction Command error @ InvDatabase ('" << command << "'):" << std::endl;
+         std::cout << errLog << std::endl;
+      }
+   } // Closing if - Classic case handled
+
+
+   // DRAMA CASE
+   // Sample input: B 1000 D D Barry Levinson, Good Morning Vietnam,
+   if (genre == 'D') {
+      // Sample input: "B 8888 D D Nancy Savoca, Dogfight,"
+      // Drama parse strategies go here
+      // NOTE: Dramas are searched for by Director, Title
+      char temp = NULL;
+      stream >> temp;
+      // Load the first valid char from the stream to the director
+      stream >> temp;
+      // Append characters to the director until a ',' is encountered
+      while (temp != ',') {
+         director += temp;
+         stream >> temp;
+      } // Closing while - All chars appended, director is complete - VERIFIED
+
+      // Remove the ' '
+      stream >> temp;
+
+      // Load the first letter of the title
+      stream >> temp;
+      // And load the next valid string from the stream to the title
+      while (temp != ',') {
+         title += temp;
+         stream >> temp;
+      } // Closing while - All chars appended, title is complete - VERIFIED
+
+      // Check things with them
+      // Assuming the film will not be found:
+      errLog = "   - Film not found in Dramas table";
+      // Iterate over vector<Drama> dramas
+      for (unsigned int i = 0; i < dramas.size(); i++) {
+         // Search for the director
+         if (dramas.at(i).getDirector() == director) {
+            // Search for the title
+            if (dramas.at(i).getTitle() == title) {
+               // All fields are a match! It's looking like this is legal!
+               isValid = true;
+               // Unless the stock check fails
+               if (dramas.at(i).getStock() < 1) {
+                  isValid = false;
+                  errLog = "   - Insufficient stock to fulfill order";
+               }
+            } // Closing title match
+         } // Closing director match
+      } // Closing for - All drama entries examined
+
+      if (isValid == false) {
+         std::cout << "Transaction Command error @ InvDatabase ('" << command << "'):" << std::endl;
+         std::cout << errLog << std::endl;
+      }
+   }
+
+
+   // COMEDY CASE
+   // Sample input: B 8000 D F You've Got Mail, 1998
+   if (genre == 'F') {
+      // Sample input: "B 8000 D F National Lampoon's Animal House, 1978"
+      // Comedy parse strategies go here
+      // NOTE: Comedies are searched for by Title, Year
+      char temp = NULL;
+      stream >> temp;
+      stream >> temp;
+      // Append characters to the title until a ',' is encountered
+      while (temp != ',') {
+         title += temp;
+         stream >> temp;
+      } // Closing while - All chars appended, title is complete
+      // Remove the ' '
+      stream >> temp;
+      // And load the next valid int from the stream to the release date
+      stream >> releaseYear;
+
+      // Check things with them
+      // Assuming the film will not be found:
+      errLog = "   - Film not found in Comedies table";
+
+      // Iterate over vector<Comedy> comedies
+      for (unsigned int i = 0; i < comedies.size(); i++) {
+         // Search for the director
+         if (comedies.at(i).getTitle() == title) {
+            // Search for the title
+            if (comedies.at(i).getReleaseYear() == releaseYear) {
+               // All fields are a match! It's looking like this is legal!
+               isValid = true;
+               // Unless the stock check fails
+               if (comedies.at(i).getStock() < 1) {
+                  isValid = false;
+                  errLog = "   - Insufficient stock to fulfill order";
+               }
+            } // Closing title match
+         } // Closing director match
+      } // Closing for - All comedy entries examined
+
+      if (isValid == false) {
+         std::cout << "Transaction Command error @ InvDatabase ('" << command << "'):" << std::endl;
+         std::cout << errLog << std::endl;
+      }
+   } // Closing comedy case
+
+   return (isValid);
+} // Closing isValidTransCmd
 
 // (+) --------------------------------|
 // #display()
@@ -368,49 +580,45 @@ void const InvDB::display() {
 // MetCall: NULL
 std::string const InvDB::toString() {
    std::string retString = "";
-   retString += "\n";
    retString += "Comedy films: \n";
+   retString += "(Qty) 'Title'                             Director             Released \n";
+   retString += "----- ----------------------------------- -------------------- ---------\n";
+   //            ( 10) 'Annie Hall'                        Woody Allen          1977
 
-   for (int i = 0; i < comedies.size(); i++) {
-      retString += std::to_string(comedies.at(i).getStock());
-      retString += ", ";
-      retString += comedies.at(i).getTitle();
-      retString += ", ";
-      retString += comedies.at(i).getDirector();
-      retString += ", ";
-      retString += std::to_string(comedies.at(i).getReleaseYear());
-      retString += "\n";
+   for (unsigned int i = 0; i < comedies.size(); i++) {
+      std::stringstream stream;
+      stream << "(" << std::setw(3) << comedies.at(i).getStock() << ") ";
+      stream << "'" << std::setw(35) << std::left << (comedies.at(i).getTitle()+"'") ;
+      stream << std::setw(20) << comedies.at(i).getDirector() << " " <<comedies.at(i).getReleaseYear();
+      retString += stream.str() + "\n";
    }
 
    retString += "\n";
    retString += "Drama films: \n";
+   retString += "(Qty) 'Title'                             Director             Released \n";
+   retString += "----- ----------------------------------- -------------------- ---------\n";
 
-   for (int i = 0; i < dramas.size(); i++) {
-      retString += std::to_string(dramas.at(i).getStock());
-      retString += ", ";
-      retString += dramas.at(i).getTitle();
-      retString += ", ";
-      retString += dramas.at(i).getDirector();
-      retString += ", ";
-      retString += std::to_string(dramas.at(i).getReleaseYear());
-      retString += "\n";
+   for (unsigned int i = 0; i < dramas.size(); i++) {
+      std::stringstream stream;
+      stream << "(" << std::setw(3) << dramas.at(i).getStock() << ") ";
+      stream << "'" << std::setw(35) << std::left << (dramas.at(i).getTitle()+"'") ;
+      stream << std::setw(20) << dramas.at(i).getDirector() << " " <<dramas.at(i).getReleaseYear();
+      retString += stream.str() + "\n";
    }
 
    retString += "\n";
    retString += "Classic films: \n";
+   retString += "(Qty) 'Title'                             Director             Featuring            Released \n";
+   retString += "----- ----------------------------------- -------------------- -------------------- ---------\n";
+                 //-------|---------|---------|---------|---------|---------|---------|---------|
 
-   for (int i = 0; i < classics.size(); i++) {
-      retString += std::to_string(classics.at(i).getStock());
-      retString += ", ";
-      retString += classics.at(i).getTitle();
-      retString += ", ";
-      retString += classics.at(i).getDirector();
-      retString += ", ";
-      retString += classics.at(i).getActor();
-      retString += ", ";
-      retString += std::to_string(classics.at(i).getReleaseMonth()) + " ";
-      retString += std::to_string(classics.at(i).getReleaseYear());
-      retString += "\n";
+   for (unsigned int i = 0; i < classics.size(); i++) {
+            std::stringstream stream;
+      stream << "(" << std::setw(3) << classics.at(i).getStock() << ") ";
+      stream << "'" << std::setw(35) << std::left << (classics.at(i).getTitle()+"'") ;
+      stream << std::setw(21) << classics.at(i).getDirector() << std::setw(21) << classics.at(i).getActor();
+      stream << std::setw(1) << classics.at(i).getReleaseYear() << "." << std::setw(2) << std::right << classics.at(i).getReleaseMonth();
+      retString += stream.str() + "\n";
    }
 
    return (retString);
@@ -427,34 +635,35 @@ std::string const InvDB::toString() {
 // (+) --------------------------------|
 // #getCTitleByTuple()
 //-------------------------------------|
-// Desc:    Default InvDB constructor
+// Desc:    Attempts to return a title by Classic search criteria
 // Params:  NULL
 // PreCons: NULL
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
 std::string InvDB::getCTitleByTuple(int month, int year, std::string actor) {
-   // TODO: Implement
-   std::string retString = "";
-
-   // Go to vector<Classic> classics
-
-   // Search for the year
-
-   // Search for the month
-
-   // Search for the actor
-
-   // At the resultant film, assign the title to the returnString
-   retString = "<InvDB::getCTitleByTuple() placeholder>";
-
-   return(retString);
+   std::string retTitle= "";
+   // Iterate over vector<Classic> classics
+   for (unsigned int i = 0; i < classics.size(); i++) {
+      // Search for the year
+      if (classics.at(i).getReleaseYear() == year) {
+         // Search for the month
+         if (classics.at(i).getReleaseMonth() == month) {
+            // Search for the actor
+            if (classics.at(i).getActor() == actor) {
+               // All fields are a match! Assign the title to the returnString
+               retTitle = classics.at(i).getTitle();
+            } // Closing actor match
+         } // Closing month match
+      } // Closing year match
+   } // Closing for - All classic entries examined
+   return(retTitle);
 } // Closing getCTitleByTuple()
 
 // (+) --------------------------------|
 // #getDYearByTuple()
 //-------------------------------------|
-// Desc:    NULL
+// Desc:    Attempts to return a year by 
 // Params:  NULL
 // PreCons: NULL
 // PosCons: NULL
@@ -464,15 +673,17 @@ int InvDB::getDYearByTuple(std::string director, std::string title) {
    // TODO: Implement
    int retYear = 0;
 
-   // Go to vector<Drama> dramas
-
-   // Search for the director
-
-   // Search for the title
-
-   // At the resultant film, assign the year to the returnInt
-   retYear = 2002;
-
+   // Iterate over vector<Drama> classics
+   for (unsigned int i = 0; i < dramas.size(); i++) {
+      // Search for the director
+      if (dramas.at(i).getDirector() == director) {
+         // Search for the title
+         if (dramas.at(i).getTitle() == title) {
+            // At the resultant film, assign the year to the returnInt
+            retYear = dramas.at(i).getReleaseYear();
+         } // Closing title match
+      } // Closing director match
+   } // Closing for - All drama entries examined
    return(retYear);
 } // Closing getDYearByTuple()
 

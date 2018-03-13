@@ -183,6 +183,13 @@ public:
    bool isValid(std::string someCommand);
 
 //-----------------|
+// #isValidTransCmd(string)
+//-----------------|
+// Desc:   Determines whether this string is a valid transaction command
+// Invars: Return value is variable based on state of DB
+   bool isValidTransCmd(int custID, std::string title);
+
+//-----------------|
 // #getCustomerAt(int)
 //-----------------|
 // Desc:   NULL

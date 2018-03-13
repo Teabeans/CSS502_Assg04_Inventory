@@ -56,6 +56,9 @@
 // Necessary for stream operations
 #include <sstream>
 
+// Necessary for stream output manipulations
+#include <iomanip>
+
 // Necessary for transaction objects
 #include "Trans.h"
 
@@ -761,7 +764,7 @@ int main() {
 //       BULK INVENTORYDB INPUT TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-   if (true) {
+   if (false) {
 
       std::cout << "--- (9.0) START BULK INVENTORYDB INPUT TESTS ---" << std::endl << std::endl;
 
@@ -841,7 +844,7 @@ int main() {
 //       FOR REALSIES EXECUTION
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-   if (false) {
+   if (true) {
 
       // Acquire the relevant files
       std::ifstream commandFile("data4commands.txt");
@@ -972,12 +975,16 @@ void bulkReadInv(std::ifstream& invFile, InvDB& tgtDB) {
 // MetCall: isLegalInvCmd() - Verifies all legality checks of the command
 void bulkReadTrans(std::ifstream& commandFile, CustDB& tgtCustDB, InvDB& tgtInvDB) {
    // Generate Transactions from the CommandFile and send Transaction impacts to the appropriate locations
+   int counter = 1;
    while (!commandFile.eof()) {
       // Read the next relevant line of command
       std::string command;
       std::getline(commandFile, command);
 
-      // TODO: I and H cases
+      std::cout << std::endl << std::setw(4) << counter << ": ('" << command << "')" << std::endl;
+      counter++;
+
+      // I and H cases
       // If the command is an 'I'
       if (command == "I") {
          // Ping invDB for execution
@@ -985,7 +992,7 @@ void bulkReadTrans(std::ifstream& commandFile, CustDB& tgtCustDB, InvDB& tgtInvD
       }
 
       // If the command is an 'H'
-      if (command[0] == 'H') {
+      else if (command[0] == 'H') {
          // Convert the command line to a string stream
          std::stringstream stream;
          stream << command;
@@ -997,11 +1004,11 @@ void bulkReadTrans(std::ifstream& commandFile, CustDB& tgtCustDB, InvDB& tgtInvD
          stream >> custID;
          // If the custID is out of range, halt
          if (custID < 0 || custID > 9999) {
-            std::cout << "Error @ bulkReadTrans(): Customer ID out of range (0-9999)" << std::endl;
+            std::cout << "History Command error: Customer ID out of range (0-9999)" << std::endl;
          }
          // If the custDB does not have this customer...
          else if (!tgtCustDB.doesContain(custID)) {
-            std::cout << "Error @ history (H) command: No such customer" << std::endl;
+            std::cout << "History Command error: No such Customer" << std::endl;
          }
          // Otherwise...
          else {
@@ -1010,25 +1017,26 @@ void bulkReadTrans(std::ifstream& commandFile, CustDB& tgtCustDB, InvDB& tgtInvD
          }
       } // Closing if - 'H' condition handled
 
-      // Prepare to hold a transaction
-      Trans* currTrans = nullptr;
-      // If the command is legal (based on the command and DB states
-      if (isLegalTransCmd(command, tgtCustDB, tgtInvDB)) {
-         // Create a transaction from it
-         currTrans = new Trans(command);
-         // Aggregate inventory information from the databases to add needed info to the transaction
-         padOut(currTrans, tgtInvDB);
+      else {// Prepare to hold a transaction
+         Trans* currTrans = nullptr;
+         // If the command is legal (based on the command and DB states)
+         if (isLegalTransCmd(command, tgtCustDB, tgtInvDB)) {
+            // Create a transaction from it
+            currTrans = new Trans(command);
+            // Aggregate inventory information from the databases to add needed info to the transaction
+            padOut(currTrans, tgtInvDB);
+            // currTrans->debug(); // DEBUG
+            // Send the Transaction to the Databases for execution
+            tgtInvDB.adjustStock(*currTrans);
+            tgtCustDB.appendHistory(*currTrans);
+         }
 
-      }
 
-
-      // Send the Transaction to the Databases for execution
-      tgtInvDB.adjustStock(*currTrans);
-      tgtCustDB.appendHistory(*currTrans);
-
-      // deallocate current transaction now that it's been used
-      if (currTrans != nullptr) {
-         delete currTrans;
+         // deallocate current transaction now that it's been used
+         if (currTrans != nullptr) {
+            delete currTrans;
+         }
+         std::cout << ""; // DEBUG
       }
    } // Closing while - All lines of command read from file / filestream
    std::cout << "--- All command lines parsed ---" << std::endl << std::endl;
@@ -1067,35 +1075,35 @@ bool isLegalCustCmd(std::string command, CustDB& tgtDB) {
 
    // Verify that field1 is within expected value range
    if (custID == 1234512345) {
-   // If not, append report
-   errorLog = errorLog + "   - No customer ID entered" + "\n";
-   // And toggle the flag
-   isLegal = false;
+      // If not, append report
+      errorLog = errorLog + "   - No customer ID entered" + "\n";
+      // And toggle the flag
+      isLegal = false;
    }
 
    // Verify that the customerID is within range
    if (custID != 1234512345 && (custID < 0 || custID > 9999)) {
-   // If not, append report
-   errorLog = errorLog + "   - Invalid customer ID entered (out of range)" + "\n";
-   // And toggle the flag
-   isLegal = false;
+      // If not, append report
+      errorLog = errorLog + "   - Invalid customer ID entered (out of range)" + "\n";
+      // And toggle the flag
+      isLegal = false;
    }
 
    // Check if both the first name and last name were entered
    if (nameF == "" || nameL == "") {
-   // If not, append report
-   errorLog = errorLog + "   - No first or last name entered" + "\n";
-   // And toggle the flag
-   isLegal = false;
+      // If not, append report
+      errorLog = errorLog + "   - No first or last name entered" + "\n";
+      // And toggle the flag
+      isLegal = false;
    }
 
-   // TODO: Any other ways a customer command can be invalid?
+   // Any other ways a customer command can be invalid?
 
    // If any test has failed, do not forward to database
    if (isLegal == false) {
-   std::cout << "Customer command error:" << std::endl;
-   std::cout << errorLog << std::endl;
-   return(isLegal);
+      std::cout << "Customer Command error ('" << command << "'):" << std::endl;
+      std::cout << errorLog << std::endl;
+      return(isLegal);
    }
    // Otherwise, this is a correctly formatted command
    // But it may still be in conflict with the database state, so check that
@@ -1119,6 +1127,7 @@ bool isLegalCustCmd(std::string command, CustDB& tgtDB) {
 //          bool false - At least one illegal condition was detected
 // MetCall: InvDB::isValid() - Verifies all legality checks within the database
 bool isLegalInvCmd(std::string command, InvDB& tgtDB) {
+   std::string origCommand = command;
    // Set flag
    bool isLegal = true;
    // Begin error log
@@ -1138,7 +1147,8 @@ bool isLegalInvCmd(std::string command, InvDB& tgtDB) {
    // Test if genre is within range first
    char genre = cmdData[0][0];
    if (genre != 'C' && genre != 'F' && genre != 'D') {
-      std::cout <<"   - Invalid genre: " << genre << " -> halting test" << std::endl;
+      std::cout << "Inventory Command error ('" << origCommand << "'):" << std::endl;
+      std::cout <<"   - Invalid genre: '" << genre << "'" << std::endl << std::endl;
       return(false);
    }
 
@@ -1218,13 +1228,13 @@ bool isLegalInvCmd(std::string command, InvDB& tgtDB) {
 
    // If any test has failed, do not forward to database
    if (isLegal == false) {
-      std::cout << "Customer command error:" << std::endl;
-      std::cout << errorLog << std::endl;
+      std::cout << "Inventory Command error ('" << origCommand << "'):" << std::endl;
+      std::cout << errorLog << std::endl << std::endl;
       return(isLegal);
    }
    // Otherwise, this is a correctly formatted command
    // But it may still be in conflict with the database state, so check that
-   isLegal = tgtDB.isLegal(command);
+   isLegal = tgtDB.isLegal(origCommand);
    // Note: tgtDB.isLegal() handles its own error reporting to cout
    // Return whether the database confirmed legality or not
    return(isLegal);
@@ -1254,7 +1264,8 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
    std::string errorLog = "";
 
    // Store command as a stream
-   std::stringstream stream(command);
+   std::stringstream stream;
+   stream << command;
 
    int currentYear = 2018;
 
@@ -1274,15 +1285,15 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
    stream >> commandType;
 
    // Test if the commandType is within range first
-   if ((commandType != 'I') || (commandType != 'H') || (commandType != 'B') || (commandType != 'R')) {
-      std::cout << "Transaction command error:" << std::endl;
-      std::cout << "   - Invalid command type, halting." << std::endl;
+   if ((commandType != 'I') && (commandType != 'H') && (commandType != 'B') && (commandType != 'R')) {
+      std::cout << "Transaction Command error ('" << command << "'):" << std::endl;
+      std::cout << "   - Invalid command type: ('" << commandType << "'), discarding..." << std::endl;
       return(false);
    }
 
    // Finish testing for an 'I' (inventory query) command
    if (commandType == 'I' && command.size() != 1) { // If there's anything after the I...
-      std::cout << "Transaction command error:" << std::endl;
+      std::cout << "Transaction Command error ('" << command << "'):" << std::endl;
       std::cout << "   - Invalid entry of 'I' (inventory) command, halting." << std::endl;
       return(false);
    }
@@ -1293,7 +1304,8 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
    }
 
    // Parse customerID
-   stream >> custID;
+   stream >> custID; // VERIFIED
+   // std::cout << custID << "!!!";
 
    // Test if customerID is within range
    if (custID < 0 || custID > 9999) {
@@ -1311,16 +1323,9 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
       isLegal = false;
    }
 
-   // Check validity of a 'H' (history) command
-   if (commandType == 'H'/*&& there's anything else in the string*/) { // TODO
-      std::cout << "Transaction command error (:" << std::endl;
-      std::cout << "   - Invalid entry of 'H' (history) command, halting." << std::endl;
-      std::cout << errorLog << std::endl;
-      return(false);
-   }
-
    // Parse format
-   stream >> format;
+   stream >> format; // VERIFIED
+   // std::cout << format << "!!!";
 
    // Test if format is within range
    if (format != 'D') {
@@ -1332,35 +1337,35 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
 
    // Sample input: B 1000 D D Barry Levinson, Good Morning Vietnam,
    // Parse genre
-   stream >> genre;
+   stream >> genre; // VERIFIED
+   // std::cout << "'" << genre << "' !!!";
 
    // Test if genre is within range
    if ((genre != 'C') && (genre != 'F') && (genre != 'D')) {
-      std::cout << "Inventory command error:" << std::endl;
+      std::cout << "Transaction Command error ('" << command << "'):" << std::endl;
       std::cout << "   - Invalid genre, halting." << std::endl;
       std::cout << errorLog << std::endl;
       return(false);
    }
 
-   // Legality tests for classics only
+   // CLASSIC BEHAVIOR
    if (genre == 'C') {
       // Parse releaseMonth
-      stream >> releaseMonth;
+      stream >> releaseMonth; // VERIFIED
       // Parse releaseYear
-      stream >> releaseYear;
-
+      stream >> releaseYear; // VERIFIED
       // Parse actor
       char temp = NULL;
       stream >> temp;
-      std::noskipws;
+      stream << std::noskipws;
       while (!stream.eof()) {
          actor += temp;
          stream >> temp;
-      } // Actor parsed
+      } // Actor parsed - VERIFIED
 
-      std::cout << "(CisLegalCmd):" << actor << ":" << releaseMonth << ":" << releaseYear << ")"; // DEBUG
+      // std::cout << "(CisLegalCmd):" << actor << ":" << releaseMonth << ":" << releaseYear << ")"; // DEBUG
 
-      // Perform all legality checks for Classics
+      // Information in hand, perform all legality checks for Classics
 
       // Verify that releaseMonth is within range
       if ((releaseMonth < 1) || (releaseMonth > 12)) {
@@ -1383,15 +1388,24 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
          // And toggle the flag
          isLegal = false;
       }
+
+
+      if (isLegal) {
+         // NOTE!!! CLASSIC BEHAVIOR MUST GO TO THE INVDB AND ATTEMPT TO RETRIEVE A TITLE AT THIS POINT
+         // Not necessary if any tests were failed here, as the legality calls will terminate
+         title = tgtInvDB.getCTitleByTuple(releaseMonth, releaseYear, actor);
+      }
    } // Classic legality tests complete
 
+
+   // DRAMA BEHAVIOR
    if (genre == 'D') {
 
       // Sample input: B 1000 D D Gus Van Sant, Good Will Hunting,
       // Parse director
       char temp = NULL;
       stream >> temp;
-      std::noskipws;
+      stream << std::noskipws;
       while (temp != ',') {
          director += temp;
          stream >> temp;
@@ -1399,15 +1413,21 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
 
       // Advance
       stream >> temp;
-
+      stream >> temp;
       // Parse title
       while (temp != ',') {
          title += temp;
          stream >> temp;
       } // Title parsed
 
-      std::cout << "(DisLegalCmd):" << director << ":" << title << ")"; // DEBUG
-      // TODO: Perform all legality checks for Dramas
+      if (title == "") {
+         // Append the error log
+         errorLog = errorLog + "   - No title provided" + "\n";
+         // And toggle the flag
+         isLegal = false;
+      }
+
+      // Information in hand, perform legality checks for Dramas
       // Verify that a director is provided
       if (director == "") {
          // Append the error log
@@ -1415,22 +1435,17 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
          // And toggle the flag
          isLegal = false;
       }
-      // Verify that a title is provided
-      if (title == "") {
-         // Append the error log
-         errorLog = errorLog + "   - No title provided" + "\n";
-         // And toggle the flag
-         isLegal = false;
-      }
    }
 
+   // COMEDY BEHAVIOR
    if (genre == 'F') {
       // Parse title
+
       char temp = NULL;
       stream >> temp;
-      std::noskipws;
+      stream << std::noskipws;
       while (temp != ',') {
-         director += temp;
+         title += temp;
          stream >> temp;
       } // Title parsed
 
@@ -1438,6 +1453,8 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
 
       // Parse releaseYear
       stream >> releaseYear;
+
+      // std::cout << "(" << title << ":" << releaseYear << ")"; // DEBUG
 
       // Verify that a title is provided
       if (title == "") {
@@ -1453,17 +1470,19 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
          // And toggle the flag
          isLegal = false;
       }
-   }
+   } // Closing Comedy behavior
 
    // If any test has failed, do not forward to database
    if (isLegal == false) {
-      std::cout << "Customer command error:" << std::endl;
+      std::cout << "Transaction Command error ('" << command << "'):" << std::endl;
       std::cout << errorLog << std::endl;
       return(isLegal);
    }
    // Otherwise, this is a correctly formatted command
-   // But it may still be in conflict with the database state, so check that
-   isLegal = (tgtCustDB.isValid(command));
+   // But it may still be in conflict with the database states, so check those
+   if (!tgtCustDB.isValidTransCmd(custID, title) || !tgtInvDB.isValidTransCmd(command)) {
+      isLegal = false;
+   }
    // Note: Target databases handle their own error reporting to cout
    // Return whether the database confirmed legality or not
    return(isLegal);
@@ -1495,22 +1514,16 @@ void padOut(Trans* transPtr, InvDB& tgtInvDB) {
 
    // Classics
    if (transPtr->getGenre() == 'C') {
-      // TITLE
+      // TITLE -  Get the film title out of the InvDB based on director/title
       std::string title = tgtInvDB.getCTitleByTuple(transPtr->getReleaseMonth(), transPtr->getReleaseYear(), transPtr->getActor());
       transPtr->setTitle(title);
    }
 
    // Drama
-   else if (transPtr->getGenre() == 'D') {
-      // RELEASEYEAR
-      int year = tgtInvDB.getDYearByTuple(transPtr->getDirector(), transPtr->getTitle()); // TODO: Get the release date out of the InvDB based on director/title
+   if (transPtr->getGenre() == 'D') {
+      // RELEASEYEAR -  Get the release date out of the InvDB based on director/title
+      int year = tgtInvDB.getDYearByTuple(transPtr->getDirector(), transPtr->getTitle());
       transPtr->setReleaseYear(year);
-   }
-
-   // Comedy, missing fields:
-   else if (transPtr->getGenre() == 'F') {
-      // All necessary data is acquired
-      // So do nothing
    }
 
    // Transaction holds sufficient data for CustDB to process
