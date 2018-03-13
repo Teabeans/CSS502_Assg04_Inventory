@@ -147,7 +147,7 @@ public:
 //-----------------|
 // Desc:   Displays all internal states to cout
 // Invars: None
-   void debug();
+   void debug() const;
 
 //-----------------|
 // #toString();
@@ -177,16 +177,16 @@ public:
 //-----------------|
 // Desc:   Returns transaction data fields
 // Invars: None
-   char        getType();
-   std::string getTypeAsString();
+   char        getType() const;
+   std::string getTypeAsString() const;
    char        getGenre() const;
-   std::string getGenreAsString();
-   std::string getTitle();
-   std::string getDirector();
-   std::string getActor();
-   int         getReleaseMonth();
-   int         getReleaseYear();
-   int         getCustID();
+   std::string getGenreAsString() const;
+   std::string getTitle() const;
+   std::string getDirector() const;
+   std::string getActor() const;
+   int         getReleaseMonth() const;
+   int         getReleaseYear() const;
+   int         getCustID() const;
 
 //-----------------|
 // #setType()

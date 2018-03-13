@@ -122,14 +122,7 @@ public:
    //-------------------------------------|
    // Desc:    Updates the stock value of a film based on the arg transaction
    // Invars:  NULL
-   void adjustStock(const Trans&);
-
-   // (+) --------------------------------|
-   // #contains(Film*)
-   //-------------------------------------|
-   // Desc:    Checks the DB for a particular film
-   // Invars:  NULL
-   // bool contains(Film*);
+   bool adjustStock(const Trans&);
 
    // (+) --------------------------------|
    // #display()
@@ -145,13 +138,6 @@ public:
    //          Outputs an error to cout for illegal conditions
    // Invars:  NULL
    bool isLegal(std::string);
-
-   // (+) --------------------------------|
-   // #retrieve(Film*)
-   //-------------------------------------|
-   // Desc:    Searches for a film object and returns it instead of a bool
-   // Invars:  NULL
-   // Film* retrieve(Film*);
    
    // (+) --------------------------------|
    // #runCmd(Film*)

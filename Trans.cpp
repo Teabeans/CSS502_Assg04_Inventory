@@ -171,7 +171,7 @@
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
-void Trans::debug() {
+void Trans::debug() const {
    std::cout << "Trans::debug() - @ address (" << this << ") - CAPS denote required fields" << std::endl;
    std::cout << "TypeChar:     " << this->type << std::endl;
    std::cout << "TYPESTRING:   " << this->typeAsString << std::endl;
@@ -237,10 +237,10 @@ std::string Trans::toString() {
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
-char Trans::getType() {
+char Trans::getType() const {
    return(this->type);
 }
-std::string Trans::getTypeAsString() {
+std::string Trans::getTypeAsString() const {
    return(this->typeAsString);
 }
 
@@ -257,7 +257,7 @@ std::string Trans::getTypeAsString() {
 char Trans::getGenre() const {
    return(this->genre);
 }
-std::string Trans::getGenreAsString() {
+std::string Trans::getGenreAsString() const {
    return(this->genreAsString);
 }
 
@@ -270,7 +270,7 @@ std::string Trans::getGenreAsString() {
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
-std::string Trans::getTitle() {
+std::string Trans::getTitle() const {
    return(this->title);
 }
 
@@ -283,7 +283,7 @@ std::string Trans::getTitle() {
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
-std::string Trans::getDirector() {
+std::string Trans::getDirector() const {
    return(this->director);
 }
 
@@ -296,7 +296,7 @@ std::string Trans::getDirector() {
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
-std::string Trans::getActor() {
+std::string Trans::getActor() const {
    return(this->actor);
 }
 
@@ -309,7 +309,7 @@ std::string Trans::getActor() {
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
-int Trans::getReleaseMonth() {
+int Trans::getReleaseMonth() const {
    return(this->releaseMonth);
 }
 
@@ -322,7 +322,7 @@ int Trans::getReleaseMonth() {
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
-int Trans::getReleaseYear() {
+int Trans::getReleaseYear() const {
    return(this->releaseYear);
 }
 
@@ -336,7 +336,7 @@ int Trans::getReleaseYear() {
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
-int Trans::getCustID() {
+int Trans::getCustID() const {
    return(this->customerID);
 }
 
@@ -492,7 +492,7 @@ Trans* Trans::factory(std::string command) {
 
    // otherwise, this is an invalid command
 
-/* - TODO: Resolve @MG: Error checking should be performed by isLegal() function before this point is reached. If factory() is called, the command should be guaranteed to be a valid one.
+ - TODO: Resolve @MG: Error checking should be performed by isLegal() function before this point is reached. If factory() is called, the command should be guaranteed to be a valid one.
    else {
       std::cerr << "Invalid command: " << command.at(0) << std::endl;
       return new Trans(command);

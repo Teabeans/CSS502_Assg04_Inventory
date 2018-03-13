@@ -615,50 +615,110 @@ int main() {
       // Attempt to add these films to the inventory database
       std::cout << "--- (7.4) Adding films to the testInvDB... ---" << std::endl << std::endl;
       testInvDB.addFilm("F, 10, Nora Ephron, Sleepless in Seattle, 1993");
-      testInvDB.addFilm("F, 10, Parody-Man, Sleepless in Seattle, 1997");
+      testInvDB.addFilm("D, 10, Barry Levinson, Good Morning Vietnam, 1997");
       testInvDB.addFilm("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
       testInvDB.addFilm("D, 10, Jonathan Demme, Something Different, 1991");
       testInvDB.addFilm("C, 10, Victor Fleming, The Wizard of Oz, Judy Garland 7 1939");
    
       // Test Display method
       std::cout << std::endl;
-      std::cout << "--- (7.5) State of testInvDB: ---" << std::endl;
-      testInvDB.display();
-      std::cout << std::endl;
-
       std::cout << "--- (7.6) State of testInvDBBulk: ---" << std::endl;
       testInvDBBulk.display();
+      std::cout << std::endl;
+
+      std::cout << "--- (7.5) State of testInvDB: ---" << std::endl;
+      testInvDB.display();
       std::cout << std::endl;
 
       testInvDB.addFilm("C, 10, Victor Fleming, The Wizard of Oz, Bob Barker 7 1939");
    
       // Create borrow transactions
-      std::cout << "--- (7.7) Creating borrow transactions... ---" << std::endl << std::endl;
-      Trans BTestC = Trans("B 1234 C The Wizard of Oz, 7 1939");
-      Trans BTestD = Trans("B 1234 D Silence of the Lambs, 1991");
-      Trans BTestF = Trans("B 1234 F Sleepless in Seattle, 1993");
+      std::cout << "--- (7.7) Test Transactions ---" << std::endl << std::endl;
 
-      // Create return transactions
-      std::cout << "--- (7.8) Creating return transactions... ---" << std::endl << std::endl;
-      Trans RTestC = Trans("R 1234 C The Wizard of Oz, 7 1939");
-      Trans RTestD = Trans("R 1234 D Silence of the Lambs, 1991");
-      Trans RTestF = Trans("R 1234 F Sleepless in Seattle, 1993");
+      // Basic borrow and return test
+      std::cout << "--- Borrow and Return: Comedies" << std:: endl;
+      Trans BTestF = Trans("B 2000 D F Sleepless in Seattle, 1993");
+      testInvDB.adjustStock(BTestF);
 
-      // Create an invalid return (one that has no borrow)
-      std::cout << "--- (7.9) Creating an erroneous return (no corresponding borrow) ---";
-      Trans RTestErr = Trans("R 1234 C Guardians of te Galaxy, 2016");
-
-      // Send a transaction
-      // TODO: Finish Transaction class constructor string parsing
-      // testInvDB.adjustStock(BTestF);
-      // testInvDB.adjustStock(RTestD);
-      // testInvDB.adjustStock(BTestF);
-
-      // Test Display method
-      std::cout << std::endl;
-      std::cout << "--- (7.10) Post-Transaction State of testInvDB: ---" << std::endl;
+      std::cout << "--- After one borrow ---" << std:: endl;
       testInvDB.display();
       std::cout << std::endl;
+
+      Trans RTestF = Trans("R 2000 D F Sleepless in Seattle, 1993");
+      testInvDB.adjustStock(RTestF);
+
+      std::cout << "--- After one return ---" << std:: endl;
+      testInvDB.display();
+      std::cout << std::endl;
+
+      // Borrow past stock value
+      std::cout << "--- Borrow past inventory: Dramas" << std:: endl;
+      Trans BTestD = Trans("B 1000 D D Barry Levinson, Good Morning Vietnam,");
+      // borrow 9 copies of this movie
+      testInvDB.adjustStock(BTestD);
+      testInvDB.adjustStock(BTestD);
+      testInvDB.adjustStock(BTestD);
+      testInvDB.adjustStock(BTestD);
+      testInvDB.adjustStock(BTestD);
+      testInvDB.adjustStock(BTestD);
+      testInvDB.adjustStock(BTestD);
+      testInvDB.adjustStock(BTestD);
+
+      std::cout << "--- DB after 9th borrow (stock should be 0) ---" << std::endl;
+      testInvDB.adjustStock(BTestD);
+
+      testInvDB.display();
+      std::cout << std::endl;
+
+      std::cout << "--- DB after 10th borrow --- (should throw stock error)" << std::endl;
+      testInvDB.adjustStock(BTestD);
+
+      testInvDB.display();
+      std::cout << std::endl;
+
+      std::cout << "--- DB after 10th borrow and 1 return --- (stock should be 1)" << std::endl;
+      Trans RTestD = Trans("R 1000 D D Barry Levinson, Good Morning Vietnam,");
+      testInvDB.adjustStock(RTestD);
+
+      testInvDB.display();
+      std::cout << std::endl;
+
+      // TODO
+      // test transactions with classics
+      // borrow past inventory with one classic and take inventory from another
+      // return a classic
+      // Borrow past stock value
+      std::cout << "--- Borrow past inventory: Classics" << std:: endl;
+      Trans BTestC = Trans("B 1000 D C 7 1939 Bob Barker");
+      // borrow 9 copies of this movie
+      testInvDB.adjustStock(BTestC);
+      testInvDB.adjustStock(BTestC);
+      testInvDB.adjustStock(BTestC);
+      testInvDB.adjustStock(BTestC);
+      testInvDB.adjustStock(BTestC);
+      testInvDB.adjustStock(BTestC);
+      testInvDB.adjustStock(BTestC);
+      testInvDB.adjustStock(BTestC);
+
+      std::cout << "--- DB after 9th borrow (stock should be 0) ---" << std::endl;
+      testInvDB.adjustStock(BTestC);
+
+      testInvDB.display();
+      std::cout << std::endl;
+
+      std::cout << "--- DB after 10th borrow --- (should borrow from Judy Garland 7 1939)" << std::endl;
+      testInvDB.adjustStock(BTestC);
+
+      testInvDB.display();
+      std::cout << std::endl;
+
+      std::cout << "--- DB after 10th borrow and 1 return --- (stock should be 1, Judy Garland should be 9)" << std::endl;
+      Trans RTestC = Trans("B 1000 D C 5 1939 Bob Barker");
+      testInvDB.adjustStock(RTestC);
+
+      testInvDB.display();
+      std::cout << std::endl;
+
 
       std::cout << "--- END INVENTORY DATABASE TESTS ---" << std::endl << std::endl;
 
@@ -671,7 +731,7 @@ int main() {
 //       BULK CUSTOMERDB INPUT TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-   if (true) {
+   if (false) {
 
       std::cout << "--- (8.0) START BULK CUSTOMERDB INPUT TESTS ---" << std::endl << std::endl;
 
@@ -730,7 +790,7 @@ int main() {
 //       BULK INVENTORYDB INPUT TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-   if (true) {
+   if (false) {
 
       std::cout << "--- START BULK INVENTORYDB INPUT TESTS ---" << std::endl << std::endl;
    
@@ -1101,66 +1161,66 @@ bool isLegalInvCmd(std::string command, InvDB tgtDB) {
 
    // Test if genre is within range first
    if ((genre != 'C') || (genre != 'F') || (genre != 'D')) {
-   std::cout << "Inventory command error:" << std::endl;
-   std::cout << "   - Invalid genre, halting." << std::endl;
-   return(false);
+      std::cout << "Inventory command error:" << std::endl;
+      std::cout << "   - Invalid genre, halting." << std::endl;
+      return(false);
    }
 
    // Verify that quantity is non-zero
    if (qty == 0) {
-   // If not, append report
-   errorLog = errorLog + "   - Zero quantity (non-inventory)" + "\n";
-   // And toggle the flag
-   isLegal = false;
+      // If not, append report
+      errorLog = errorLog + "   - Zero quantity (non-inventory)" + "\n";
+      // And toggle the flag
+      isLegal = false;
    }
 
    // TODO: Other tests on quantity? Negative values?
 
    // Verify that a director is entered
    if (field1 == "") {
-   // If not, append report
-   errorLog = errorLog + "   - No director specified" + "\n";
-   // And toggle the flag
-   isLegal = false;
+      // If not, append report
+      errorLog = errorLog + "   - No director specified" + "\n";
+      // And toggle the flag
+      isLegal = false;
    }
 
    // Verify that a film name is entered
    if (field2 == "") {
-   // If not, append report
-   errorLog = errorLog + "   - No film title entered" + "\n";
-   // And toggle the flag
-   isLegal = false;
+      // If not, append report
+      errorLog = errorLog + "   - No film title entered" + "\n";
+      // And toggle the flag
+      isLegal = false;
    }
 
    // In the case of classic films only, verify that an actor is specified
    if (genre == 'C' && field3 == "") {
-   // If not, append report
-   errorLog = errorLog + "   - No actor/actress specified" + "\n";
-   // And toggle the flag
-   isLegal = false;
+      // If not, append report
+      errorLog = errorLog + "   - No actor/actress specified" + "\n";
+      // And toggle the flag
+      isLegal = false;
    }
 
    // In the case of classic films only, verify that a release month is specified
    if (genre == 'C' && (releaseMonth < 1 || releaseMonth > 12)) {
-   // If not, append report
-   errorLog = errorLog + "   - Release month not properly entered" + "\n";
-   // And toggle the flag
-   isLegal = false;
+      // If not, append report
+      errorLog = errorLog + "   - Release month not properly entered" + "\n";
+      // And toggle the flag
+      isLegal = false;
    }
 
    // Verify that a release year was entered
    if (releaseYear == 0 || releaseYear > currentYear) {
-   // If not, append report
-   errorLog = errorLog + "   - Release year not properly specified" + "\n";
-   // And toggle the flag
-   isLegal = false;
+      // If not, append report
+      errorLog = errorLog + "   - Release year not properly specified" + "\n";
+      // And toggle the flag
+      isLegal = false;
    }
 
    // If any test has failed, do not forward to database
    if (isLegal == false) {
-   std::cout << "Customer command error:" << std::endl;
-   std::cout << errorLog << std::endl;
-   return(isLegal);
+      std::cout << "Customer command error:" << std::endl;
+      std::cout << errorLog << std::endl;
+      return(isLegal);
    }
    // Otherwise, this is a correctly formatted command
    // But it may still be in conflict with the database state, so check that
@@ -1209,105 +1269,103 @@ bool isLegalTransCmd(std::string command, CustDB tgtCustDB, InvDB tgtInvDB) {
 
    // Test if the commandType is within range first
    if ((commandType != 'I') || (commandType != 'H') || (commandType != 'B') || (commandType != 'R')) {
-   std::cout << "Transaction command error:" << std::endl;
-   std::cout << "   - Invalid command type, halting." << std::endl;
-   return(false);
+      std::cout << "Transaction command error:" << std::endl;
+      std::cout << "   - Invalid command type, halting." << std::endl;
+      return(false);
    }
 
    // Finish testing for an 'I' (inventory query) command
    if (commandType == 'I' /*&& there's anything else in the string*/) { // TODO
-   std::cout << "Transaction command error:" << std::endl;
-   std::cout << "   - Invalid entry of 'I' (inventory) command, halting." << std::endl;
-   return(false);
+      std::cout << "Transaction command error:" << std::endl;
+      std::cout << "   - Invalid entry of 'I' (inventory) command, halting." << std::endl;
+      return(false);
    }
 
    // All legality checks for an 'I' command complete, so exit
    if (commandType == 'I') {
-   return(isLegal);
+      return(isLegal);
    }
 
    // TODO: Parse customerID
 
    // Test if customerID is within range
    if (custID < 0 || custID > 9999) {
-   // Append the error log
-   errorLog = errorLog + "   - Customer ID out of range" + "\n";
-   // And toggle the flag
-   isLegal = false;
+      // Append the error log
+      errorLog = errorLog + "   - Customer ID out of range" + "\n";
+      // And toggle the flag
+      isLegal = false;
    }
 
    // Test if customer is in the database
    if (!tgtCustDB.doesContain(custID)) {
-   // Append the error log
-   errorLog = errorLog + "   - Non-existent customer" + "\n";
-   // And toggle the flag
-   isLegal = false;
+      // Append the error log
+      errorLog = errorLog + "   - Non-existent customer" + "\n";
+      // And toggle the flag
+      isLegal = false;
    }
 
    // Check validity of a 'H' (history) command
    if (commandType == 'H'/*&& there's anything else in the string*/) { // TODO
-   std::cout << "Transaction command error:" << std::endl;
-   std::cout << "   - Invalid entry of 'H' (history) command, halting." << std::endl;
-   std::cout << errorLog << std::endl;
-   return(false);
+      std::cout << "Transaction command error:" << std::endl;
+      std::cout << "   - Invalid entry of 'H' (history) command, halting." << std::endl;
+      std::cout << errorLog << std::endl;
+      return(false);
    }
 
    // TODO: Parse format
 
    // Test if format is within range
    if (format != 'D') {
-   // Append the error log
-   errorLog = errorLog + "   - Invalid media format." + "\n";
-   // And toggle the flag
-   isLegal = false;
+      // Append the error log
+      errorLog = errorLog + "   - Invalid media format." + "\n";
+      // And toggle the flag
+      isLegal = false;
    }
 
    // TODO: Parse genre
 
    // Test if genre is within range
    if ((genre != 'C') || (genre != 'F') || (genre != 'D')) {
-   std::cout << "Inventory command error:" << std::endl;
-   std::cout << "   - Invalid genre, halting." << std::endl;
-   std::cout << errorLog << std::endl;
-   return(false);
+      std::cout << "Inventory command error:" << std::endl;
+      std::cout << "   - Invalid genre, halting." << std::endl;
+      std::cout << errorLog << std::endl;
+      return(false);
+   }
+
+   // Parse ReleaseYear (common to all genres)
+   // Normally we'd use 1800 || (whatever the current year is)
+   if (releaseYear < 1800 || releaseYear > 2018) {
+      return(false);
    }
 
    // Legality tests for classics only
    if (genre == 'C') {
-   // TODO: Parse releaseMonth
-   // TODO: Parse releaseYear
-   // TODO: Parse actor
-
-   // TODO: Perform all legality checks for Classics
-   // Verify that releaseMonth is within range
-   // Verify that releaseYear is within range
-   // Verify that an actor is provided
+      // Parse releaseMonth
+      if (releaseMonth > 12 || releaseMonth < 1) {
+         return(false);
+      }
    }
 
    if (genre == 'D') {
-   // TODO: Parse director
-   // TODO: Parse title
-
-   // TODO: Perform all legality checks for Dramas
-   // Verify that a director is provided
-   // Verify that a title is provided
+      // Parse director & title
+      if (director == "" || title == "") {
+         return(false);
+      }
    }
 
    if (genre == 'F') {
-   // TODO: Parse title
-   // TODO: Parse releaseYear
-
-   // TODO: Perform all legality checks for Comedies
-   // Verify that a title is provided
-   // Verify that releaseYear is within range
+      // Parse title
+      if (title == "") {
+         return(false);
+      }
    }
 
 
    // If any test has failed, do not forward to database
    if (isLegal == false) {
-   std::cout << "Customer command error:" << std::endl;
-   std::cout << errorLog << std::endl;
-   return(isLegal);
+      std::cout << "Customer command error:" << std::endl;
+      std::cout << errorLog << std::endl;
+      return(isLegal);
    }
    // Otherwise, this is a correctly formatted command
    // But it may still be in conflict with the database state, so check that

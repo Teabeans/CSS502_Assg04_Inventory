@@ -204,93 +204,125 @@ bool InvDB::addFilm(std::string filmData) {
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
-void InvDB::adjustStock(const Trans& trans) { // TODO: Add const to Trans& argument?
+bool InvDB::adjustStock(const Trans& trans) {
 
+   bool foundFilm = false;
+   bool noStock = false;
+   bool anyErrors = false;
 
+   // Retrieve film
+   // search the table for the film being added to see if it's already present
+
+   // if this film is a comedy
    if (trans.getGenre() == 'F') {
 
-      // confirm that there is a film for this transaction
-//      if (this->isLegal("<Placeholder>")) {}
-   //    film.setTitle(trans.getTitle());
+      // look through the comedies vector for a Comedy that matches the transaction
+      for (int i = 0; i < comedies.size(); i++) {
+         if (comedies.at(i).getTitle() == trans.getTitle()
+             && comedies.at(i).getReleaseYear() == trans.getReleaseYear()) {
 
-   //    film.setReleaseYear(std::stoi(trans.getRelease()));
+            // once it's found, adjust the film's stock value
+            if (trans.getType() == 'B') {
+               if (comedies.at(i).getStock() > 0) {
+                  comedies.at(i).setStock(comedies.at(i).getStock() - 1);
+               }
+               else {
+                  noStock = true;
+               }
+            }
+            else if (trans.getType() == 'R') {
+               comedies.at(i).setStock(comedies.at(i).getStock() + 1);
+            }
+            foundFilm = true;
+            break;
+         }
+      }
+   }
+   // if this film is a drama
+   else if (trans.getGenre() == 'D') {
 
-   //    film.setReleaseDate(trans.getReleaseYear());
+      // look through the dramas vector for a Drama that matches the transaction
+      for (int i = 0; i < dramas.size(); i++) {
+         if (dramas.at(i).getDirector() == trans.getDirector()
+             && dramas.at(i).getTitle() == trans.getTitle()) {
 
+            // once it's found, adjust the film's stock value
+            if (trans.getType() == 'B') {
+               if (dramas.at(i).getStock() > 0) {
+                  dramas.at(i).setStock(dramas.at(i).getStock() - 1);
+               }
+               else {
+                  noStock = true;
+               }
+            }
+            else if (trans.getType() == 'R') {
+               dramas.at(i).setStock(dramas.at(i).getStock() + 1);
+            }
+            foundFilm = true;
+            break;
+         }
+      }
+   }
+   // if this film is a classic
+   else if (trans.getGenre() == 'C') {
+      int year;
+      std::string title;
 
-   //    if (trans.getType() == 'B') {
-   //       retrieve(&film)->setStock(retrieve(&film)->getStock() + 1);
-   //    }
-   //    else {
-   //       retrieve(&film)->setStock(retrieve(&film)->getStock() - 1);
-   //    }
-   // }
+      // look through the classics vector for a Classic that matches the transaction
+      for (int i = 0; i < classics.size(); i++) {
+         if (classics.at(i).getReleaseYear() == trans.getReleaseYear()
+             && classics.at(i).getReleaseMonth() == trans.getReleaseMonth()
+             && classics.at(i).getActor() == trans.getActor()) {
 
-   // else if (trans.getGenre() == 'D') {
-      
-   // }
+            // once it's found, adjust the film's stock value
+            if (trans.getType() == 'B') {
+               if (classics.at(i).getStock() > 0) {
+                  classics.at(i).setStock(classics.at(i).getStock() - 1);
+               }
+               else {
+                  noStock = true;
+                  // save the year and title for looking at alternate classics
+                  year = classics.at(i).getReleaseYear();
+                  title = classics.at(i).getTitle();
+               }
+            }
+            else if (trans.getType() == 'R') {
+               classics.at(i).setStock(classics.at(i).getStock() + 1);
+            }
+            foundFilm = true;
+            break;
+         }
+      }
+      // special condition for sharing stock between classics with the same title but different actors
+      if (noStock == true) {
+         for (int i = 0; i < classics.size(); i++) {
+            if (classics.at(i).getTitle() == title
+                && classics.at(i).getReleaseYear() == year
+                && classics.at(i).getStock() > 0) {
 
-   // else if (trans.getGenre() == 'C') {
-   //    Classic filmAA("C, 0, , , ");
-      
+               // once it's found, adjust the film's stock value
+               classics.at(i).setStock(classics.at(i).getStock() - 1);
+               noStock = false;
+            }
+            break;
+         }
+      }
    }
 
+   if (foundFilm == false) {
+      trans.debug();
+      std::cout << "Invalid transaction, film does not exist in database" << std::endl;
+      anyErrors = true;
+   }
+   if (noStock == true) {
+      trans.debug();
+      std::cout << "No stock available for this film" << std::endl;
+      anyErrors = true;
+   }
+   // if no errors, return success
+   return(!anyErrors);
 }
 
-// (+) --------------------------------|
-// #contains(Film*)
-//-------------------------------------|
-// Desc:    Checks the DB for a particular film
-// Params:  Ptr to film object
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  True if the film is present, False otherwise
-// MetCall: NULL
-// bool InvDB::contains(Film* film) {
-
-//    // search the table for the film being added to see if it's already present
-//    bool alreadyContainsFilm = false;
-//    int index = 0; 
-
-//    // if this film is a comedy
-//    if (film->getGenre() == 'F') {
-//       while (index < comedies.size()) {
-//          if (comedies.at(index) == *film) {
-//             alreadyContainsFilm = true;
-//             break;
-//          }
-//          else {
-//             index++;
-//          }
-//       }
-//    }
-//    // if this film is a drama
-//    else if (film->getGenre() == 'D') {
-//       while (index < dramas.size()) {
-//          if (dramas.at(index) == *film) {
-//             alreadyContainsFilm = true;
-//             break;
-//          }
-//          else {
-//             index++;
-//          }
-//       }
-//    }
-//    // if this film is a classic
-//    else if (film->getGenre() == 'C') {
-//       while (index < classics.size()) {
-//          if (classics.at(index) == *film) {
-//             alreadyContainsFilm = true;
-//             break;
-//          }
-//          else {
-//             index++;
-//          }
-//       }
-//    }
-//    return alreadyContainsFilm;
-
-// }
 
 // (+) --------------------------------|
 // #isLegal()
@@ -307,63 +339,6 @@ bool InvDB::isLegal(std::string command) {
    return true;
 }
 
-// (+) --------------------------------|
-// #retrieve(Film*)
-//-------------------------------------|
-// Desc:    Searches for a film object and returns it instead of a bool
-// Params:  Film object to be found
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  Pointer to the film object
-// MetCall: NULL
-// Film* InvDB::retrieve(Film* film) {
-
-//    // search the table for the film being added to see if it's already present
-//    int i = 0; 
-
-//    // if this film is a comedy
-//    if (film->getGenre() == 'F') {
-//       while (i < comedies.size()) {
-//          if (comedies.at(i) == *film) {
-//             break;
-//          }
-//          else {
-//             i++;
-//          }
-//       }
-
-//       return &comedies.at(i);
-//    }
-
-//    else if (film->getGenre() == 'D') {
-//       while (i < dramas.size()) {
-//          if (dramas.at(i) == *film) {
-//             break;
-//          }
-//          else {
-//             i++;
-//          }
-//       }
-
-//       return &dramas.at(i);
-//    }
-
-//    else if (film->getGenre() == 'C') {
-//       while (i < classics.size()) {
-//          if (classics.at(i) == *film) {
-//             break;
-//          }
-//          else {
-//             i++;
-//          }
-//       }
-
-//       return &classics.at(i);
-//    }
-//    else {
-//       return NULL;
-//    }
-// }
 
 // (+) --------------------------------|
 // #display()
