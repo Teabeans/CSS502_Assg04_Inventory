@@ -81,25 +81,25 @@
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
 // Bulk reader - Customers
-void bulkReadCust(std::ifstream& custtxt, CustDB tgtDB);
+void bulkReadCust(std::ifstream& custtxt, CustDB& tgtDB);
 
 // Bulk reader - Inventory
-void bulkReadInv(std::ifstream& invtxt, InvDB tgtDB);
+void bulkReadInv(std::ifstream& invtxt, InvDB& tgtDB);
 
 // Bulk reader - Transactions
-void bulkReadTrans(std::ifstream& transtxt, CustDB tgtCustDB, InvDB tgtInvDB);
+void bulkReadTrans(std::ifstream& transtxt, CustDB& tgtCustDB, InvDB& tgtInvDB);
 
 // Legality check - Customer commands
-bool isLegalCustCmd(std::string command, CustDB tgtDB);
+bool isLegalCustCmd(std::string command, CustDB& tgtDB);
 
 // Legality check - Inventory commands
-bool isLegalInvCmd(std::string command, InvDB tgtDB);
+bool isLegalInvCmd(std::string command, InvDB& tgtDB);
 
 // Legality check - Transaction commands
-bool isLegalTransCmd(std::string command, CustDB tgtDB, InvDB tgtInvDB);
+bool isLegalTransCmd(std::string command, CustDB& tgtDB, InvDB& tgtInvDB);
 
 // Appends missing information to a transaction
-void padOut(Trans* transPtr, InvDB tgtInvDB);
+void padOut(Trans* transPtr, InvDB& tgtInvDB);
 
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
@@ -735,53 +735,27 @@ int main() {
 
       std::cout << "--- (8.0) START BULK CUSTOMERDB INPUT TESTS ---" << std::endl << std::endl;
 
-      // Test the customerDB bulk inputs
       std::cout << "--- (8.1) Testing customerDB bulk inputs... ---" << std::endl << std::endl;
 
-      // Test the customerDB bulk inputs
       std::cout << "--- (8.2) Create an empty CustDB object ---" << std::endl << std::endl;
 
       CustDB custDB;
 
-      // Capture command file to filestream
       std::cout << "--- (8.3) Capture bulk input to fileStream ---" << std::endl << std::endl;
 
       std::ifstream customerFile("data4customers.txt");
 
-      // Have the Inventory Controller (main()) parse the file and perform insertion actions
       std::cout << "--- (8.4) Sending bulk commands to CustDB object... ---" << std::endl << std::endl;
 
-      std::string command;
-      while (!customerFile.eof()) {
+      bulkReadCust(customerFile, custDB);
 
-         std::cout << "--- (8.5) Parse ---" << std::endl << std::endl;
-
-         std::getline(customerFile, command);
-         std::cout << "(" << command << ")" << std::endl;
-
-         std::cout << "--- (8.6) Test of isLegal() logic ---" << std::endl << std::endl;
-
-         bool isLegal = isLegalCustCmd(command, custDB);
-
-         std::cout << "The command isLegal(): " << isLegal << std::endl;
-
-         if (isLegal) {
-
-            // Make a new customer
-            Cust* newCust = new Cust(command);
-
-            // And send it to the database
-            custDB.insertCustomer(newCust);
-         }
-
-      }
-
-      // Check if the commands were SUPER EFFECTIVE!
       std::cout << "--- (8.7) Check state of CustDB after bulk input: ---" << std::endl << std::endl;
+
+      std::cout << custDB.toString() << std::endl;
 
       std::cout << "--- END BULK CUSTOMERDB INPUT TESTS ---" << std::endl << std::endl;
 
-   } // END BULK CUSTOMERDB INPUT TESTS 
+   } // END BULK CUSTOMERDB INPUT TESTS
 
 
 
@@ -792,71 +766,74 @@ int main() {
 //-------|---------|---------|---------|---------|---------|---------|---------|
    if (false) {
 
-      std::cout << "--- START BULK INVENTORYDB INPUT TESTS ---" << std::endl << std::endl;
-   
-      // Test the inventoryDB bulk inputs
-      std::cout << "Testing inventoryDB bulk inputs..." << std::endl << std::endl;
+      std::cout << "--- (9.0) START BULK INVENTORYDB INPUT TESTS ---" << std::endl << std::endl;
 
-      // Test the inventoryDB bulk inputs
-      std::cout << "Creating an empty InvDB object..." << std::endl << std::endl;
+      std::cout << "--- (9.1) Testing inventoryDB bulk inputs... ---" << std::endl << std::endl;
 
-      // Capture command file to filestream
-      std::cout << "Capture bulk input to fileStream..." << std::endl << std::endl;
-   
-      // Have the Inventory Controller (main()) parse the file and perform insertion actions
-      std::cout << "Sending bulk commands to InvDB object..." << std::endl << std::endl;
-   
-      // Test isLegalInv() logic
-      std::cout << "The first command isLegal(): " << "<isLegal() result goes here>" << " (0 expected, plus error report)" << std::endl << std::endl;
+      std::cout << "--- (9.2) Create an empty InvDB object ---" << std::endl << std::endl;
 
-      // Check if the commands were SUPER EFFECTIVE!
-      std::cout << "Check state of InvDB after bulk input:" << std::endl << std::endl;
-   
+      InvDB invDB;
+
+      std::cout << "--- (9.3) Capture bulk input to fileStream ---" << std::endl << std::endl;
+
+      std::ifstream inventoryFile("data4movies.txt");
+
+      std::cout << "--- (9.4) Sending bulk commands to InvDB object... ---" << std::endl << std::endl;
+
+      bulkReadInv(inventoryFile, invDB);
+
+      std::cout << "--- (9.5) Check state of InvDB after bulk input: ---" << std::endl << std::endl;
+
+      std::cout << invDB.toString() << std::endl;
+
       std::cout << "--- END BULK INVENTORYDB INPUT TESTS ---" << std::endl << std::endl;
 
-   } // END BULK CUSTOMERDB INPUT TESTS
-   
+   } // END BULK INVENTORYDB INPUT TESTS
 
-   
+
+
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
 //       BULK COMMAND INPUT TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-   if (false) {
+   if (true) {
 
-      std::cout << "--- START BULK COMMAND INPUT TESTS ---" << std::endl << std::endl;
+      std::cout << "--- (10.0) START BULK TRANSACTION INPUT TESTS ---" << std::endl << std::endl;
 
-      // Generate a test InvDB and CustDB
-      std::cout << "Generating empty InvDB and CustDB objects..." << std::endl << std::endl;
-      InvDB BulkInvDB = InvDB();
-      CustDB BulkCustDB = CustDB();
+      std::cout << "--- (10.1) Testing Transaction bulk inputs... ---" << std::endl << std::endl;
 
-      // Minimally populate these two DBs
-      std::cout << "Populating the two databases..." << std::endl << std::endl;
+      std::cout << "--- (10.2) Create empty CustDB and InvDB objects ---" << std::endl << std::endl;
 
-      // Capture the command file to a stream
-      std::cout << "Loading the command file..." << std::endl << std::endl;
+      CustDB custDB;
+      InvDB invDB;
 
-      // Parse the stream
-      std::cout << "Parsing the command stream..." << std::endl << std::endl;
+      std::cout << "--- (10.3) Capture bulk inputs to fileStream ---" << std::endl << std::endl;
 
-      // Test isLegal() logic
-      std::cout << "Testing isLegal() logic:" << std::endl;
-      std::cout << std::endl;
+      std::ifstream customerFile("data4customers.txt");
+      std::ifstream inventoryFile("data4movies.txt");
+      std::ifstream transactionFile("data4commands.txt");
 
-      // Generate transaction objects from legal commands
-      // Send these transactions to both the InvDB and CustDB
-      std::cout << "Generating and sending test transactions..." << std::endl << std::endl;
-      // call bulkProcess()
+      std::cout << "--- (10.4) Sending bulk commands to CustDB and InvDB objects ---" << std::endl << std::endl;
 
-      // Check results
-      std::cout << "Results of bulk processing" << std::endl;
-      std::cout << "InvDB status:" << std::endl << BulkInvDB.toString() << std::endl << std::endl;
-      std::cout << "CustDB status:" << std::endl << BulkCustDB.toString() << std::endl << std::endl;
-      std::cout << std::endl;
+      bulkReadCust(customerFile, custDB);
+      bulkReadInv(inventoryFile, invDB);
 
-      std::cout << "--- END BULK COMMAND INPUT TESTS ---" << std::endl << std::endl;
+      std::cout << "--- (10.5) Check state of InvDB and CustDB after bulk input: ---" << std::endl << std::endl;
+
+      std::cout << invDB.toString() << std::endl << std::endl;
+      std::cout << custDB.toString() << std::endl << std::endl;
+
+      std::cout << "--- (10.6) Process bulk transactions ---" << std::endl << std::endl;
+
+      bulkReadTrans(transactionFile, custDB, invDB);
+
+      std::cout << "--- (10.5) Check state of InvDB and CustDB after bulk transactions: ---" << std::endl << std::endl;
+
+      std::cout << invDB.toString() << std::endl << std::endl;
+      std::cout << custDB.toString() << std::endl << std::endl;
+
+      std::cout << "--- END BULK INVENTORYDB INPUT TESTS ---" << std::endl << std::endl;
 
    } // END BULK COMMAND INPUT TESTS
 
@@ -913,7 +890,7 @@ int main() {
 //          Does not handle any error reporting
 // RetVal:  None
 // MetCall: isLegalCustCmd() - Verifies all legality checks of the command
-void bulkReadCust(std::ifstream& custFile, CustDB tgtDB) {
+void bulkReadCust(std::ifstream& custFile, CustDB& tgtDB) {
    while (!custFile.eof()) {
       // Get a line of text (one command)
 
@@ -953,7 +930,7 @@ void bulkReadCust(std::ifstream& custFile, CustDB tgtDB) {
 } // Closing bulkReadCust()
 
 // (+) --------------------------------|
-// #bulkReadInv(ifstream&, InvDB)
+// #bulkReadInv(ifstream&, InvDB&)
 //-------------------------------------|
 // Desc:    Bulk reader of a correctly formatted inventory command file
 // Params:  ifstream& arg1 - The target text file containing inventory commands
@@ -965,7 +942,7 @@ void bulkReadCust(std::ifstream& custFile, CustDB tgtDB) {
 //          Does not handle any error reporting
 // RetVal:  None
 // MetCall: isLegalInvCmd() - Verifies all legality checks of the command
-void bulkReadInv(std::ifstream& invFile, InvDB tgtDB) {
+void bulkReadInv(std::ifstream& invFile, InvDB& tgtDB) {
    // While there is still filestream to read
    while (!invFile.eof()) {
       // Get a line of text (one command)
@@ -984,7 +961,7 @@ void bulkReadInv(std::ifstream& invFile, InvDB tgtDB) {
 } // Closing bulkReadInv()
 
 // (+) --------------------------------|
-// #bulkReadTrans(ifstream&, InvDB)
+// #bulkReadTrans(ifstream&, CustDB&, InvDB&)
 //-------------------------------------|
 // Desc:    Bulk reader of a correctly formatted inventory command file
 // Params:  ifstream& arg1 - The target text file containing inventory commands
@@ -996,7 +973,7 @@ void bulkReadInv(std::ifstream& invFile, InvDB tgtDB) {
 //          Does not handle any error reporting
 // RetVal:  None
 // MetCall: isLegalInvCmd() - Verifies all legality checks of the command
-void bulkReadTrans(std::ifstream& commandFile, CustDB tgtCustDB, InvDB tgtInvDB) {
+void bulkReadTrans(std::ifstream& commandFile, CustDB& tgtCustDB, InvDB& tgtInvDB) {
    // Generate Transactions from the CommandFile and send Transaction impacts to the appropriate locations
    while (!commandFile.eof()) {
       // Read the next relevant line of command
@@ -1062,7 +1039,7 @@ void bulkReadTrans(std::ifstream& commandFile, CustDB tgtCustDB, InvDB tgtInvDB)
 } // Closing bulkReadTrans()
 
 // (+) --------------------------------|
-// #isLegalCustCmd(ifstream&, CustDB)
+// #isLegalCustCmd(ifstream&, CustDB&)
 //-------------------------------------|
 // Desc:    Verifies the legality of a customer command line
 // Params:  ifstream& arg1 - The target text file containing inventory commands
@@ -1074,7 +1051,7 @@ void bulkReadTrans(std::ifstream& commandFile, CustDB tgtCustDB, InvDB tgtInvDB)
 // RetVal:  bool true - No illegal conditions are reported
 //          bool false - At least one illegal condition was detected
 // MetCall: CustDB::isValid() - Verifies all legality checks within the database
-bool isLegalCustCmd(std::string command, CustDB tgtDB) {
+bool isLegalCustCmd(std::string command, CustDB& tgtDB) {
    // Set flag
    bool isLegal = true;
    // Begin error log
@@ -1082,11 +1059,14 @@ bool isLegalCustCmd(std::string command, CustDB tgtDB) {
 
    // Initialize field variables
    int custID = 1234512345;
-   std::string nameF = "";
    std::string nameL = "";
+   std::string nameF = "";
 
    // Parse fields
-   // TODO: Load string command to string stream object
+   std::stringstream stream(command);
+   stream >> custID;
+   stream >> nameL;
+   stream >> nameF;
 
    // Verify that field1 is within expected value range
    if (custID == 1234512345) {
@@ -1129,7 +1109,7 @@ bool isLegalCustCmd(std::string command, CustDB tgtDB) {
 } // Closing isLegalCustCmd()
 
 // (+) --------------------------------|
-// #isLegalInvCmd(ifstream&, InvDB)
+// #isLegalInvCmd(ifstream&, InvDB&)
 //-------------------------------------|
 // Desc:    Verifies the legality of an inventory command line
 // Params:  ifstream& arg1 - The target text file containing inventory commands
@@ -1141,7 +1121,7 @@ bool isLegalCustCmd(std::string command, CustDB tgtDB) {
 // RetVal:  bool true - No illegal conditions are reported
 //          bool false - At least one illegal condition was detected
 // MetCall: InvDB::isValid() - Verifies all legality checks within the database
-bool isLegalInvCmd(std::string command, InvDB tgtDB) {
+bool isLegalInvCmd(std::string command, InvDB& tgtDB) {
    // Set flag
    bool isLegal = true;
    // Begin error log
@@ -1231,7 +1211,7 @@ bool isLegalInvCmd(std::string command, InvDB tgtDB) {
 } // Closing isLegalInvCmd()
 
 // (+) --------------------------------|
-// #isLegalTransCmd(ifstream&, CustDB, InvDB)
+// #isLegalTransCmd(ifstream&, CustDB&, InvDB&)
 //-------------------------------------|
 // Desc:    Verifies the legality of a transaction command line
 // Params:  ifstream& arg1 - The target text file containing inventory commands
@@ -1246,7 +1226,7 @@ bool isLegalInvCmd(std::string command, InvDB tgtDB) {
 //          bool false - At least one illegal condition was detected
 // MetCall: CustDB::isValid() - Verifies all legality checks within the customer DB
 //          InvDB::isValid() - Verifies all legality checks within the inventory DB
-bool isLegalTransCmd(std::string command, CustDB tgtCustDB, InvDB tgtInvDB) {
+bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
    // Set flag
    bool isLegal = true;
    // Begin error log
@@ -1376,7 +1356,7 @@ bool isLegalTransCmd(std::string command, CustDB tgtCustDB, InvDB tgtInvDB) {
 } // Closing isLegalTransCmd()
 
 // (+) --------------------------------|
-// #padOut(ifstream&, CustDB, InvDB)
+// #padOut(ifstream&, InvDB&)
 //-------------------------------------|
 // Desc:    Acquires and appends missing information for a transaction
 // Params:  transPtr* arg1 - 
@@ -1386,7 +1366,7 @@ bool isLegalTransCmd(std::string command, CustDB tgtCustDB, InvDB tgtInvDB) {
 // PosCons: Sufficient data has been appended to the transaction to allow for proper output
 // RetVal:  None
 // MetCall: NULL
-void padOut(Trans* transPtr, InvDB tgtInvDB) {
+void padOut(Trans* transPtr, InvDB& tgtInvDB) {
    // Sample inputs:
    // B 4444 D C 2 1971 Malcolm McDowell
    // B 1000 D D Gus Van Sant, Good Will Hunting,

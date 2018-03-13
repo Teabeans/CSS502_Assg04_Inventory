@@ -151,14 +151,23 @@ bool CustDB::doesConflict(Cust* custPtr, int query) {
 // RetVal:  NULL
 // MetCall: NULL
 int CustDB::hash(Cust* custPtr) {
-   std::string custName = custPtr->getName();
-   char letter1 = custName[0]; // TODO: Verify that this is legal
-   char letter2 = custName[1];
-   char letter3 = custName[2];
-   int intOf1 = letter1 * 1000000; // 123 goes to 123 000 000
-   int intOf2 = letter2 * 1000;    // 456 goes to     456 000
-   int intOf3 = letter3;           // 789 goes to         789
-   int hash = ( letter1 + letter2 + letter3 ) % MAXCUSTOMERS;
+   std::string custName = "";
+   char letter1 = 'X';
+   char letter2 = 'X';
+   char letter3 = 'X';
+   int intOf1 = 0;
+   int intOf2 = 0;
+   int intOf3 = 0;
+   int hash = 0;
+
+   custName = custPtr->getName();
+   letter1 = custName[0]; // TODO: Verify that this is legal
+   letter2 = custName[1];
+   letter3 = custName[2];
+   intOf1 = letter1 * 1000000; // 123 goes to 123 000 000
+   intOf2 = letter2 * 1000;    // 456 goes to     456 000
+   intOf3 = letter3;           // 789 goes to         789
+   hash = ( intOf1 + intOf2 + intOf3) % MAXCUSTOMERS;
    // If a conflict is identified
    if (this->doesConflict(custPtr, hash)) {
       // Probe until an open index is found
@@ -237,13 +246,14 @@ std::string CustDB::toString() {
    std::string retString = "CustDB::toString() \n";
    retString += "Customer Database:\n";
    retString += "ID        First Name           Last Name\n";
+   retString += "--------- -------------------- --------------------\n";
 //               1234      01234567890123456789 01234567890123456789
    // Go down the custTable
-   for (int i = 0 ; i < MAXCUSTOMERS ; i++) {
+   for (int i = 0 ; i < 10000 ; i++) {
       // And for every valid Customer...
-      if (this->custTable[i] != nullptr) {
+      if (this->custTableByID[i] != nullptr) {
          // Append them to the string
-         retString += this->custTable[i]->toString() + "\n";
+         retString += this->custTableByID[i]->toString() + "\n";
       }
    }
    return (retString);
@@ -292,6 +302,7 @@ bool const CustDB::doesContain(int custID) {
 // RetVal:  NULL
 // MetCall: NULL
 void CustDB::insertCustomer(Cust* custPtr) {
+   // Hash the customer's name
    int indexToInsertAt = this->hash(custPtr);
    // Add customer to table by name (hash)
    this->custTable[indexToInsertAt] = custPtr;
@@ -305,7 +316,7 @@ void CustDB::insertCustomer(Cust* custPtr) {
 //-----------------|
 // Desc:   Determines whether this string is a valid customerDB command
 // Invars: Return value is variable based on state of DB
-bool CustDB::isValid(std::string) {
+bool CustDB::isValid(std::string command) {
    std::string errorLog = "";
    bool isValid = true;
 
@@ -313,18 +324,16 @@ bool CustDB::isValid(std::string) {
    // 6666 Donkey Darrell
 
    // Load string to stream
-   std::stringstream stream;
+   std::stringstream stream(command);
 
    // Capture the first number
    int custID;
-   stream >> custID;
-
-   // Capture the last name
    std::string lName;
-   stream >> lName;
-
-   // Capture the first name
    std::string fName;
+
+   // Capture the customer ID
+   stream >> custID;
+   stream >> lName;
    stream >> fName;
 
    Cust* theCust = this->custTableByID[custID];
@@ -335,14 +344,13 @@ bool CustDB::isValid(std::string) {
       errorLog = errorLog + "   - Customer ID already in use" + "\n";
       // And toggle the flag
       isValid = false;
-   }
 
-   // If the customer fName and lName match...
-   if ((theCust->getFirstName() == fName) && (theCust->getLastName() == lName)) {
-      // Append the error log
-      errorLog = errorLog + "   - Repeat customer entry" + "\n";
+      // If the customer fName and lName match...
+      if ((theCust->getFirstName() == fName) && (theCust->getLastName() == lName)) {
+         // Append the error log
+         errorLog = errorLog + "   - Repeat customer entry" + "\n";
+      }
    }
-
          // If any test has failed, report as much
    if (isValid == false) {
       std::cout << "Customer Database error:" << std::endl;
