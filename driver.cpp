@@ -737,40 +737,43 @@ int main() {
 //       BULK COMMAND INPUT TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-   if (false) {
+   if (true) {
 
-      std::cout << "--- START BULK COMMAND INPUT TESTS ---" << std::endl << std::endl;
+      std::cout << "--- (10.0) START BULK TRANSACTION INPUT TESTS ---" << std::endl << std::endl;
 
-      // Generate a test InvDB and CustDB
-      std::cout << "Generating empty InvDB and CustDB objects..." << std::endl << std::endl;
-      InvDB BulkInvDB = InvDB();
-      CustDB BulkCustDB = CustDB();
+      std::cout << "--- (10.1) Testing Transaction bulk inputs... ---" << std::endl << std::endl;
 
-      // Minimally populate these two DBs
-      std::cout << "Populating the two databases..." << std::endl << std::endl;
+      std::cout << "--- (10.2) Create empty CustDB and InvDB objects ---" << std::endl << std::endl;
 
-      // Capture the command file to a stream
-      std::cout << "Loading the command file..." << std::endl << std::endl;
+      CustDB custDB;
+      InvDB invDB;
 
-      // Parse the stream
-      std::cout << "Parsing the command stream..." << std::endl << std::endl;
+      std::cout << "--- (10.3) Capture bulk inputs to fileStream ---" << std::endl << std::endl;
 
-      // Test isLegal() logic
-      std::cout << "Testing isLegal() logic:" << std::endl;
-      std::cout << std::endl;
+      std::ifstream customerFile("data4customers.txt");
+      std::ifstream inventoryFile("data4movies.txt");
+      std::ifstream transactionFile("data4commands.txt");
 
-      // Generate transaction objects from legal commands
-      // Send these transactions to both the InvDB and CustDB
-      std::cout << "Generating and sending test transactions..." << std::endl << std::endl;
-      // call bulkProcess()
+      std::cout << "--- (10.4) Sending bulk commands to CustDB and InvDB objects ---" << std::endl << std::endl;
 
-      // Check results
-      std::cout << "Results of bulk processing" << std::endl;
-      std::cout << "InvDB status:" << std::endl << BulkInvDB.toString() << std::endl << std::endl;
-      std::cout << "CustDB status:" << std::endl << BulkCustDB.toString() << std::endl << std::endl;
-      std::cout << std::endl;
+      bulkReadCust(customerFile, custDB);
+      bulkReadInv(inventoryFile, invDB);
 
-      std::cout << "--- END BULK COMMAND INPUT TESTS ---" << std::endl << std::endl;
+      std::cout << "--- (10.5) Check state of InvDB and CustDB after bulk input: ---" << std::endl << std::endl;
+
+      std::cout << invDB.toString() << std::endl << std::endl;
+      std::cout << custDB.toString() << std::endl << std::endl;
+
+      std::cout << "--- (10.6) Process bulk transactions ---" << std::endl << std::endl;
+
+      bulkReadTrans(transactionFile, custDB, invDB);
+
+      std::cout << "--- (10.5) Check state of InvDB and CustDB after bulk transactions: ---" << std::endl << std::endl;
+
+      std::cout << invDB.toString() << std::endl << std::endl;
+      std::cout << custDB.toString() << std::endl << std::endl;
+
+      std::cout << "--- END BULK INVENTORYDB INPUT TESTS ---" << std::endl << std::endl;
 
    } // END BULK COMMAND INPUT TESTS
 
