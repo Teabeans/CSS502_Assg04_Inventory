@@ -671,7 +671,7 @@ int main() {
 //       BULK CUSTOMERDB INPUT TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-   if (true) {
+   if (false) {
 
       std::cout << "--- (8.0) START BULK CUSTOMERDB INPUT TESTS ---" << std::endl << std::endl;
 
@@ -691,11 +691,11 @@ int main() {
 
       std::cout << "--- (8.7) Check state of CustDB after bulk input: ---" << std::endl << std::endl;
 
-      std::cout << custDB.toString();
+      std::cout << custDB.toString() << std::endl;
 
       std::cout << "--- END BULK CUSTOMERDB INPUT TESTS ---" << std::endl << std::endl;
 
-   } // END BULK CUSTOMERDB INPUT TESTS 
+   } // END BULK CUSTOMERDB INPUT TESTS
 
 
 
