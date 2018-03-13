@@ -246,6 +246,13 @@ public:
    Cust();
 
 //-----------------|
+// #Cust(string)
+//-----------------|
+// Desc:   Customer constructor by customer command string
+// Invars: None
+   Cust(std::string command);
+
+//-----------------|
 // #Cust(string, string, int)
 //-----------------|
 // Desc:   Customer constructor by name and ID
