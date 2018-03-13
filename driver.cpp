@@ -1336,9 +1336,11 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
       while (!stream.eof()) {
          actor += temp;
          stream >> temp;
-      }
+      } // Actor parsed
 
-      // TODO: Perform all legality checks for Classics
+      std::cout << "(CisLegalCmd):" << actor << ":" << releaseMonth << ":" << releaseYear << ")"; // DEBUG
+
+      // Perform all legality checks for Classics
 
       // Verify that releaseMonth is within range
       if ((releaseMonth < 1) || (releaseMonth > 12)) {
@@ -1348,39 +1350,96 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
          isLegal = false;
       }
       // Verify that releaseYear is within range
-      if ((releaseYear < 1888) || (releaseYear > 12)) {
+      if ((releaseYear < 1888) || (releaseYear > currentYear)) {
          // Append the error log
-         errorLog = errorLog + "   - Invalid month (out of range)" + "\n";
+         errorLog = errorLog + "   - Invalid year (out of range)" + "\n";
          // And toggle the flag
          isLegal = false;
       }
       // Verify that an actor is provided
-   }
+      if (actor == "") {
+         // Append the error log
+         errorLog = errorLog + "   - No actor provided" + "\n";
+         // And toggle the flag
+         isLegal = false;
+      }
+   } // Classic legality tests complete
 
    if (genre == 'D') {
-      // TODO: Parse director
-      // TODO: Parse title
 
+      // Sample input: B 1000 D D Gus Van Sant, Good Will Hunting,
+      // Parse director
+      char temp = NULL;
+      stream >> temp;
+      std::noskipws;
+      while (temp != ',') {
+         director += temp;
+         stream >> temp;
+      } // Director parsed
+
+      // Advance
+      stream >> temp;
+
+      // Parse title
+      while (temp != ',') {
+         title += temp;
+         stream >> temp;
+      } // Title parsed
+
+      std::cout << "(DisLegalCmd):" << director << ":" << title << ")"; // DEBUG
       // TODO: Perform all legality checks for Dramas
       // Verify that a director is provided
+      if (director == "") {
+         // Append the error log
+         errorLog = errorLog + "   - No director provided" + "\n";
+         // And toggle the flag
+         isLegal = false;
+      }
       // Verify that a title is provided
+      if (title == "") {
+         // Append the error log
+         errorLog = errorLog + "   - No title provided" + "\n";
+         // And toggle the flag
+         isLegal = false;
+      }
    }
 
    if (genre == 'F') {
-      // TODO: Parse title
-      // TODO: Parse releaseYear
+      // Parse title
+      char temp = NULL;
+      stream >> temp;
+      std::noskipws;
+      while (temp != ',') {
+         director += temp;
+         stream >> temp;
+      } // Title parsed
 
-      // TODO: Perform all legality checks for Comedies
+      stream >> temp;
+
+      // Parse releaseYear
+      stream >> releaseYear;
+
       // Verify that a title is provided
+      if (title == "") {
+         // Append the error log
+         errorLog = errorLog + "   - No title provided" + "\n";
+         // And toggle the flag
+         isLegal = false;
+      }
       // Verify that releaseYear is within range
+      if ((releaseYear < 1888) || (releaseYear > currentYear)) {
+         // Append the error log
+         errorLog = errorLog + "   - Invalid year (out of range)" + "\n";
+         // And toggle the flag
+         isLegal = false;
+      }
    }
-
 
    // If any test has failed, do not forward to database
    if (isLegal == false) {
-   std::cout << "Customer command error:" << std::endl;
-   std::cout << errorLog << std::endl;
-   return(isLegal);
+      std::cout << "Customer command error:" << std::endl;
+      std::cout << errorLog << std::endl;
+      return(isLegal);
    }
    // Otherwise, this is a correctly formatted command
    // But it may still be in conflict with the database state, so check that
