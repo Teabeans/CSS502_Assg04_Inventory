@@ -429,6 +429,38 @@ Cust::Cust() {
    this->history   =   "(history == NULL)";
    this->custID    = 99999; // Number out-of-bounds
 }
+// (+) --------------------------------|
+// #Cust(string)
+//-------------------------------------|
+// Desc:    NULL
+// Params:  NULL
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+Cust::Cust(std::string command) {
+   std::string nameF = "";
+   std::string nameL = "";
+   int IDnum = 0;
+
+   std::stringstream stream(command);
+
+   stream >> nameF;
+   stream >> nameL;
+   stream >> IDnum;
+
+   this->firstName = nameF;
+   this->lastName  = nameL;
+   this->custID    = IDnum;
+   this->historyHeader = "Transaction history for ";
+   this->historyHeader += this->firstName + " " + this->lastName + " (ID ";
+   // Convert the ID integer to a 4-wide formatted string
+   std::ostringstream tempStream;
+   tempStream << std::setw(4) << std::setfill('0') << this->custID;
+   std::string tempString(tempStream.str());
+   // Append that string to the history header
+   this->historyHeader += tempString + "): \n";
+}
 
 // (+) --------------------------------|
 // #Cust(string, string, int)
@@ -474,3 +506,4 @@ Cust::~Cust() {
 //-------------------------------------|
 
 // End of file - Cust.cpp
+//Testing!
