@@ -179,7 +179,7 @@ public:
 // Invars: None
    char        getType();
    std::string getTypeAsString();
-   char        getGenre();
+   char        getGenre() const;
    std::string getGenreAsString();
    std::string getTitle();
    std::string getDirector();
