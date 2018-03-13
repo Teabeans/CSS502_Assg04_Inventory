@@ -12,7 +12,7 @@
 // Matt Gross & Tim Lum
 // mattgrosspersonal@gmail.com + twhlum@gmail.com
 // Created:  2018.03.03
-// Modified: 2018.03.--
+// Modified: 2018.03.14
 // For the University of Washington Bothell, CSS 502A
 // Winter 2018, Graduate Certificate in Software Design & Development (GCSDD)
 //
@@ -213,6 +213,7 @@ Film* Film::makeFilm(std::string command) {
       retFilm = new Comedy(command);
       return(retFilm);
    }
+   // This should never be hit
    return(nullptr);
 }
 
@@ -400,14 +401,14 @@ void Film::setStock(int data) {
 // (+) --------------------------------|
 // #setTitle()
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Sets the title of this film to the received string
+// Params:  string arg1 - The film title to set
+// PreCons: None
+// PosCons: This film's title has been set to arg1
+// RetVal:  None
+// MetCall: None
 void Film::setTitle(std::string data) {
-   title = data;
+   this->title = data;
 } // Closing setTitle()
 
 
@@ -422,47 +423,51 @@ void Film::setTitle(std::string data) {
 // #operator==(Film&)
 //-------------------------------------|
 // Desc:    Tests the film against another based on it's title & year
-// Params:  NULL
+// Params:  Film& arg1 - The reference film to compare against 'this' film
 // PreCons: Title and release date must be populated
-// PosCons: NULL
-// RetVal:  True or False
-// MetCall: NULL
+// PosCons: None
+// RetVal:  bool True -  'this' is equal to 'arg1'
+//          bool False - 'this' is not equal to 'arg1'
+// MetCall: Film::equals()
 bool Film::operator==(Film& rhs) {
-   std::cout << "(Film::operator==() called)" << std::endl;
-   return equals(rhs);
-}
+   return (this->equals(rhs));
+} // Closing operator==()
 
 // (+) --------------------------------|
 // #operator<(Film&)
 //-------------------------------------|
 // Desc:    Tests the film against another based on it's title & year
-// Params:  NULL
+// Params:  Film& arg1 - The reference film to compare against 'this' film
 // PreCons: Title and release date must be populated
-// PosCons: NULL
-// RetVal:  True or False
-// MetCall: NULL
+// PosCons: None
+// RetVal:  bool True -  'this' is less than (or equal to) 'arg1'
+//          bool False - 'this' is greater than 'arg1'
+// MetCall: Film::isLessThan()
+//          Film::equals()
 bool Film::operator<(Film& rhs) {
-   return isLessThan(rhs);
-}
+   return (this->isLessThan(rhs));
+} // Closing operator<()
 bool Film::operator<=(Film& rhs) {
-   return (isLessThan(rhs) || equals(rhs));
-}
+   return (this->isLessThan(rhs) || this->equals(rhs));
+} // Closing operator<=()
 
 // (+) --------------------------------|
 // #operator>(Film&)
 //-------------------------------------|
 // Desc:    Tests the film against another based on it's title & year
-// Params:  NULL
+// Params:  Film& arg1 - The reference film to compare against 'this' film
 // PreCons: Title and release date must be populated
-// PosCons: NULL
-// RetVal:  True or False
-// MetCall: NULL
+// PosCons: None
+// RetVal:  bool True -  'this' is greater than 'arg1'
+//          bool False - 'this' is less than (or equal to) 'arg1'
+// MetCall: Film::isGreaterThan()
+//          Film::equals()
 bool Film::operator>(Film& rhs) {
-   return isGreaterThan(rhs);
-}
+   return (this->isGreaterThan(rhs));
+} // Closing operator>()
 bool Film::operator>=(Film& rhs) {
-   return (isGreaterThan(rhs) || equals(rhs));
-}
+   return ((this->isGreaterThan(rhs) || this->equals(rhs)));
+} // Closing operator>=()
 
 
 
@@ -476,59 +481,85 @@ bool Film::operator>=(Film& rhs) {
 // (+) --------------------------------|
 // #Film()
 //-------------------------------------|
-// Desc:    Populate data-members with placeholder data
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Default Film constructor
+// Params:  None
+// PreCons: None
+// PosCons: A default Film object has been created
+// RetVal:  None
+// MetCall: None
 Film::Film() {
-   title = "";
-   stock = 0;
-   releaseYear = 0;
-   director = "";
-   genre = ' ';
-   actor = "";
-}
+   // Initialize all fields
+   this->actor = "";
+   this->director = "";
+   this->genre = ' ';
+   this->releaseMonth = 0;
+   this->releaseYear = 0;
+   this->stock = 0;
+   this->title = "";
+} // Closing Film()
 
 // (+) --------------------------------|
 // #Film(string)
 //-------------------------------------|
 // Desc:    Take in a string and generate the appropriate data-members
-// Params:  Comma-delimited string
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Params:  string arg1 - A properly formatted and legal inventory command
+// PreCons: GIGO - No error checking is performed by this method
+// PosCons: A Film object has been created and its fields populated
+// RetVal:  None
+// MetCall: std::string.substr()
+//          std::string.find()
+//          std::string.erase()
+//          std::string.length()
+//          std::stoi()
 Film::Film(std::string data) {
-
-   // split the data string by commas and parse into object data
-   std::string delim = ", ";
+   // Prepare to store 5 fields
    std::string items[5];
 
+   // Sample input:
+   // D, 10, Steven Spielberg, Schindler's List, 1993
+
+   // Set the ", " as a delimiter
+   std::string delim = ", ";
+
+   // For 5 iterations...
    for (int i = 0; i < 5; i++) {
+      // Store a delimited substring to the array
       items[i] = data.substr(0, data.find(delim));
+      // And consume the original data
       data.erase(0, data.find(delim) + delim.length());
-   }
+   } // Closing for - All fields have been captured
 
-   // set data members based on data segments
-   genre = items[0][0]; // char
-   stock = std::stoi(items[1]); // int
-   director = items[2];
-   title = items[3];
-   releaseYear = std::stoi(items[4]); // int
+   // Set data members based on data segments
+   this->genre       = items[0][0];         // char @ index[0] of a string
+   this->stock       = std::stoi(items[1]); // int converted from string
+   this->director    = items[2];            // string
+   this->title       = items[3];            // string
+   this->releaseYear = std::stoi(items[4]); // int converted from string
 
-}
+} // Closing Film(string)
 
 // (+) --------------------------------|
 // #~Film()
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Deconstructor for the Film class
+// Params:  None
+// PreCons: None
+// PosCons: Fields have been zeroed
+// RetVal:  None
+// MetCall: None
 Film::~Film() {
+   // Null all fields
+   this->actor = "";
+   this->director = "";
+   this->genre = NULL;
+   this->releaseMonth = 0;
+   this->releaseYear = 0;
+   this->stock = 0;
+   this->title = "";
+} // Closing ~Film()
 
-}
+//-------------------------------------|
+// End Student Code
+//-------------------------------------|
+
+// End of file - Film.cpp
