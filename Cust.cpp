@@ -176,7 +176,7 @@ void Cust::appendHistory(std::string someTransaction, char type, std::string tit
       this->removeFromCheckouts(title);
    }
    // Append history
-   this->history += someTransaction + "\n" + this->history;
+   this->history = someTransaction + "\n" + this->history;
 }
 
 // (+) --------------------------------|
