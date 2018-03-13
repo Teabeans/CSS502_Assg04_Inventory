@@ -246,23 +246,25 @@ public:
    //-----------------|
    // #Film()
    //-----------------|
-   // Desc:   NULL
+   // Desc:   Default film constructor
    // Invars: NULL
    Film();
 
    //-----------------|
    // #Film(string)
    //-----------------|
-   // Desc:   Constructor that builds an appropriate Film subclass by string
-   // Invars: NULL
+   // Desc:   Constructor that builds a Drama Film subclass by string
+   //         FOR TESTING PURPOSES ONLY
+   // Invars: None
    Film(std::string);
 
    //-----------------|
    // #~Film()
    //-----------------|
-   // Desc:   NULL
-   // Invars: NULL
+   // Desc:   Deconstructor for the Film class
+   // Invars: Fields have been zeroed
    ~Film();
+
 }; // Closing class Film {}
 
 //-------------------------------------|
