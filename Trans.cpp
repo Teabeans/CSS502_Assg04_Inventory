@@ -254,7 +254,7 @@ std::string Trans::getTypeAsString() {
 // PosCons: NULL
 // RetVal:  NULL
 // MetCall: NULL
-char Trans::getGenre() {
+char Trans::getGenre() const {
    return(this->genre);
 }
 std::string Trans::getGenreAsString() {
