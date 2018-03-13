@@ -210,7 +210,7 @@ void InvDB::adjustStock(const Trans& trans) { // TODO: Add const to Trans& argum
    if (trans.getGenre() == 'F') {
 
       // confirm that there is a film for this transaction
-      if (this->isLegal())
+//      if (this->isLegal("<Placeholder>")) {}
    //    film.setTitle(trans.getTitle());
 
    //    film.setReleaseYear(std::stoi(trans.getRelease()));
