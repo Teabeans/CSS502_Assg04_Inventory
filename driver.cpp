@@ -1022,11 +1022,14 @@ bool isLegalCustCmd(std::string command, CustDB tgtDB) {
 
    // Initialize field variables
    int custID = 1234512345;
-   std::string nameF = "";
    std::string nameL = "";
+   std::string nameF = "";
 
    // Parse fields
-   // TODO: Load string command to string stream object
+   std::stringstream stream(command);
+   stream >> custID;
+   stream >> nameL;
+   stream >> nameF;
 
    // Verify that field1 is within expected value range
    if (custID == 1234512345) {
