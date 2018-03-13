@@ -598,22 +598,22 @@ int main() {
 //-------|---------|---------|---------|---------|---------|---------|---------|
    if (true) {
 
-      std::cout << "--- START INVENTORY DATABASE TESTS ---" << std::endl << std::endl;
+      std::cout << "--- (7.0) START INVENTORY DATABASE TESTS ---" << std::endl << std::endl;
 
       // Create a new inventory database object
-      std::cout << "Creating an empty InvDB object..." << std::endl << std::endl;
+      std::cout << "--- (7.1) Creating an empty InvDB object... ---" << std::endl << std::endl;
       InvDB testInvDB;
 
-      std::cout << "Create an InvDB object from bulk input..." << std::endl << std::endl;
+      std::cout << "--- (7.2) Create an InvDB object from bulk input... ---" << std::endl << std::endl;
       std::ifstream inventoryFile("data4movies.txt");
       InvDB testInvDBBulk(inventoryFile);
 
 
       // Create three new films
-      std::cout << "Creating three new films..." << std::endl << std::endl;
+      std::cout << "--- (7.3) Creating three new films... ---" << std::endl << std::endl;
 
       // Attempt to add these films to the inventory database
-      std::cout << "Adding films to the testInvDB..." << std::endl << std::endl;
+      std::cout << "--- (7.4) Adding films to the testInvDB... ---" << std::endl << std::endl;
       testInvDB.addFilm("F, 10, Nora Ephron, Sleepless in Seattle, 1993");
       testInvDB.addFilm("F, 10, Parody-Man, Sleepless in Seattle, 1997");
       testInvDB.addFilm("D, 10, Jonathan Demme, Silence of the Lambs, 1991");
@@ -622,30 +622,30 @@ int main() {
    
       // Test Display method
       std::cout << std::endl;
-      std::cout << "State of testInvDB:" << std::endl;
+      std::cout << "--- (7.5) State of testInvDB: ---" << std::endl;
       testInvDB.display();
       std::cout << std::endl;
 
-      std::cout << "State of testInvDBBulk:" << std::endl;
+      std::cout << "--- (7.6) State of testInvDBBulk: ---" << std::endl;
       testInvDBBulk.display();
       std::cout << std::endl;
 
       testInvDB.addFilm("C, 10, Victor Fleming, The Wizard of Oz, Bob Barker 7 1939");
    
       // Create borrow transactions
-      std::cout << "Creating borrow transactions..." << std::endl << std::endl;
+      std::cout << "--- (7.7) Creating borrow transactions... ---" << std::endl << std::endl;
       Trans BTestC = Trans("B 1234 C The Wizard of Oz, 7 1939");
       Trans BTestD = Trans("B 1234 D Silence of the Lambs, 1991");
       Trans BTestF = Trans("B 1234 F Sleepless in Seattle, 1993");
 
       // Create return transactions
-      std::cout << "Creating return transactions..." << std::endl << std::endl;
+      std::cout << "--- (7.8) Creating return transactions... ---" << std::endl << std::endl;
       Trans RTestC = Trans("R 1234 C The Wizard of Oz, 7 1939");
       Trans RTestD = Trans("R 1234 D Silence of the Lambs, 1991");
       Trans RTestF = Trans("R 1234 F Sleepless in Seattle, 1993");
 
       // Create an invalid return (one that has no borrow)
-      std::cout << "Creating an erroneous return (no corresponding borrow)";
+      std::cout << "--- (7.9) Creating an erroneous return (no corresponding borrow) ---";
       Trans RTestErr = Trans("R 1234 C Guardians of te Galaxy, 2016");
 
       // Send a transaction
@@ -656,7 +656,7 @@ int main() {
 
       // Test Display method
       std::cout << std::endl;
-      std::cout << "Post-Transaction State of testInvDB:" << std::endl;
+      std::cout << "--- (7.10) Post-Transaction State of testInvDB: ---" << std::endl;
       testInvDB.display();
       std::cout << std::endl;
 
@@ -671,27 +671,53 @@ int main() {
 //       BULK CUSTOMERDB INPUT TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-   if (false) {
+   if (true) {
 
-      std::cout << "--- START BULK CUSTOMERDB INPUT TESTS ---" << std::endl << std::endl;
-
-      // Test the customerDB bulk inputs
-      std::cout << "Testing customerDB bulk inputs..." << std::endl << std::endl;
+      std::cout << "--- (8.0) START BULK CUSTOMERDB INPUT TESTS ---" << std::endl << std::endl;
 
       // Test the customerDB bulk inputs
-      std::cout << "Creating an empty CustDB object..." << std::endl << std::endl;
+      std::cout << "--- (8.1) Testing customerDB bulk inputs... ---" << std::endl << std::endl;
+
+      // Test the customerDB bulk inputs
+      std::cout << "--- (8.2) Create an empty CustDB object ---" << std::endl << std::endl;
+
+      CustDB custDB;
 
       // Capture command file to filestream
-      std::cout << "Capture bulk input to fileStream..." << std::endl << std::endl;
+      std::cout << "--- (8.3) Capture bulk input to fileStream ---" << std::endl << std::endl;
+
+      std::ifstream customerFile("data4customers.txt");
 
       // Have the Inventory Controller (main()) parse the file and perform insertion actions
-      std::cout << "Sending bulk commands to CustDB object..." << std::endl << std::endl;
+      std::cout << "--- (8.4) Sending bulk commands to CustDB object... ---" << std::endl << std::endl;
 
-      // Test isLegalCust() logic
-      std::cout << "The first command isLegal(): " << "<isLegal() result goes here>" << " (0 expected, plus error report)" << std::endl << std::endl;
+      std::string command;
+      while (!customerFile.eof()) {
+
+         std::cout << "--- (8.5) Parse ---" << std::endl << std::endl;
+
+         std::getline(customerFile, command);
+         std::cout << "(" << command << ")" << std::endl;
+
+         std::cout << "--- (8.6) Test of isLegal() logic ---" << std::endl << std::endl;
+
+         bool isLegal = isLegalCustCmd(command, custDB);
+
+         std::cout << "The command isLegal(): " << isLegal << std::endl;
+
+         if (isLegal) {
+
+            // Make a new customer
+            Cust* newCust = new Cust(command);
+
+            // And send it to the database
+            custDB.insertCustomer(newCust);
+         }
+
+      }
 
       // Check if the commands were SUPER EFFECTIVE!
-      std::cout << "Check state of CustDB after bulk input:" << std::endl << std::endl;
+      std::cout << "--- (8.7) Check state of CustDB after bulk input: ---" << std::endl << std::endl;
 
       std::cout << "--- END BULK CUSTOMERDB INPUT TESTS ---" << std::endl << std::endl;
 
@@ -704,7 +730,7 @@ int main() {
 //       BULK INVENTORYDB INPUT TESTS
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-   if (false) {
+   if (true) {
 
       std::cout << "--- START BULK INVENTORYDB INPUT TESTS ---" << std::endl << std::endl;
    
