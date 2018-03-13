@@ -166,12 +166,13 @@
 // #display()
 //-------------------------------------|
 // Desc:    Outputs internal state of transaction to cout
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Params:  None
+// PreCons: A valid transaction must exist (call to a nullptr will fail)
+// PosCons: Transaction states have been outputted to console
+// RetVal:  None
+// MetCall: None
 void Trans::debug() const {
+   std::cout << std::endl;
    std::cout << "Trans::debug() - @ address (" << this << ") - CAPS denote required fields" << std::endl;
    std::cout << "TypeChar:     " << this->type << std::endl;
    std::cout << "TYPESTRING:   " << this->typeAsString << std::endl;
@@ -184,42 +185,58 @@ void Trans::debug() const {
    std::cout << "RELEASERYEAR: " << this->releaseYear << std::endl;
    std::cout << "CustomerID:   " << this->customerID << std::endl;
    std::cout << std::endl;
-}
+} // Closing debug()
 
 // (+) --------------------------------|
 // #toString()
 //-------------------------------------|
 // Desc:    Outputs a string representation of the transaction
-// Params:  NULL
-// PreCons: NULL
+// Params:  None
+// PreCons: Proper format requires:
+//          CustomerID
+//          Transaction type as string
+//          Film title
+//          Film genre
+//          Release month (if applicable)
+//          Release year
 // PosCons: Formatted to match the Customer History requirements
-// RetVal:  NULL
-// MetCall: NULL
-std::string Trans::toString() {
+// RetVal:  string - A summary representation of this transaction
+// MetCall: None
+std::string Trans::toString() const {
+   // The string to return
    std::string retString = "";
-
+   // A working stream for formatted outputs
    std::ostringstream tempStream;
+
+   // Sample output:
+   // (ID: <customerID>) <type> - '<title>' (<genre>), <release>
+   // (ID: 1234) Borrow - 'Jurassic Park' (Drama), 1993
+
    // Append all values, properly formatted
-   // TODO: Test this from driver
+
+   // (ID: 1234)
    tempStream << std::setw(4) << std::setfill('0') << this->customerID;
    // Assign the temporary stream to a string
    std::string IDnumString(tempStream.str());
 
-// Sample output:
-// (ID: <customerID>) <type> - '<title>' (<genre>), <release>
-// (ID: 1234) Borrow - 'Jurassic Park' (Drama), 1993
    // (ID: 1234) Borrow - '
    retString += "(ID: " + IDnumString + ") " + this->typeAsString + " - '";
+
    // (ID: 1234) Borrow - 'Jurassic Park' (Drama), 
    retString += this->title + "' (" + this->genreAsString + "), ";
+
    // (ID: 1234) Borrow - 'Jurassic Park' (Drama), 
    if (this->releaseMonth != 0) {
       retString += std::to_string(this->releaseMonth) + " ";
    }
+
    // (ID: 1234) Borrow - 'Jurassic Park' (Drama), 1993
    retString += std::to_string(this->releaseYear);
+
    return(retString);
-}
+} // Closing toString()
+
+
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
@@ -231,29 +248,29 @@ std::string Trans::toString() {
 // #getType()
 // #getTypeAsString()
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Gets the Type/TypeAsString
+// Params:  None
+// PreCons: None
+// PosCons: None
+// RetVal:  char/string - The transaction type (Borrow or Return)
+// MetCall: None
 char Trans::getType() const {
    return(this->type);
-}
+} // Closing getType()
 std::string Trans::getTypeAsString() const {
    return(this->typeAsString);
-}
+} // Closing getTypeAsString()
 
 // (+) --------------------------------|
 // #getGenre()
 // #getGenreAsString()
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Gets the customerID
+// Params:  None
+// PreCons: None
+// PosCons: None
+// RetVal:  int - The Customer ID
+// MetCall: None
 char Trans::getGenre() const {
    return(this->genre);
 }
@@ -264,12 +281,12 @@ std::string Trans::getGenreAsString() const {
 // (+) --------------------------------|
 // #getTitle()
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Gets the customerID
+// Params:  None
+// PreCons: None
+// PosCons: None
+// RetVal:  int - The Customer ID
+// MetCall: None
 std::string Trans::getTitle() const {
    return(this->title);
 }
@@ -277,12 +294,12 @@ std::string Trans::getTitle() const {
 // (+) --------------------------------|
 // #getIdentifier1()
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Gets the customerID
+// Params:  None
+// PreCons: None
+// PosCons: None
+// RetVal:  int - The Customer ID
+// MetCall: None
 std::string Trans::getDirector() const {
    return(this->director);
 }
@@ -290,12 +307,12 @@ std::string Trans::getDirector() const {
 // (+) --------------------------------|
 // #getIdentifier2()
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Gets the customerID
+// Params:  None
+// PreCons: None
+// PosCons: None
+// RetVal:  int - The Customer ID
+// MetCall: None
 std::string Trans::getActor() const {
    return(this->actor);
 }
@@ -303,12 +320,12 @@ std::string Trans::getActor() const {
 // (+) --------------------------------|
 // #getReleaseMonth()
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Gets the customerID
+// Params:  None
+// PreCons: None
+// PosCons: None
+// RetVal:  int - The Customer ID
+// MetCall: None
 int Trans::getReleaseMonth() const {
    return(this->releaseMonth);
 }
@@ -316,141 +333,140 @@ int Trans::getReleaseMonth() const {
 // (+) --------------------------------|
 // #getReleaseYear()
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Gets the customerID
+// Params:  None
+// PreCons: None
+// PosCons: None
+// RetVal:  int - The Customer ID
+// MetCall: None
 int Trans::getReleaseYear() const {
    return(this->releaseYear);
 }
 
-
 // (+) --------------------------------|
 // #getCustID()
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Gets the customerID
+// Params:  None
+// PreCons: None
+// PosCons: None
+// RetVal:  int - The Customer ID
+// MetCall: None
 int Trans::getCustID() const {
    return(this->customerID);
-}
+} // Closing getCustID()
 
 // (+) --------------------------------|
 // #setType(char)
 // #setTypeAsString(string)
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Sets the transaction type to a received char/string value
+// Params:  char/string arg1 - The transaction type (borrow or return)
+// PreCons: GIGO - No error checking is handled by this method.
+// PosCons: The transaction type has been set
+// RetVal:  None
+// MetCall: None
 void Trans::setType(char transType) {
    this->type = transType;
-}
+} // Closing setType()
 void Trans::setTypeAsString(std::string transType) {
    this->typeAsString = transType;
-}
+} // Closing setTypeAsString()
 
 // (+) --------------------------------|
 // #setGenre(char)
 // #setGenreAsString(string)
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Sets the genre to a received char/string value
+// Params:  char/string arg1 - The genre of the film being transacted
+// PreCons: GIGO - No error checking is handled by this method
+// PosCons: The genre has been set
+// RetVal:  None
+// MetCall: None
 void Trans::setGenre(char theGenre) {
    this->genre = theGenre;
-}
+} // Closing setGenre()
 void Trans::setGenreAsString(std::string theGenre) {
    this->genreAsString = theGenre;
-}
+} // Closing setGenreAsString()
 
 // (+) --------------------------------|
 // #setTitle(string)
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Sets the title of the film transacted to a received string value
+// Params:  string arg1 - The title of the film being transacted
+// PreCons: GIGO - No error checking is handled by this method.
+// PosCons: The title has been set
+// RetVal:  None
+// MetCall: None
 void Trans::setTitle(std::string theTitle) {
    this->title = theTitle;
-}
+} // Closing setTitle()
 
 // (+) --------------------------------|
 // #setDirector(string)
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Sets the director to a received stringvalue
+// Params:  string arg1 - The director of the film being transacted
+// PreCons: GIGO - No error checking is handled by this method.
+// PosCons: The director has been set
+// RetVal:  None
+// MetCall: None
 void Trans::setDirector(std::string director) {
    this->director = director;
-}
+} // Closing setDirector()
 
 // (+) --------------------------------|
 // #setActor(string)
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Sets the actor to a received string value
+// Params:  string arg1 - The actor name of the film being transacted
+// PreCons: GIGO - No error checking is handled by this method.
+// PosCons: The actor has been set
+// RetVal:  None
+// MetCall: None
 void Trans::setActor(std::string actor) {
    this->actor = actor;
-}
+} // Closing setActor()
 
 // (+) --------------------------------|
 // #setReleaseMonth(int)
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Sets the releaseMonth to a received int value
+// Params:  int arg1 - The month release of the film being transacted
+// PreCons: GIGO - No error checking is handled by this method.
+// PosCons: The ID has been set
+// RetVal:  None
+// MetCall: None
 void Trans::setReleaseMonth(int month) {
    this->releaseMonth = month;
-}
+} // Closing setReleaseMonth()
 
 // (+) --------------------------------|
 // #setReleaseYear(int)
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Sets the customerID to a received int value
+// Params:  int arg1 - The year release of the film being transacted
+// PreCons: GIGO - No error checking is handled by this method.
+// PosCons: The year has been set
+// RetVal:  None
+// MetCall: None
 void Trans::setReleaseYear(int year) {
    this->releaseYear = year;
-}
+} // Closing setReleaseYear()
 
 // (+) --------------------------------|
 // #setCustID(int)
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Sets the customerID to a received int value
+// Params:  int arg1 - The customerID involved in the transaction
+// PreCons: GIGO - No error checking is handled by this method.
+// PosCons: The ID has been set
+// RetVal:  None
+// MetCall: None
 void Trans::setCustID(int IDnum) {
    this->customerID = IDnum;
-}
+} // Closing setCustID()
 
 
 
@@ -459,46 +475,6 @@ void Trans::setCustID(int IDnum) {
 //       CONSTRUCTORS / DESTRUCTORS (+)
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
-
-/*
-// TODO: Resolve @MG - Factory method logic is the same as Trans(string) constructor? Should the Trans(string) call this method, or would you rather have it packed right into the constructor?
-// (+) --------------------------------|
-// #factory(string)
-//-------------------------------------|
-// Desc:    Generates a transaction using a factory procedure
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-Trans* Trans::factory(std::string command) {
-
-   // create borrow object and run transaction
-   if (command[0] == 'B') {
-      std::cerr << " Borrow" << std::endl;
-      return new Borrow(command);
-   }
-
-   // create return object and run transaction
-   else if (command[0] == 'R') {
-      std::cerr << " Return" << std::endl;
-      return new Return(command);
-   }
-
-   // else if (command[0] == 'H') {
-      // std::cerr << " Show History" << std::endl;
-      // return new History;
-   // }
-
-   // otherwise, this is an invalid command
-
- - TODO: Resolve @MG: Error checking should be performed by isLegal() function before this point is reached. If factory() is called, the command should be guaranteed to be a valid one.
-   else {
-      std::cerr << "Invalid command: " << command.at(0) << std::endl;
-      return new Trans(command);
-   }
-
-*/
 
 // (+) --------------------------------|
 // #Trans()
@@ -528,13 +504,13 @@ Trans::Trans() {
 //-------------------------------------|
 // Desc:    Constructor of Transaction object by string
 // Params:  string arg1 - The command to construct a transaction out of
-// PreCons: NULL
+// PreCons: GIGO - Command must be correctly formatted and vetted
 // PosCons: As many fields as possible of the Transaction are populated
 //          Populated fields will be inconsistent depending on genre
 //          Certain fields will remain unitialized
 //          Filling these fields will require the use of setter methods from outside
 // RetVal:  None
-// MetCall: NULL
+// MetCall: None
 Trans::Trans(std::string command) {
    // Initialize all variables
    this->type          = NULL;
@@ -547,8 +523,10 @@ Trans::Trans(std::string command) {
    this->releaseMonth  = 0;
    this->releaseYear   = 0;
    this->customerID    = 1234512345;
-// Sample input:
-// "B 1111 D F Ferries and You: A Primer, 2018"
+
+   // Sample input:
+   // "B 1111 D F Ferries and You: A Primer, 2018"
+
    // Step 1: Load the command to a stream
    std::stringstream stream;
    stream << command;
@@ -571,6 +549,7 @@ Trans::Trans(std::string command) {
 
    // Step 5.1: Get the genre
    stream >> this->genre;
+
    // Step 5.2: Set the genreAsStrings
    if (this->genre == 'C') {
       this->genreAsString = "Classic";
@@ -652,11 +631,11 @@ Trans::Trans(std::string command) {
 // #~Trans()
 //-------------------------------------|
 // Desc:    Trans deconstructor
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Params:  None
+// PreCons: None
+// PosCons: All fields have been zeroed
+// RetVal:  None
+// MetCall: None
 Trans::~Trans() {
    // Reset all field states before deallocating
    this->type          = NULL;
@@ -669,6 +648,10 @@ Trans::~Trans() {
    this->releaseMonth  = 0;
    this->releaseYear   = 0;
    this->customerID    = 1234512345;
-}
+} // Closing ~Trans()
+
+//-------------------------------------|
+// End Student Code
+//-------------------------------------|
 
 // End of file - Trans.cpp
