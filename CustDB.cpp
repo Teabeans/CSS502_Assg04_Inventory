@@ -317,7 +317,6 @@ void CustDB::insertCustomer(Cust* custPtr) {
 // Desc:   Determines whether this string is a valid customerDB command
 // Invars: Return value is variable based on state of DB
 bool CustDB::isValid(std::string command) {
-   std::cout << "CustDB::isValid(" << command << ")" << std::endl;
    std::string errorLog = "";
    bool isValid = true;
 
