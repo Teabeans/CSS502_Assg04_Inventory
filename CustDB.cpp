@@ -305,7 +305,7 @@ void CustDB::insertCustomer(Cust* custPtr) {
 //-----------------|
 // Desc:   Determines whether this string is a valid customerDB command
 // Invars: Return value is variable based on state of DB
-bool CustDB::isValid(std::string) {
+bool CustDB::isValid(std::string command) {
    std::string errorLog = "";
    bool isValid = true;
 
@@ -313,18 +313,16 @@ bool CustDB::isValid(std::string) {
    // 6666 Donkey Darrell
 
    // Load string to stream
-   std::stringstream stream;
+   std::stringstream stream(command);
 
    // Capture the first number
    int custID;
-   stream >> custID;
-
-   // Capture the last name
    std::string lName;
-   stream >> lName;
-
-   // Capture the first name
    std::string fName;
+
+   // Capture the customer ID
+   stream >> custID;
+   stream >> lName;
    stream >> fName;
 
    Cust* theCust = this->custTableByID[custID];
@@ -335,14 +333,13 @@ bool CustDB::isValid(std::string) {
       errorLog = errorLog + "   - Customer ID already in use" + "\n";
       // And toggle the flag
       isValid = false;
-   }
 
-   // If the customer fName and lName match...
-   if ((theCust->getFirstName() == fName) && (theCust->getLastName() == lName)) {
-      // Append the error log
-      errorLog = errorLog + "   - Repeat customer entry" + "\n";
+      // If the customer fName and lName match...
+      if ((theCust->getFirstName() == fName) && (theCust->getLastName() == lName)) {
+         // Append the error log
+         errorLog = errorLog + "   - Repeat customer entry" + "\n";
+      }
    }
-
          // If any test has failed, report as much
    if (isValid == false) {
       std::cout << "Customer Database error:" << std::endl;
