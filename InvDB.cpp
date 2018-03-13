@@ -151,43 +151,43 @@ bool InvDB::addFilm(std::string filmData) {
    // if Comedy, add to comedies
    if (filmData.at(0) == 'F') {
 
-      Comedy* film = new Comedy(filmData);
+      Comedy film(filmData);
 
       // find the appropriate position in the comedies vector
       auto iterator = comedies.begin();
       for (unsigned int i = 0; i < comedies.size(); i++) {
-         if (comedies.at(i) > *film) break;
+         if (comedies.at(i) > film) break;
          iterator++;
       }
-      comedies.insert(iterator, *film);
+      comedies.insert(iterator, film);
    }
 
    // if Drama, add to dramas
    else if (filmData.at(0) == 'D') {
 
-      Drama* film = new Drama(filmData);
+      Drama film(filmData);
 
       // find the appropriate position in the dramas vector
       auto iterator = dramas.begin();
       for (unsigned int i = 0; i < dramas.size(); i++) {
-         if (dramas.at(i) > *film) break;
+         if (dramas.at(i) > film) break;
          iterator++;
       }
-      dramas.insert(iterator, *film);
+      dramas.insert(iterator, film);
    }
 
    // if Classic, add to classics
    else if (filmData.at(0) == 'C') {
 
-      Classic* film = new Classic(filmData);
+      Classic film(filmData);
 
       // find the appropriate position in the classics vector
       auto iterator = classics.begin();
       for (unsigned int i = 0; i < classics.size(); i++) {
-         if (classics.at(i) > *film) break;
+         if (classics.at(i) > film) break;
          iterator++;
       }
-      classics.insert(iterator, *film);
+      classics.insert(iterator, film);
    }
 
    else {
@@ -740,6 +740,19 @@ InvDB::InvDB(std::ifstream& data) {
 // MetCall: NULL
 InvDB::~InvDB() {
    // std::cerr << "destruct invDB" << std::endl;
+
+   auto iterator = comedies.begin();
+   for (unsigned int i = 0; i < comedies.size(); i++) {
+      
+      // delete *iterator;
+
+      iterator++;
+   }
+
+
+   // comedies.erase(comedies.begin());
+   // dramas.erase(dramas.begin());
+   // classics.erase(classics.begin());
 
    // std::cerr << "end destruct invDB" << std::endl;
 }

@@ -986,7 +986,7 @@ void bulkReadTrans(std::ifstream& commandFile, CustDB& tgtCustDB, InvDB& tgtInvD
 
       // I and H cases
       // If the command is an 'I'
-      if (command == "I") {
+      if (command[0] == 'I') {
          // Ping invDB for execution
          tgtInvDB.display();
       }
@@ -1292,9 +1292,10 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
    }
 
    // Finish testing for an 'I' (inventory query) command
-   if (commandType == 'I' && command.size() != 1) { // If there's anything after the I...
+   if (commandType == 'I' && command.size() > 2) { // If there's anything after the I...
       std::cout << "Transaction Command error ('" << command << "'):" << std::endl;
-      std::cout << "   - Invalid entry of 'I' (inventory) command, halting." << std::endl;
+      std::cout << "   - Invalid length of 'I' (inventory) command, halting." << std::endl;
+      std::cout << "Command length: " << command.size() << std::endl;
       return(false);
    }
 

@@ -6,9 +6,9 @@ B 8000 D F You've Got Mail, 1998
 B 1000 D D Barry Levinson, Good Morning Vietnam,
 B 1000 D C 5 1940 Katherine Hepburn
 B 2000 D F Sleepless in Seattle, 1993
+R 5000 D C 3 1971 Ruth Gordon
 B 4444 D C 2 1971 Malcolm McDowell
 B 5000 D C 3 1971 Ruth Gordon
-R 5000 D C 3 1971 Ruth Gordon
 B 8888 D F Annie Hall, 1977
 B 1111 D C 2 1971 Malcolm McDowell
 B 1111 D Z 2 1971 Malcolm McDowell
