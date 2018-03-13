@@ -445,21 +445,27 @@ Cust::Cust(std::string command) {
 
    std::stringstream stream(command);
 
-   stream >> nameF;
-   stream >> nameL;
+   // Sample input: 9000 Lizard Larry
    stream >> IDnum;
+   stream >> nameL;
+   stream >> nameF;
 
-   this->firstName = nameF;
-   this->lastName  = nameL;
+   std::cout << IDnum << ":" << nameL << ":" << nameF;
+
    this->custID    = IDnum;
+   this->lastName  = nameL;
+   this->firstName = nameF;
+
+
    this->historyHeader = "Transaction history for ";
    this->historyHeader += this->firstName + " " + this->lastName + " (ID ";
    // Convert the ID integer to a 4-wide formatted string
-   std::ostringstream tempStream;
+   std::stringstream tempStream;
    tempStream << std::setw(4) << std::setfill('0') << this->custID;
    std::string tempString(tempStream.str());
    // Append that string to the history header
    this->historyHeader += tempString + "): \n";
+
 }
 
 // (+) --------------------------------|
@@ -472,13 +478,13 @@ Cust::Cust(std::string command) {
 // RetVal:  NULL
 // MetCall: NULL
 Cust::Cust(std::string nameF, std::string nameL, int IDnum) {
-   this->firstName = nameF;
-   this->lastName  = nameL;
    this->custID    = IDnum;
+   this->lastName  = nameL;
+   this->firstName = nameF;
    this->historyHeader = "Transaction history for ";
    this->historyHeader += this->firstName + " " + this->lastName + " (ID ";
    // Convert the ID integer to a 4-wide formatted string
-   std::ostringstream tempStream;
+   std::stringstream tempStream;
    tempStream << std::setw(4) << std::setfill('0') << this->custID;
    std::string tempString(tempStream.str());
    // Append that string to the history header
