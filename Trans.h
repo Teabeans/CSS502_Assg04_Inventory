@@ -154,7 +154,7 @@ public:
 //-----------------|
 // Desc:   Converts this transaction to a string representation
 // Invars: GIGO - No error checking is performed by toString()
-   std::string toString();
+   std::string toString() const;
 
 
 
