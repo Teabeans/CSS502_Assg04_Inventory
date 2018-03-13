@@ -1229,8 +1229,12 @@ bool isLegalInvCmd(std::string command, InvDB& tgtDB) {
 bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
    // Set flag
    bool isLegal = true;
+
    // Begin error log
    std::string errorLog = "";
+
+   // Store command as a stream
+   std::stringstream stream(command);
 
    int currentYear = 2018;
 
@@ -1245,7 +1249,9 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
    std::string title = "";
    std::string actor = ""; // (in case of Classic)
 
-   // TODO: Parse command type off string
+   // Sample input: B 1000 D D Barry Levinson, Good Morning Vietnam,
+   // Parse command type off string
+   stream >> commandType;
 
    // Test if the commandType is within range first
    if ((commandType != 'I') || (commandType != 'H') || (commandType != 'B') || (commandType != 'R')) {
@@ -1255,7 +1261,7 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
    }
 
    // Finish testing for an 'I' (inventory query) command
-   if (commandType == 'I' /*&& there's anything else in the string*/) { // TODO
+   if (commandType == 'I' && command.size() != 1) { // If there's anything after the I...
       std::cout << "Transaction command error:" << std::endl;
       std::cout << "   - Invalid entry of 'I' (inventory) command, halting." << std::endl;
       return(false);
@@ -1266,7 +1272,8 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
       return(isLegal);
    }
 
-   // TODO: Parse customerID
+   // Parse customerID
+   stream >> custID;
 
    // Test if customerID is within range
    if (custID < 0 || custID > 9999) {
@@ -1286,13 +1293,14 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
 
    // Check validity of a 'H' (history) command
    if (commandType == 'H'/*&& there's anything else in the string*/) { // TODO
-      std::cout << "Transaction command error:" << std::endl;
+      std::cout << "Transaction command error (:" << std::endl;
       std::cout << "   - Invalid entry of 'H' (history) command, halting." << std::endl;
       std::cout << errorLog << std::endl;
       return(false);
    }
 
-   // TODO: Parse format
+   // Parse format
+   stream >> format;
 
    // Test if format is within range
    if (format != 'D') {
@@ -1302,50 +1310,77 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
       isLegal = false;
    }
 
-   // TODO: Parse genre
+   // Sample input: B 1000 D D Barry Levinson, Good Morning Vietnam,
+   // Parse genre
+   stream >> genre;
 
    // Test if genre is within range
-   if ((genre != 'C') || (genre != 'F') || (genre != 'D')) {
+   if ((genre != 'C') && (genre != 'F') && (genre != 'D')) {
       std::cout << "Inventory command error:" << std::endl;
       std::cout << "   - Invalid genre, halting." << std::endl;
       std::cout << errorLog << std::endl;
       return(false);
    }
 
-   // Parse ReleaseYear (common to all genres)
-   // Normally we'd use 1800 || (whatever the current year is)
-   if (releaseYear < 1800 || releaseYear > 2018) {
-      return(false);
-   }
-
    // Legality tests for classics only
    if (genre == 'C') {
       // Parse releaseMonth
-      if (releaseMonth > 12 || releaseMonth < 1) {
-         return(false);
+      stream >> releaseMonth;
+      // Parse releaseYear
+      stream >> releaseYear;
+
+      // Parse actor
+      char temp = NULL;
+      stream >> temp;
+      std::noskipws;
+      while (!stream.eof()) {
+         actor += temp;
+         stream >> temp;
       }
+
+      // TODO: Perform all legality checks for Classics
+
+      // Verify that releaseMonth is within range
+      if ((releaseMonth < 1) || (releaseMonth > 12)) {
+         // Append the error log
+         errorLog = errorLog + "   - Invalid month (out of range)" + "\n";
+         // And toggle the flag
+         isLegal = false;
+      }
+      // Verify that releaseYear is within range
+      if ((releaseYear < 1888) || (releaseYear > 12)) {
+         // Append the error log
+         errorLog = errorLog + "   - Invalid month (out of range)" + "\n";
+         // And toggle the flag
+         isLegal = false;
+      }
+      // Verify that an actor is provided
    }
 
    if (genre == 'D') {
-      // Parse director & title
-      if (director == "" || title == "") {
-         return(false);
-      }
+      // TODO: Parse director
+      // TODO: Parse title
+
+      // TODO: Perform all legality checks for Dramas
+      // Verify that a director is provided
+      // Verify that a title is provided
    }
 
    if (genre == 'F') {
-      // Parse title
-      if (title == "") {
-         return(false);
-      }
+      // TODO: Parse title
+      // TODO: Parse releaseYear
+
+      // TODO: Perform all legality checks for Comedies
+      // Verify that a title is provided
+      // Verify that releaseYear is within range
    }
 
 
    // If any test has failed, do not forward to database
    if (isLegal == false) {
-      std::cout << "Customer command error:" << std::endl;
-      std::cout << errorLog << std::endl;
-      return(isLegal);
+   std::cout << "Customer command error:" << std::endl;
+   std::cout << errorLog << std::endl;
+   return(isLegal);
    }
    // Otherwise, this is a correctly formatted command
    // But it may still be in conflict with the database state, so check that
