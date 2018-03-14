@@ -480,11 +480,11 @@ void Trans::setCustID(int IDnum) {
 // #Trans()
 //-------------------------------------|
 // Desc:    Defaults Transaction constructor
-// Params:  NULL
+// Params:  None
 // PreCons: Should not be called under normal circumstances
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// PosCons: All fields have been initialized
+// RetVal:  None
+// MetCall: None
 Trans::Trans() {
    // Initialize all variables
    this->type          = NULL;
