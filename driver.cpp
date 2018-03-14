@@ -986,7 +986,6 @@ void bulkReadTrans(std::ifstream& commandFile, CustDB& tgtCustDB, InvDB& tgtInvD
       std::string command;
       std::getline(commandFile, command);
 
-      std::cout << std::endl << std::setw(4) << counter << ": ('" << command << "')" << std::endl;
       counter++;
 
       // I and H cases
@@ -994,6 +993,7 @@ void bulkReadTrans(std::ifstream& commandFile, CustDB& tgtCustDB, InvDB& tgtInvD
       if (command[0] == 'I') {
          // Ping invDB for execution
          tgtInvDB.display();
+         std::cout << std::endl;
       }
 
       // If the command is an 'H'
@@ -1018,7 +1018,7 @@ void bulkReadTrans(std::ifstream& commandFile, CustDB& tgtCustDB, InvDB& tgtInvD
          // Otherwise...
          else {
             // Output the history of the customer at this position
-            std::cout << tgtCustDB.getCustomerAt(custID)->getHistory() << std::endl;
+            std::cout << tgtCustDB.getCustomerAt(custID)->getHistory() << std::endl << std::endl;
          }
       } // Closing if - 'H' condition handled
 
@@ -1034,6 +1034,9 @@ void bulkReadTrans(std::ifstream& commandFile, CustDB& tgtCustDB, InvDB& tgtInvD
             // Send the Transaction to the Databases for execution
             tgtInvDB.adjustStock(*currTrans);
             tgtCustDB.appendHistory(*currTrans);
+         }
+         else {
+            std::cout << std::endl;
          }
 
 
@@ -1246,6 +1249,23 @@ bool isLegalInvCmd(std::string command, InvDB& tgtDB) {
 } // Closing isLegalInvCmd()
 
 // (+) --------------------------------|
+// #trim(std::string)
+//-------------------------------------|
+// Desc:    Trims whitespace from the end of a string
+// Params:  string by reference
+// PreCons: NULL
+// PosCons: NULL
+// RetVal:  NULL
+// MetCall: NULL
+void trim(std::string& str) {
+   std::string whitespaces(" \t\f\v\n\r");
+   int pos = str.find_last_not_of(whitespaces);
+   if (pos != std::string::npos) {
+      str.erase(pos + 1);
+   }
+}
+
+// (+) --------------------------------|
 // #isLegalTransCmd(ifstream&, CustDB&, InvDB&)
 //-------------------------------------|
 // Desc:    Verifies the legality of a transaction command line
@@ -1271,6 +1291,7 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
    // Store command as a stream
    std::stringstream stream;
    stream << command;
+   trim(command);
 
    int currentYear = 2018;
 
@@ -1291,7 +1312,9 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
 
    // Test if the commandType is within range first
    if ((commandType != 'I') && (commandType != 'H') && (commandType != 'B') && (commandType != 'R')) {
+
       std::cout << "Transaction Command error ('" << command << "'):" << std::endl;
+
       std::cout << "   - Invalid command type: ('" << commandType << "'), discarding..." << std::endl;
       return(false);
    }
@@ -1368,12 +1391,8 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
          actor += temp;
          stream >> temp;
       }
-      // trim whitespace from actor
-      std::string whitespaces(" \t\f\v\n\r");
-      int pos = actor.find_last_not_of(whitespaces);
-      if (pos != std::string::npos) {
-         actor.erase(pos + 1);
-      }// Actor parsed - VERIFIED
+      trim(actor);
+      // Actor parsed - VERIFIED
 
       // std::cout << "(CisLegalCmd):" << actor << ":" << releaseMonth << ":" << releaseYear << ")"; // DEBUG
 
@@ -1413,8 +1432,6 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
              && !tgtCustDB.getCustomerAt(custID)->isCheckedOut(title)) {
             // Append the error log
             errorLog = errorLog + "   - Customer has not borrowed this film" + "\n";
-            errorLog = errorLog + "Title: " + title + "\n";
-            errorLog = errorLog + tgtCustDB.getCustomerAt(custID)->getHistory();
             // And toggle the flag
             isLegal = false;
          }
@@ -1527,7 +1544,7 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
    }
    // Otherwise, this is a correctly formatted command
    // But it may still be in conflict with the database states, so check those
-   if (!tgtCustDB.isValidTransCmd(custID, title) || !tgtInvDB.isValidTransCmd(command)) {
+   if (!tgtCustDB.isValidTransCmd(custID, title, commandType) || !tgtInvDB.isValidTransCmd(command)) {
       isLegal = false;
    }
    // Note: Target databases handle their own error reporting to cout
