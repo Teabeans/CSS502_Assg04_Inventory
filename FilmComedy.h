@@ -12,7 +12,7 @@
 // Matt Gross & Tim Lum
 // mattgrosspersonal@gmail.com + twhlum@gmail.com
 // Created:  2018.03.03
-// Modified: 2018.03.--
+// Modified: 2018.03.14
 // For the University of Washington Bothell, CSS 502A
 // Winter 2018, Graduate Certificate in Software Design & Development (GCSDD)
 //
@@ -98,22 +98,22 @@ public:
    // (+) --------------------------------|
    // #equals(Film&)
    //-------------------------------------|
-   // Desc:   Tests the film against another based on it's director and title
-   // Invars: None
+   // Desc:   Compares 'this' Film against another by it's title and year
+   // Invars: Release year and title must be initialized
    bool equals(Film&);
 
    // (+) --------------------------------|
    // #isLessThan(Film&)
    //-------------------------------------|
-   // Desc:   Tests the film against another based on it's director and title
-   // Invars: None
+   // Desc:   Compares 'this' Film against another by it's title and year
+   // Invars: Release year and title must be initialized
    bool isLessThan(Film&);
 
    // (+) --------------------------------|
    // #isGreaterThan(Film&)
    //-------------------------------------|
-   // Desc:   Tests the film against another based on it's director and title
-   // Invars: None
+   // Desc:   Compares 'this' Film against another by it's title and year
+   // Invars: Release year and title must be initialized
    bool isGreaterThan(Film&);
 
 
@@ -127,22 +127,23 @@ public:
    //-----------------|
    // #Comedy()
    //-----------------|
-   // Desc:   NULL
-   // Invars: NULL
+   // Desc:   Default constructor for the Comedy class
+   // Invars: Fields are zeroed by Film superclass constructor
    Comedy();
 
    //-----------------|
-   // #Comedy()
+   // #Comedy(string)
    //-----------------|
-   // Desc:   NULL
-   // Invars: NULL
+   // Desc:   Comedy constructor by string
+   // Invars: GIGO - No error checking is performed by this method
+   //         Command must be correctly formatted
    Comedy(std::string);
 
    //-----------------|
-   // #Comedy()
+   // #~Comedy()
    //-----------------|
-   // Desc:   NULL
-   // Invars: NULL
+   // Desc:   Destructor for the Comedy class
+   // Invars: None
    ~Comedy();
 
 }; // Closing class Comedy {}

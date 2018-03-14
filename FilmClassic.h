@@ -12,7 +12,7 @@
 // Matt Gross & Tim Lum
 // mattgrosspersonal@gmail.com + twhlum@gmail.com
 // Created:  2018.03.03
-// Modified: 2018.03.--
+// Modified: 2018.03.14
 // For the University of Washington Bothell, CSS 502A
 // Winter 2018, Graduate Certificate in Software Design & Development (GCSDD)
 //
@@ -21,9 +21,8 @@
 // File Description
 //-----------------------------------------------------------------------------|
 //
-// This is the header file for the Classic Film class, representing a single film
-// of the classic type, primarily separated from the generic film by identifying
-// major actors as the key differentiator
+// This is the header file for the Classic Film class, representing a Film
+// subclass. It requires additional data, such as a release month and actor.
 //
 
 //-----------------------------------------------------------------------------|
@@ -98,22 +97,25 @@ public:
    // (+) --------------------------------|
    // #equals(Film&)
    //-------------------------------------|
-   // Desc:   Tests the film against another based on it's year, month, and actor
-   // Invars: None
+   // Desc:   Compares 'this' Film against another by it's release date and actor
+   // Invars: Release year must be initialized
+   //         Release month and actor will be referenced in the event of a tie
    bool equals(Film&);
 
    // (+) --------------------------------|
    // #isLessThan(Film&)
    //-------------------------------------|
-   // Desc:   Tests the film against another based on it's year, month, and actor
-   // Invars: None
+   // Desc:   Compares 'this' Film against another by it's release date and actor
+   // Invars: Release year must be initialized
+   //         Release month and actor will be referenced in the event of a tie
    bool isLessThan(Film&);
 
    // (+) --------------------------------|
    // #isGreaterThan(Film&)
    //-------------------------------------|
-   // Desc:   Tests the film against another based on it's year, month, and actor
-   // Invars: None
+   // Desc:   Compares 'this' Film against another by it's release date and actor
+   // Invars: Release year must be initialized
+   //         Release month and actor will be referenced in the event of a tie
    bool isGreaterThan(Film&);
 
 
@@ -127,22 +129,23 @@ public:
    //-----------------|
    // #Classic()
    //-----------------|
-   // Desc:   NULL
-   // Invars: NULL
+   // Desc:   Default constructor for the Classic class
+   // Invars: None
    Classic();
 
    //-----------------|
    // #Classic(string)
    //-----------------|
-   // Desc:   NULL
-   // Invars: NULL
+   // Desc:   Classic constructor by string
+   // Invars: GIGO - No error checking is performed by this method
+   //         Command must be correctly formatted
    Classic(std::string);
 
    //-----------------|
    // #~Classic()
    //-----------------|
-   // Desc:   NULL
-   // Invars: NULL
+   // Desc:   Destructor for the Classic class
+   // Invars: None
    ~Classic();
 
 }; // Closing class Classic {}

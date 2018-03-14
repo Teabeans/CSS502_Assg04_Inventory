@@ -1,7 +1,7 @@
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
 // UW CSS 502A - Assignment 4 - Inventory Management
-// Drama.cpp
+// FilmDrama.cpp
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
@@ -12,7 +12,7 @@
 // Matt Gross & Tim Lum
 // mattgrosspersonal@gmail.com + twhlum@gmail.com
 // Created:  2018.03.03
-// Modified: 2018.03.--
+// Modified: 2018.03.14
 // For the University of Washington Bothell, CSS 502A
 // Winter 2018, Graduate Certificate in Software Design & Development (GCSDD)
 //
@@ -42,9 +42,16 @@
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
+// Necessary for string operations
 #include <string>
+
+// Necessary for string stream operations
 #include <sstream>
+
+// Necessary for input-output operations
 #include <iostream>
+
+// Field and method declarations for the Drama class
 #include "FilmDrama.h"
 
 
@@ -58,64 +65,67 @@
 // (+) --------------------------------|
 // #equals(Film&)
 //-------------------------------------|
-// Desc:    Tests the film against another based on it's release date, then 
-//          major actor
-// Params:  None
-// PreCon:  Release date and release month, and actor must be populated
-// PosCons: NULL
-// RetVal:  True or False
-// MetCall: NULL
+// Desc:    Compares 'this' Film against another by it's director and title
+// Params:  Film& arg1 - The Film to compare against
+// PreCon:  Director and title must be initialized
+// PosCons: None
+// RetVal:  bool True - 'This' Drama is equal to arg1
+//          bool False - 'This' Drama is not equal to arg1
+// MetCall: Film::getDirector()
+//          Film::getTitle()
 bool Drama::equals(Film& rhs) {
-   
-   return (this->getDirector() == rhs.getDirector() 
-           && this->getTitle() == rhs.getTitle());
-}
+   return (this->getDirector() == rhs.getDirector() &&
+           this->getTitle()    == rhs.getTitle());
+} // Closing equals()
 
 // (+) --------------------------------|
 // #isLessThan(Film&)
 //-------------------------------------|
-// Desc:    Tests the film against another based on it's release date, then 
-//          major actor
-// Params:  None
-// PreCon:  Release date and release month, and actor must be populated
-// PosCons: NULL
-// RetVal:  True or False
-// MetCall: NULL
+// Desc:    Compares 'this' Film against another by it's title and year
+// Params:  Film& arg1 - The Film to compare against
+// PreCon:  Release year and title must be initialized
+// PosCons: None
+// RetVal:  bool True - 'This' Drama is less than arg1
+//          bool False - 'This' Drama is not less than arg1
+// MetCall: Film::getDirector()
+//          Film::getTitle()
 bool Drama::isLessThan(Film& rhs) {
-
-   // If the director is lesser...
+   // If this director is less than RHS director...
    if (this->getDirector() < rhs.getDirector()) {
       return true;
    }
-   // If the director matches
+   // If the directors are the same...
    else if (this->getDirector() == rhs.getDirector()) {
       // Then compare titles
+      // If this title is less than RHS title
       if (this->getTitle() < rhs.getTitle()) {
          return true;
       }
-      // Greater than or equal to case
+      // Otherwise, LHS is greater than or equal to RHS
+      // So return false
       return false;
    }
-   // Director must by greater than
+   // Otherwise, this director must be greater than RHS director
    else {
       return false;
    }
-}
+} // Closing isLessThan()
 
 // (+) --------------------------------|
 // #isGreaterThan(Film&)
 //-------------------------------------|
-// Desc:    Tests the film against another based on it's release date, then 
-//          major actor
-// Params:  None
-// PreCon:  Release date and release month, and actor must be populated
-// PosCons: NULL
-// RetVal:  True or False
-// MetCall: NULL
+// Desc:    Compares 'this' Film against another by it's title and year
+// Params:  Film& arg1 - The Film to compare against
+// PreCon:  Release year and title must be initialized
+// PosCons: None
+// RetVal:  bool True - 'This' Drama is less than arg1
+//          bool False - 'This' Drama is not less than arg1
+// MetCall: Drama::isLessThan()
+//          Drama::equals()
 bool Drama::isGreaterThan(Film& rhs) {
-
    return (!isLessThan(rhs) && !equals(rhs));
-}
+} // Closing isGreaterThan()
+
 
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
@@ -127,25 +137,30 @@ bool Drama::isGreaterThan(Film& rhs) {
 // (+) --------------------------------|
 // #Drama()
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Default constructor for the Drama class
+// Params:  None
+// PreCons: Fields are zeroed by Film superclass constructor
+// PosCons: None
+// RetVal:  None
+// MetCall: None
 Drama::Drama() {
-
-}
+   // Initialize fields
+   // None for this class
+} // Closing Drama()
 
 // (+) --------------------------------|
 // #Drama(string)
 //-------------------------------------|
-// Desc:    Overrides the Film(string) constructor, adding logic to parse director and title
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Drama constructor by string
+// Params:  string arg1 - The command to build a Drama film from
+// PreCons: GIGO - No error checking is performed by this method
+//          Command must be correctly formatted
+// PosCons: The inventory command has been parsed and integrated to 'this' Film
+// RetVal:  None
+// MetCall: std::noskipws
+//          Film::setDirector()
+//          Film::setTitle()
+//          Film::setReleaseYear()
 Drama::Drama(std::string data) {
    // Sample input
    // "D, 10, Clint Eastwood, Unforgiven, 1992"
@@ -223,19 +238,23 @@ Drama::Drama(std::string data) {
 
    //Capture the releaseYear
    this->setReleaseYear(theYear);
-}
+} // Closing Drama(string)
 
 // (+) --------------------------------|
 // #~Drama()
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Destructor for the Drama class
+// Params:  None
+// PreCons: None
+// PosCons: Fields have been zeroed
+// RetVal:  None
+// MetCall: None
 Drama::~Drama() {
+   // None specific to this subclass
+} // Closing ~Drama()
 
-}
+//-------------------------------------|
+// End Student Code
+//-------------------------------------|
 
 // End of File - FilmDrama.cpp

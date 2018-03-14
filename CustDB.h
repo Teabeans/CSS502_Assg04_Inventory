@@ -12,7 +12,7 @@
 // Matt Gross & Tim Lum
 // mattgrosspersonal@gmail.com + twhlum@gmail.com
 // Created:  2018.03.03
-// Modified: 2018.03.--
+// Modified: 2018.03.14
 // For the University of Washington Bothell, CSS 502A
 // Winter 2018, Graduate Certificate in Software Design & Development (GCSDD)
 //
@@ -81,15 +81,15 @@ private:
 //-----------------|
 // #custTable
 //-----------------|
-// Desc:   The customer database
-// Invars: Table size must not exceed 9999, nearest prime is 9973
+// Desc:   The customer database, sorted by customer hash
+// Invars: None
    Cust* custTable[MAXCUSTOMERS];
 
 //-----------------|
 // #custTableByID
 //-----------------|
 // Desc:   The customer database, sorted by customer ID number
-// Invars: Table size to accommodate 
+// Invars: Table size to accommodate 0000-9999
    Cust* custTableByID[10000];
 
 
@@ -150,57 +150,58 @@ public:
 //-----------------|
 // #toString()
 //-----------------|
-// Desc:   NULL
-// Invars: NULL
+// Desc:   Generates a string representation of the database
+// Invars: None
    std::string toString();
 
 //-----------------|
 // #display()
 //-----------------|
-// Desc:   NULL
-// Invars: NULL
+// Desc:   Displays the toString() representation of this database
+// Invars: None
    void display();
 
 //-----------------|
 // #doesContain()
 //-----------------|
-// Desc:   NULL
-// Invars: NULL
+// Desc:   Confirms whether a customer exists (by Cust ID)
+// Invars: None
    bool const doesContain(int custID);
 
 //-----------------|
 // #insertCustomer(int)
 //-----------------|
-// Desc:   NULL
-// Invars: NULL
+// Desc:   Inserts a customer to the database
+// Invars: GIGO - No error checking is performed by this method
    void insertCustomer(Cust*);
 
 //-----------------|
 // #isValid(string)
 //-----------------|
-// Desc:   Determines whether this string is a valid customerDB command
+// Desc:   Examine a command and confirm whether it is legal or not
 // Invars: Return value is variable based on state of DB
    bool isValid(std::string someCommand);
 
 //-----------------|
 // #isValidTransCmd(string)
 //-----------------|
-// Desc:   Determines whether this string is a valid transaction command
+// Desc:   Determines whether this transaction is in conflict with the Database state
 // Invars: Return value is variable based on state of DB
-   bool isValidTransCmd(int custID, std::string title);
+   bool isValidTransCmd(int custID, std::string title, char type);
 
 //-----------------|
 // #getCustomerAt(int)
 //-----------------|
-// Desc:   NULL
-// Invars: NULL
+// Desc:   Returns a customer, searched by customer ID
+// Invars: None
    Cust* getCustomerAt(int);
 
 //-----------------|
 // #appendHistory(Trans)
 //-----------------|
-// Desc:   NULL
-// Invars: NULL
+// Desc:   Appends a transaction to the history of the involved customer
+// Invars: GIGO - No error checking is performed by this function
+//         Transaction must be legal and properly formatted upon receipt
    void appendHistory(Trans);
 
 
@@ -224,15 +225,15 @@ public:
 //-----------------|
 // #CustDB()
 //-----------------|
-// Desc:   NULL
-// Invars: NULL
+// Desc:   Default constructor for a Customer Database
+// Invars: All table entries initialized to nullptr
    CustDB();
 
 //-----------------|
 // #~CustDB()
 //-----------------|
-// Desc:   NULL
-// Invars: NULL
+// Desc:   Deallocates memory and zeroes fields
+// Invars: All memory has been deallocated
    ~CustDB();
 
 }; // Closing class CustDB {}

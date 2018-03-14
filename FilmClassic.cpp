@@ -12,7 +12,7 @@
 // Matt Gross & Tim Lum
 // mattgrosspersonal@gmail.com + twhlum@gmail.com
 // Created:  2018.03.03
-// Modified: 2018.03.--
+// Modified: 2018.03.14
 // For the University of Washington Bothell, CSS 502A
 // Winter 2018, Graduate Certificate in Software Design & Development (GCSDD)
 //
@@ -62,63 +62,71 @@
 // (+) --------------------------------|
 // #equals(Film&)
 //-------------------------------------|
-// Desc:    Tests the film against another based on it's release date, then 
-//          major actor
-// Params:  None
-// PreCon:  Release date and release month, and actor must be populated
-// PosCons: NULL
-// RetVal:  True or False
-// MetCall: NULL
+// Desc:    Compares 'this' Film against another by it's release date and actor
+// Params:  Film& arg1 - The Film to compare against
+// PreCon:  Release year must be initialized
+//          Release month and actor will be referenced in the event of a tie
+// PosCons: None
+// RetVal:  bool True - 'This' classic is equal to arg1
+//          bool False - 'This' classic is not equal to arg1
+// MetCall: Film::getReleaseYear()
+//          Film::getReleaseMonth()
+//          Film::getActor()
 bool Classic::equals(Film& rhs) {
-
-   return (releaseMonth == rhs.getReleaseYear() 
-           && releaseYear == rhs.getReleaseMonth()
-           && actor == rhs.getActor());
-}
+   // If all comparisons are equal, return true
+   return (this->releaseMonth == rhs.getReleaseYear() &&
+           this->releaseYear  == rhs.getReleaseMonth() &&
+           this->actor        == rhs.getActor());
+} // Closing equals()
 
 // (+) --------------------------------|
 // #isLessThan(Film&)
 //-------------------------------------|
-// Desc:    Tests the film against another based on it's release date, then 
-//          major actor
-// Params:  None
-// PreCon:  Release date and release month, and actor must be populated
-// PosCons: NULL
-// RetVal:  True or False
-// MetCall: NULL
+// Desc:    Compares 'this' Film against another by it's release date and actor
+// Params:  Film& arg1 - The Film to compare against
+// PreCon:  Release year must be initialized
+//          Release month and actor will be referenced in the event of a tie
+// PosCons: None
+// RetVal:  bool True - 'This' classic is less than arg1
+//          bool False - 'This' classic is not less than arg1
+// MetCall: Film::getReleaseYear()
+//          Film::getReleaseMonth()
+//          Film::getActor()
 bool Classic::isLessThan(Film& rhs) {
-
-   if (releaseYear < rhs.getReleaseYear()) {
+   // Compare the year of release
+   if (this->releaseYear < rhs.getReleaseYear()) {
       return true;
    }
-   // if the year is the same, check the month
-   else if (releaseYear == rhs.getReleaseYear() && releaseMonth < rhs.getReleaseMonth()) {
+   // If the years match, check the month
+   else if (this->releaseYear == rhs.getReleaseYear() && this->releaseMonth < rhs.getReleaseMonth()) {
       return true;
    }
-   // if the year and month are the same, check the major actor
-   else if (releaseYear == rhs.getReleaseYear() && releaseMonth == rhs.getReleaseMonth()
-            && actor < rhs.getActor()) {
+   // If the year and month are the same, check the actor
+   else if (this->releaseYear == rhs.getReleaseYear() && this->releaseMonth == rhs.getReleaseMonth()
+            && this->actor < rhs.getActor()) {
       return true;
    }
    else {
       return false;
    }
-}
+} // Closing isLessThan()
 
 // (+) --------------------------------|
 // #isGreaterThan(Film&)
 //-------------------------------------|
-// Desc:    Tests the film against another based on it's release date, then 
-//          major actor
-// Params:  None
-// PreCon:  Release date and release month, and actor must be populated
-// PosCons: NULL
-// RetVal:  True or False
-// MetCall: NULL
+// Desc:    Compares 'this' Film against another by it's release date and actor
+// Params:  Film& arg1 - The Film to compare against
+// PreCon:  Release year must be initialized
+//          Release month and actor will be referenced in the event of a tie
+// PosCons: None
+// RetVal:  bool True - 'This' classic is greater than arg1
+//          bool False - 'This' classic is not greater than arg1
+// MetCall: Classic::isLessThan()
+//          Classic::equals()
 bool Classic::isGreaterThan(Film& rhs) {
+   return (!this->isLessThan(rhs) && !this->equals(rhs));
+} // Closing isGreaterThan()
 
-   return (!isLessThan(rhs) && !equals(rhs));
-}
 
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
@@ -130,21 +138,22 @@ bool Classic::isGreaterThan(Film& rhs) {
 // (+) --------------------------------|
 // #Classic()
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Default constructor for the Classic class
+// Params:  None
+// PreCons: Fields are zeroed by Film superclass constructor
+// PosCons: None
+// RetVal:  None
+// MetCall: None
 Classic::Classic() {
-
-}
+   // Initialize fields
+   // None for this class
+} //  Closing Classic()
 
 // (+) --------------------------------|
 // #Classic(string)
 //-------------------------------------|
-// Desc:    Overrides the Film(string) constructor, adding logic to parse actors
-// Params:  string arg1 - 
+// Desc:    Classic constructor by string
+// Params:  string arg1 - The command to build a Classic film from
 // PreCons: GIGO - No error checking is performed by this method
 //          Command must be correctly formatted
 // PosCons: The inventory command has been parsed and integrated to 'this' Film
@@ -188,9 +197,9 @@ Classic::Classic(std::string command) {
    }
 
    // Assign to variables
-   this->actor = items[0] + " " + items[1]; // strings: firstName lastName
+   this->actor        = items[0] + " " + items[1]; // strings: firstName lastName
    this->releaseMonth = std::stoi(items[2]); // int
-   this->releaseYear = std::stoi(items[3]); // int
+   this->releaseYear  = std::stoi(items[3]); // int
 } // Closing Classic(string)
 
 // (+) --------------------------------|
