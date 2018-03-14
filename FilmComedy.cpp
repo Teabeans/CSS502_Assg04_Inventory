@@ -97,7 +97,7 @@ bool Comedy::isLessThan(Film& rhs) {
    // If the titles are equal...
    else if (this->getTitle() == rhs.getTitle()) {
       // Then compare release
-      // If this release year is less than RHS release year,
+      // If this release year is less than RHS release year
       if (this->getReleaseYear() < rhs.getReleaseYear()) {
          // Return true
          return(true);
