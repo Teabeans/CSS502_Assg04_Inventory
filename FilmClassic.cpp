@@ -42,8 +42,13 @@
 //
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
+// Necessary for string operations
 #include <string>
+
+// Necessary for input-output operations
 #include <iostream>
+
+// Field and method declarations for the Classic class
 #include "FilmClassic.h"
 
 
@@ -139,52 +144,70 @@ Classic::Classic() {
 // #Classic(string)
 //-------------------------------------|
 // Desc:    Overrides the Film(string) constructor, adding logic to parse actors
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-Classic::Classic(std::string data) {
+// Params:  string arg1 - 
+// PreCons: GIGO - No error checking is performed by this method
+//          Command must be correctly formatted
+// PosCons: The inventory command has been parsed and integrated to 'this' Film
+// RetVal:  None
+// MetCall: std::string.substr()
+//          std::string.find()
+//          std::string.erase()
+//          std::string.find()
+//          std::string.length()
+//          std::stoi()
+Classic::Classic(std::string command) {
+   // Sample input:
+   // C, 10, George Cukor, Holiday, Katherine Hepburn 9 1938
 
-   // split the regular film data items by commans and insert those to 
+   // For the first 4 elements...
+   // Split the regular film data items by commans and insert those to 
    // the appropriate data members
    std::string delim = ", ";
    std::string items[4];
 
+   // Capture 4 elements
    for (int i = 0; i < 4; i++) {
-      items[i] = data.substr(0, data.find(delim));
-      data.erase(0, data.find(delim) + delim.length());
+      items[i] = command.substr(0, command.find(delim));
+      command.erase(0, command.find(delim) + delim.length());
    }
 
-   genre = items[0][0]; // char
-   stock = std::stoi(items[1]); // int
-   director = items[2];
-   title = items[3];
+   // Assign to variables
+   this->genre    = items[0][0]; // char
+   this->stock    = std::stoi(items[1]); // int
+   this->director = items[2];
+   this->title    = items[3];
 
-   // split the last two items by spaces to incorprate the major actor and date
+   // Change the delimiter for the last 4 elements
+   // Split the last two items by spaces to incorprate the major actor and date
    delim = " ";
 
+   // Capture 4 elements
    for (int i = 0; i < 4; i++) {
-      items[i] = data.substr(0, data.find(delim));
-      data.erase(0, data.find(delim) + delim.length());
+      items[i] = command.substr(0, command.find(delim));
+      command.erase(0, command.find(delim) + delim.length());
    }
 
-   actor = items[0] + " " + items[1]; // strings: firstName lastName
-   releaseMonth = std::stoi(items[2]); // int
-   releaseYear = std::stoi(items[3]); // int
-}
+   // Assign to variables
+   this->actor = items[0] + " " + items[1]; // strings: firstName lastName
+   this->releaseMonth = std::stoi(items[2]); // int
+   this->releaseYear = std::stoi(items[3]); // int
+} // Closing Classic(string)
 
 // (+) --------------------------------|
 // #~Classic()
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Destructor for the Classic class
+// Params:  None
+// PreCons: None
+// PosCons: Fields have been zeroed
+// RetVal:  None
+// MetCall: None
 Classic::~Classic() {
+   // None specific to this subclass
+} // Closing ~Classic()
 
-}
+//-------------------------------------|
+// End Student Code
+//-------------------------------------|
 
 // End of File - FilmClassic.cpp
