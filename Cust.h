@@ -12,7 +12,7 @@
 // Matt Gross & Tim Lum
 // mattgrosspersonal@gmail.com + twhlum@gmail.com
 // Created:  2018.03.03
-// Modified: 2018.03.--
+// Modified: 2018.03.14
 // For the University of Washington Bothell, CSS 502A
 // Winter 2018, Graduate Certificate in Software Design & Development (GCSDD)
 //
@@ -55,6 +55,7 @@
 #include "Trans.h"
 
 
+
 //-------|---------|---------|---------|---------|---------|---------|---------|
 //
 //       CLASS CONSTANTS
@@ -62,6 +63,7 @@
 //-------|---------|---------|---------|---------|---------|---------|---------|
 
 // None for this class
+
 
 
 class Cust {
@@ -249,7 +251,8 @@ public:
 // #Cust(string)
 //-----------------|
 // Desc:   Customer constructor by customer command string
-// Invars: None
+// Invars: GIGO - No error checking is performed by this method
+//         The input must be properly formatted upon receipt
    Cust(std::string command);
 
 //-----------------|
@@ -265,8 +268,6 @@ public:
 // Desc:   Customer deconstructor
 // Invars: None
    ~Cust();
-
-
 
 }; // Closing class Cust{}
 
