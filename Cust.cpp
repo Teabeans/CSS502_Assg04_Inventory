@@ -348,7 +348,14 @@ int Cust::getID() {
 // RetVal:  NULL
 // MetCall: NULL
 std::string Cust::getHistory() {
-   std::string retString = this->historyHeader + this->history;
+   std::string retString;
+   if (this->history != "") {
+      retString = this->historyHeader + this->history;
+   }
+   else {
+      retString = this->historyHeader;
+      retString += "   - No transactions for this customer.";
+   }
    return(retString);
 } // Closing getHistory()
 

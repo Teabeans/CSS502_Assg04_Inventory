@@ -190,9 +190,7 @@ bool InvDB::addFilm(std::string filmData) {
       classics.insert(iterator, film);
    }
 
-   else {
-      std::cout << "Invalid film type: " << filmData.at(0) << ". Ignoring..." << std::endl;
-   }
+   // format checking already handled by isLegal logic
 
    return true;
 } // Closing addFilm()
@@ -645,14 +643,20 @@ std::string InvDB::getCTitleByTuple(int month, int year, std::string actor) {
    std::string retTitle= "";
    // Iterate over vector<Classic> classics
    for (unsigned int i = 0; i < classics.size(); i++) {
+
       // Search for the year
       if (classics.at(i).getReleaseYear() == year) {
+
          // Search for the month
          if (classics.at(i).getReleaseMonth() == month) {
+
             // Search for the actor
             if (classics.at(i).getActor() == actor) {
+
                // All fields are a match! Assign the title to the returnString
                retTitle = classics.at(i).getTitle();
+               break;
+
             } // Closing actor match
          } // Closing month match
       } // Closing year match

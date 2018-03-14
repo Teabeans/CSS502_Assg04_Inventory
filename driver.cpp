@@ -122,7 +122,7 @@ int main() {
 //-------|---------|---------|---------|---------|---------|---------|---------|
    if (false) {
 
-      std::cout << "--- (1.0) BEGIN FILM CLASS TESTS ---" << std::endl << std::endl;
+      std::cout << "--- (1.0) BEGIN TRANS CLASS TESTS ---" << std::endl << std::endl;
 
       std::cout << "--- (1.1) Creating a default Transaction... ---" << std::endl << std::endl;
       Trans testTrans;
@@ -719,6 +719,11 @@ int main() {
       testInvDB.display();
       std::cout << std::endl;
 
+      std::cout << "--- (7.8) Test getCTitleByTuple ---" << std::endl << std::endl;
+      std::string test = testInvDB.getCTitleByTuple(7, 1939, "Judy Garland");
+      std::cout << "Test Title: '"<< test << "' ('The Wizard of Oz' expected)" << std::endl;
+      std::string test2 = testInvDB.getCTitleByTuple(7, 1939, "Bob Barker");
+      std::cout << "Test Title: '"<< test2 << "' ('The Wizard of Oz' expected)" << std::endl;
 
       std::cout << "--- END INVENTORY DATABASE TESTS ---" << std::endl << std::endl;
 
@@ -1362,7 +1367,13 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
       while (!stream.eof()) {
          actor += temp;
          stream >> temp;
-      } // Actor parsed - VERIFIED
+      }
+      // trim whitespace from actor
+      std::string whitespaces(" \t\f\v\n\r");
+      int pos = actor.find_last_not_of(whitespaces);
+      if (pos != std::string::npos) {
+         actor.erase(pos + 1);
+      }// Actor parsed - VERIFIED
 
       // std::cout << "(CisLegalCmd):" << actor << ":" << releaseMonth << ":" << releaseYear << ")"; // DEBUG
 
@@ -1395,6 +1406,18 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
          // NOTE!!! CLASSIC BEHAVIOR MUST GO TO THE INVDB AND ATTEMPT TO RETRIEVE A TITLE AT THIS POINT
          // Not necessary if any tests were failed here, as the legality calls will terminate
          title = tgtInvDB.getCTitleByTuple(releaseMonth, releaseYear, actor);
+
+         // if this is a Return, check if this customer has 
+         // this film currently checked out
+         if (commandType == 'R' 
+             && !tgtCustDB.getCustomerAt(custID)->isCheckedOut(title)) {
+            // Append the error log
+            errorLog = errorLog + "   - Customer has not borrowed this film" + "\n";
+            errorLog = errorLog + "Title: " + title + "\n";
+            errorLog = errorLog + tgtCustDB.getCustomerAt(custID)->getHistory();
+            // And toggle the flag
+            isLegal = false;
+         }
       }
    } // Classic legality tests complete
 
@@ -1426,6 +1449,17 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
          errorLog = errorLog + "   - No title provided" + "\n";
          // And toggle the flag
          isLegal = false;
+      }
+      else {
+         // if this is a Return, check if this customer has 
+         // this film currently checked out
+         if (commandType == 'R' 
+             && !tgtCustDB.getCustomerAt(custID)->isCheckedOut(title)) {
+            // Append the error log
+            errorLog = errorLog + "   - Customer has not borrowed this film" + "\n";
+            // And toggle the flag
+            isLegal = false;
+         }
       }
 
       // Information in hand, perform legality checks for Dramas
@@ -1464,6 +1498,18 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
          // And toggle the flag
          isLegal = false;
       }
+      else {
+         // if this is a Return, check if this customer has 
+         // this film currently checked out
+         if (commandType == 'R' 
+             && !tgtCustDB.getCustomerAt(custID)->isCheckedOut(title)) {
+            // Append the error log
+            errorLog = errorLog + "   - Customer has not borrowed this film" + "\n";
+            // And toggle the flag
+            isLegal = false;
+         }
+      }
+
       // Verify that releaseYear is within range
       if ((releaseYear < 1888) || (releaseYear > currentYear)) {
          // Append the error log
