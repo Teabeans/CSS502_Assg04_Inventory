@@ -152,8 +152,8 @@ Classic::Classic() {
 // (+) --------------------------------|
 // #Classic(string)
 //-------------------------------------|
-// Desc:    Overrides the Film(string) constructor, adding logic to parse actors
-// Params:  string arg1 - 
+// Desc:    Classic constructor by string
+// Params:  string arg1 - The command to build a Classic film from
 // PreCons: GIGO - No error checking is performed by this method
 //          Command must be correctly formatted
 // PosCons: The inventory command has been parsed and integrated to 'this' Film
