@@ -108,17 +108,19 @@ bool Classic::isLessThan(Film& rhs) {
 // (+) --------------------------------|
 // #isGreaterThan(Film&)
 //-------------------------------------|
-// Desc:    Tests the film against another based on it's release date, then 
-//          major actor
-// Params:  None
-// PreCon:  Release date and release month, and actor must be populated
-// PosCons: NULL
-// RetVal:  True or False
-// MetCall: NULL
+// Desc:    Compares 'this' Film against another by it's release date and actor
+// Params:  Film& arg1 - The Film to compare against
+// PreCon:  Release year must be initialized
+//          Release month and actor will be referenced in the event of a tie
+// PosCons: None
+// RetVal:  bool True - 'This' classic is greater than arg1
+//          bool False - 'This' classic is not greater than arg1
+// MetCall: Classic::isLessThan()
+//          Classic::equals()
 bool Classic::isGreaterThan(Film& rhs) {
-
    return (!isLessThan(rhs) && !equals(rhs));
-}
+} // Closing isGreaterThan()
+
 
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
