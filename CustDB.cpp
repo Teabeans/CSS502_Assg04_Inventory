@@ -12,7 +12,7 @@
 // Matt Gross & Tim Lum
 // mattgrosspersonal@gmail.com + twhlum@gmail.com
 // Created:  2018.03.03
-// Modified: 2018.03.--
+// Modified: 2018.03.14
 // For the University of Washington Bothell, CSS 502A
 // Winter 2018, Graduate Certificate in Software Design & Development (GCSDD)
 //
@@ -123,11 +123,13 @@
 // #doesConflict(Cust*, int)
 //-------------------------------------|
 // Desc:    Determines whether this customer and index creates a collision
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Params:  Cust* arg1 - The customer to check a collision on
+//          int arg2 - The index to examine
+// PreCons: None
+// PosCons: None
+// RetVal:  bool True - The customer and position creates a conflict
+//          bool False - No conflict detected
+// MetCall: None
 bool CustDB::doesConflict(Cust* custPtr, int query) {
    // Identity check - If the pointers are the same, this is not a collision.
    if (this->custTable[query] == custPtr) {
@@ -144,12 +146,14 @@ bool CustDB::doesConflict(Cust* custPtr, int query) {
 // (-) --------------------------------|
 // #hash(Cust*)
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
+// Desc:    Determines a hash value for a given customer
+// Params:  Cust* arg1 - The customer to determine a hash for
 // PreCons: Customer name ("F L") must contain at least 3 chars.
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// PosCons: None
+// RetVal:  int - The first available table index
+// MetCall: Cust::getName()
+//          CustDB::doesConflict()
+//          CustDB::probe()
 int CustDB::hash(Cust* custPtr) {
    std::string custName = "";
    char letter1 = 'X';
@@ -175,17 +179,18 @@ int CustDB::hash(Cust* custPtr) {
    }
    // Non-conflicting index guaranteed
    return(hash);
-}
+} // Closing hash()
 
 // (-) --------------------------------|
 // #probe(Cust*)
 //-------------------------------------|
-// Desc:    Linear probe
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Linear probe, helper method for the Hash() function
+// Params:  Cust* arg1 - The customer being hashed
+//          int arg2 - The hash position in question
+// PreCons: Hash() has been called
+// PosCons: None
+// RetVal:  int - The first non-conflicting index found by this probe method
+// MetCall: CustDB::doesConflict()
 int CustDB::probe(Cust* custPtr, int query) {
    int hash = query;
    while (this->doesConflict(custPtr, query)) {
@@ -198,12 +203,12 @@ int CustDB::probe(Cust* custPtr, int query) {
 // (-) --------------------------------|
 // #obliviate()
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Deallocates all customers in the table
+// Params:  None
+// PreCons: None
+// PosCons: All customers have been deallocated
+// RetVal:  None
+// MetCall: None
 void CustDB::obliviate() {
    for (int i = 0 ; i < MAXCUSTOMERS ; i++) {
       if (this->custTable[i] != nullptr) {
@@ -213,7 +218,7 @@ void CustDB::obliviate() {
    for (int i = 0 ; i <= 9999 ; i++) {
       this->custTableByID[i] = nullptr;
    }
-}
+} // Closing obliviate()
 
 
 
@@ -236,12 +241,12 @@ void CustDB::obliviate() {
 // (+) --------------------------------|
 // #toString()
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Generates a string representation of the database
+// Params:  None
+// PreCons: None
+// PosCons: None
+// RetVal:  string - A string representation of the database
+// MetCall: Cust::toString()
 std::string CustDB::toString() {
    std::string retString = "CustDB::toString() \n";
    retString += "Customer Database:\n";
@@ -262,12 +267,12 @@ std::string CustDB::toString() {
 // (+) --------------------------------|
 // #display()
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Displays the toString() representation of this database
+// Params:  None
+// PreCons: None
+// PosCons: None
+// RetVal:  None
+// MetCall: CustDB::toString()
 void CustDB::display() {
    std::cout << "CustDB::display()" << std::endl;
    std::cout << this->toString() << std::endl;
@@ -276,12 +281,13 @@ void CustDB::display() {
 // (+) --------------------------------|
 // #doesContain()
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Confirms whether a customer exists (by Cust ID)
+// Params:  int arg1 - The Customer ID to search
+// PreCons: None
+// PosCons: None
+// RetVal:  bool True - The customer was found
+//          bool False - No such customer exists
+// MetCall: None
 bool const CustDB::doesContain(int custID) {
    // If the customer table by ID contains anything other than nullptr...
    if (this->custTableByID[custID] != nullptr) {
@@ -295,12 +301,13 @@ bool const CustDB::doesContain(int custID) {
 // (+) --------------------------------|
 // #insertCustomer(Cust&)
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Inserts a customer to the database
+// Params:  Cust* arg1 - A pointer to the customer to insert
+// PreCons: GIGO - No error checking is performed by this method
+// PosCons: The customer has been inserted to the database
+// RetVal:  None
+// MetCall: CustDB::hash()
+//          Cust::getID()
 void CustDB::insertCustomer(Cust* custPtr) {
    // Hash the customer's name
    int indexToInsertAt = this->hash(custPtr);
@@ -311,11 +318,17 @@ void CustDB::insertCustomer(Cust* custPtr) {
 
 } // Closing insertCustomer()
 
-//-----------------|
-// #isValid(string)
-//-----------------|
-// Desc:   Determines whether this string is a valid customerDB command
-// Invars: Return value is variable based on state of DB
+// (+) --------------------------------|
+// #isValid(Cust&)
+//-------------------------------------|
+// Desc:    Examine a command and confirm whether it is legal or not
+// Params:  string arg1 - The command to examine
+// PreCons: NULL
+// PosCons: If illegal conditions are found, errors are reported
+// RetVal:  bool True - No conflicts found
+//          bool False - Conflicts found
+// MetCall: Cust::getFirstName()
+//          Cust::getLastName()
 bool CustDB::isValid(std::string command) {
    std::string errorLog = "";
    bool isValid = true;
@@ -363,25 +376,43 @@ bool CustDB::isValid(std::string command) {
    return(isValid);
 } // Closing isValid()
 
-bool CustDB::isValidTransCmd(int custID, std::string title) {
-   // What do we need to check?
+// (+) --------------------------------|
+// #isValidTransCmd(int, string)
+//-------------------------------------|
+// Desc:    Determines whether this transaction is in conflict with the Database state
+// Params:  int arg1 - The Customer ID of the transaction
+//          string arg2 - The title of the film being transacted
+//          string arg3 - The transaction type
+// PreCons: None
+// PosCons: None
+// RetVal:  bool True - No conflicts with the transaction detected
+//          bool False - Conflict with the transaction detected
+// MetCall: Cust::isCheckedOut()
+bool CustDB::isValidTransCmd(int custID, std::string title, char type) {
    // Sample input:
-   // B 1000 D C 5 1940 Katherine Hepburn
-   // B 1000 D D Barry Levinson, Good Morning Vietnam,
-   // B 8000 D F You've Got Mail, 1998
+   // 1000 Good Morning Vietnam,
    bool isValid = true;
+
+   // If it's an attempted return...
+   if (type == 'R') {
+      // Confirm that the customer by this ID has the title checkd out
+      isValid = custTableByID[custID]->isCheckedOut(title);
+   }
+
+   // Other checks that the CustDB state is relevant to?
+
    return (isValid);
-}
+} // Closing isValidTransCmd()
 
 // (+) --------------------------------|
 // #getCustomerAt(int)
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
+// Desc:    Returns a customer, searched by customer ID
+// Params:  int arg1 - The CustomerID to search for
+// PreCons: None
+// PosCons: None
+// RetVal:  Cust* - A pointer to the customer at this ID
+// MetCall: None
 Cust* CustDB::getCustomerAt(int query) {
    return (this->custTableByID[query]);
 } // Closing getCustomerAt()
@@ -389,20 +420,25 @@ Cust* CustDB::getCustomerAt(int query) {
 // (+) --------------------------------|
 // #appendHistory(Trans)
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-   void CustDB::appendHistory(Trans someTransaction) {
-      // Gather requisite data for an appending action
-      int         IDnum    = someTransaction.getCustID();
-      Cust*       tgt      = this->custTableByID[IDnum];
-      std::string appendix = someTransaction.toString();
-      // Send to the target customer for history append and checkout correction
-      tgt->appendHistory(appendix, someTransaction.getType(), someTransaction.getTitle());
-   } // Closing appendHistory()
+// Desc:    Appends a transaction to the history of the involved customer
+// Params:  Trans arg1 - The transaction to append
+// PreCons: GIGO - No error checking is performed by this function
+//          Transaction must be legal and properly formatted upon receipt
+// PosCons: The transaction has been appended to the customer history
+// RetVal:  None
+// MetCall: Cust::appendHistory()
+//          Cust::getCustID()
+//          Trans::toString()
+//          Trans::getType()
+//          Trans::getTitle()
+void CustDB::appendHistory(Trans someTransaction) {
+   // Gather requisite data for an appending action
+   int         IDnum    = someTransaction.getCustID();
+   Cust*       tgt      = this->custTableByID[IDnum];
+   std::string appendix = someTransaction.toString();
+   // Send to the target customer for history append and checkout correction
+   tgt->appendHistory(appendix, someTransaction.getType(), someTransaction.getTitle());
+} // Closing appendHistory()
 
 
 //-------|---------|---------|---------|---------|---------|---------|---------|
@@ -424,33 +460,33 @@ Cust* CustDB::getCustomerAt(int query) {
 // (+) --------------------------------|
 // #CustDB()
 //-------------------------------------|
-// Desc:    NULL
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-   CustDB::CustDB() {
-      for (int i = 0 ; i < MAXCUSTOMERS ; i++) {
-         this->custTable[i] = nullptr;
-      }
-      for (int i = 0 ; i <= 9999 ; i++) {
-         this->custTableByID[i] = nullptr;
-      }
+// Desc:    Default constructor for a Customer Database
+// Params:  None
+// PreCons: None
+// PosCons: All table entries initialized to nullptr
+// RetVal:  None
+// MetCall: None
+CustDB::CustDB() {
+   for (int i = 0 ; i < MAXCUSTOMERS ; i++) {
+      this->custTable[i] = nullptr;
    }
+   for (int i = 0 ; i <= 9999 ; i++) {
+      this->custTableByID[i] = nullptr;
+   }
+} // Closing CustDB()
 
 // (+) --------------------------------|
 // #~CustDB()
 //-------------------------------------|
 // Desc:    Deallocates memory and zeroes fields
-// Params:  NULL
-// PreCons: NULL
-// PosCons: NULL
-// RetVal:  NULL
-// MetCall: NULL
-   CustDB::~CustDB() {
-      this->obliviate();
-   }
+// Params:  None
+// PreCons: None
+// PosCons: All memory has been deallocated
+// RetVal:  None
+// MetCall: CustDB::obliviate()
+CustDB::~CustDB() {
+   this->obliviate();
+} // Closing ~CustDB()
 
 //-------------------------------------|
 // End Student Code
