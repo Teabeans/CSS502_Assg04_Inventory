@@ -69,8 +69,8 @@
 // Params:  Film& arg1 - The Film to compare against
 // PreCon:  Director and title must be initialized
 // PosCons: None
-// RetVal:  bool True - 'This' comedy is equal to arg1
-//          bool False - 'This' comedy is not equal to arg1
+// RetVal:  bool True - 'This' Drama is equal to arg1
+//          bool False - 'This' Drama is not equal to arg1
 // MetCall: Film::getDirector()
 //          Film::getTitle()
 bool Drama::equals(Film& rhs) {
@@ -85,8 +85,8 @@ bool Drama::equals(Film& rhs) {
 // Params:  Film& arg1 - The Film to compare against
 // PreCon:  Release year and title must be initialized
 // PosCons: None
-// RetVal:  bool True - 'This' comedy is less than arg1
-//          bool False - 'This' comedy is not less than arg1
+// RetVal:  bool True - 'This' Drama is less than arg1
+//          bool False - 'This' Drama is not less than arg1
 // MetCall: Film::getDirector()
 //          Film::getTitle()
 bool Drama::isLessThan(Film& rhs) {
@@ -118,8 +118,8 @@ bool Drama::isLessThan(Film& rhs) {
 // Params:  Film& arg1 - The Film to compare against
 // PreCon:  Release year and title must be initialized
 // PosCons: None
-// RetVal:  bool True - 'This' comedy is less than arg1
-//          bool False - 'This' comedy is not less than arg1
+// RetVal:  bool True - 'This' Drama is less than arg1
+//          bool False - 'This' Drama is not less than arg1
 // MetCall: Drama::isLessThan()
 //          Drama::equals()
 bool Drama::isGreaterThan(Film& rhs) {
