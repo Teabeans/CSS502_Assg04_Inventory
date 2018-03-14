@@ -266,7 +266,7 @@ public:
 // #~Cust()
 //-----------------|
 // Desc:   Customer deconstructor
-// Invars: None
+// Invars: All fields have been zeroed
    ~Cust();
 
 }; // Closing class Cust{}
