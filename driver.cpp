@@ -556,10 +556,10 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
    int currentYear = 2018;
 
    // Initialize field variables
-   char commandType     = 'X';
+   char commandType     = ' ';
    int custID           = 1234512345;
    char format          = 'D'; // 'D' for DVD on all titles
-   char genre           = 'X';
+   char genre           = ' ';
    int releaseMonth     = 0; // (in case of Classic)
    int releaseYear      = 0;
    std::string director = "";
@@ -644,7 +644,7 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
       // Parse releaseYear
       stream >> releaseYear; // VERIFIED
       // Parse actor
-      char temp = 'X';
+      char temp = ' ';
       stream >> temp;
       stream << std::noskipws;
       while (!stream.eof()) {
@@ -704,7 +704,7 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
 
       // Sample input: B 1000 D D Gus Van Sant, Good Will Hunting,
       // Parse director
-      char temp = 'X';
+      char temp = ' ';
       stream >> temp;
       stream << std::noskipws;
       while (temp != ',') {
@@ -753,7 +753,7 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
    if (genre == 'F') {
       // Parse title
 
-      char temp = 'X';
+      char temp = ' ';
       stream >> temp;
       stream << std::noskipws;
       while (temp != ',') {
