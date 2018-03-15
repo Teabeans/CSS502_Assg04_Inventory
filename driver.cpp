@@ -1347,7 +1347,7 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
    // Test if customer is in the database
    if (!tgtCustDB.doesContain(custID)) {
       // Append the error log
-      errorLog = errorLog + "   - Non-existent customer" + "\n";
+      errorLog = errorLog + "   - Non-existant customer";
       // And toggle the flag
       isLegal = false;
    }
@@ -1359,7 +1359,7 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
    // Test if format is within range
    if (format != 'D') {
       // Append the error log
-      errorLog = errorLog + "   - Invalid media format." + "\n";
+      errorLog = errorLog + "   - Invalid media format.";
       // And toggle the flag
       isLegal = false;
    }
@@ -1373,7 +1373,7 @@ bool isLegalTransCmd(std::string command, CustDB& tgtCustDB, InvDB& tgtInvDB) {
    if ((genre != 'C') && (genre != 'F') && (genre != 'D')) {
       std::cout << "Transaction Command error ('" << command << "'):" << std::endl;
       std::cout << "   - Invalid genre, halting." << std::endl;
-      std::cout << errorLog << std::endl;
+      std::cout << errorLog;
       return(false);
    }
 
