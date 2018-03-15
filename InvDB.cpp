@@ -379,10 +379,10 @@ bool InvDB::isValidTransCmd(std::string command) {
    // Are there enough movies in stock to fulfill the transaction?
 
    // Initialize field variables
-   char commandType = NULL;
+   char commandType = 'X';
    int custID = 1234512345;
-   char format = NULL; // 'D' for DVD on all titles
-   char genre = NULL;
+   char format = 'X'; // 'D' for DVD on all titles
+   char genre = 'X';
    int releaseMonth = 0; // (in case of Classic)
    int releaseYear = 0;
    std::string director = "";
@@ -457,7 +457,7 @@ bool InvDB::isValidTransCmd(std::string command) {
       // Sample input: "B 8888 D D Nancy Savoca, Dogfight,"
       // Drama parse strategies go here
       // NOTE: Dramas are searched for by Director, Title
-      char temp = NULL;
+      char temp = 'X';
       stream >> temp;
       // Load the first valid char from the stream to the director
       stream >> temp;
@@ -511,7 +511,7 @@ bool InvDB::isValidTransCmd(std::string command) {
       // Sample input: "B 8000 D F National Lampoon's Animal House, 1978"
       // Comedy parse strategies go here
       // NOTE: Comedies are searched for by Title, Year
-      char temp = NULL;
+      char temp = 'X';
       stream >> temp;
       stream >> temp;
       // Append characters to the title until a ',' is encountered
