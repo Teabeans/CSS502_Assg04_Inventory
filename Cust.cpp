@@ -375,7 +375,7 @@ std::string Cust::getHistory() {
    }
    else {
       retString = this->historyHeader;
-      retString += "   - No transactions for this customer.";
+      retString += "   - No transactions for this customer.\n";
    }
    return(retString);
 } // Closing getHistory()
