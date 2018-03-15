@@ -472,6 +472,7 @@ Cust::Cust() {
 //          std::setfill()
 //          stringstream::str()
 Cust::Cust(std::string command) {
+   this->checkouts = 0;
    std::string nameF = "";
    std::string nameL = "";
    int IDnum = 0;
@@ -512,7 +513,7 @@ Cust::Cust(std::string command) {
 //          std::setfill()
 //          stringstream::str()
 Cust::Cust(std::string nameF, std::string nameL, int IDnum) {
-
+   this->checkouts = 0;
    this->custID    = IDnum;
    this->lastName  = nameL;
    this->firstName = nameF;
