@@ -555,7 +555,7 @@ Film::~Film() {
    // Null all fields
    this->actor = "";
    this->director = "";
-   this->genre = NULL;
+   this->genre = 'X';
    this->releaseMonth = 0;
    this->releaseYear = 0;
    this->stock = 0;
