@@ -1,0 +1,199 @@
+Customer Command error (''):
+   - No customer ID entered
+   - No first or last name entered
+
+Inventory Command error ('Z, 10, Hal Ashby, Harold and Maude, Bud Cort 3 1971'):
+   - Invalid genre: 'Z'
+
+Inventory Command error ('Z, 10, Frank Capra, It's a Wonderful Life, James Steward 11 1946'):
+   - Invalid genre: 'Z'
+
+Inventory Command error (''):
+   - Invalid genre: ' '
+
+Comedy films:
+(Qty) 'Title'                             Director             Released
+----- ----------------------------------- -------------------- ---------
+( 10) 'Annie Hall'                        Woody Allen          1977
+( 10) 'Fargo'                             Joel Coen            1996
+( 10) 'National Lampoon's Animal House'   John Landis          1978
+( 10) 'Pirates of the Caribbean'          Gore Verbinski       2003
+( 10) 'Sleepless in Seattle'              Nora Ephron          1993
+( 10) 'When Harry Met Sally'              Rob Reiner           1989
+( 10) 'You've Got Mail'                   Nora Ephron          1998
+
+Drama films:
+(Qty) 'Title'                             Director             Released
+----- ----------------------------------- -------------------- ---------
+( 10) 'Good Morning Vietnam'              Barry Levinson       1988
+( 10) 'Unforgiven'                        Clint Eastwood       1992
+( 10) 'Good Will Hunting'                 Gus Van Sant         2000
+( 10) 'Silence of the Lambs'              Jonathan Demme       1991
+( 10) 'Dogfight'                          Nancy Savoca         1991
+( 10) 'King of Hearts'                    Phillippe De Broca   1967
+( 10) 'Schindler's List'                  Steven Spielberg     1993
+
+Classic films:
+(Qty) 'Title'                             Director             Featuring            Released
+----- ----------------------------------- -------------------- -------------------- ---------
+( 10) 'Holiday'                           George Cukor         Cary Grant           1938. 9
+( 10) 'Holiday'                           George Cukor         Katherine Hepburn    1938. 9
+( 10) 'Gone With the Wind'                Victor Fleming       Clark Gable          1939. 2
+( 10) 'Gone With the Wind'                Victor Fleming       Vivien Leigh         1939. 2
+( 10) 'The Wizard of Oz'                  Victor Fleming       Judy Garland         1939. 7
+( 10) 'The Philadelphia Story'            George Cukor         Cary Grant           1940. 5
+( 10) 'The Philadelphia Story'            George Cukor         Katherine Hepburn    1940. 5
+( 10) 'The Maltese Falcon'                John Huston          Humphrey Bogart      1941.10
+( 10) 'Casablanca'                        Michael Curtiz       Humphrey Bogart      1942. 8
+( 10) 'Casablanca'                        Michael Curtiz       Ingrid Bergman       1942. 8
+( 10) 'It's a Wonderful Life'             Frank Capra          Donna Reed           1946.11
+( 10) 'It's a Wonderful Life'             Frank Capra          James Steward        1946.11
+( 10) 'A Clockwork Orange'                Stanley Kubrick      Malcolm McDowell     1971. 2
+( 10) 'Harold and Maude'                  Hal Ashby            Ruth Gordon          1971. 3
+
+Transaction history for Minnie Mouse (ID 1000):
+   - No transactions for this customer.
+
+Transaction history for Freddie Frog (ID 5000):
+   - No transactions for this customer.
+
+Transaction history for Wally Wacky (ID 8000):
+   - No transactions for this customer.
+
+Transaction Command error ('B 1111 D Z 2 1971 Malcolm McDowell'):
+   - Invalid genre, halting.
+
+Transaction Command error ('X'):
+   - Invalid command type: ('X'), discarding...
+
+Transaction Command error ('Z 1000 D C 10 1941 Humphrey Bogart'):
+   - Invalid command type: ('Z'), discarding...
+
+Transaction Command error ('B 1234 D C 2 1971 Malcolm McDowell'):
+   - Non-existant customer
+
+Transaction Command error @ InvDatabase ('B 1000 D F Bogus Title, 2001'):
+   - Film not found in Comedies table
+
+Transaction Command error ('B 1000 Z F Fargo, 1996'):
+   - Invalid media format.
+
+Transaction Command error @ InvDatabase ('B 9000 D C 3 1971 Ruth Gordon'):
+   - Insufficient stock to fulfill order
+
+Transaction Command error @ InvDatabase ('B 3333 D C 3 1971 Ruth Gordon'):
+   - Insufficient stock to fulfill order
+
+Transaction Command error @ InvDatabase ('B 7777 D C 3 1971 Ruth Gordon'):
+   - Insufficient stock to fulfill order
+
+Transaction Command error @ InvDatabase ('B 1000 D D Steven Spielberg, Bogus Title,'):
+   - Film not found in Dramas table
+
+Comedy films:
+(Qty) 'Title'                             Director             Released
+----- ----------------------------------- -------------------- ---------
+(  9) 'Annie Hall'                        Woody Allen          1977
+(  9) 'Fargo'                             Joel Coen            1996
+(  9) 'National Lampoon's Animal House'   John Landis          1978
+( 10) 'Pirates of the Caribbean'          Gore Verbinski       2003
+(  9) 'Sleepless in Seattle'              Nora Ephron          1993
+(  9) 'When Harry Met Sally'              Rob Reiner           1989
+(  9) 'You've Got Mail'                   Nora Ephron          1998
+
+Drama films:
+(Qty) 'Title'                             Director             Released
+----- ----------------------------------- -------------------- ---------
+(  9) 'Good Morning Vietnam'              Barry Levinson       1988
+(  9) 'Unforgiven'                        Clint Eastwood       1992
+(  9) 'Good Will Hunting'                 Gus Van Sant         2000
+(  9) 'Silence of the Lambs'              Jonathan Demme       1991
+(  8) 'Dogfight'                          Nancy Savoca         1991
+(  9) 'King of Hearts'                    Phillippe De Broca   1967
+(  9) 'Schindler's List'                  Steven Spielberg     1993
+
+Classic films:
+(Qty) 'Title'                             Director             Featuring            Released
+----- ----------------------------------- -------------------- -------------------- ---------
+(  9) 'Holiday'                           George Cukor         Cary Grant           1938. 9
+( 10) 'Holiday'                           George Cukor         Katherine Hepburn    1938. 9
+( 10) 'Gone With the Wind'                Victor Fleming       Clark Gable          1939. 2
+( 10) 'Gone With the Wind'                Victor Fleming       Vivien Leigh         1939. 2
+( 10) 'The Wizard of Oz'                  Victor Fleming       Judy Garland         1939. 7
+(  9) 'The Philadelphia Story'            George Cukor         Cary Grant           1940. 5
+(  9) 'The Philadelphia Story'            George Cukor         Katherine Hepburn    1940. 5
+(  9) 'The Maltese Falcon'                John Huston          Humphrey Bogart      1941.10
+( 10) 'Casablanca'                        Michael Curtiz       Humphrey Bogart      1942. 8
+( 10) 'Casablanca'                        Michael Curtiz       Ingrid Bergman       1942. 8
+( 10) 'It's a Wonderful Life'             Frank Capra          Donna Reed           1946.11
+( 10) 'It's a Wonderful Life'             Frank Capra          James Steward        1946.11
+(  9) 'A Clockwork Orange'                Stanley Kubrick      Malcolm McDowell     1971. 2
+(  0) 'Harold and Maude'                  Hal Ashby            Ruth Gordon          1971. 3
+
+Transaction history for Minnie Mouse (ID 1000):
+(ID: 1000) Borrow - 'Harold and Maude' (Classic), 3 1971
+(ID: 1000) Borrow - 'The Philadelphia Story' (Classic), 5 1940
+(ID: 1000) Borrow - 'Good Will Hunting' (Drama), 2000
+(ID: 1000) Borrow - 'The Philadelphia Story' (Classic), 5 1940
+(ID: 1000) Borrow - 'Good Morning Vietnam' (Drama), 1988
+
+Transaction history for Mickey Mouse (ID 1111):
+(ID: 1111) Borrow - 'Holiday' (Classic), 9 1938
+(ID: 1111) Borrow - 'The Maltese Falcon' (Classic), 10 1941
+(ID: 1111) Borrow - 'Harold and Maude' (Classic), 3 1971
+(ID: 1111) Borrow - 'A Clockwork Orange' (Classic), 2 1971
+
+Transaction history for Freddie Frog (ID 5000):
+(ID: 5000) Borrow - 'Harold and Maude' (Classic), 3 1971
+(ID: 5000) Return - 'Harold and Maude' (Classic), 3 1971
+(ID: 5000) Borrow - 'Harold and Maude' (Classic), 3 1971
+(ID: 5000) Return - 'Harold and Maude' (Classic), 3 1971
+(ID: 5000) Borrow - 'Harold and Maude' (Classic), 3 1971
+(ID: 5000) Return - 'Harold and Maude' (Classic), 3 1971
+(ID: 5000) Borrow - 'Harold and Maude' (Classic), 3 1971
+
+Transaction history for Wally Wacky (ID 8000):
+(ID: 8000) Borrow - 'National Lampoon's Animal House' (Comedy), 1978
+(ID: 8000) Borrow - 'Harold and Maude' (Classic), 3 1971
+(ID: 8000) Borrow - 'Harold and Maude' (Classic), 3 1971
+(ID: 8000) Return - 'You've Got Mail' (Comedy), 1998
+(ID: 8000) Borrow - 'You've Got Mail' (Comedy), 1998
+
+Transaction history for Porky Pig (ID 8888):
+(ID: 8888) Borrow - 'Harold and Maude' (Classic), 3 1971
+(ID: 8888) Borrow - 'Dogfight' (Drama), 1991
+(ID: 8888) Borrow - 'Silence of the Lambs' (Drama), 1991
+(ID: 8888) Borrow - 'When Harry Met Sally' (Comedy), 1989
+(ID: 8888) Borrow - 'Annie Hall' (Comedy), 1977
+
+Transaction Command error (''):
+   - Invalid command type: ('X'), discarding...
+
+Transaction Command error (''):
+   - Invalid command type: ('X'), discarding...
+
+--- All command lines parsed ---
+
+==42==
+==42== HEAP SUMMARY:
+==42==     in use at exit: 72,704 bytes in 1 blocks
+==42==   total heap usage: 2,153 allocs, 2,152 frees, 349,181 bytes allocated
+==42==
+==42== 72,704 bytes in 1 blocks are still reachable in loss record 1 of 1
+==42==    at 0x4C2DB8F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==42==    by 0x4EC3EFF: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21)
+==42==    by 0x40106B9: call_init.part.0 (dl-init.c:72)
+==42==    by 0x40107CA: call_init (dl-init.c:30)
+==42==    by 0x40107CA: _dl_init (dl-init.c:120)
+==42==    by 0x4000C69: ??? (in /lib/x86_64-linux-gnu/ld-2.23.so)
+==42==
+==42== LEAK SUMMARY:
+==42==    definitely lost: 0 bytes in 0 blocks
+==42==    indirectly lost: 0 bytes in 0 blocks
+==42==      possibly lost: 0 bytes in 0 blocks
+==42==    still reachable: 72,704 bytes in 1 blocks
+==42==         suppressed: 0 bytes in 0 blocks
+==42==
+==42== For counts of detected and suppressed errors, rerun with: -v
+==42== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+teabeans@Acer2:~$
