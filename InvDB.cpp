@@ -12,7 +12,7 @@
 // Matt Gross & Tim Lum
 // mattgrosspersonal@gmail.com + twhlum@gmail.com
 // Created:  2018.03.03
-// Modified: 2018.03.--
+// Modified: 2018.03.14
 // For the University of Washington Bothell, CSS 502A
 // Winter 2018, Graduate Certificate in Software Design & Development (GCSDD)
 //
@@ -738,10 +738,10 @@ InvDB::InvDB(std::ifstream& data) {
 //-------------------------------------|
 // Desc:    InvDB deconstructor
 // Params:  None
-// PreCons: NULL
-// PosCons: NULL
+// PreCons: None
+// PosCons: None
 // RetVal:  None
-// MetCall: NULL
+// MetCall: vector::begin()
 InvDB::~InvDB() {
    // std::cerr << "destruct invDB" << std::endl;
 
