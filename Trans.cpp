@@ -487,9 +487,9 @@ void Trans::setCustID(int IDnum) {
 // MetCall: None
 Trans::Trans() {
    // Initialize all variables
-   this->type          = NULL;
+   this->type          = 'X';
    this->typeAsString  = "";
-   this->genre         = NULL;
+   this->genre         = 'X';
    this->genreAsString = "";
    this->title         = "";
    this->director      = "";
@@ -513,9 +513,9 @@ Trans::Trans() {
 // MetCall: None
 Trans::Trans(std::string command) {
    // Initialize all variables
-   this->type          = NULL;
+   this->type          = 'X';
    this->typeAsString  = "";
-   this->genre         = NULL;
+   this->genre         = 'X';
    this->genreAsString = "";
    this->title         = "";
    this->director      = "";
@@ -585,7 +585,7 @@ Trans::Trans(std::string command) {
       // Sample input: "B 8888 D D Nancy Savoca, Dogfight,"
       // Drama parse strategies go here
       // NOTE: Dramas are searched for by Director, Title
-      char temp = NULL;
+      char temp = 'X';
       stream >> temp;
       // Load the first valid char from the stream to the director
       stream >> temp;
@@ -612,7 +612,7 @@ Trans::Trans(std::string command) {
       // Sample input: "B 8000 D F National Lampoon's Animal House, 1978"
       // Comedy parse strategies go here
       // NOTE: Comedies are searched for by Title, Year
-      char temp = NULL;
+      char temp = 'X';
       stream >> temp;
       stream >> temp;
       // Append characters to the title until a ',' is encountered
@@ -638,9 +638,9 @@ Trans::Trans(std::string command) {
 // MetCall: None
 Trans::~Trans() {
    // Reset all field states before deallocating
-   this->type          = NULL;
+   this->type          = 'X';
    this->typeAsString  = "";
-   this->genre         = NULL;
+   this->genre         = 'X';
    this->genreAsString = "";
    this->title         = "";
    this->director      = "";
