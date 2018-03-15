@@ -9,9 +9,9 @@
 // Authorship
 //-----------------------------------------------------------------------------|
 //
-// Tim Lum
-// twhlum@gmail.com
-// Created:  2018.02.04
+// Tim Lum + Matt Gross
+// twhlum@gmail.com + mattgrosspersonal@gmail.com
+// Created:  2018.03.04
 // Modified: 2018.03.14
 // For the University of Washington Bothell, CSS 502A
 // Winter 2018, Graduate Certificate in Software Design & Development (GCSDD)
@@ -24,7 +24,7 @@
 // Template author:
 // Tim Lum (twhlum@gmail.com)
 //
-// lab3.cpp, lab3output.txt, nodedata.h, nodedata.cpp, data31.txt, data32.txt, dataUWB.txt author:
+// data4commands.txt, data4customers.txt, data4movies.txt
 // Min Chen (minchen2@uw.edu)
 //
 // Assignment specification and coding standards:
